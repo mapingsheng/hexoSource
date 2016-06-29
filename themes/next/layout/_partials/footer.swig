@@ -9,12 +9,12 @@
 </div>
 
 <div class="powered-by">
-  {{ __('footer.powered', '<a class="theme-link" href="http://hexo.io">Hexo</a>') }}
+  {{ __('footer.powered', '<a class="theme-link" href="http://www.soujava.com">soujava</a>') }}
 </div>
 
 <div class="theme-info">
   {{ __('footer.theme') }} -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.{{ theme.scheme }}
+  <a class="theme-link" href="https://github.com/mapingsheng">
+    GitHub
   </a>
 </div>
