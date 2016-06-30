@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.soujava.com/"/>
-  <updated>2016-06-29T03:24:48.819Z</updated>
+  <updated>2016-06-30T09:29:19.055Z</updated>
   <id>http://www.soujava.com/</id>
   
   <author>
@@ -14,6 +14,191 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>界面框架</title>
+    <link href="http://www.soujava.com/2016/06/30/%E7%95%8C%E9%9D%A2%E6%A1%86%E6%9E%B6/"/>
+    <id>http://www.soujava.com/2016/06/30/界面框架/</id>
+    <published>2016-06-30T08:39:11.000Z</published>
+    <updated>2016-06-30T09:29:19.055Z</updated>
+    
+    <content type="html">&lt;h1 id=&quot;1、布局框架&quot;&gt;&lt;a href=&quot;#1、布局框架&quot; class=&quot;headerlink&quot; title=&quot;1、布局框架&quot;&gt;&lt;/a&gt;1、布局框架&lt;/h1&gt;&lt;ol&gt;
+&lt;li&gt;访问地址：&lt;a href=&quot;http://layout.jquery-dev.com/index.cfm&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://layout.jquery-dev.com/index.cfm&lt;/a&gt; &lt;pre&gt;&lt;code&gt;demo：http://layout.jquery-dev.com/demos.cfm
+可以满足多种复杂或者简单的布局，支持拖拉操作：
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/bujv.jpg&quot; alt=&quot;Alt text&quot; title=&quot;git push&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;2、表格框架&quot;&gt;&lt;a href=&quot;#2、表格框架&quot; class=&quot;headerlink&quot; title=&quot;2、表格框架&quot;&gt;&lt;/a&gt;2、表格框架&lt;/h1&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;SlickGrid（&lt;a href=&quot;https://github.com/Celebio/SlickGrid）&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/Celebio/SlickGrid）&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;  1)、支持表格的排序、列宽度的拖拽调整、表格中列的可编辑、表格中可编辑单元格中的各种控件(时间选择、下拉框、滑动条、复选框等等)、表格中添                                    加树形菜单、表格列宽度随着窗口大小自动调整；&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/biaoge1.jpg&quot; alt=&quot;Alt text&quot; title=&quot;表格&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/biaoge2.jpg&quot; alt=&quot;Alt text&quot; title=&quot;表格&quot;&gt;&lt;/p&gt;
+&lt;p&gt;   2)、可以在表格中直接框选复制-粘贴、对单元格中的值动态筛选、表格中的一些值的汇总计算以及展示、框选复制粘贴&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/biaoge3.jpg&quot; alt=&quot;Alt text&quot; title=&quot;表格&quot;&gt;&lt;/p&gt;
+&lt;p&gt;   3)、表格数据的渲染速度也非常不错，50万条静态数据一次加载渲染到表格中1-3秒时间&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/biaoge4.jpg&quot; alt=&quot;Alt text&quot; title=&quot;表格&quot;&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;paramquery（&lt;a href=&quot;http://paramquery.com/grid）&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://paramquery.com/grid）&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;1)、表格拖拉控制宽度、排序、可编辑&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/biaoge5.jpg&quot; alt=&quot;Alt text&quot; title=&quot;表格&quot;&gt;&lt;/p&gt;
+&lt;p&gt;  2)、可以对添加表格中的数据、以及对表格中的某几列数据添加横向滚动条&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/biaoge6.jpg&quot; alt=&quot;Alt text&quot; title=&quot;表格&quot;&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;3)、可以对表格头部进行复杂的嵌套汇总显示：
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/biaoge9.jpg&quot; alt=&quot;Alt text&quot; title=&quot;表格&quot;&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;jqwidgets（&lt;a href=&quot;http://www.jqwidgets.com/）&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.jqwidgets.com/）&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt; 这个表格框架还是相当的强大的，你能想到的，你将用到的都为你提供了，总之一两句话表达不彻底，需要你去亲自体验！不过有些浏览器兼容可能会出些问题，我在使用过程中由于兼容问题，我修改了其内核js文件解决的。&lt;/p&gt;
+&lt;p&gt; DEMO体验地址：&lt;a href=&quot;http://www.jqwidgets.com/jquery-widgets-demo/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.jqwidgets.com/jquery-widgets-demo/&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/jqwidgets.png&quot; alt=&quot;Alt text&quot; title=&quot;表格&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;3、界面风格&quot;&gt;&lt;a href=&quot;#3、界面风格&quot; class=&quot;headerlink&quot; title=&quot;3、界面风格&quot;&gt;&lt;/a&gt;3、界面风格&lt;/h1&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;semantic-ui (&lt;a href=&quot;http://semantic-ui.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://semantic-ui.com/&lt;/a&gt;) &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;topcoat (&lt;a href=&quot;http://topcoat.io/topcoat/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://topcoat.io/topcoat/&lt;/a&gt;) &lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;1、布局框架&quot;&gt;&lt;a href=&quot;#1、布局框架&quot; class=&quot;headerlink&quot; title=&quot;1、布局框架&quot;&gt;&lt;/a&gt;1、布局框架&lt;/h1&gt;&lt;ol&gt;
+&lt;li&gt;访问地址：&lt;a href=&quot;http://layout.jquery-dev.com/index
+    
+    </summary>
+    
+      <category term="UI" scheme="http://www.soujava.com/categories/UI/"/>
+    
+    
+      <category term="界面框架" scheme="http://www.soujava.com/tags/%E7%95%8C%E9%9D%A2%E6%A1%86%E6%9E%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>页面中添加&#39;ENTER&#39;键点击事件</title>
+    <link href="http://www.soujava.com/2016/06/30/%E9%A1%B5%E9%9D%A2%E4%B8%AD%E6%B7%BB%E5%8A%A0-ENTER-%E9%94%AE%E7%82%B9%E5%87%BB%E4%BA%8B%E4%BB%B6/"/>
+    <id>http://www.soujava.com/2016/06/30/页面中添加-ENTER-键点击事件/</id>
+    <published>2016-06-30T08:31:17.000Z</published>
+    <updated>2016-06-30T08:34:47.696Z</updated>
+    
+    <content type="html">&lt;h1 id=&quot;jquery&quot;&gt;&lt;a href=&quot;#jquery&quot; class=&quot;headerlink&quot; title=&quot;jquery&quot;&gt;&lt;/a&gt;jquery&lt;/h1&gt;&lt;pre&gt;&lt;code&gt;$(&amp;quot;body&amp;quot;).keydown(function(e){
+    if(e.keyCode==&amp;quot;13&amp;quot;){
+        alert(&amp;apos;点击了Enter键&amp;apos;);
+    }
+});
+&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&quot;javascript&quot;&gt;&lt;a href=&quot;#javascript&quot; class=&quot;headerlink&quot; title=&quot;javascript&quot;&gt;&lt;/a&gt;javascript&lt;/h1&gt;&lt;pre&gt;&lt;code&gt;document.body.onclick=function(){
+    if(e.keyCode==&amp;quot;13&amp;quot;){
+       alert(&amp;apos;点击了Enter键&amp;apos;);
+    }
+};
+&lt;/code&gt;&lt;/pre&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;jquery&quot;&gt;&lt;a href=&quot;#jquery&quot; class=&quot;headerlink&quot; title=&quot;jquery&quot;&gt;&lt;/a&gt;jquery&lt;/h1&gt;&lt;pre&gt;&lt;code&gt;$(&amp;quot;body&amp;quot;).keydown(function(e){
+    i
+    
+    </summary>
+    
+      <category term="javascript" scheme="http://www.soujava.com/categories/javascript/"/>
+    
+    
+      <category term="添加enter事件" scheme="http://www.soujava.com/tags/%E6%B7%BB%E5%8A%A0enter%E4%BA%8B%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>关闭父窗口刷新子窗口</title>
+    <link href="http://www.soujava.com/2016/06/30/%E5%85%B3%E9%97%AD%E7%88%B6%E7%AA%97%E5%8F%A3%E5%88%B7%E6%96%B0%E5%AD%90%E7%AA%97%E5%8F%A3/"/>
+    <id>http://www.soujava.com/2016/06/30/关闭父窗口刷新子窗口/</id>
+    <published>2016-06-30T08:21:45.000Z</published>
+    <updated>2016-06-30T08:26:41.670Z</updated>
+    
+    <content type="html">&lt;h1 id=&quot;父窗口-index-html&quot;&gt;&lt;a href=&quot;#父窗口-index-html&quot; class=&quot;headerlink&quot; title=&quot;父窗口-index.html&quot;&gt;&lt;/a&gt;父窗口-index.html&lt;/h1&gt;&lt;pre&gt;&lt;code&gt;&amp;lt;html&amp;gt;  
+ &amp;lt;head&amp;gt;  
+  &amp;lt;title&amp;gt;index.htmll&amp;lt;/title&amp;gt;  
+  &amp;lt;meta name=&amp;quot;Generator&amp;quot; content=&amp;quot;EditPlus&amp;quot;&amp;gt;  
+  &amp;lt;meta name=&amp;quot;Author&amp;quot; content=&amp;quot;&amp;quot;&amp;gt;  
+  &amp;lt;meta name=&amp;quot;Keywords&amp;quot; content=&amp;quot;&amp;quot;&amp;gt;  
+  &amp;lt;meta name=&amp;quot;Description&amp;quot; content=&amp;quot;&amp;quot;&amp;gt;  
+    &amp;lt;SCRIPT LANGUAGE=&amp;quot;JavaScript&amp;quot;&amp;gt;  
+    &amp;lt;!--   
+    function clicks(){   
+     window.open(&amp;quot;other.html&amp;quot;);   
+    }   
+    //--&amp;gt;  
+    &amp;lt;/SCRIPT&amp;gt;  
+ &amp;lt;/head&amp;gt;  
+ &amp;lt;body&amp;gt;  
+ &amp;lt;a  onClick=&amp;quot;clicks();&amp;quot; target=&amp;quot;_blank&amp;quot;&amp;gt; test&amp;lt;/a&amp;gt;  
+ &amp;lt;/body&amp;gt;  
+&amp;lt;/html&amp;gt;  
+&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&quot;子窗口-other-html&quot;&gt;&lt;a href=&quot;#子窗口-other-html&quot; class=&quot;headerlink&quot; title=&quot;子窗口-other.html&quot;&gt;&lt;/a&gt;子窗口-other.html&lt;/h1&gt;&lt;pre&gt;&lt;code&gt; &amp;lt;html&amp;gt;  
+ &amp;lt;head&amp;gt;  
+  &amp;lt;title&amp;gt;子窗口&amp;lt;/title&amp;gt;  
+  &amp;lt;meta name=&amp;quot;Generator&amp;quot; content=&amp;quot;EditPlus&amp;quot;&amp;gt;  
+  &amp;lt;meta name=&amp;quot;Author&amp;quot; content=&amp;quot;&amp;quot;&amp;gt;  
+  &amp;lt;meta name=&amp;quot;Keywords&amp;quot; content=&amp;quot;&amp;quot;&amp;gt;  
+  &amp;lt;meta name=&amp;quot;Description&amp;quot; content=&amp;quot;&amp;quot;&amp;gt;  
+&amp;lt;SCRIPT LANGUAGE=&amp;quot;JavaScript&amp;quot;&amp;gt;  
+&amp;lt;!--   
+function Close()   
+{
+  window.opener.location.href=&amp;quot;index.html&amp;quot;;
+}
+//--&amp;gt;  
+&amp;lt;/script&amp;gt;  
+ &amp;lt;/head&amp;gt;  
+ &amp;lt;body&amp;gt;  
+ &amp;lt;a href=&amp;quot;javascript:Close();&amp;quot;&amp;gt;关闭当前子窗口，打开父窗口&amp;lt;/a&amp;gt;  
+ &amp;lt;/body&amp;gt;  
+&amp;lt;/html&amp;gt;  
+&lt;/code&gt;&lt;/pre&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;父窗口-index-html&quot;&gt;&lt;a href=&quot;#父窗口-index-html&quot; class=&quot;headerlink&quot; title=&quot;父窗口-index.html&quot;&gt;&lt;/a&gt;父窗口-index.html&lt;/h1&gt;&lt;pre&gt;&lt;code&gt;&amp;lt;html&amp;gt;  
+    
+    </summary>
+    
+      <category term="javascript" scheme="http://www.soujava.com/categories/javascript/"/>
+    
+    
+      <category term="javascript" scheme="http://www.soujava.com/tags/javascript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java was started but returned exit code异常</title>
+    <link href="http://www.soujava.com/2016/06/30/Java-was-started-but-returned-exit-code%E5%BC%82%E5%B8%B8/"/>
+    <id>http://www.soujava.com/2016/06/30/Java-was-started-but-returned-exit-code异常/</id>
+    <published>2016-06-30T07:56:30.000Z</published>
+    <updated>2016-06-30T08:01:09.494Z</updated>
+    
+    <content type="html">&lt;p&gt;今天eclipse启动时一直报个错：Java was started but returned exit code=-805306369………等等&lt;br&gt;将eclipse.ini内容改为：&lt;br&gt;（注：最下面的几行是调整后的配置）&lt;/p&gt;
+&lt;p&gt;-startup&lt;br&gt;plugins/org.eclipse.equinox.launcher_1.1.0.v20100507.jar&lt;br&gt;–launcher.library&lt;br&gt;plugins/org.eclipse.equinox.launcher.win32.win32.x86_64_1.1.0.v20100503&lt;br&gt;-product&lt;br&gt;org.eclipse.epp.package.jee.product&lt;br&gt;–launcher.defaultAction&lt;br&gt;openFile&lt;br&gt;–launcher.XXMaxPermSize&lt;br&gt;256M&lt;br&gt;-showsplash&lt;br&gt;org.eclipse.platform&lt;br&gt;-vmargs&lt;br&gt;-Dosgi.requiredJavaVersion=1.5&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;-Xms1024m&lt;br&gt;-Xmx1024m&lt;br&gt;-XX:MaxPermSize=128m&lt;br&gt;-XX:+CMSClassUnloadingEnabled&lt;br&gt;-XX:+CMSPermGenSweepingEnabled&lt;br&gt;-XX:+UseParallelGC&lt;br&gt;-XX:CompileCommand=exclude,org/eclipse/core/internal/dtree/DataTreeNode,forwardDeltaWith&lt;/p&gt;
+&lt;/blockquote&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;今天eclipse启动时一直报个错：Java was started but returned exit code=-805306369………等等&lt;br&gt;将eclipse.ini内容改为：&lt;br&gt;（注：最下面的几行是调整后的配置）&lt;/p&gt;
+&lt;p&gt;-startup&lt;br&gt;pl
+    
+    </summary>
+    
+      <category term="IDE" scheme="http://www.soujava.com/categories/IDE/"/>
+    
+    
+      <category term="eclipse" scheme="http://www.soujava.com/tags/eclipse/"/>
+    
+  </entry>
   
   <entry>
     <title>添加KEY后，每次push时让输入密码</title>
