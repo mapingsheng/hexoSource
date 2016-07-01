@@ -1,0 +1,45 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="记录未知的，牢记已知的"><title>通过gitBook让网站更实用 | soujava</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/4.1.1/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">通过gitBook让网站更实用</h1><a id="logo" href="/.">soujava</a><p class="description">记录未知的，牢记已知的</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">通过gitBook让网站更实用</h1><div class="post-meta">Jun 28, 2016<span> | </span><span class="category"><a href="/categories/github/">github</a></span><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> Hits</span></span></div><a data-thread-key="2016-06-28-通过gitBook让网站更实用/" href="/2016-06-28-通过gitBook让网站更实用/#comments" class="ds-thread-count"></a><div class="post-content"><ol>
+<li>前两篇文章中介绍了使用github Pages功能生成静态博客系统，并且也选择了系统提供的几个博客模板，但是提供的博客模板固然不错，但是总觉得如果有目录导航整个文章目录更便于阅读，就如书本似的(左侧目录+右侧内容文章);<blockquote>
+<p>csdn上面的博客查看方式<br><img src="http://soujava.com/images/mycsdnblog.jpg" alt="Alt text"><br> </p><p>采用gitBook构建的博客<br> </p><p><img src="http://soujava.com/images/mygitbook.jpg" alt="Alt text"><br> </p><p>比如上面两个博客图片比对可以感受一下(csdn上面博客和采用gitBook构建的博客)</p>
+ <p></p></blockquote>
+</li>
+<li>gitBook是什么<br> <p>GitBook是一个基于 Node.js 的命令行工具，可使用 Github/Git 和 Markdown 来制作精美的电子书，GitBook 并非关于 Git 的教程。<br> GitBook支持输出多种文档格式：<br> ·静态站点：GitBook默认输出该种格式，生成的静态站点可直接托管搭载Github Pages服务上；<br> ·PDF：需要安装gitbook-pdf依赖；<br> ·eBook：需要安装ebook-convert；<br> ·单HTML网页：支持将内容输出为单页的HTML，不过一般用在将电子书格式转换为PDF或eBook的中间过程；<br> ·JSON：一般用于电子书的调试或元数据提取。<br> 使用GitBook制作电子书，必备两个文件：README.md和SUMMARY.md<br> </p><p>官网:<a href="https://www.gitbook.com" target="_blank" rel="external">https://www.gitbook.com</a> </p><p></p></li>
+<li><p>如何使用gitBook书写文章，需要安装node.js、gitBook、markdown，下面介绍：</p>
+<blockquote>
+<p>1)、下载、安装node.js;官网：<a href="http://nodejs.cn/" target="_blank" rel="external">http://nodejs.cn/</a></p>
+<p><img src="http://soujava.com/images/nodejsdownload.jpg" alt="Alt text"></p>
+<p>下载完成后，直接双击、下一步下一步的进行傻瓜式安装即可！</p>
+<p>2)、通过window命令安装gitbook服务；<br><code>npm install gitbook -g</code></p>
+<p><img src="http://soujava.com/images/1.jpg" alt="Alt text"></p>
+<p>3)、通过window命令安装gitbook命令服务（gitbook-cli）；<br><code>npm install gitbook-cli -g</code></p>
+<p>4)、下载安装markdown；<br>下载地址：<a href="http://markdownpad.com/download.html；" target="_blank" rel="external">http://markdownpad.com/download.html；</a><br>下载完成后直接下一步下一步安装，安装成功后桌面出现快捷启动图标</p>
+<p><img src="http://soujava.com/images/markdown.jpg" alt="Alt text"></p>
+<p>5)、使用gitbook开始制作电子书式的博客系统；首先在你的硬盘上面新建你个存放你博客的目录，比如BLOG;然后通过window环境下面的cmd命令窗口切换到该目录下面，通过gitbook init命令初始化gitbook服务的目录结构：</p>
+<p><img src="http://soujava.com/images/3.jpg" alt="Alt text"></p>
+<p>6)、首先介绍一下gitbook init命令的作用，首先读取SUMMARY.md文件中的目录定义结构，然后会按照该目录结构在对应博客文件夹下面生成对应的文件目录结构,<br>SUMMARY.md文件内容如图<br> </p><p><img src="http://soujava.com/images/gitinit.jpg" alt="Alt text"></p>
+<p>运行gitbook init命令后生成的目录结构如图</p>
+<p> </p><p><img src="http://soujava.com/images/gitinitfile.jpg" alt="Alt text"></p>
+<p>7)、然后通过gitbook build命令将目录结构中的.md文件(markdown语法格式的文件)转换生成.html文件(静态网页文件)，可以用浏览器浏览查看;</p>
+<p><img src="http://soujava.com/images/gitbuildbook.jpg" alt="Alt text"></p>
+<p>8)、截止到这一步我们通过gitbook构建电子书式的博客文章已经完成了，我们只需要把第7)步骤中通过gitbook build命令生成的_book文件夹下面的文件通过git提交到自己github账户下面的博客项目目录下面即可(如果之前自己账户下面的github博客没有用gitbook服务生成的目录构建博客目录的话，可以删除根目录下面旧的目录文件；如果之前已经用过gitbook服务生成的静态目录结构构建过博客目录，那么我们只需要通过git push覆盖旧文件即可)；<br>9)、上面没有讲到如何用markdown工具，其实在第6)步骤中通过gitbook init命令生成的以.md文件组成的目录结构就是markdown的文件，我们需要用markdown工具进行编辑操作，当然.md文件也可以用其他编辑器工具编写，只是个人感觉用markdown工具更方便一些，至于如何用markdown工具编写网页，需要你去先了解一下markdown的语法；这里就不过多介绍了，因为语法内容挺多的！</p>
+</blockquote>
+</li>
+<li>总结<blockquote>
+<p>安装node.js、gitbook、markdown</p>
+<p>通过gitbook init命令初始化目录结构</p>
+<p>通过markdown工具编辑目录结构文章对应的.md文件</p>
+<p>通过gitbook build命令将.md文件转换生成.html静态网页文件(默认自动存放在_book文件夹下)</p>
+<p>通过git push命令将_book文件夹下面生成的.html静态文件推送到自己github账户下面的博客系统项目工程目录下面</p>
+</blockquote>
+</li>
+</ol>
+</div><div class="tags"><a href="/tags/github/">github</a></div><div class="post-nav"><a href="/2016-06-28-添加KEY后，每次push时让输入密码/" class="pre">添加KEY后，每次push时让输入密码</a><a href="/2016-06-28-为github-pages绑定独立域名/" class="next">为github pages绑定独立域名</a></div><div data-thread-key="2016-06-28-通过gitBook让网站更实用/" data-title="通过gitBook让网站更实用" data-url="http://www.soujava.com/2016-06-28-通过gitBook让网站更实用/" class="ds-share flat"><div class="ds-share-inline"><ul class="ds-share-icons-16"><li data-toggle="ds-share-icons-more"><a href="javascript:void(0);" class="ds-more">分享到：</a></li><li><a href="javascript:void(0);" data-service="weibo" class="ds-weibo">微博</a></li><li><a href="javascript:void(0);" data-service="qzone" class="ds-qzone">QQ空间</a></li><li><a href="javascript:void(0);" data-service="qqt" class="ds-qqt">腾讯微博</a></li><li><a href="javascript:void(0);" data-service="wechat" class="ds-wechat">微信</a></li></ul><div class="ds-share-icons-more"></div></div></div><div data-thread-key="2016-06-28-通过gitBook让网站更实用/" data-title="通过gitBook让网站更实用" data-url="http://www.soujava.com/2016-06-28-通过gitBook让网站更实用/" data-author-key="1" class="ds-thread"></div></div></div></div><div class="pure-u-1-4"><div id="sidebar"><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/IDE/">IDE</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/UI/">UI</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/github/">github</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/javascript/">javascript</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/github/" style="font-size: 15px;">github</a> <a href="/tags/eclipse/" style="font-size: 15px;">eclipse</a> <a href="/tags/javascript/" style="font-size: 15px;">javascript</a> <a href="/tags/界面框架/" style="font-size: 15px;">界面框架</a> <a href="/tags/添加enter事件/" style="font-size: 15px;">添加enter事件</a></div></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">© <a href="/." rel="nofollow">soujava.</a><a rel="nofollow" target="_blank" href="http://www.soujava.com"> 马平升.</a><a rel="nofollow" target="_blank" href="https://github.com/mapingsheng"> Github</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=0.0.0"><script>var duoshuoQuery = {short_name:'soujava'};
+(function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
