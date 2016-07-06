@@ -7,6 +7,7 @@ type: "about"
 
  - 马平升/男
  - Github：https://github.com/mapingsheng
+ - 邮箱：mapingsheng1025@163.com
  - 微信 ：maps503981739
 
 
