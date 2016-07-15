@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.soujava.com/"/>
-  <updated>2016-07-06T01:04:23.228Z</updated>
+  <updated>2016-07-15T06:42:32.005Z</updated>
   <id>http://www.soujava.com/</id>
   
   <author>
@@ -14,6 +14,168 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>java通过Stream对list集合分组</title>
+    <link href="http://www.soujava.com/java%E9%80%9A%E8%BF%87Stream%E5%AF%B9list%E9%9B%86%E5%90%88%E5%88%86%E7%BB%84/"/>
+    <id>http://www.soujava.com/java通过Stream对list集合分组/</id>
+    <published>2016-07-15T06:00:11.000Z</published>
+    <updated>2016-07-15T06:42:32.005Z</updated>
+    
+    <content type="html">&lt;p&gt;现在有一个List集合，想对该集合中的数据分组处理，想到java8中的stream，就搞来试试，非常给力！例子如下&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;User.java&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;package com.maps;
+
+public class User{
+    private Integer id;
+    private String type;
+    private String name; 
+
+    public User(){}
+    public User(Integer id,String type,String name){
+        this.id = id;
+        this.type = type;
+        this.name = name;
+    }   
+
+    public void setId(Integer id){
+        this.id = id;
+    }
+
+    public Integer getId(){
+        return id;
+    }
+
+    public void setType(String type){
+        this.type = type;
+    }
+
+    public String getType(){
+        return type;
+    }
+
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public String getName(){
+        return name;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
+&lt;p&gt;MainUser.java&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;package com.maps;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+public class MainUser{
+
+    public static void main(String[] args){
+        List&amp;lt;User&amp;gt; list = getUserList();
+        Map&amp;lt;String,List&amp;lt;User&amp;gt;&amp;gt; userGroupMap = list.stream().collect(Collectors.groupingBy(DictValue::getType));
+    }
+
+
+    public static List&amp;lt;User&amp;gt; getUserList(){
+        User user1 = new User(1,&amp;quot;张三&amp;quot;,&amp;quot;小学&amp;quot;);
+        User user2 = new User(2,&amp;quot;李四&amp;quot;,&amp;quot;小学&amp;quot;);
+        User user3 = new User(3,&amp;quot;王五&amp;quot;,&amp;quot;初中&amp;quot;);
+        User user4 = new User(4,&amp;quot;马六&amp;quot;,&amp;quot;高中&amp;quot;);
+
+        List&amp;lt;User&amp;gt; list = new ArrayList&amp;lt;User&amp;gt;();
+        list.add(user1);
+        list.add(user2);
+        list.add(user3);
+        list.add(user4);
+
+        return list;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
+&lt;p&gt;运行上面例子得到下面的结果&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;{高中=[com.maps.User@448139f0], 初中=[com.maps.User@7cca494b], 小学=[com.maps.User@7ba4f24f, com.maps.User@3b9a45b3]}
+&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
+&lt;p&gt;是不是感觉不用for循环挺爽！&lt;/p&gt;
+&lt;/blockquote&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;现在有一个List集合，想对该集合中的数据分组处理，想到java8中的stream，就搞来试试，非常给力！例子如下&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;User.java&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;package com.maps;
+
+p
+    
+    </summary>
+    
+      <category term="java8" scheme="http://www.soujava.com/categories/java8/"/>
+    
+    
+      <category term="Stream" scheme="http://www.soujava.com/tags/Stream/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>java接收oracle中clob类型字段值</title>
+    <link href="http://www.soujava.com/java%E6%8E%A5%E6%94%B6oracle%E4%B8%ADclob%E7%B1%BB%E5%9E%8B%E5%AD%97%E6%AE%B5%E5%80%BC/"/>
+    <id>http://www.soujava.com/java接收oracle中clob类型字段值/</id>
+    <published>2016-07-06T08:16:33.000Z</published>
+    <updated>2016-07-06T08:40:54.414Z</updated>
+    
+    <content type="html">&lt;p&gt;oracle数据库中有一种大文本字段类型：clob;那么当我们的java程序从数据库中查询出来的数据列表用java程序如何接收处理呢？&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Clob columnContentClob = result.getClob(1); //先用大文本类型接收,getClob方法可以传入列名(columnName)重载使用
+Reader is = columnContentClob.getCharacterStream();//用reader接收
+BufferedReader bf = new BufferedReader(is);//实例化一个缓冲流
+String columnContent = bf.readLine();//读取大文本的内容
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;实例&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;String driver = &amp;quot;oracle.jdbc.OracleDriver&amp;quot;;
+String url = &amp;quot;jdbc:oracle:thin:@127.0.0.1:1521/databaseName&amp;quot;;
+String username = &amp;quot;username&amp;quot;;
+String password = &amp;quot;password&amp;quot;;
+Class.forName(driver);
+Connection conn = DriverManager.getConnection(url, username, password);
+
+ ResultSet rs = null;
+PreparedStatement pstmt = null;
+String query = &amp;quot;SELECT description FROM mytable WHERE id = ?&amp;quot;;
+try {
+  conn = getConnection();
+  pstmt = conn.prepareStatement(query);
+  pstmt.setInt(1, id);
+  rs = pstmt.executeQuery();
+  rs.next();
+  Clob clob = rs.getClob(1);//rs.getClob(&amp;quot;description&amp;quot;);
+
+} finally {
+  rs.close();
+  pstmt.close();
+  conn.close();
+}
+&lt;/code&gt;&lt;/pre&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;oracle数据库中有一种大文本字段类型：clob;那么当我们的java程序从数据库中查询出来的数据列表用java程序如何接收处理呢？&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Clob columnContentClob = result.getClob(1); //先用大文本类型接
+    
+    </summary>
+    
+      <category term="java" scheme="http://www.soujava.com/categories/java/"/>
+    
+    
+      <category term="java接收clob字段" scheme="http://www.soujava.com/tags/java%E6%8E%A5%E6%94%B6clob%E5%AD%97%E6%AE%B5/"/>
+    
+  </entry>
   
   <entry>
     <title>oracle11G导出数据时空表无法导出</title>
