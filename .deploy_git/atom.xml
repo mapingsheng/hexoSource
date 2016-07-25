@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.soujava.com/"/>
-  <updated>2016-07-15T06:42:32.005Z</updated>
+  <updated>2016-07-25T10:12:51.220Z</updated>
   <id>http://www.soujava.com/</id>
   
   <author>
@@ -16,112 +16,140 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Linux系统添加配置随开机启动的服务-rc.local配置</title>
+    <link href="http://www.soujava.com/Linux%E7%B3%BB%E7%BB%9F%E6%B7%BB%E5%8A%A0%E9%85%8D%E7%BD%AE%E9%9A%8F%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8%E7%9A%84%E6%9C%8D%E5%8A%A1/"/>
+    <id>http://www.soujava.com/Linux系统添加配置随开机启动的服务/</id>
+    <published>2016-07-25T09:46:24.000Z</published>
+    <updated>2016-07-25T10:12:51.220Z</updated>
+    
+    <content type="html">&lt;p&gt;在linux服务器操作系统中，经常会安装一些服务器端的软件如：tomcat、redis、MQ、Nginx等等常用的服务器组件；那么有时候服务器重启后需要用一个一个的启动命令把不同的软件启动起来；主要有以下几种场景：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;以root身份才能启动的服务&lt;/li&gt;
+&lt;li&gt;以非root身份启动的服务(一般情况下都是以非root身份启动和管理服务)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;一、下面以把tomcat服务器配置成随开机自启动的配置为例说明一下&lt;/strong&gt;&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;tomcat的安装路径：/usr/local/server/apache-tomcat-&lt;span class=&quot;number&quot;&gt;8&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;那么我们知道了tomcat的安装路径后，就可以通过以下命令启动tomcat服务了&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;/usr/local/server/apache-tomcat-&lt;span class=&quot;number&quot;&gt;8&lt;/span&gt;/bin/start.sh&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;如果我们想让linux每次开机时自动启动tomcat服务，那么我们需要如下配置：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;打开 /etc/rc.d/rc.local文件，在该配置文件中添加tomcat的启动命令&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;touch /var/lock/subsys/local&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;/usr/local/server/apache-tomcat-&lt;span class=&quot;number&quot;&gt;8&lt;/span&gt;/bin/start.sh&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;二、下面以把redis服务配置成随开机自启动的配置为例说明一下（以redis用户启动）&lt;/strong&gt;&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;redis的安装路径：/usr/local/cache/redis-&lt;span class=&quot;number&quot;&gt;2.8&lt;/span&gt;.19&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;如果我们通过输入命令启动redis的方式是：(假设redis服务启动时必须用redis用户)&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;/usr/local/cache/redis-&lt;span class=&quot;number&quot;&gt;2.8&lt;/span&gt;.19/src/redis-server&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;如果我们想让linux每次开机时自动启动redis服务，那么我们需要如下配置：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;打开 /etc/rc.d/rc.local文件，在该配置文件中添加tomcat的启动命令&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;touch /var/lock/subsys/local&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;su redis -c &lt;span class=&quot;string&quot;&gt;&quot;/usr/local/cache/redis-2.8.19/src/redis-server&quot;&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;三、总结&lt;/strong&gt;&lt;br&gt;我们主要通过在rc.local文件中添加我们服务的启动脚本的方式来配置随开机自启动服务；当然对于linux操作系统来讲，并不是仅仅就这一种方式配置随机启动操作，其他方式后续再说。那么rc.local到底是什么文件呢？&lt;/p&gt;
+&lt;p&gt;rc.local其实是一个脚本文件，该脚本是在系统初始化级别脚本运行之后再执行的，因此可以在里面添加你想在系统启动之后执行的任何操作，比如启动第三方的服务，比如挂载mount操作等等。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在linux服务器操作系统中，经常会安装一些服务器端的软件如：tomcat、redis、MQ、Nginx等等常用的服务器组件；那么有时候服务器重启后需要用一个一个的启动命令把不同的软件启动起来；主要有以下几种场景：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;以root身份才能启动的服务&lt;/
+    
+    </summary>
+    
+      <category term="Linux" scheme="http://www.soujava.com/categories/Linux/"/>
+    
+    
+      <category term="服务开机启动" scheme="http://www.soujava.com/tags/%E6%9C%8D%E5%8A%A1%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux开机启动后经常需要配置网卡</title>
+    <link href="http://www.soujava.com/Linux%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8%E5%90%8E%E7%BB%8F%E5%B8%B8%E9%9C%80%E8%A6%81%E9%85%8D%E7%BD%AE%E7%BD%91%E5%8D%A1/"/>
+    <id>http://www.soujava.com/Linux开机启动后经常需要配置网卡/</id>
+    <published>2016-07-25T09:27:42.000Z</published>
+    <updated>2016-07-25T09:43:14.316Z</updated>
+    
+    <content type="html">&lt;p&gt;在虚拟机中安装的CentOS6操作系统，每次开机启动后，网卡默认都是关闭的；所以系统对外网络是处于中断的状态的，所以也就不能通过Xshell工具远程连接操作。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/wangka.jpg&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
+&lt;p&gt;然后针对上面的情况，需要手动操作一下，把eth0网卡开启使用才行；感觉很繁琐！&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/wankapeizhi.jpg&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
+&lt;p&gt;解决方法：&lt;br&gt;使用如下命令编辑网卡信息：&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;vim /etc/sysconfig/network-scripts/ifcfg-eth0&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;网卡信息的内容大致如下：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;DEVICE=&amp;quot;eth0&amp;quot;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;TYPE=ethernet&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;UUID=1221231K-4DFSD-8SDFA&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ONBOOT=&amp;quot;yes&amp;quot;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;IPADDR=192.168.1.152&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;NETMASK=255.255.255.0&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;GATEWAY=192.168.1.1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;BOOTPROTO=static&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;然后在网卡信息中找到”NOBOOT=no”配置选项，改成”NOBOOT=yes”&lt;/p&gt;
+&lt;p&gt;再重启电脑后就不需要再次手动配置激活网卡了！&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在虚拟机中安装的CentOS6操作系统，每次开机启动后，网卡默认都是关闭的；所以系统对外网络是处于中断的状态的，所以也就不能通过Xshell工具远程连接操作。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/wangka.jpg&quot; al
+    
+    </summary>
+    
+      <category term="Linux" scheme="http://www.soujava.com/categories/Linux/"/>
+    
+    
+      <category term="网卡" scheme="http://www.soujava.com/tags/%E7%BD%91%E5%8D%A1/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>通过Nginx反向代理解决跨域问题</title>
+    <link href="http://www.soujava.com/%E9%80%9A%E8%BF%87%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E8%A7%A3%E5%86%B3%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/"/>
+    <id>http://www.soujava.com/通过反向代理解决跨域问题/</id>
+    <published>2016-07-19T09:26:32.000Z</published>
+    <updated>2016-07-25T09:45:28.236Z</updated>
+    
+    <content type="html">&lt;p&gt; 有以下需求：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;有两个独立运行的系统，用户系统(user)、发布系统(publish)&lt;/li&gt;
+&lt;li&gt;publish系统中的添加内容功能模块需要选择对应的用户，那么user系统已经有了一个这样的页面，而publish系统想直接加载过来使用，并且勾选页面中的数据后可以获取已勾选的数据；&lt;/li&gt;
+&lt;li&gt;因为两个系统部署在不同的服务器中运行，所以存在跨域问题&lt;/li&gt;
+&lt;li&gt;解决方案主要通过反向代理的方式解决，这种方式可以避免两个系统更改大量的代码&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/kuayu.jpg&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;注&lt;/strong&gt;：以上方式可以解决publish系统远程调用user系统提供的数据页面(静态页面)的跨域问题，但是如果user系统提供的页面中有js异步事件，则仍然会出现跨域问题(比如在user系统提供的选择用户的界面中，当点击左侧角色分类时，异步加载右侧的用户列表数据)；所以需要user系统提供的视图页面对应的业务处理方法中做一些微小的改动即可，在响应对象中添加如下设置：&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;response.setHeader(&lt;span class=&quot;string&quot;&gt;&quot;Access-Control-Allow-Origin&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;*&quot;&lt;/span&gt;);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt; 有以下需求：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;有两个独立运行的系统，用户系统(user)、发布系统(publish)&lt;/li&gt;
+&lt;li&gt;publish系统中的添加内容功能模块需要选择对应的用户，那么user系统已经有了一个这样的页面，而publish系统想直接加载过来使用，并且
+    
+    </summary>
+    
+      <category term="Nginx" scheme="http://www.soujava.com/categories/Nginx/"/>
+    
+    
+      <category term="跨域" scheme="http://www.soujava.com/tags/%E8%B7%A8%E5%9F%9F/"/>
+    
+  </entry>
+  
+  <entry>
     <title>java通过Stream对list集合分组</title>
     <link href="http://www.soujava.com/java%E9%80%9A%E8%BF%87Stream%E5%AF%B9list%E9%9B%86%E5%90%88%E5%88%86%E7%BB%84/"/>
     <id>http://www.soujava.com/java通过Stream对list集合分组/</id>
     <published>2016-07-15T06:00:11.000Z</published>
-    <updated>2016-07-15T06:42:32.005Z</updated>
+    <updated>2016-07-15T07:22:09.367Z</updated>
     
     <content type="html">&lt;p&gt;现在有一个List集合，想对该集合中的数据分组处理，想到java8中的stream，就搞来试试，非常给力！例子如下&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;User.java&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;pre&gt;&lt;code&gt;package com.maps;
-
-public class User{
-    private Integer id;
-    private String type;
-    private String name; 
-
-    public User(){}
-    public User(Integer id,String type,String name){
-        this.id = id;
-        this.type = type;
-        this.name = name;
-    }   
-
-    public void setId(Integer id){
-        this.id = id;
-    }
-
-    public Integer getId(){
-        return id;
-    }
-
-    public void setType(String type){
-        this.type = type;
-    }
-
-    public String getType(){
-        return type;
-    }
-
-    public void setName(String name){
-        this.name = name;
-    }
-
-    public String getName(){
-        return name;
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
-&lt;p&gt;MainUser.java&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;pre&gt;&lt;code&gt;package com.maps;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-public class MainUser{
-
-    public static void main(String[] args){
-        List&amp;lt;User&amp;gt; list = getUserList();
-        Map&amp;lt;String,List&amp;lt;User&amp;gt;&amp;gt; userGroupMap = list.stream().collect(Collectors.groupingBy(DictValue::getType));
-    }
-
-
-    public static List&amp;lt;User&amp;gt; getUserList(){
-        User user1 = new User(1,&amp;quot;张三&amp;quot;,&amp;quot;小学&amp;quot;);
-        User user2 = new User(2,&amp;quot;李四&amp;quot;,&amp;quot;小学&amp;quot;);
-        User user3 = new User(3,&amp;quot;王五&amp;quot;,&amp;quot;初中&amp;quot;);
-        User user4 = new User(4,&amp;quot;马六&amp;quot;,&amp;quot;高中&amp;quot;);
-
-        List&amp;lt;User&amp;gt; list = new ArrayList&amp;lt;User&amp;gt;();
-        list.add(user1);
-        list.add(user2);
-        list.add(user3);
-        list.add(user4);
-
-        return list;
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
-&lt;p&gt;运行上面例子得到下面的结果&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;pre&gt;&lt;code&gt;{高中=[com.maps.User@448139f0], 初中=[com.maps.User@7cca494b], 小学=[com.maps.User@7ba4f24f, com.maps.User@3b9a45b3]}
-&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;16&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;17&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;18&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;19&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;20&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;21&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;22&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;23&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;24&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;25&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;26&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;27&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;28&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;29&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;30&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;31&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;32&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;33&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;34&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;35&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;36&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;37&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;38&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;39&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;package&lt;/span&gt; com.maps;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   &lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;User&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   	&lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; Integer id;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; String type;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; String name; &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&amp;#123;&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(Integer id,String type,String name)&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.id = id;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.type = type;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.name = name;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;   &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;setId&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(Integer id)&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.id = id;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; Integer &lt;span class=&quot;title&quot;&gt;getId&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; id;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;setType&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(String type)&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.type = type;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; String &lt;span class=&quot;title&quot;&gt;getType&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; type;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;setName&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(String name)&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.name = name;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; String &lt;span class=&quot;title&quot;&gt;getName&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; name;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   &amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;16&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;17&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;18&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;19&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;20&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;21&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;22&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;23&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;24&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;25&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;26&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;27&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;28&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;29&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;30&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;31&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;package&lt;/span&gt; com.maps;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.util.ArrayList;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.util.List;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.util.Map;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.util.stream.Collectors;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   &lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;MainUser&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   	&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(String[] args)&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		List&amp;lt;User&amp;gt; list = getUserList();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		Map&amp;lt;String,List&amp;lt;User&amp;gt;&amp;gt; userGroupMap = list.stream().collect(Collectors.groupingBy(User::getType));&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; List&amp;lt;User&amp;gt; &lt;span class=&quot;title&quot;&gt;getUserList&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		User user1 = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; User(&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&quot;张三&quot;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&quot;小学&quot;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		User user2 = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; User(&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&quot;李四&quot;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&quot;小学&quot;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		User user3 = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; User(&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&quot;王五&quot;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&quot;初中&quot;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		User user4 = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; User(&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&quot;马六&quot;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&quot;高中&quot;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		List&amp;lt;User&amp;gt; list = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; ArrayList&amp;lt;User&amp;gt;();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		list.add(user1);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		list.add(user2);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		list.add(user3);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		list.add(user4);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;			&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; list;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   &amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;运行上面例子得到下面的结果&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&amp;#123;高中=[com.maps.User@&lt;span class=&quot;number&quot;&gt;448139f&lt;/span&gt;0], 初中=[com.maps.User@&lt;span class=&quot;number&quot;&gt;7&lt;/span&gt;cca494b], 小学=[com.maps.User@&lt;span class=&quot;number&quot;&gt;7&lt;/span&gt;ba4f24f, com.maps.User@&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;b9a45b3]&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;是不是感觉不用for循环挺爽！&lt;/p&gt;
-&lt;/blockquote&gt;
 </content>
     
     <summary type="html">
     
       &lt;p&gt;现在有一个List集合，想对该集合中的数据分组处理，想到java8中的stream，就搞来试试，非常给力！例子如下&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;User.java&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;pre&gt;&lt;code&gt;package com.maps;
-
-p
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div clas
     
     </summary>
     
-      <category term="java8" scheme="http://www.soujava.com/categories/java8/"/>
+      <category term="java" scheme="http://www.soujava.com/categories/java/"/>
     
     
-      <category term="Stream" scheme="http://www.soujava.com/tags/Stream/"/>
+      <category term="java8 Stream" scheme="http://www.soujava.com/tags/java8-Stream/"/>
     
   </entry>
   

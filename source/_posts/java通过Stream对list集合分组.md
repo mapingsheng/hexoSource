@@ -1,12 +1,12 @@
 ---
 title: java通过Stream对list集合分组
 date: 2016-07-15 14:00:11
-categories: java8
-tags: Stream
+categories: java
+tags: java8 Stream
 ---
 现在有一个List集合，想对该集合中的数据分组处理，想到java8中的stream，就搞来试试，非常给力！例子如下
 
- >User.java
+```java
 
 	package com.maps;
 
@@ -46,8 +46,9 @@ tags: Stream
 			return name;
 		}
     }
+```
 
- >MainUser.java
+```java
 
 	package com.maps;
 
@@ -60,7 +61,7 @@ tags: Stream
     	
 		public static void main(String[] args){
 			List<User> list = getUserList();
-			Map<String,List<User>> userGroupMap = list.stream().collect(Collectors.groupingBy(DictValue::getType));
+			Map<String,List<User>> userGroupMap = list.stream().collect(Collectors.groupingBy(User::getType));
 		}
 
 
@@ -79,9 +80,10 @@ tags: Stream
 			return list;
 		}
     }
+```
 
-  >运行上面例子得到下面的结果
-    
+运行上面例子得到下面的结果
+```java
     {高中=[com.maps.User@448139f0], 初中=[com.maps.User@7cca494b], 小学=[com.maps.User@7ba4f24f, com.maps.User@3b9a45b3]}
-
-  >是不是感觉不用for循环挺爽！
+```
+是不是感觉不用for循环挺爽！
