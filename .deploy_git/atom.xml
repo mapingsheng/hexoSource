@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.soujava.com/"/>
-  <updated>2016-07-25T10:12:51.220Z</updated>
+  <updated>2016-07-28T12:29:32.836Z</updated>
   <id>http://www.soujava.com/</id>
   
   <author>
@@ -14,6 +14,53 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Mybatis动态传入tableName--非预编译(STATEMENT)</title>
+    <link href="http://www.soujava.com/Mybatis%E5%8A%A8%E6%80%81%E4%BC%A0%E5%85%A5tableName-%E9%9D%9E%E9%A2%84%E7%BC%96%E8%AF%91-STATEMENT/"/>
+    <id>http://www.soujava.com/Mybatis动态传入tableName-非预编译-STATEMENT/</id>
+    <published>2016-07-28T11:12:02.000Z</published>
+    <updated>2016-07-28T12:29:32.836Z</updated>
+    
+    <content type="html">&lt;p&gt;在使用Mybatis过程中，你可以体会到它的强大与灵活之处，由衷的为Mybatis之父点上999个赞！在使用过程中经常会遇到这样一种情况，我查询数据的时候，表名称是动态的从程序中传入的，比如我们通过mybatis的xml文件写sql查询时都是下面的样子：&lt;br&gt;&lt;strong&gt;1、正常的查询&lt;/strong&gt;&lt;br&gt;&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;select id=&quot;activityEnrollModelTableName&quot; parameterType=&quot;java.util.HashMap&quot; resultType=&quot;java.util.HashMap&quot;&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    SELECT * FROM user WHERE userid = #&amp;#123;userid&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;/select&amp;gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;上面的查询语句用mybatis执行时,其实是自动的按照JDBC的预编译语句方式执行的，等同于下面一段JDBC代码的执行过程&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;Class.forName(&lt;span class=&quot;string&quot;&gt;&quot;com.mysql.jdbc.Driver&quot;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Connection conn = DriverManage.getConnection(&lt;span class=&quot;string&quot;&gt;&quot;jdbc:mysql://localhost:3306/dbname&quot;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&quot;root&quot;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&quot;112233&quot;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;PreparedStatement preState = conn.prepareStatement(&lt;span class=&quot;string&quot;&gt;&quot;SELECT * FROM user WHERE userid = ?&quot;&lt;/span&gt;); &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;preState.setString(&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&quot;96&quot;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ResultSet result = preState.executeQuery();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt;(result.next())&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	result.getString(columnname);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	..........&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;到这里我们不禁疑惑，难道mybatis默认都是按照预编译语句的方式执行sql的吗？其实就是这样。通过查看mybatis官网文档可以看到有这么一个参数，statementType=[STATEMENT | PREPARED | CALLABLE ]；有三个可选值，mybatis默认值是PREPARED；&lt;br&gt;这个参数是什么作用呢：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;设定mybatis执行sql的模式&lt;/li&gt;
+&lt;li&gt;STATEMENT设定为非预编译语句模式&lt;/li&gt;
+&lt;li&gt;PREPARED设定为预编译语句模式–mybatis默认&lt;/li&gt;
+&lt;li&gt;CALLABLE设定为兼容模式，或者自适应模式，比如设置该值后，mybatis处理sql时会自动的处理根据#、$去判断处理，后面说一下#和$的区别。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;综上所述,mybatis默认按照预编译语句方式执行sql语句&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2、动态传入表名&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;其实也经常会遇到动态的传入tableName的情况，也就是说上面的sql语句中的”user”是动态传入的，动态传入表名是mybatis中的一种特殊情况，&lt;br&gt;&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;select id=&quot;activityEnrollModelTableName&quot; parameterType=&quot;java.util.HashMap&quot; resultType=&quot;java.util.HashMap&quot;&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    SELECT * FROM #&amp;#123;user&amp;#125; WHERE userid = #&amp;#123;userid&amp;#125; //错误的写法&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;/select&amp;gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;针对上面的语句，如果让mybatis仍然按照预编译语句方式执行时，等同于如下面的JDBC代码：&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;Class.forName(&lt;span class=&quot;string&quot;&gt;&quot;com.mysql.jdbc.Driver&quot;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Connection conn = DriverManage.getConnection(&lt;span class=&quot;string&quot;&gt;&quot;jdbc:mysql://localhost:3306/dbname&quot;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&quot;root&quot;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&quot;112233&quot;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;PreparedStatement preState = conn.prepareStatement(&lt;span class=&quot;string&quot;&gt;&quot;SELECT * FROM ? WHERE userid = ?&quot;&lt;/span&gt;); &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;preState.setString(&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&quot;USER&quot;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;preState.setString(&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&quot;96&quot;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ResultSet result = preState.executeQuery();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt;(result.next())&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	result.getString(columnname);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	..........&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;我们把该段JDBC代码通过java代码执行后，发现会报异常：&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;java.sql.SQLException: ORA-&lt;span class=&quot;number&quot;&gt;00903&lt;/span&gt;: 表名无效&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;所以可以说明预编译语句不能用于列名(查询的列名也不能用预编译语句)、表名；只能作用与where条件参数属性！既然JDBC就不能将预编译语句方式作用与表名上面，那么mybatis就同样也行不通(因为mybatis默认是预编译语句模式)。不过mybatis也早已考虑到了这种情况，所以为我们做了处理：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;select标签语句中添加statementType=”STATEMENT”的属性配置&lt;/li&gt;
+&lt;li&gt;标签内的sql语句中将所有的${}更换成为#{}，即将$还成#;&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;select id=&quot;activityEnrollModelTableName&quot; statementType=&quot;STATEMENT&quot; parameterType=&quot;java.util.HashMap&quot; resultType=&quot;java.util.HashMap&quot;&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    SELECT * FROM $&amp;#123;user&amp;#125; WHERE userid = $&amp;#123;userid&amp;#125; //正确的写法&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;/select&amp;gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;上面的语句标签中通过添加statementType=”STATEMENT”配置后，mybatis就不再使用预编译语句方式执行sql语句了，也就是通过直接执行sql语句操作；那么既然添加了statementType=”STATEMENT”非预编译配置后，为什么还需要把#换成$呢？其实是这样：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;“#” 是预编译语句模式下面的默认匹配符，也就是说mybatis遇到#{}时，将#{userid}替换成占位符?;被解析为一个JDBC预编译语句，然后再将#{userid}本身的值set进来。&lt;/li&gt;
+&lt;li&gt;“$” 是非预编译语句下面的匹配符，非预编译语句说白了就是你传入什么sql语句，就执行什么sql语句，mybatis不做任何处理操作，但是这里mybatis会将${}对应的值，当做一个字符串处理，也就是说你程序接口方法中传递过来参数值是什么，对应的sql填充就是什么！&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在使用Mybatis过程中，你可以体会到它的强大与灵活之处，由衷的为Mybatis之父点上999个赞！在使用过程中经常会遇到这样一种情况，我查询数据的时候，表名称是动态的从程序中传入的，比如我们通过mybatis的xml文件写sql查询时都是下面的样子：&lt;br&gt;&lt;stron
+    
+    </summary>
+    
+      <category term="Mybatis" scheme="http://www.soujava.com/categories/Mybatis/"/>
+    
+    
+      <category term="动态传入tableName" scheme="http://www.soujava.com/tags/%E5%8A%A8%E6%80%81%E4%BC%A0%E5%85%A5tableName/"/>
+    
+  </entry>
   
   <entry>
     <title>Linux系统添加配置随开机启动的服务-rc.local配置</title>
