@@ -1,7 +1,7 @@
 ---
 title: Linux开机启动后经常需要配置网卡
 date: 2016-07-25 17:27:42
-categories: Linux
+categories: linux
 tags: 网卡
 ---
 在虚拟机中安装的CentOS6操作系统，每次开机启动后，网卡默认都是关闭的；所以系统对外网络是处于中断的状态的，所以也就不能通过Xshell工具远程连接操作。
