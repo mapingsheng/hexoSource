@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.soujava.com/"/>
-  <updated>2016-07-28T12:29:32.836Z</updated>
+  <updated>2016-08-17T03:41:28.778Z</updated>
   <id>http://www.soujava.com/</id>
   
   <author>
@@ -14,6 +14,359 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>java使用jxl读取excel数据时特殊符号处理</title>
+    <link href="http://www.soujava.com/java%E4%BD%BF%E7%94%A8jxl%E8%AF%BB%E5%8F%96excel%E6%95%B0%E6%8D%AE%E6%97%B6%E7%89%B9%E6%AE%8A%E7%AC%A6%E5%8F%B7%E5%A4%84%E7%90%86/"/>
+    <id>http://www.soujava.com/java使用jxl读取excel数据时特殊符号处理/</id>
+    <published>2016-08-17T03:40:01.000Z</published>
+    <updated>2016-08-17T03:41:28.778Z</updated>
+    
+    <content type="html">&lt;p&gt;使用JXL读取Excel中数据时，如果Excel中的单元格中有M1.5×6这样的值时，读取数据时，不能识别×，或者为乱码（？）。&lt;br&gt; 未处理之前代码：&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;   Workbook modelBook = Workbook.getWorkbook(input);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Sheet sheet = modelBook.getSheet(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;处理之后的代码：&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;   WorkbookSettings setting = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; WorkbookSettings();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Locale locale = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Locale(&lt;span class=&quot;string&quot;&gt;&quot;zh&quot;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&quot;CN&quot;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;setting.setLocale(locale);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;setting.setEncoding(&lt;span class=&quot;string&quot;&gt;&quot;ISO-8859-1&quot;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Workbook modelBook = Workbook.getWorkbook(input,setting);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;注：处理之后的代码片段中前4行代码段，用来解决乱码问题！&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;使用JXL读取Excel中数据时，如果Excel中的单元格中有M1.5×6这样的值时，读取数据时，不能识别×，或者为乱码（？）。&lt;br&gt; 未处理之前代码：&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gut
+    
+    </summary>
+    
+      <category term="java" scheme="http://www.soujava.com/categories/java/"/>
+    
+    
+      <category term="jxl" scheme="http://www.soujava.com/tags/jxl/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux查看端口占用</title>
+    <link href="http://www.soujava.com/Linux%E6%9F%A5%E7%9C%8B%E7%AB%AF%E5%8F%A3%E5%8D%A0%E7%94%A8/"/>
+    <id>http://www.soujava.com/Linux查看端口占用/</id>
+    <published>2016-08-17T03:30:49.000Z</published>
+    <updated>2016-08-17T03:35:13.806Z</updated>
+    
+    <content type="html">&lt;p&gt;在操作linux服务器的时候经常会碰到端口被占用的情况，那么如果更好的找到某个端口被什么占用呢。&lt;/p&gt;
+&lt;p&gt;一、分布操作&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;先使用下面命令，查看当前环境的所有进程&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;netstat  -apn&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;然后看某一个端口，后面对应的PID，然后通过kill  PID,把该端口停止&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;kill -9 pid号&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;二、快捷操作&lt;/p&gt;
+&lt;p&gt; 使用如下命令查看对应的端口是否被占用&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt;netstat  -apn | grep  protNO
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;例如：netstat -apn | grep 8080  查看8080端口是否被占用，如果没占用，则显示被占用的进程；如果未被占用，则什么也不会输出。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在操作linux服务器的时候经常会碰到端口被占用的情况，那么如果更好的找到某个端口被什么占用呢。&lt;/p&gt;
+&lt;p&gt;一、分布操作&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;先使用下面命令，查看当前环境的所有进程&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;netstat  -apn&lt;/p&gt;
+
+    
+    </summary>
+    
+      <category term="linux" scheme="http://www.soujava.com/categories/linux/"/>
+    
+    
+      <category term="网卡" scheme="http://www.soujava.com/tags/%E7%BD%91%E5%8D%A1/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Tomcat实时查看日志信息</title>
+    <link href="http://www.soujava.com/Tomcat%E5%AE%9E%E6%97%B6%E6%9F%A5%E7%9C%8B%E6%97%A5%E5%BF%97%E4%BF%A1%E6%81%AF/"/>
+    <id>http://www.soujava.com/Tomcat实时查看日志信息/</id>
+    <published>2016-08-17T03:27:50.000Z</published>
+    <updated>2016-08-17T03:30:00.628Z</updated>
+    
+    <content type="html">&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;先切换到tomcat的安装目录logs/文件夹下面（tomcat/logs/）&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;cd  tomcat/logs/&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;运行如下命令就可以实时查看tomcat的运行日志信息了&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;tail -f catalina.out&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;ol&gt;
+&lt;li&gt;&lt;p&gt;先切换到tomcat的安装目录logs/文件夹下面（tomcat/logs/）&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;cd  tomcat/logs/&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;运行如下命令就可以实时查看tomcat的
+    
+    </summary>
+    
+      <category term="Tomcat" scheme="http://www.soujava.com/categories/Tomcat/"/>
+    
+    
+      <category term="Tomcat日志" scheme="http://www.soujava.com/tags/Tomcat%E6%97%A5%E5%BF%97/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux双网卡配置(内外网同时访问)</title>
+    <link href="http://www.soujava.com/Linux%E5%8F%8C%E7%BD%91%E5%8D%A1%E9%85%8D%E7%BD%AE-%E5%86%85%E5%A4%96%E7%BD%91%E5%90%8C%E6%97%B6%E8%AE%BF%E9%97%AE/"/>
+    <id>http://www.soujava.com/Linux双网卡配置-内外网同时访问/</id>
+    <published>2016-08-17T02:28:50.000Z</published>
+    <updated>2016-08-17T03:22:03.305Z</updated>
+    
+    <content type="html">&lt;p&gt;事情的经过是这样的。。。。。；我有一台linux服务器操作系统，只能内网访问，现在需要提供给公司其他地域的同事通过VPN可以访问操作，那么就需要为这个linux操作系统配置一个新配置一个网卡，你修改网卡配置文件之前需要确保你的linux操作系统已经有两块物理网卡了，也就是说当你进入linux操作系统后，运行ifconfig命令可以看到eth0和eth1两个网卡信息，这才代表你的物理环境没有问题。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/vSphere11.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;一、Ubuntu篇&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1、进入/etc/network目录中，编辑interfaces文件&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/linuxInter0.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;2、配置eth1网卡的信息(ip地址，网关、子网掩码、DNS)信息&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/linuxInter1.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;3、配置完相关信息后，需要编辑路由配置文件，配置域名服务器(这里配置完成后，永久生效)&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt;vim /etc/resolvconf/resolv.conf.d/base
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/linuxInter2.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;4、配置完网卡信息后，我们还不能连通外网，因为我们系统的路由默认采用内网网关进行通信的，我们需要把外网的网关设置成默认路由。先运行route命令查看路由信息，可以看到default 为eth0；即默认为内网网关。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/linuxInter4.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;5、把外网网关地址添加为默认路由，同时删除内网网关的路由&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt;route add default  gw 192.168.1.1
+
+&amp;gt;route del default  gw 192.168.0.253
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;6、路由配置完成后，运行route命令我们可以看到default变成了eth1&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/linuxInter3.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;7、重启网络服务&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt;/etc/init.d/networking restart
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;8、总结：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;查看物理环境十分正常，也就是通过ifconfig命令是否显示两块网卡设备&lt;/li&gt;
+&lt;li&gt;配置eth1网卡配置文件&lt;/li&gt;
+&lt;li&gt;添加外网dns地址&lt;/li&gt;
+&lt;li&gt;设置外网网关为默认路由&lt;/li&gt;
+&lt;li&gt;重启网络服务&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;注：我之前一直在/etc/resolv.conf中添加dns信息，后来才明白这个是临时文件，当在/etc/resolvconf/resolv.conf.d/base文件中配置完成后，/etc/resolv.conf中信息会自动生成的。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;一、Cent0S篇&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1、同样检查一下系统物理环境是否正常，通过ifconfig命令查看是否存在除eth0网卡设备外，还有其他网卡eth*;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/vSphere11.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;2、进入/etc/sysconfig/network-scripts/目录下面，我们可以看到有两个网卡设备的配置文件：ifcfg-eth0、ifcfg-eth1。&lt;/p&gt;
+&lt;p&gt;3、将ifcfg-eth0配置文件复制一份并改名为ifcfg-eth1。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt;cp ifcfg-eth0 ifcfg-eth1
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;4、修改ifcfg-eth1配置文件,具体信息如下&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;16&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;DEVICE=eth1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;TYPE=Ethernet&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;NOBOOT=yes&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;NM_CONTROLLED=yes&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;BOOTPROTO=none&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;IPADDR=&lt;span class=&quot;number&quot;&gt;192.168&lt;/span&gt;.*.*&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;PREFIX=&lt;span class=&quot;number&quot;&gt;24&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;GATEWAY=&lt;span class=&quot;number&quot;&gt;192.168&lt;/span&gt;.*.*&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;DEFROUTE=yes	&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;IPV4_FAILURE_FATAL=yes&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;IPV6INIT=no&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;NAME=&lt;span class=&quot;string&quot;&gt;&quot;System eth1&quot;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;DNS1=*.*.*.*&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;HWADDR=你的虚拟机的网卡设备的mac地址&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;LAST_CONNECT=&lt;span class=&quot;number&quot;&gt;1465192940&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;USERCTL=no&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;5、重启网络服务(下面两条命令都可以)&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt; service network restart
+&amp;gt; /etc/init.d/network restart
+&lt;/code&gt;&lt;/pre&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;事情的经过是这样的。。。。。；我有一台linux服务器操作系统，只能内网访问，现在需要提供给公司其他地域的同事通过VPN可以访问操作，那么就需要为这个linux操作系统配置一个新配置一个网卡，你修改网卡配置文件之前需要确保你的linux操作系统已经有两块物理网卡了，也就是说
+    
+    </summary>
+    
+      <category term="linux" scheme="http://www.soujava.com/categories/linux/"/>
+    
+    
+      <category term="Linux" scheme="http://www.soujava.com/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>VMwarevSphere添加物理网卡后其中的虚拟机使用该网卡配置</title>
+    <link href="http://www.soujava.com/VMwarevSphere%E6%B7%BB%E5%8A%A0%E7%89%A9%E7%90%86%E7%BD%91%E5%8D%A1%E5%90%8E%E5%85%B6%E4%B8%AD%E7%9A%84%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%BD%BF%E7%94%A8%E8%AF%A5%E7%BD%91%E5%8D%A1%E9%85%8D%E7%BD%AE/"/>
+    <id>http://www.soujava.com/VMwarevSphere添加物理网卡后其中的虚拟机使用该网卡配置/</id>
+    <published>2016-08-17T01:27:45.000Z</published>
+    <updated>2016-08-17T03:18:59.997Z</updated>
+    
+    <content type="html">&lt;p&gt;一、有一台机架服务器，使用VMwarevSphere进行虚拟化，然后在其上安装N台虚拟机以供不同业务需要，之前该VMwarevSphere只有一个内网的物理网卡，也就是只能内网访问和使用；现在有个需求需要把该VMwarevSphere开放外网功能，并满足其他地域的用户通过公司VPN可以正常使用上面的虚拟机(其中的某一台)。所以现在需要三步操作：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;买一个物理网卡插到机架服务器的卡槽上面(哈哈，这一步不用说了，我去趟WC)&lt;/li&gt;
+&lt;li&gt;VMwarevSphereClientk连VMwarevSphere服务器配置网卡&lt;/li&gt;
+&lt;li&gt;进入到VMwarevSphere中的某一台虚拟机进行网卡配置&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;二、VMwarevSphereClientk连VMwarevSphere服务器配置网卡&lt;/p&gt;
+&lt;p&gt;1、 插入外网物理网卡之后，我们通过VMwarevSphereClientk连VMwarevSphere服务器后，在“配置”-“网络适配器”中就可以看到刚才新接入的网卡了(如果看不到，则说明你的网卡有问题啊，具体什么问题需要物理解决)，下面的图片中我们可以看到有两个可用的网卡(最下面两个vmnic0、vmnic1，其实vmnic1是我新接入的网卡)，其他的都不可用，仅仅代表支持多少个网卡&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/vSphere0.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;2、 虽然我们已经接入了物理网卡，但是我们现在系统的网络环境还没有装载进来，我们需要把该网卡添加到网络环境中来；进入“配置”–“网络”，在右侧界面中右上角点击“添加网络”&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/vSphere1.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;3、开始进入到添加网络的界面，其实只需要下一步下一步的进行就可以了&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/vSphere2.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;4、 选择网卡的网络类型&lt;/p&gt;
+&lt;p&gt;注：创建交换机那一项，选择网卡时不要被图片中我的选择内容干扰了，选择哪个网卡根据你的实际情况，参照第一幅图片中(你找到你新插入的物理网卡的代号vmnic0~vmnicN)；比如你新接入的网卡是那个你就选择哪个。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/vSphere3.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;5、设置网卡的链接方式&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/vSphere4.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;6、完成配置&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/vSphere5.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;7、然后再次进入“配置”–“网络”界面中，我们可以看到我们新添加的网卡&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/vSphere00.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;8、 然后我们对这个网卡进行编辑操作(添加虚拟机端口)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/vSphere01.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/vSphere02.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;9、 这里跟上一个步骤差不多，只不过这里的连接类型需要选择“vmKernel”&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/vSphere03.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/vSphere04.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;10、 配置我们的ip地址(一般是配置你的外网ip地址，因为你既然让他开放到外网，所以你肯定有可能需要在外网通过vmSphereClient进行远程管理吧，这里就是配置你的外网访问ip地址)，到这里我们的物理机和网卡的配置就算完成了，下面需要配置的就是我们需要提供给外网用户访问的虚拟机了。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/vSphere05.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/vSphere06.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;11、 选择我们需要提供给外网用户访问的虚“虚拟机”，开始配置网络&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/vSphere6.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;12、 为虚拟机添加网卡(我们虚拟机要想链接外网，肯定要使用物理服务器的外网网卡，所以我们需要把物理服务器新接入的网卡添加到虚拟机上面)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/vSphere7.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;13、 选择网络类型(其实这里又是跟前面的网络配置差不多，多么熟悉的界面)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/vSphere8.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/vSphere9.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;14、 然后添加完成后，我们可以看到我们新加入的网络适配器2，这里需要记住右侧的MAC地址，后面的配置网卡配置文件时要用到&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/vSphere10.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;15、重启一下系统，然后我们进入到需要供外网访问的那台虚拟机中，输入ifconfig命令就可以看到我们为虚拟机添加的网卡了&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/vSphere11.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;16、当然上一步中看到eth1这个新的网卡还不行，需要为这个网卡配置具体的ip，因为我们既然需要把这台虚拟机提供给外面用户访问，那么ip地址肯定不能老变化，所以我们需要为这个网卡eth1配置相关信息，具体怎么配置可以参考另一篇文章“&lt;a href=&quot;http://soujava.com/Linux%E5%8F%8C%E7%BD%91%E5%8D%A1%E9%85%8D%E7%BD%AE-%E5%86%85%E5%A4%96%E7%BD%91%E5%90%8C%E6%97%B6%E8%AE%BF%E9%97%AE/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Linux双网卡配置(内外网同时访问)&lt;/a&gt;”&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;一、有一台机架服务器，使用VMwarevSphere进行虚拟化，然后在其上安装N台虚拟机以供不同业务需要，之前该VMwarevSphere只有一个内网的物理网卡，也就是只能内网访问和使用；现在有个需求需要把该VMwarevSphere开放外网功能，并满足其他地域的用户通过公
+    
+    </summary>
+    
+      <category term="vSphere" scheme="http://www.soujava.com/categories/vSphere/"/>
+    
+    
+      <category term="vSphere添加物理网卡" scheme="http://www.soujava.com/tags/vSphere%E6%B7%BB%E5%8A%A0%E7%89%A9%E7%90%86%E7%BD%91%E5%8D%A1/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>thymeleaf教程1-环境搭建</title>
+    <link href="http://www.soujava.com/thymeleaf%E6%95%99%E7%A8%8B1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
+    <id>http://www.soujava.com/thymeleaf教程1-环境搭建/</id>
+    <published>2016-08-08T07:16:41.000Z</published>
+    <updated>2016-08-09T06:08:53.313Z</updated>
+    
+    <content type="html">&lt;p&gt;一、由于springboot这一强大的框架的发布，更由于其采用thymeleaf作为其官方的推荐模板引擎，所以决定学习一下thymeleaf这个模板引擎，当然是通过springboot才了解到的thymeleaf；所以试用也是基于springboot来进行；而springboot采用gradle工具依赖管理，所以要想使用thymeleaf，必须进行如下操作：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;在你的springboot项目工程中添加thymeleaf的依赖配置&lt;/li&gt;
+&lt;/ol&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;compile(&lt;span class=&quot;string&quot;&gt;&quot;org.springframework.boot:spring-boot-starter-thymeleaf:1.3.3.RELEASE&quot;&lt;/span&gt;);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ol&gt;
+&lt;li&gt;编写一个测试页面(html),对thymeleaf进行使用&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;html xmlns:th=&quot;http://www.thymeleaf.org&quot;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     xmlns:layout=&quot;http://www.ultraq.net.nz/web/thymeleaf/layout&quot;&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;head&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;/head&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;body&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	hello thymeleaf!&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;/body&amp;gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;p&gt;我们可以看到这就是一个普普通通的html模板页面，唯一不同的地方就是在&lt;html&gt;标签中添加了一些配置；这就是thymeleaf的标签；这里配置完以后，在下面我们就可以用&lt;strong&gt;&amp;lt;th:XX &lt;/strong&gt;这样的标签把数据渲染到html模板中了；&lt;/html&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;由于该html是模板页面，所以我们不能在浏览器中直接打开浏览thymeleaf渲染数据的效果，需要借助于类似tomcat的web服务器浏览才行！如果仍然直接在浏览器中浏览的话，那么我们看到的效果是&amp;lt;th:XX 标签被忽略的效果！&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;二、暂且抛弃springboot，仅仅采用原生态的方式试用thymeleaf，即除了thymeleaf，其它都不包含&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;eclipse新建maven工程&lt;br&gt; &lt;img src=&quot;http://soujava.com/images/newmavenproject.png&quot; alt=&quot;&quot;&gt;&lt;br&gt; &lt;img src=&quot;http://soujava.com/images/newmaven1.png&quot; alt=&quot;&quot;&gt;&lt;br&gt; &lt;img src=&quot;http://soujava.com/images/newmaven2.png&quot; alt=&quot;&quot;&gt;&lt;br&gt; &lt;img src=&quot;http://soujava.com/images/newmaven3.png&quot; alt=&quot;&quot;&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;在pom.xml配置对Thymeleaf的依赖&lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;16&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;17&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;18&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;19&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;20&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;21&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;22&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;23&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;24&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;25&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;26&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;27&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;28&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;29&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;30&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;31&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;32&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;33&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;34&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;35&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;36&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;37&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;38&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;39&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;40&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;41&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;42&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;43&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;44&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;45&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;46&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;47&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;48&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;49&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;50&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;51&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;52&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;53&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;54&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;55&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;56&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;57&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;58&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;59&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;60&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;61&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;62&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;63&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;64&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;65&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;66&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;67&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;68&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;69&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;70&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;71&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;72&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;73&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;74&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;75&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;76&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;77&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;78&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;79&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;80&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;81&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;82&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;83&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;84&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;85&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;86&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;87&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;88&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;89&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;90&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;91&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;92&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;93&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;94&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;95&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;96&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;97&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;98&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;99&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;100&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;101&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;102&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;103&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;104&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;105&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;106&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;107&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;108&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;109&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;110&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;111&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;112&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;113&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;114&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;115&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;116&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;117&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;118&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;119&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;120&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;121&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;122&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;123&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;124&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;125&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; 	xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd&quot;&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; 	&amp;lt;modelVersion&amp;gt;4.0.0&amp;lt;/modelVersion&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; 	&amp;lt;groupId&amp;gt;com.maps&amp;lt;/groupId&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; 	&amp;lt;artifactId&amp;gt;theymeleaf&amp;lt;/artifactId&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; 	&amp;lt;packaging&amp;gt;war&amp;lt;/packaging&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; 	&amp;lt;version&amp;gt;0.0.1-SNAPSHOT&amp;lt;/version&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; 	&amp;lt;name&amp;gt;theymeleaf Maven Webapp&amp;lt;/name&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; 	&amp;lt;url&amp;gt;http://maven.apache.org&amp;lt;/url&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   &amp;lt;repositories&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   &amp;lt;repository&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &amp;lt;id&amp;gt;sonatype-nexus-snapshots&amp;lt;/id&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &amp;lt;name&amp;gt;Sonatype Nexus Snapshots&amp;lt;/name&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &amp;lt;url&amp;gt;https://oss.sonatype.org/content/repositories/snapshots&amp;lt;/url&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &amp;lt;snapshots&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;       &amp;lt;enabled&amp;gt;true&amp;lt;/enabled&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &amp;lt;/snapshots&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   &amp;lt;/repository&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   &amp;lt;/repositories&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; &lt;/div&gt;&lt;div class=&quot;line&quot;&gt; &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   &amp;lt;dependencies&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   &amp;lt;dependency&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &amp;lt;groupId&amp;gt;junit&amp;lt;/groupId&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &amp;lt;artifactId&amp;gt;junit&amp;lt;/artifactId&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &amp;lt;version&amp;gt;3.8.1&amp;lt;/version&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &amp;lt;scope&amp;gt;test&amp;lt;/scope&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   &amp;lt;/dependency&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;lt;dependency&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &amp;lt;groupId&amp;gt;org.thymeleaf&amp;lt;/groupId&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &amp;lt;artifactId&amp;gt;thymeleaf&amp;lt;/artifactId&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &amp;lt;version&amp;gt;3.0.1.RELEASE&amp;lt;/version&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &amp;lt;scope&amp;gt;compile&amp;lt;/scope&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   &amp;lt;/dependency&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   &amp;lt;dependency&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &amp;lt;groupId&amp;gt;javax.servlet&amp;lt;/groupId&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &amp;lt;artifactId&amp;gt;javax.servlet-api&amp;lt;/artifactId&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &amp;lt;version&amp;gt;3.1.0&amp;lt;/version&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &amp;lt;scope&amp;gt;provided&amp;lt;/scope&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   &amp;lt;/dependency&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   &amp;lt;dependency&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &amp;lt;groupId&amp;gt;org.slf4j&amp;lt;/groupId&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &amp;lt;artifactId&amp;gt;slf4j-api&amp;lt;/artifactId&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &amp;lt;version&amp;gt;1.6.1&amp;lt;/version&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &amp;lt;scope&amp;gt;compile&amp;lt;/scope&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   &amp;lt;/dependency&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;       &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   &amp;lt;dependency&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &amp;lt;groupId&amp;gt;org.slf4j&amp;lt;/groupId&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &amp;lt;artifactId&amp;gt;slf4j-log4j12&amp;lt;/artifactId&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &amp;lt;version&amp;gt;1.6.1&amp;lt;/version&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &amp;lt;scope&amp;gt;compile&amp;lt;/scope&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   &amp;lt;/dependency&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   &amp;lt;dependency&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &amp;lt;groupId&amp;gt;log4j&amp;lt;/groupId&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &amp;lt;artifactId&amp;gt;log4j&amp;lt;/artifactId&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &amp;lt;version&amp;gt;1.2.15&amp;lt;/version&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &amp;lt;scope&amp;gt;compile&amp;lt;/scope&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &amp;lt;exclusions&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;       &amp;lt;exclusion&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;         &amp;lt;groupId&amp;gt;com.sun.jdmk&amp;lt;/groupId&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;         &amp;lt;artifactId&amp;gt;jmxtools&amp;lt;/artifactId&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;       &amp;lt;/exclusion&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;       &amp;lt;exclusion&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;         &amp;lt;groupId&amp;gt;com.sun.jmx&amp;lt;/groupId&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;         &amp;lt;artifactId&amp;gt;jmxri&amp;lt;/artifactId&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;       &amp;lt;/exclusion&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;       &amp;lt;exclusion&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;         &amp;lt;groupId&amp;gt;javax.jms&amp;lt;/groupId&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;         &amp;lt;artifactId&amp;gt;jms&amp;lt;/artifactId&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;       &amp;lt;/exclusion&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &amp;lt;/exclusions&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   &amp;lt;/dependency&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; 	&amp;lt;/dependencies&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; &lt;/div&gt;&lt;div class=&quot;line&quot;&gt; &lt;/div&gt;&lt;div class=&quot;line&quot;&gt; 	&amp;lt;build&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   &amp;lt;resources&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &amp;lt;resource&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;       &amp;lt;directory&amp;gt;src/main/resources&amp;lt;/directory&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &amp;lt;/resource&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &amp;lt;resource&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;       &amp;lt;directory&amp;gt;src/main/java&amp;lt;/directory&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;       &amp;lt;includes&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;         &amp;lt;include&amp;gt;**/*.properties&amp;lt;/include&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;         &amp;lt;include&amp;gt;**/*.xml&amp;lt;/include&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;         &amp;lt;include&amp;gt;**/*.html&amp;lt;/include&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;       &amp;lt;/includes&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &amp;lt;/resource&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   &amp;lt;/resources&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;       &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   &amp;lt;plugins&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &amp;lt;plugin&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;       &amp;lt;groupId&amp;gt;org.apache.maven.plugins&amp;lt;/groupId&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;       &amp;lt;artifactId&amp;gt;maven-compiler-plugin&amp;lt;/artifactId&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;       &amp;lt;version&amp;gt;3.2&amp;lt;/version&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;       &amp;lt;configuration&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;         &amp;lt;source&amp;gt;1.5&amp;lt;/source&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;         &amp;lt;target&amp;gt;1.5&amp;lt;/target&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;       &amp;lt;/configuration&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &amp;lt;/plugin&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &amp;lt;plugin&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;       &amp;lt;groupId&amp;gt;org.apache.maven.plugins&amp;lt;/groupId&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;       &amp;lt;artifactId&amp;gt;maven-resources-plugin&amp;lt;/artifactId&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;       &amp;lt;version&amp;gt;2.7&amp;lt;/version&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;       &amp;lt;configuration&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;         &amp;lt;encoding&amp;gt;ISO-8859-1&amp;lt;/encoding&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;       &amp;lt;/configuration&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &amp;lt;/plugin&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &amp;lt;plugin&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;       &amp;lt;groupId&amp;gt;org.apache.tomcat.maven&amp;lt;/groupId&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;       &amp;lt;artifactId&amp;gt;tomcat7-maven-plugin&amp;lt;/artifactId&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;       &amp;lt;version&amp;gt;2.2&amp;lt;/version&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &amp;lt;/plugin&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   &amp;lt;/plugins&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; 	&amp;lt;/build&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;/project&amp;gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;中断一下，先讲解一下该demo的执行流程&lt;br&gt; &lt;img src=&quot;http://soujava.com/images/thymeleafFollow.png&quot; alt=&quot;模板引擎执行流程&quot;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;MyApplication–应用装载器&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;16&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;17&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;18&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;19&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;20&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;21&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;22&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;23&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;24&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;25&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;26&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;27&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;28&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;29&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;30&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;31&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;32&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;33&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;34&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;35&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;36&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;37&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;38&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;39&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;40&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;41&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;42&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;43&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;44&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;45&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;46&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;47&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;48&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;49&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;50&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;51&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;52&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;53&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;54&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;55&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;56&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;57&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;58&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;59&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;60&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;61&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;62&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;63&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;64&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;65&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;66&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;67&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;68&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;69&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;70&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;71&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;72&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;package&lt;/span&gt; application;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.util.HashMap;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.util.Map;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; javax.servlet.ServletContext;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; javax.servlet.http.HttpServletRequest;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; org.thymeleaf.ITemplateEngine;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; org.thymeleaf.TemplateEngine;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; org.thymeleaf.templatemode.TemplateMode;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; org.thymeleaf.templateresolver.ServletContextTemplateResolver;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; controller.HomeController;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; controller.Controller;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;MyApplication&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   	 	&lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; TemplateEngine templateEngine;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   	 	&lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; Map&amp;lt;String, Controller&amp;gt; controllersByURL;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;MyApplication&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;final&lt;/span&gt; ServletContext servletContext)&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        	&lt;span class=&quot;keyword&quot;&gt;super&lt;/span&gt;();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	        &lt;span class=&quot;comment&quot;&gt;/*1、实例化模板解析器，并配置相关选项*/&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	        ServletContextTemplateResolver templateResolver = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; ServletContextTemplateResolver(servletContext);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	        &lt;span class=&quot;comment&quot;&gt;/*1.1、其实thymeleaf模板引擎的默认模式是HTML，在这里再次设置只是为了更好理解*/&lt;/span&gt; &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	        templateResolver.setTemplateMode(TemplateMode.HTML);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	        &lt;span class=&quot;comment&quot;&gt;/*1.2、设置模板引擎的默认加载路径*/&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	        templateResolver.setPrefix(&lt;span class=&quot;string&quot;&gt;&quot;/WEB-INF/templates/&quot;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	        &lt;span class=&quot;comment&quot;&gt;/*1.3、设置模板引擎的文件后缀*/&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	        templateResolver.setSuffix(&lt;span class=&quot;string&quot;&gt;&quot;.html&quot;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	        &lt;span class=&quot;comment&quot;&gt;/*1.4、设置模板缓存时间为1小时，如果不设置，模板将一直在缓存中*/&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	        templateResolver.setCacheTTLMs(Long.valueOf(&lt;span class=&quot;number&quot;&gt;3600000L&lt;/span&gt;));&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	        &lt;span class=&quot;comment&quot;&gt;/*1.5、模板引擎的默认缓存是开启的，这里设置true是为了更好理解； 其实如果这里设置false的话，当你修改模板后，你就可以在浏览器中实时查看到修改后的模板内容*/&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	        templateResolver.setCacheable(&lt;span class=&quot;keyword&quot;&gt;false&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	        &lt;span class=&quot;comment&quot;&gt;/*2、实例化模板引擎*/&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	        &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.templateEngine = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; TemplateEngine();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	        &lt;span class=&quot;comment&quot;&gt;/*3、将模板解析器装载到模板引擎中*/&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	        &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.templateEngine.setTemplateResolver(templateResolver);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	        &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	        &lt;span class=&quot;comment&quot;&gt;/*4、针对不同的url实例化不同的业务控制器*/&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	        &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.controllersByURL = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; HashMap&amp;lt;String, Controller&amp;gt;();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	        &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.controllersByURL.put(&lt;span class=&quot;string&quot;&gt;&quot;/&quot;&lt;/span&gt;, &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; HomeController());&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; Controller &lt;span class=&quot;title&quot;&gt;resolveControllerForRequest&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;final&lt;/span&gt; HttpServletRequest request)&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;       	 	&lt;span class=&quot;keyword&quot;&gt;final&lt;/span&gt; String path = getRequestPath(request);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        	&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.controllersByURL.get(path);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; ITemplateEngine &lt;span class=&quot;title&quot;&gt;getTemplateEngine&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	        &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.templateEngine;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	    &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; String &lt;span class=&quot;title&quot;&gt;getRequestPath&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;final&lt;/span&gt; HttpServletRequest request)&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	        String requestURI = request.getRequestURI();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	        &lt;span class=&quot;keyword&quot;&gt;final&lt;/span&gt; String contextPath = request.getContextPath();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	        &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	        &lt;span class=&quot;keyword&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; fragmentIndex = requestURI.indexOf(&lt;span class=&quot;string&quot;&gt;&#39;;&#39;&lt;/span&gt;); &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	        &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (fragmentIndex != -&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;) &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	            requestURI = requestURI.substring(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, fragmentIndex);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	        &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	        &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	        &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (requestURI.startsWith(contextPath)) &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	            &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; requestURI.substring(contextPath.length());&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	        &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	        &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; requestURI;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	    &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Controller–控制器接口&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;package&lt;/span&gt; controller;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; javax.servlet.ServletContext;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; javax.servlet.http.HttpServletRequest;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; javax.servlet.http.HttpServletResponse;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; org.thymeleaf.ITemplateEngine;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Controller&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;process&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;           HttpServletRequest request, HttpServletResponse response,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;           ServletContext servletContext, ITemplateEngine templateEngine)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;           &lt;span class=&quot;keyword&quot;&gt;throws&lt;/span&gt; Exception;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;HomeController–首页控制器业务类,实现controller接口&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;16&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;17&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;18&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;19&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;20&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;21&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;22&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;23&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;24&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;25&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;26&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;27&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;28&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;package&lt;/span&gt; controller;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.util.Calendar;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; javax.servlet.ServletContext;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; javax.servlet.http.HttpServletRequest;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; javax.servlet.http.HttpServletResponse;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; org.thymeleaf.ITemplateEngine;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; org.thymeleaf.context.WebContext;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;HomeController&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Controller&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;HomeController&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;super&lt;/span&gt;();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;process&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;           &lt;span class=&quot;keyword&quot;&gt;final&lt;/span&gt; HttpServletRequest request, &lt;span class=&quot;keyword&quot;&gt;final&lt;/span&gt; HttpServletResponse response,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;           &lt;span class=&quot;keyword&quot;&gt;final&lt;/span&gt; ServletContext servletContext, &lt;span class=&quot;keyword&quot;&gt;final&lt;/span&gt; ITemplateEngine templateEngine)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;           &lt;span class=&quot;keyword&quot;&gt;throws&lt;/span&gt; Exception &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;       &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;       WebContext ctx = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; WebContext(request, response, servletContext, request.getLocale());&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;       ctx.setVariable(&lt;span class=&quot;string&quot;&gt;&quot;today&quot;&lt;/span&gt;, Calendar.getInstance());&lt;span class=&quot;comment&quot;&gt;//thymeleaf的上下文中设置变量数据&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;       &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;       templateEngine.process(&lt;span class=&quot;string&quot;&gt;&quot;home&quot;&lt;/span&gt;, ctx, response.getWriter());&lt;span class=&quot;comment&quot;&gt;//模板引擎转向到对应的模板页面&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  		&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;MyFilter–过滤器类&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;16&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;17&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;18&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;19&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;20&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;21&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;22&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;23&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;24&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;25&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;26&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;27&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;28&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;29&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;30&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;31&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;32&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;33&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;34&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;35&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;36&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;37&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;38&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;39&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;40&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;41&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;42&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;43&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;44&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;45&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;46&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;47&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;48&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;49&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;50&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;51&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;52&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;53&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;54&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;55&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;56&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;57&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;58&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;59&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;60&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;61&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;62&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;63&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;64&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;65&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;66&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;67&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;68&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;69&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;70&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;71&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;72&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;73&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;74&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;75&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;76&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;77&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;78&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;79&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;80&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;81&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;82&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;83&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;84&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;85&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;86&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;87&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;88&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;89&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;package&lt;/span&gt; filter;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.io.IOException;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; javax.servlet.Filter;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; javax.servlet.FilterChain;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; javax.servlet.FilterConfig;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; javax.servlet.ServletContext;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; javax.servlet.ServletException;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; javax.servlet.ServletRequest;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; javax.servlet.ServletResponse;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; javax.servlet.http.HttpServletRequest;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; javax.servlet.http.HttpServletResponse;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; org.thymeleaf.ITemplateEngine;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; application.MyApplication;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; controller.Controller;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; entity.User;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;MyFilter&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Filter&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; ServletContext servletContext;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    	&lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; MyApplication application;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;MyFilter&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    	    &lt;span class=&quot;keyword&quot;&gt;super&lt;/span&gt;();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;init&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;final&lt;/span&gt; FilterConfig filterConfig)&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;throws&lt;/span&gt; ServletException &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        	&lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.servletContext = filterConfig.getServletContext();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        	&lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.application = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; MyApplication(&lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.servletContext);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;doFilter&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;final&lt;/span&gt; ServletRequest request, &lt;span class=&quot;keyword&quot;&gt;final&lt;/span&gt; ServletResponse response,&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;final&lt;/span&gt; FilterChain chain) &lt;span class=&quot;keyword&quot;&gt;throws&lt;/span&gt; IOException, ServletException &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        	&lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (!process((HttpServletRequest)request, (HttpServletResponse)response)) &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            	chain.doFilter(request, response);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;destroy&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;boolean&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;process&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(HttpServletRequest request, HttpServletResponse response)&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;throws&lt;/span&gt; ServletException &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        	&lt;span class=&quot;keyword&quot;&gt;try&lt;/span&gt; &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            	&lt;span class=&quot;comment&quot;&gt;//针对资源请求url进行排除&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;           	 &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (request.getRequestURI().startsWith(&lt;span class=&quot;string&quot;&gt;&quot;/css&quot;&lt;/span&gt;) ||&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;                    request.getRequestURI().startsWith(&lt;span class=&quot;string&quot;&gt;&quot;/images&quot;&lt;/span&gt;) ||&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;                    request.getRequestURI().startsWith(&lt;span class=&quot;string&quot;&gt;&quot;/favicon&quot;&lt;/span&gt;)) &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;                &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;false&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;           	 &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;/*&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;             * 根据URL映射，获得处理该请求的控制器。&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;             */&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            Controller controller = &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.application.resolveControllerForRequest(request);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (controller == &lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt;) &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;                &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;false&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;/*&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;             * 获取TemplateEngine(模板引擎)实例&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;             */&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            ITemplateEngine templateEngine = &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.application.getTemplateEngine();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;/*&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;             * 写入响应头部信息&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;             */&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            response.setContentType(&lt;span class=&quot;string&quot;&gt;&quot;text/html;charset=UTF-8&quot;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            response.setHeader(&lt;span class=&quot;string&quot;&gt;&quot;Pragma&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;no-cache&quot;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            response.setHeader(&lt;span class=&quot;string&quot;&gt;&quot;Cache-Control&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;no-cache&quot;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            response.setDateHeader(&lt;span class=&quot;string&quot;&gt;&quot;Expires&quot;&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;/*&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;             * 执行控制器，并转向到对应的模板视图&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;             */&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            controller.process(request, response, &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.servletContext, templateEngine);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;true&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;       	 &amp;#125; &lt;span class=&quot;keyword&quot;&gt;catch&lt;/span&gt; (Exception e) &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;try&lt;/span&gt; &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            &amp;#125; &lt;span class=&quot;keyword&quot;&gt;catch&lt;/span&gt; (&lt;span class=&quot;keyword&quot;&gt;final&lt;/span&gt; IOException ignored) &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;throw&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; ServletException(e);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;	&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;web.xml配置&lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;16&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;17&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;18&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;19&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;20&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;21&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;22&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;23&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;24&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;	&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;lt;web-app id=&quot;gtvg&quot;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;         version=&quot;3.1&quot;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;         xmlns=&quot;http://xmlns.jcp.org/xml/ns/javaee&quot;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;         xsi:schemaLocation=&quot;http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd&quot;&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;lt;display-name&amp;gt;thymeleafexamples-gtvg&amp;lt;/display-name&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;lt;session-config&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &amp;lt;session-timeout&amp;gt;60&amp;lt;/session-timeout&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;lt;/session-config&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;lt;filter&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &amp;lt;filter-name&amp;gt;gtvgfilter&amp;lt;/filter-name&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &amp;lt;filter-class&amp;gt;filter.MyFilter&amp;lt;/filter-class&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;lt;/filter&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;lt;filter-mapping&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &amp;lt;filter-name&amp;gt;gtvgfilter&amp;lt;/filter-name&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &amp;lt;url-pattern&amp;gt;/*&amp;lt;/url-pattern&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;lt;/filter-mapping&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;/web-app&amp;gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;在webapp/WEB-INF目录下面新建templates(模板目录)&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;/p&gt;&lt;p&gt;&lt;code&gt;因为在MyApplication应用装载器中，我们在初始化模板引擎解析器时，设置了模板的目录选项。&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt;/*1.2、设置模板引擎的默认加载路径*/
+ templateResolver.setPrefix(&amp;quot;/WEB-INF/templates/&amp;quot;);
+&lt;/code&gt;&lt;/pre&gt;&lt;ol&gt;
+&lt;li&gt;在templates目录下面新建home.html模板文件&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;html xmlns:th=&quot;http://www.thymeleaf.org&quot;&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &amp;lt;head&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;lt;title&amp;gt;Good Thymes Virtual Grocery&amp;lt;/title&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot; /&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &amp;lt;/head&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &amp;lt;body&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;lt;p&amp;gt;hello &amp;lt;span th:text=&quot;&#39;Thymeleaf&#39;&quot;&amp;gt;word!&amp;lt;/span&amp;gt;.&amp;lt;/p&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &amp;lt;/body&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;/html&amp;gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;/p&gt;&lt;p&gt;&lt;code&gt;在该模板页面中，我们可以看到使用了 th:text标签显示内容到p标签中&lt;/code&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;运行pom.xml编译构建完成后，启动tomcat服务器预览测试&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/thyemleafshow.png&quot; alt=&quot;显示页面&quot;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;/p&gt;&lt;p&gt;&lt;code&gt;根据浏览效果我们可以看到th:text中的内容替换了p标签原有的内容word!&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;&lt;p&gt;&lt;code&gt;该demo已经上传至github上面，&lt;a href=&quot;https://github.com/mapingsheng/theymeleaf&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/mapingsheng/theymeleaf&lt;/a&gt;&lt;/code&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;一、由于springboot这一强大的框架的发布，更由于其采用thymeleaf作为其官方的推荐模板引擎，所以决定学习一下thymeleaf这个模板引擎，当然是通过springboot才了解到的thymeleaf；所以试用也是基于springboot来进行；而springb
+    
+    </summary>
+    
+      <category term="thymeleaf" scheme="http://www.soujava.com/categories/thymeleaf/"/>
+    
+    
+      <category term="thymeleaf" scheme="http://www.soujava.com/tags/thymeleaf/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>如何查看当前的linux系统是哪个发行商</title>
+    <link href="http://www.soujava.com/%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E7%9A%84linux%E7%B3%BB%E7%BB%9F%E6%98%AF%E5%93%AA%E4%B8%AA%E5%8F%91%E8%A1%8C%E5%95%86/"/>
+    <id>http://www.soujava.com/如何查看当前的linux系统是哪个发行商/</id>
+    <published>2016-08-03T08:06:33.000Z</published>
+    <updated>2016-08-03T08:35:10.953Z</updated>
+    
+    <content type="html">&lt;p&gt;我们刚开始进入一个linux操作系统，可能只知道它是一个操作系统，但是不太清楚到底是那个发行商，比如ubuntu、Centos、Debian等等；那么当然老鸟通过查看某些目录的配置文件一眼就可以看到是什么发行商；对于新鸟来说有以下几个技巧可以查看：&lt;/p&gt;
+&lt;p&gt;一、 通用方法-适用于当前市面上绝大多数linux&lt;/p&gt;
+&lt;p&gt;  &lt;strong&gt;lsb_release -a&lt;/strong&gt;&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;[maps&lt;span class=&quot;meta&quot;&gt;@iZ&lt;/span&gt;25017n0ruZ conf]$ lsb_release -a&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;LSB Version:	:core-&lt;span class=&quot;number&quot;&gt;4.1&lt;/span&gt;-amd64:core-&lt;span class=&quot;number&quot;&gt;4.1&lt;/span&gt;-noarch&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Distributor ID:	CentOS&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Description:	CentOS Linux release &lt;span class=&quot;number&quot;&gt;7.0&lt;/span&gt;.1406 (Core) &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Release:	&lt;span class=&quot;number&quot;&gt;7.0&lt;/span&gt;.1406&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Codename:	Core&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;输入以上命令后可以看到该linux操作系统是CentOs,版本是7.0.1406&lt;/p&gt;
+&lt;p&gt;二、 非通用-技巧&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;首先通过cat /proc/version命令查看当前linux系统内核信息&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;[maps@iZ25017n0ruZ etc]$ cat /proc/version &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Linux version 3.10.0-123.9.3.el7.x86_64 (builder@kbuilder.dev.centos.org) (gcc version 4.8.2 20140120 (Red Hat 4.8.2-16) (GCC) ) #1 SMP Thu Nov 6 15:06:03 UTC 2014&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;通过上面命令输出信息我们可以看到系统为Red Hat 4.8.2系列&lt;br&gt;&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;[maps@iZ25017n0ruZ etc]$ cat /proc/version &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Linux version 3.13.0-32-generic (buildd@kissel) (gcc version 4.8.2 (Ubuntu 4.8.2-19ubuntu1) ) #57-Ubuntu SMP Tue Jul 15 03:51:08 UTC 2014&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;通过上面输出信息我们可以看到系统为Ubuntu系列&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;然后切换到/etc/目录下面，看看是否os.release文件，然后通过”cat os.release”命令查看该文件内容信息&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;[**cat /etc/redhat-release**&lt;span class=&quot;meta&quot;&gt;@iZ&lt;/span&gt;25017n0ruZ etc]$ cat ./os-release &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;NAME=&lt;span class=&quot;string&quot;&gt;&quot;CentOS Linux&quot;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;VERSION=&lt;span class=&quot;string&quot;&gt;&quot;7 (Core)&quot;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ID=&lt;span class=&quot;string&quot;&gt;&quot;centos&quot;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ID_LIKE=&lt;span class=&quot;string&quot;&gt;&quot;rhel fedora&quot;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;VERSION_ID=&lt;span class=&quot;string&quot;&gt;&quot;7&quot;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;PRETTY_NAME=&lt;span class=&quot;string&quot;&gt;&quot;CentOS Linux 7 (Core)&quot;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ANSI_COLOR=&lt;span class=&quot;string&quot;&gt;&quot;0;31&quot;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;CPE_NAME=&lt;span class=&quot;string&quot;&gt;&quot;cpe:/o:centos:centos:7&quot;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;HOME_URL=&lt;span class=&quot;string&quot;&gt;&quot;https://www.centos.org/&quot;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;BUG_REPORT_URL=&lt;span class=&quot;string&quot;&gt;&quot;https://bugs.centos.org/&quot;&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;通过上面的输出信息我们可以确定该系统为CentOs 7&lt;/p&gt;
+&lt;p&gt;注：如果是redhat系列的linux系统，在/etc目录下面会有redhat-release文件，我们通过&lt;strong&gt;cat /etc/redhat-release&lt;/strong&gt;命令也可以查看系统发行商信息&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;[maps&lt;span class=&quot;meta&quot;&gt;@iZ&lt;/span&gt;25017n0ruZ conf]$ cat /etc/redhat-release&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;CentOS Linux release &lt;span class=&quot;number&quot;&gt;7.0&lt;/span&gt;.1406 (Core)&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;我们刚开始进入一个linux操作系统，可能只知道它是一个操作系统，但是不太清楚到底是那个发行商，比如ubuntu、Centos、Debian等等；那么当然老鸟通过查看某些目录的配置文件一眼就可以看到是什么发行商；对于新鸟来说有以下几个技巧可以查看：&lt;/p&gt;
+&lt;p&gt;一、 通用
+    
+    </summary>
+    
+      <category term="linux" scheme="http://www.soujava.com/categories/linux/"/>
+    
+    
+      <category term="linux" scheme="http://www.soujava.com/tags/linux/"/>
+    
+  </entry>
   
   <entry>
     <title>Mybatis动态传入tableName--非预编译(STATEMENT)</title>
@@ -67,7 +420,7 @@
     <link href="http://www.soujava.com/Linux%E7%B3%BB%E7%BB%9F%E6%B7%BB%E5%8A%A0%E9%85%8D%E7%BD%AE%E9%9A%8F%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8%E7%9A%84%E6%9C%8D%E5%8A%A1/"/>
     <id>http://www.soujava.com/Linux系统添加配置随开机启动的服务/</id>
     <published>2016-07-25T09:46:24.000Z</published>
-    <updated>2016-07-25T10:12:51.220Z</updated>
+    <updated>2016-08-17T03:22:14.605Z</updated>
     
     <content type="html">&lt;p&gt;在linux服务器操作系统中，经常会安装一些服务器端的软件如：tomcat、redis、MQ、Nginx等等常用的服务器组件；那么有时候服务器重启后需要用一个一个的启动命令把不同的软件启动起来；主要有以下几种场景：&lt;/p&gt;
 &lt;ol&gt;
@@ -100,7 +453,7 @@
     
     </summary>
     
-      <category term="Linux" scheme="http://www.soujava.com/categories/Linux/"/>
+      <category term="linux" scheme="http://www.soujava.com/categories/linux/"/>
     
     
       <category term="服务开机启动" scheme="http://www.soujava.com/tags/%E6%9C%8D%E5%8A%A1%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8/"/>
@@ -112,7 +465,7 @@
     <link href="http://www.soujava.com/Linux%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8%E5%90%8E%E7%BB%8F%E5%B8%B8%E9%9C%80%E8%A6%81%E9%85%8D%E7%BD%AE%E7%BD%91%E5%8D%A1/"/>
     <id>http://www.soujava.com/Linux开机启动后经常需要配置网卡/</id>
     <published>2016-07-25T09:27:42.000Z</published>
-    <updated>2016-07-25T09:43:14.316Z</updated>
+    <updated>2016-08-17T03:35:36.430Z</updated>
     
     <content type="html">&lt;p&gt;在虚拟机中安装的CentOS6操作系统，每次开机启动后，网卡默认都是关闭的；所以系统对外网络是处于中断的状态的，所以也就不能通过Xshell工具远程连接操作。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://soujava.com/images/wangka.jpg&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
@@ -131,7 +484,7 @@
     
     </summary>
     
-      <category term="Linux" scheme="http://www.soujava.com/categories/Linux/"/>
+      <category term="linux" scheme="http://www.soujava.com/categories/linux/"/>
     
     
       <category term="网卡" scheme="http://www.soujava.com/tags/%E7%BD%91%E5%8D%A1/"/>
@@ -573,109 +926,6 @@ function Close()
     
     
       <category term="github" scheme="http://www.soujava.com/tags/github/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>为github pages绑定独立域名</title>
-    <link href="http://www.soujava.com/2016-06-28-%E4%B8%BAgithub-pages%E7%BB%91%E5%AE%9A%E7%8B%AC%E7%AB%8B%E5%9F%9F%E5%90%8D/"/>
-    <id>http://www.soujava.com/2016-06-28-为github-pages绑定独立域名/</id>
-    <published>2016-06-28T09:47:28.000Z</published>
-    <updated>2016-06-29T03:41:16.729Z</updated>
-    
-    <content type="html">&lt;blockquote&gt;
-&lt;p&gt;如果想让你的博客显得更专业更高逼格，那么申请注册一个你自己的独立一级域名是必须的了，那么下面我接着上一篇博客继续讲一下如何把你的博客跟你的独立域名绑定起来！&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;strong&gt;&lt;p&gt;1、假设你已经有了一个独立域名了，至于那些还没有独立域名的童鞋还是先申请注册一个自己的独立域名吧，申请注册一个非常简单，我就不多啰嗦了！我的独立域名是&lt;a href=&quot;http://www.soujava.com&quot;&gt;soujava&lt;/a&gt;；个人感觉这个域名还算可以吧！个人是搞java开发的！&lt;/p&gt;&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;&lt;p&gt;2、不管你的域名是在哪里注册的，其实原理通用的，因为我的域名是在新网上面注册的，那么我就以新网为例进行讲解！&lt;/p&gt;&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;登陆域名注册服务商提供的域名管理系统进行域名管理-其他网站的界面可能不太一样，但是原理一样就是配置DNS解析你的域名&lt;blockquote&gt;
-&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/yumingmanage.jpg&quot; alt=&quot;Alt text&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/ippeizhi.jpg&quot; alt=&quot;Alt text&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;code&gt;下面讲解此步骤配置的ip如何获取&lt;/code&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;&lt;p&gt;3、通过ping命令ping一下你在github上通过gitHub Pages服务生成的博客访问地址&lt;/p&gt;&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;/p&gt;&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/getIp.jpg&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;&lt;p&gt;4、将你的域名与ip在DNS上面映射配置完成后，需要等待一段时间，具体多长时间我也不太清楚，当时我是晚上配置的，第二天早上一起床就可以用配置的独立域名访问了！&lt;/p&gt;&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;/p&gt;&lt;p&gt;&lt;code&gt;有些域名服务提供商的DNS解析时间可能不一样，大家可以耐心等候一下！&lt;/code&gt;&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;如果想让你的博客显得更专业更高逼格，那么申请注册一个你自己的独立一级域名是必须的了，那么下面我接着上一篇博客继续讲一下如何把你的博客跟你的独立域名绑定起来！&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;strong&gt;&lt;p&gt;1、假设你已经有了一个独立
-    
-    </summary>
-    
-      <category term="github" scheme="http://www.soujava.com/categories/github/"/>
-    
-    
-      <category term="github" scheme="http://www.soujava.com/tags/github/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>通过github pages生成网站</title>
-    <link href="http://www.soujava.com/2016-06-28-%E9%80%9A%E8%BF%87github-pages%E7%94%9F%E6%88%90%E7%BD%91%E7%AB%99/"/>
-    <id>http://www.soujava.com/2016-06-28-通过github-pages生成网站/</id>
-    <published>2016-06-28T09:43:00.000Z</published>
-    <updated>2016-06-29T03:29:02.316Z</updated>
-    
-    <content type="html">&lt;p&gt;&lt;strong&gt;1 什么是github pages&lt;/strong&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;GitHub Pages本用于介绍托管在GitHub的项目， 不过，由于他的空间免费稳定，用来做搭建一个博客再好不过了。&lt;br&gt;github Pages可以被认为是用户编写的、托管在github上的静态网页。所以说你有以下屌丝要求的话可以考虑使用github Pages提供的服务：免费、稳定、完全自由可控，独立域名访问等等&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;strong&gt;2 新建仓库&lt;/strong&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/newRepository.jpg&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;strong&gt;3 输入仓库信息&lt;/strong&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/inputInfo.jpg&quot; alt=&quot;Alt text&quot; title=&quot;输入仓库信息&quot;&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;strong&gt;4 添加成功后，点击“settings”按钮&lt;/strong&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/createSucc.jpg&quot; alt=&quot;Alt text&quot; title=&quot;仓库添加成功&quot;&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;strong&gt;5 使用Github Pages生成页面&lt;/strong&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/useGitPages.jpg&quot; alt=&quot;Alt text&quot; title=&quot;使用gitHub pages生服务&quot;&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;strong&gt;6 点击选择博客布局按钮进入选择布局界面&lt;/strong&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/selectLayout.jpg&quot; alt=&quot;Alt text&quot; title=&quot;选择样式布局&quot;&gt; &lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;strong&gt;7 切换布局选择操作,最后点击“publish page”按钮&lt;/strong&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/succblog.jpg&quot; alt=&quot;Alt text&quot; title=&quot;切换布局选择操作&quot;&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;strong&gt;8 发布完成后的界面如下，但是此时我们还不可以使用红框中的二级域名单独访问&lt;/strong&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/publishSuccess.jpg&quot; alt=&quot;Alt text&quot; title=&quot;发布成功&quot;&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;strong&gt;9 然后回到第5步(或者点击settings页签)，每当你点击“Launch automatic page generator”按钮后，可以看到如下所示&lt;/strong&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/fagnwen.jpg&quot; alt=&quot;Alt text&quot; title=&quot;点击访问url地址访问博客&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;/p&gt;&lt;p&gt;点击上图中红框中的访问url地址访问博客&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;strong&gt;10 如果我们还没有自己的独立域名，也暂时使用第8步中红框中的二级域名单独访问，而不用访问第9步中那一串长长的且不好记的url地址&lt;/strong&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;1)、在项目工程跟目录中添加一个名称为CNAME(无后缀名)的文件,在线或者通过git命令都行&lt;br&gt;&lt;img src=&quot;http://soujava.com/images/tianjiagitfile.jpg&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
-&lt;p&gt;2)、将新建项目时输入的二级域名格式的仓库地址添加到文件内容中，文件名称必须为CNAME&lt;br&gt;&lt;img src=&quot;http://soujava.com/images/gitaddFile.jpg&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/cname.jpg&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;strong&gt;1 什么是github pages&lt;/strong&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;GitHub Pages本用于介绍托管在GitHub的项目， 不过，由于他的空间免费稳定，用来做搭建一个博客再好不过了。&lt;br&gt;github Pages可以被认为是
-    
-    </summary>
-    
     
   </entry>
   
