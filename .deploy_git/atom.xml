@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.soujava.com/"/>
-  <updated>2016-08-17T03:41:28.778Z</updated>
+  <updated>2016-08-23T09:50:25.910Z</updated>
   <id>http://www.soujava.com/</id>
   
   <author>
@@ -14,6 +14,390 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>thymeleaf教程2-后台数据封装与页面渲染</title>
+    <link href="http://www.soujava.com/thymeleaf%E6%95%99%E7%A8%8B2-%E5%90%8E%E5%8F%B0%E6%95%B0%E6%8D%AE%E5%B0%81%E8%A3%85%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93/"/>
+    <id>http://www.soujava.com/thymeleaf教程2-后台数据封装与页面渲染/</id>
+    <published>2016-08-23T08:32:50.000Z</published>
+    <updated>2016-08-23T09:50:25.910Z</updated>
+    
+    <content type="html">&lt;p&gt;我们使用模板引擎的过程中，页面上面的数据肯定需要从后台传递过来，然后把数据装载到页面对应区域中，所以我们来看看如果把后台的数据在前端页面渲染。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;一、添加一个表单页面–登陆操作&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;http://soujava.com/images/thy6.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;二、新建业务控制器(doLogin)–获取登陆表单中提交的数据&lt;/strong&gt;&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;String username = request.getParameter(&lt;span class=&quot;string&quot;&gt;&quot;username&quot;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  	String password = request.getParameter(&lt;span class=&quot;string&quot;&gt;&quot;password&quot;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  	&lt;span class=&quot;comment&quot;&gt;//实例化一个thymeleaf文本上下文&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      WebContext ctx = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; WebContext(request, response, servletContext, request.getLocale());&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//将前端登陆表单页面提交过来的数据封装到thymeleaf上下文中&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      ctx.setVariable(&lt;span class=&quot;string&quot;&gt;&quot;username&quot;&lt;/span&gt;, username);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      ctx.setVariable(&lt;span class=&quot;string&quot;&gt;&quot;password&quot;&lt;/span&gt;, password);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      &lt;span class=&quot;comment&quot;&gt;//调用模板引擎转向到对应的模板页面--desc模板页面&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      templateEngine.process(&lt;span class=&quot;string&quot;&gt;&quot;desc&quot;&lt;/span&gt;, ctx, response.getWriter());&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;三、新建模板页面(desc)–显示doLogin控制器中封装的数据&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/thy7.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;注：读取数据使用${XX}这种形式，是不是感觉很熟悉，EL表达式；而向页面html元素中渲染数据使用thymeleaf提供的标签th:text=”${XX}”这种形式。&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;四、编译工程项目–启动web服务器测试&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1、在登陆表单中输入对应的用户名和密码，点击提交按钮&lt;br&gt;&lt;img src=&quot;http://soujava.com/images/thy1.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;1、可以看到提交表单后进入到doLogin控制器中，控制器获取数据并封装数据，然后转向到模板页面中渲染数据。&lt;br&gt;&lt;img src=&quot;http://soujava.com/images/thy2.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;五、在控制器doLogin中封装一些稍微复杂的数据集-数组&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1、我们声明一个类型数组，然后把数组封装到thymeleaf上下文中&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;String[] types = &amp;#123;&lt;span class=&quot;string&quot;&gt;&quot;足球&quot;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&quot;篮球&quot;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&quot;羽毛球&quot;&lt;/span&gt;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   ctx.setVariable(&lt;span class=&quot;string&quot;&gt;&quot;types&quot;&lt;/span&gt;, types);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;2、在desc模板页面中遍历显示封装好的集合数据&lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;p th:each=&quot;type : $&amp;#123;types&amp;#125;&quot;&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   	&amp;lt;span th:text=&quot;$&amp;#123;type&amp;#125;&quot;&amp;gt;&amp;lt;/span&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   &amp;lt;/p&amp;gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;em&gt;注：上面渲染集合数据到模板页面的代码中我们采用了th:each的方法遍历数据，这是thymeleaf提供的，其实thymeleaf提供了非常多并且非常强大的方法，后续再一一说明。&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;3、针对刚刚封装好的集合数据到页面测试一下&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/thy3.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/thy4.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;六、在控制器doLogin中封装一些稍微复杂的数据集-实体Bean&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1、我们新建一个User的Bean实体&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;User&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; 	&lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; String firstName = &lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; String lastName = &lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; String nationality = &lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; Integer age = &lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt;；&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;final&lt;/span&gt; String firstName, &lt;span class=&quot;keyword&quot;&gt;final&lt;/span&gt; String lastName, &lt;/span&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;final&lt;/span&gt; String nationality, &lt;span class=&quot;keyword&quot;&gt;final&lt;/span&gt; Integer age) &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;super&lt;/span&gt;();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.firstName = firstName;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.lastName = lastName;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.nationality = nationality;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.age = age;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;2、在我们的doLogin业务控制器中实例化该User实体bean，并且把bean数据实体封装到thymeleaf上下文中&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;User user = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; User(&lt;span class=&quot;string&quot;&gt;&quot;zhang&quot;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&quot;san&quot;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&quot;china&quot;&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;25&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      ctx.setVariable(&lt;span class=&quot;string&quot;&gt;&quot;user&quot;&lt;/span&gt;, user);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;3、在desc模板页面中显示封装好的User实体bean数据&lt;br&gt;&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;p th:text=&quot;$&amp;#123;user.firstName+&#39;:&#39;+user.lastName+&#39;:&#39;+user.nationality+&#39;:&#39;+user.age&amp;#125;&quot;&amp;gt;&amp;lt;/p&amp;gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;注：我们在获取bean中的属性数据时，仍然采用EL表达式${user.firstName}的方式；然后将获取的数据显示到html元素中用th:text方法；只不过我们使用th:text时在中间使用了字符串拼接将多个属性拼接显示。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;六、总结&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;1、我们在执行业务操作的时候，需要把后台的数据集封装到thymeleaf上下文中，我们可以封装组合各种我们需要的数据，如：字符串、集合、实体bean等等&lt;br&gt;2、通过thymeleaf模板引擎转向到对应的模板页面&lt;br&gt;3、用thymeleaf提供的方法渲染后台封装的数据到页面中&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;我们使用模板引擎的过程中，页面上面的数据肯定需要从后台传递过来，然后把数据装载到页面对应区域中，所以我们来看看如果把后台的数据在前端页面渲染。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;一、添加一个表单页面–登陆操作&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;http://souja
+    
+    </summary>
+    
+      <category term="thymeleaf" scheme="http://www.soujava.com/categories/thymeleaf/"/>
+    
+    
+      <category term="thymeleaf" scheme="http://www.soujava.com/tags/thymeleaf/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>jquery获取单选按钮值的诡异之处</title>
+    <link href="http://www.soujava.com/jquery%E8%8E%B7%E5%8F%96%E5%8D%95%E9%80%89%E6%8C%89%E9%92%AE%E5%80%BC%E7%9A%84%E8%AF%A1%E5%BC%82%E4%B9%8B%E5%A4%84/"/>
+    <id>http://www.soujava.com/jquery获取单选按钮值的诡异之处/</id>
+    <published>2016-08-21T04:17:10.000Z</published>
+    <updated>2016-08-21T05:08:28.128Z</updated>
+    
+    <content type="html">&lt;p&gt;最近在使用jquery获取表单中选中的单选按钮的值时，发现了一个诡异的问题，那就是当你使用[checked]这个方式获取选中的单选按钮值时，能不能获取选中的值跟你前面用的选择器方式有关系，当你使用:radio[name=’types’]这种方式获取选中的值时是没有问题的，但是当你使用[type=’radio’][name=’language’]这种方式获取选中的值时是有问题的（如果单选按钮组中有默认选中的按钮，那么这种方式一直获取的都是默认选中的按钮；如果单选按钮组中没有默认选中的按钮，那么这种方式获取不到选中的单选按钮的值）。举例如下：&lt;/p&gt;
+&lt;p&gt;表单元素如下：&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;input type=&lt;span class=&quot;string&quot;&gt;&quot;radio&quot;&lt;/span&gt; name=&lt;span class=&quot;string&quot;&gt;&quot;language&quot;&lt;/span&gt;  value=&lt;span class=&quot;string&quot;&gt;&quot;php&quot;&lt;/span&gt;/&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;input type=&lt;span class=&quot;string&quot;&gt;&quot;radio&quot;&lt;/span&gt; name=&lt;span class=&quot;string&quot;&gt;&quot;language&quot;&lt;/span&gt;  value=&lt;span class=&quot;string&quot;&gt;&quot;mysql&quot;&lt;/span&gt;/&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;input type=&lt;span class=&quot;string&quot;&gt;&quot;radio&quot;&lt;/span&gt; name=&lt;span class=&quot;string&quot;&gt;&quot;language&quot;&lt;/span&gt;  value=&lt;span class=&quot;string&quot;&gt;&quot;java&quot;&lt;/span&gt;/&amp;gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;一、方式一 [checked] (正确)&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;通过使用&lt;code&gt;[checked]&lt;/code&gt;获取选中的单选按钮的值，类型选择器使用的&lt;code&gt;:radio&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$(&amp;apos;input:radio[name=&amp;quot;language&amp;quot;][checked]&amp;apos;).val()；
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/jqueryRadio2.png&quot; alt=&quot;Alt text&quot; title=&quot;可以获取单选值&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;注：这种方式&lt;code&gt;可以&lt;/code&gt;获取选中的单选按钮的值，如果没有选择任何单选按钮，则获取的值为undefined。&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;二、方式二 [checked] (错误)&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;通过使用&lt;code&gt;[checked]&lt;/code&gt;获取选中的单选按钮的值，，类型选择器使用的&lt;code&gt;[type=&amp;quot;radio&amp;quot;]&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$(&amp;apos;input[type=&amp;quot;radio&amp;quot;][name=&amp;quot;language&amp;quot;][checked]&amp;apos;).val()；
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/jqueryRadio1.png&quot; alt=&quot;Alt text&quot; title=&quot;不可以获取单选值&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;注：这种方式&lt;code&gt;不可以&lt;/code&gt;获取选中的单选按钮的值，获取的值始终为undefined。&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;三、小结 &lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;上面两种获取单选按钮选择中的方式中唯一差别的地方就是类型选择器的方式一种是标准的类型选择器(type=”radio”)、一种是伪类选择器(:radio);然后到jquery官方网站查看官网文档可以看到：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/jqueryRadio3.png&quot; alt=&quot;Alt text&quot; title=&quot;官方文档&quot;&gt;&lt;/p&gt;
+&lt;p&gt;官网文档中关于选择器的描述大致这样说：$(“:radio”)和$(“[type=radio]”)是等价的,在效率方面还更倾向使用标准的类型选择器&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;四、方式三 :checked (没有任何问题)&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;使用&lt;code&gt;[type=&amp;quot;radio&amp;quot;]&lt;/code&gt;类型选择器：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$(&amp;apos;input[type=&amp;quot;radio&amp;quot;][name=&amp;quot;language&amp;quot;]:checked&amp;apos;).val()；
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;使用&lt;code&gt;:radio&lt;/code&gt;伪类选择器：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;$(&amp;apos;input[type=&amp;quot;radio&amp;quot;][name=&amp;quot;language&amp;quot;]:checked&amp;apos;).val()；
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/jqueryRadio4.png&quot; alt=&quot;Alt text&quot; title=&quot;获取值&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;注：方式三种中在使用:checked方式的前提下，不管使用类型选择器还是使用伪类选择器都是可以获取选中的单选按钮的值的！&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;五、总结&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;获取单选按钮元素选中的值时，统一采用&lt;code&gt;:checked&lt;/code&gt;这种方式获取，不要再使用&lt;code&gt;[checked]&lt;/code&gt;或者&lt;code&gt;[checked=&amp;quot;checked&amp;quot;]&lt;/code&gt;这种方式。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;最近在使用jquery获取表单中选中的单选按钮的值时，发现了一个诡异的问题，那就是当你使用[checked]这个方式获取选中的单选按钮值时，能不能获取选中的值跟你前面用的选择器方式有关系，当你使用:radio[name=’types’]这种方式获取选中的值时是没有问题的，但
+    
+    </summary>
+    
+      <category term="javascript" scheme="http://www.soujava.com/categories/javascript/"/>
+    
+    
+      <category term="jquery" scheme="http://www.soujava.com/tags/jquery/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>整型字面值与进制运算之间的关系</title>
+    <link href="http://www.soujava.com/%E6%95%B4%E5%9E%8B%E5%AD%97%E9%9D%A2%E5%80%BC%E4%B8%8E%E8%BF%9B%E5%88%B6%E8%BF%90%E7%AE%97%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB/"/>
+    <id>http://www.soujava.com/整型字面值与进制运算之间的关系/</id>
+    <published>2016-08-20T09:19:18.000Z</published>
+    <updated>2016-08-20T09:57:54.772Z</updated>
+    
+    <content type="html">&lt;p&gt;何为字面值？说白了就是一眼看上去的内容值，比如下面的分别用几个不同进制(二进制、八进制、十进制、十六进制)表示法表示的自面值信息&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;二进制表示：int i = 0b111010110;其实0b111010110就是字面值&lt;/li&gt;
+&lt;li&gt;八进制表示：long l3 = 0123;其实0123就是字面值&lt;/li&gt;
+&lt;li&gt;十进制表示：long l2 = 225;其实225就是字面值&lt;/li&gt;
+&lt;li&gt;十六进制表示：long l5 = 0x12af;其实0x12af就是二进制值&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;好了上面已经描述了自面值的概念，那么整型自面值就是整数类型的字面值喽(哈哈没有开玩笑)。下面说明整型字面值与不同进制之间的关系。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;一、十进制&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;地球上被人类采用的通用的数值表示方式，比如再正常不过的0、2、5、32、100等等；我们眼睛看到的数值就是表示其真实的值，不像其它进制表示方式，我们眼睛看到的值并不一定是其真实的值，所以我们人类一般采用十进制表示方式(10进制比较诚实，人类比较懒呗)。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;二、二进制&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;计算机唯一能识别的只有0和1，而这里的0和1就是二进制，绝对不是指数字的0和1，这也是比较容易引起混淆的地方；&lt;/p&gt;
+&lt;p&gt;举个常见的例子：我们生活中常用的算账用的计算器，我们输入100+30然后按完“=”号后，计算器屏幕上面会显示两个数相加后的结果130，    这个过程我输入的数字(100、30)或者按的按钮(+、=)和最后输出的130这几个动作，都是我们人类自己能很好识别的；我们输入十进制数字。然后计算器接收后是不识别的，实际上这个过程经历了非常复杂的转换过程：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;1)、十进制数会被转换成二进制，也就是把100转化成只有0和1组成的一串数字（1100100）；
+    30转换成二进制数字(11110)
+2)、然后计算器把转换后的两个二进制数进行相加，最终得到二进制结果：10000010(130)；
+    实际上二进制之间加法很简单，只需要把两个二进制数右对齐，然后上下两个数(0或者1)相加，相加的和逢2进1就行了。
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;二、八进制&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;除了人类使用的10进制、计算机使用的二进制外，其实还有八进制（以0开头，以8为基数运算）&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;8进制数字的范围是0~7,也就是说用8进制形式标示数值时，需要用0开头，
+并且标示数值串中只能包含0~7之间的数字，例如：
+int i = 0123;
+int m = 01354;
+int n =0238;（不合格）
+
+8进制表示的数值怎么计算成人类识别的10进制呢，其实非常简单，只需要按照规则来计算就行了，
+我们就拿int i = 013;这个变量定义来讲，一共三个数字(0、1、3)；那么我们从最右侧3用索引数数就是(0[2]、1[1]、3[0]),方括号中为从右侧开始计数的索引。
+
+比如013=3*8的0次方+1*8的1次方=3+8=11；
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;三、十六进制&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;16进制的数字范围是0~15，而阿拉伯数字只有0~9，所以分别用A~F（a~f）替代数字10~15；也就是说用16进制表示的数值串中只能包括0~9和a|A~f|F；十六进制表示方式就是以0X开头，以16为基数进行运算&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;可以参照上面的八进制计算规则，long l5 = 0x12af;定义的变量用十进制表示方法就是：
+0x12af表示的十进制数为：15*16的0次方+10*16的1次方+2*16的2次方+1*16的3次方=4783
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;四、二进制表示十进制&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;从jdk7开始，我们可以直接定义变量的时候可以用二进制表示十进制字面值，不过必须使用0b或0B作为数值的前缀。&lt;/p&gt;
+&lt;p&gt;比如：int x = 0b1010;&lt;br&gt;&lt;em&gt;其实x的真实值是二进制1010运算十进制后的值10.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;int u = 0B111010110;&lt;br&gt;&lt;em&gt;其实u的真实值是二进制111010110运算十进制后的值470.&lt;/em&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;何为字面值？说白了就是一眼看上去的内容值，比如下面的分别用几个不同进制(二进制、八进制、十进制、十六进制)表示法表示的自面值信息&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;二进制表示：int i = 0b111010110;其实0b111010110就是字面值&lt;/li&gt;
+&lt;li&gt;八进制表示
+    
+    </summary>
+    
+      <category term="java" scheme="http://www.soujava.com/categories/java/"/>
+    
+    
+      <category term="进制运算" scheme="http://www.soujava.com/tags/%E8%BF%9B%E5%88%B6%E8%BF%90%E7%AE%97/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Redis--安装</title>
+    <link href="http://www.soujava.com/Redis-%E5%AE%89%E8%A3%85/"/>
+    <id>http://www.soujava.com/Redis-安装/</id>
+    <published>2016-08-19T09:21:43.000Z</published>
+    <updated>2016-08-19T09:26:17.224Z</updated>
+    
+    <content type="html">&lt;p&gt;&lt;strong&gt;一、下载安装包&lt;/strong&gt;&lt;br&gt;  下载redis安装包，下载方式很多比如如下方式都可以：&lt;br&gt;    1)、到官网下载&lt;a href=&quot;http://redis.io需要的版本&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://redis.io需要的版本&lt;/a&gt;&lt;br&gt;    2)、在linux系统中用命令下载 $ wget &lt;a href=&quot;http://download.redis.io/releases/redis-2.8.17.tar.gz&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://download.redis.io/releases/redis-2.8.17.tar.gz&lt;/a&gt;&lt;br&gt;    下载成功后得到redis-2.8.17.tar.gz安装包&lt;br&gt;&lt;strong&gt;二、安装&lt;/strong&gt;&lt;br&gt;    1)、用命令解压缩安装包&lt;br&gt;       $ tar xzf redis-2.8.17.tar.gz&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;2)、进入解压后的文件中
+     $ cd redis-2.8.17
+
+3)、编译安装
+      $ make
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;  注：make完后 redis-2.8.17目录下会出现编译后的redis服务程序redis-server,还有用于测试的客户端程序redis-cli&lt;br&gt;&lt;strong&gt;三、启动服务&lt;/strong&gt;&lt;br&gt;     1)、进入到redis安装目录src下面&lt;br&gt;          $ cd /usr/local/redis-2.8.17/src&lt;br&gt;     2)、启动服务操作，启动服务主要有两种方式：&lt;br&gt;           A：采用默认配置方式启动(不推荐)&lt;br&gt;                $ ./redis-server&lt;br&gt;           B：采用制定配置文件启动(推荐)&lt;br&gt;                 $ ./redis-server ../redis.conf&lt;br&gt;     注：redis.conf是一个默认的配置文件。我们可以根据需要使用自己的配置文件,修改redis.conf  配置文件修改 daemonize yes ；该配置为使redis启动后可以后台运行&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;四、测试&lt;/strong&gt;&lt;br&gt;   1)、进入安装目录，运行redis-cli&lt;br&gt;         $ ./redis-cli&lt;br&gt;         redis&amp;gt; set username maps&lt;br&gt;         redis&amp;gt;get username&lt;br&gt;         “maps” &lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;strong&gt;一、下载安装包&lt;/strong&gt;&lt;br&gt;  下载redis安装包，下载方式很多比如如下方式都可以：&lt;br&gt;    1)、到官网下载&lt;a href=&quot;http://redis.io需要的版本&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;ht
+    
+    </summary>
+    
+      <category term="Redis" scheme="http://www.soujava.com/categories/Redis/"/>
+    
+    
+      <category term="Redis安装" scheme="http://www.soujava.com/tags/Redis%E5%AE%89%E8%A3%85/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Mysql--Lock wait timeout exceeded try restarting transaction</title>
+    <link href="http://www.soujava.com/Mysql-Lock-wait-timeout-exceeded-try-restarting-transaction/"/>
+    <id>http://www.soujava.com/Mysql-Lock-wait-timeout-exceeded-try-restarting-transaction/</id>
+    <published>2016-08-19T08:46:36.000Z</published>
+    <updated>2016-08-19T08:50:24.341Z</updated>
+    
+    <content type="html">&lt;p&gt;一个业务正在操作mysql过程中，突然报提示错误信息：Lock wait timeout exceeded; try restarting transaction。&lt;br&gt;查询发现问题原因是，在执行操作的表被另外一个操作锁定，当前操作等待另外一个操作完成时提示超时。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;一、临时解决办法&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;执行以下脚本登录mysql：mysql -h 192.168.0.166 -u user -ppassword&lt;/li&gt;
+&lt;li&gt;执行select * from information_schema.innodb_trx\G;查询当前处于锁等待的进程。查询结果只需要关注trx_mysql_thread_id所对应的值。&lt;/li&gt;
+&lt;li&gt;执行show processlist;查询当前的所有进程，找到对应的ID，执行kill命令，kill id。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;二、Mysql数据库设置&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;设置innodb_lock_wait_timeout参数。通过show variables like ‘innodb_lock_wait_timeout’;查看当前设置的值。&lt;/li&gt;
+&lt;li&gt;执行set global innodb_lock_wait_timeout=120;设置超时时间。&lt;/li&gt;
+&lt;li&gt;设置是否自动提交事务。通过select @@autocommit;查询是否自动提交事务（1代表自动提交，0代表不自动提交）。执行set global autocommit=1;设置自动提交。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;em&gt;注：这里设置自动提交事务操作针对高并发业务是会出问题的，所以视情况而定！&lt;/em&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;一个业务正在操作mysql过程中，突然报提示错误信息：Lock wait timeout exceeded; try restarting transaction。&lt;br&gt;查询发现问题原因是，在执行操作的表被另外一个操作锁定，当前操作等待另外一个操作完成时提示超时。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Mysql" scheme="http://www.soujava.com/categories/Mysql/"/>
+    
+    
+      <category term="Mysql" scheme="http://www.soujava.com/tags/Mysql/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MySql安装后添加的用户不能远程连接登陆</title>
+    <link href="http://www.soujava.com/MySql%E5%AE%89%E8%A3%85%E5%90%8E%E6%B7%BB%E5%8A%A0%E7%9A%84%E7%94%A8%E6%88%B7%E4%B8%8D%E8%83%BD%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5%E7%99%BB%E9%99%86/"/>
+    <id>http://www.soujava.com/MySql安装后添加的用户不能远程连接登陆/</id>
+    <published>2016-08-19T08:23:54.000Z</published>
+    <updated>2016-08-19T08:41:56.928Z</updated>
+    
+    <content type="html">&lt;p&gt;&lt;strong&gt;一、添加一个用户fileserver并授权操作&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;http://soujava.com/images/mysql1.png&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;注：添加一个可以访问所有数据库、用户名为fileserver、可以在本地和远程进行访问的、密码是fileserver的用户 &lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;二、查询刚才添加的用户是否存在&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;http://soujava.com/images/mysql2.png&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;注：可以看到刚才的fileserver用户已经创建完毕 &lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;三、用刚才添加成功的用户登陆操作报异常&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;http://soujava.com/images/mysql3.png&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;注：当用户刚才创建的用户登录并输入密码后时提示如下信息，这是因为当前的登录操作是在mysql本地客户端进行的，而上面的user表中没有对应localhost的fileserve的用户&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;四、在添加一个fileserver用户并分配可以本地localhost登录&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;http://soujava.com/images/mysql4.png&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;五、再查下刚才创建的用户是否已经存在&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;http://soujava.com/images/mysql5.png&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;六、再次用刚刚创建的fileserver登录操作，可以正常登录&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;http://soujava.com/images/mysql6.png&quot; alt=&quot;Alt text&quot;&gt;&lt;br&gt;&lt;em&gt;注：使用mysql -u 命令登录操作时默认使用localhost的域用户登录操作 &lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;七、在另外一台IP地址的电脑上面安装Navicate工具，并且连接之前安装的mysql服务&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;http://soujava.com/images/mysql7.png&quot; alt=&quot;Alt text&quot;&gt;&lt;br&gt;&lt;em&gt;注：连接时提示连接错误，因为mysql服务没有对当前IP的电脑开放远程访问的权限&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;八、在mysql配置文件中配置该IP的访问操作&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;http://soujava.com/images/mysql8.png&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;九、配置完成后重启mysql服务&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;http://soujava.com/images/mysql9.png&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;十、再次在不同IP(192.168.0.203)地址电脑上面通过Navicate连接mysql服务操作，连接成功&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;http://soujava.com/images/mysql10.png&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;strong&gt;一、添加一个用户fileserver并授权操作&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;http://soujava.com/images/mysql1.png&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;注：添加一个可以访问所有数据库、用户
+    
+    </summary>
+    
+      <category term="Mysql" scheme="http://www.soujava.com/categories/Mysql/"/>
+    
+    
+      <category term="Mysql" scheme="http://www.soujava.com/tags/Mysql/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CentOS-6.4内核升级操作</title>
+    <link href="http://www.soujava.com/CentOS-6-4%E5%86%85%E6%A0%B8%E5%8D%87%E7%BA%A7%E6%93%8D%E4%BD%9C/"/>
+    <id>http://www.soujava.com/CentOS-6-4内核升级操作/</id>
+    <published>2016-08-19T08:00:13.000Z</published>
+    <updated>2016-08-19T08:15:57.871Z</updated>
+    
+    <content type="html">&lt;p&gt;Linux下涉及到系统内核的一些软件，需要对内核升级才能使用，例如Docker的最低要求是2.6.32-431等等。&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;注意：&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    如果在make menuconfig步骤报错，可尝试以下方法：&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;、修改scripts/kconfig/Makefile 文件&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;、找到HOSTLOADLIBES_mconf 在行末加入  -ltinfo&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;一、先查看当前centos的系统内核&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/linuxKenel1.png&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;二、下载内核包，如：linux-3.4.56.tar.xz&lt;/strong&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;https:&lt;span class=&quot;comment&quot;&gt;//www.kernel.org/pub/linux/kernel/v3.x/linux-3.4.56.tar.xz&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;strong&gt;三、安装内核&lt;/strong&gt;&lt;br&gt;&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;# tar -Jxvf linux-3.4.56.tar.xz&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;# mv linux-3.4.56 /usr/src/linux-3.4.56&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;# cd linux-3.4.56&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;# make mrproper #清除环境变量&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;# make menuconfig &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;# make clean&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;# make bzImage&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;# make modules&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;# make modules_install&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;# make install&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;四、编辑/etc/grub.conf文件，将default=1改成default=0&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;五、重启系统并检查内核&lt;/strong&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Linux下涉及到系统内核的一些软件，需要对内核升级才能使用，例如Docker的最低要求是2.6.32-431等等。&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div clas
+    
+    </summary>
+    
+      <category term="Linux" scheme="http://www.soujava.com/categories/Linux/"/>
+    
+    
+      <category term="Linux" scheme="http://www.soujava.com/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>git搞着玩-新建本地仓库与分支合并</title>
+    <link href="http://www.soujava.com/git%E6%90%9E%E7%9D%80%E7%8E%A9-%E6%96%B0%E5%BB%BA%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93/"/>
+    <id>http://www.soujava.com/git搞着玩-新建本地仓库/</id>
+    <published>2016-08-19T03:01:47.000Z</published>
+    <updated>2016-08-19T07:38:48.596Z</updated>
+    
+    <content type="html">&lt;p&gt;用了git有一段时间了，在项目团队刚切入git时还是遇到了不少的阻力，各种质疑，为什么svn用的好好的突然转到git上面？为什么git操作这么复杂？等等等等；当然我作为逗比的我还是很愿意为他们一一诉说我对git的真爱的。当然并不是说svn不好，我可以说svn非常好，尤其某些场景更是强大至极，至少对于小团队或者单产品线研发模式来讲用svn是非常好的选择。我们之所以从svn平台切换到git上面主要是因为我们的研发路线是一个主产品线+N个项目定制线；并且主产品线会和其中的项目定制线进行彼此合并操作；&lt;/p&gt;
+&lt;p&gt;再举个切实的例子，张三丰正在开发太极拳产品，并且已经发布了1.0版本，投入市场后非常受欢迎，当然也收集了一些用户的反馈，经过研发部讨论可以把一些建议并入主产品开发，另外基于主产品线再开出一个branch做另一个小众市场的试错项目，这项目由张无忌开发；那么问题来了，以后类似这样的项目会越来越多，程序员一人多用的现象已经中国这片土地上面成为常态，所以程序员们也必然会通过自身努力练就三头六臂的本领；所以张无忌现在会同时(犹如电脑CPU进程切换一样)负责3个项目；那么比如张无忌正在开发A项目，然后B项目突然反馈一个致命bug，必须立刻马上解决；后来这个bug发现C项目也有；那么张无忌是不是先把正在开发的A项目的代码提交(不能提交到远程代码仓库，因为开发的A项目代码还是半成品)，然后去修改B项目的致命bug；这时如果用的svn的话，具体咋搞？这里我就不具体说了，反正我觉得张无忌会哭！那么用git就非常爽啦，针对项目A分支进行add、commit就行了；然后checkout B，切换到B项目分支上改bug就行了，改完后合并到C项目上就行啦！你说爽不爽，这就是中央仓库和“分布式”仓库的巨大差别！看到其它同事茫然的点点头，我心中窃喜！&lt;/p&gt;
+&lt;p&gt;扯的有点远了，回到正题上来！git不就是个版本管理工具嘛，有什么了不起的，先自己随便搞搞；用一段话描述项目的需求如下：在本地新建一个git代码仓库，然后添加一个分支develop，在分支develop中添加一个文件，然后再添加一个分支master，将develop分支中的文件合并到master分支中，然后同时修改develop分支中的文件和master分支中的文件并合并，遇到冲突后解决冲突，就这么多。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;一、新建本地仓库（git init）&lt;/strong&gt;&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ git init&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Initialized empty Git repository in D:/workspace/gitDemo/.git/&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;提示初始化一个空的git仓库在XXXX目录中&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;二、新建develop分支（git branch develop）&lt;/strong&gt;&lt;br&gt;&lt;em&gt;- 先检查刚才新建的本地空仓库中是否有分支（git branch）;明显没有嘛，这还用想？不试试怎么知道，好吧就试试吧！&lt;/em&gt;&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ git branch&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;输入命令后什么都没有输出，表名该仓库还没有任何分支；当然git branch命令会列出本地仓库的所有分支，并会标示出当前所在的分支。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;- 新建develop分支操作（git branch develop）&lt;/em&gt;&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ git branch develop&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;fatal: Not a valid object name: &lt;span class=&quot;string&quot;&gt;&#39;master&#39;&lt;/span&gt;.&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;我去，直接给我亮出了红牌的致命警告，真是道路曲折啊，没法儿玩儿了；出现上面的提示是因为根据git约定要求，在空仓库中新建分支之前，需要commit一一下，好吧！那照做呗….&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;- 提交一下（git commit）&lt;/em&gt;&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ git commit -m &lt;span class=&quot;string&quot;&gt;&quot;按照git要求，执行一次空的提交操作&quot;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;On branch master&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Initial commit&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;nothing to commit&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;哎呀我去，我只是提交了一下啊，它怎么做了这么多事情(三行英文的意思就是 当前分支在master上面、初始化提交、提交的内容为空)；后两句我可以理解，那么当前分支为master这句话我有点理解不了。&lt;/p&gt;
+&lt;p&gt;出现上面的提示(On branch master)是因为git仓库默认初始分支是master；而你直接在空的仓库中提交时，会坚持当前仓库是否有master分支，如果没有，则新建master分支，好吧，我只能说它太“人性化了”。那么其实到这里我们已经通过commit操作创建了git默认的master分支了。&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;- 看看刚才git自动为我新建的master分支真的创建完了吗&lt;/em&gt;&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ git branch&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;哎呀，我去，怎么还显示空啊，难道创建失败了？好吧，在告诉你一个秘密：其实master分支已经自动创建完成了，只是不显示而已，你需要添加（add）一个物理文件进去，然后提交(commit)就可以看到master分支了。&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ echo &lt;span class=&quot;string&quot;&gt;&quot;hello maps&quot;&lt;/span&gt; &amp;gt;index.txt&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$ git commit -m &lt;span class=&quot;string&quot;&gt;&quot;commit index.txt file&quot;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;[master (root-commit) be4ae99] commit index.txt file&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; file changed, &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; insertion(+)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	create mode &lt;span class=&quot;number&quot;&gt;100644&lt;/span&gt; index.txt&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$ git branch&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;* master&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;通过上面三步(添加一个物理文件、add到git的index库中、commit到git的本地仓库中)之后，我们可以看到master分支已经显示出来了！针对不易啊！&lt;br&gt;&lt;em&gt;注：其实上上步骤(上一步的上一步)中我们描述的执行一次空的提交(commit)是多余的；完全用上面三步走战略就行啦！&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;通过第二大步的操作后，我们本来新建develop分支的，结构却不由自主的“被创建一个master分支”。现状的状况就是我们在空的仓库中新建了一个master分支，然后在master分支中新建了一个index.txt文件。下面只能操作第三步，再次新建我们的develop分支喽。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;三、再次新建develop分支（git branch develop）&lt;/strong&gt;&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ git branch develop&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;执行完新建develop命令后，我们查看develop命令是否新建完成了（怎么现在对git branch这个命令越来越怀疑了，不会它又自动为我新建一个其它的分支吧，哈哈。眼见为实，操作看看吧）&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ git branch&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; 	develop&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;* master&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;看到了吧，我们新建的develop分支已经出来了，但是奇怪的是我们上一步新建的master分支前面为什么一个”&lt;em&gt;“呢，其实这个”&lt;/em&gt;“代表当前所在的分支；上面的意思就目前仓库中有两个分支(develop、master)；而你当前所在的分支是master中。&lt;em&gt;那么到目前为止，现在的状况就是在本地代码仓库中，有一个master分支和一个develop分支，而master分支中有一个index.txt文件，而develop中没有任何文件。&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;四、把master分支中的文件合并到develop中&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;如标题一样，我们的目的是把master分支中的文件合并到develop中去，但是我们还不能直接用合并命令，还需要按照步骤执行如下操作：&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;1、切换到develop分支中(为啥这么做呢，git的合并规则是这样，比如我要把master分支合并到develop分支中，那么我就需要先切换到develop分支中，然后执行合并命令)&lt;/p&gt;
+&lt;p&gt;   先切换到develop分支中&lt;br&gt;    &lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ git checkout develop&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Switched to branch &lt;span class=&quot;string&quot;&gt;&#39;develop&#39;&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;   切换完成后，看看我们当前所处的分支是否是develop分支（看到没，develop前面一个“*”，代表当前所在分支是develop）&lt;br&gt;    &lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ git branch&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; * develop&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; 	master&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;2、执行合并分支的命令(&lt;em&gt;所以git合并命令git merge master的真正意思就是把master分支合并到我所在的当前分支develop中&lt;/em&gt;)&lt;/p&gt;
+&lt;p&gt;   然后执行合并master分支到develop分支中的操作(执行完成后，我们就可以到develop分支下面看到合并过来的index.txt文件了)&lt;br&gt;    &lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ git merge master&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Already up-to-date.&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;五、修改合并到develop分支中的文件内容为hello develop，并提交&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;我们因为执行了上一步的合并master分支到develop分支的操作，所以我们当前所在分支是develop；那么我们修改该分支下面的index.txt文件内容为：hello develop&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;原内容：hello maps&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;新内容：hello develop&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;然后执行添加(add)和提交(commit)操作.&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ git add index.txt&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ git commit -m &lt;span class=&quot;string&quot;&gt;&quot;修改index文件为hello develop&quot;&lt;/span&gt;	&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;[develop bf5d39d] 修改index文件为hello develop&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; file changed, &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; insertion(+), &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; deletion(-)&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;strong&gt;六、切换到master分支,并修改文件内容为hello master&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;   切换到master分支&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ git checkout master&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Switched to branch &lt;span class=&quot;string&quot;&gt;&#39;master&#39;&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;   修改文件内容(因为上一步修改的是develop分支中的index文件，那么我们切换到master分支后，其中的index.txt文件是不会发生改变的，所以内容依然是hello maps)&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;原内容：hello maps&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;新内容：hello master&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;七、小述一下&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;到目前为止，我们修改了develop分支中的内容为：hello develop；而修改master分支中的内容为：hello master；并且当前所在分支是master分支，那么接下来我们需要合并develop分支中的文件到当前所在分支master中来。因为两个分支中的文件都发生了更改，所以合并时肯定会报冲突，至于冲突下面解决。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;八、合并develop分支的内容到master分支中&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;先检查一下当前所在分支是否是master中（看到了吧 ，master分支前面一个“*”号，代表当前所在分支是master上面）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ git branch&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; 	develop&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; * master&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;ul&gt;
+&lt;li&gt;合并develop分支中的内容到master分支上面（我们执行合并命令后git merge develop之后提示了4行信息）&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ git merge develop&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Auto-merging index.&lt;span class=&quot;function&quot;&gt;txt&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;title&quot;&gt;CONFLICT&lt;/span&gt; &lt;span class=&quot;params&quot;&gt;(content)&lt;/span&gt;: Merge conflict in index.txt&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Automatic merge failed; fix conflicts and then commit the result.&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;上面的提示证明此次合并失败，以为两个文件中的内容合并过程中冲突了。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;使用git diff命令查看两个文件冲突的内容&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ git diff&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;diff --cc index.txt&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;index &lt;span class=&quot;number&quot;&gt;2e6&lt;/span&gt;baf7,&lt;span class=&quot;number&quot;&gt;246&lt;/span&gt;b739..&lt;span class=&quot;number&quot;&gt;0000000&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;--- a/index.txt&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;+++ b/index.txt&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;@@@ -&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; -&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; +&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;5&lt;/span&gt; @@@&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;- hello master&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; -hello develop&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;++&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt; HEAD&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;++hello master&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;++=======&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;++hello develop&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;++&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt; develop&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;我们也可以到当前分支master中直接打开index.txt文件查看，或者用cat命令查看也可以&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ cat index.txt&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt; HEAD&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;hello master&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;=======&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;hello develop&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt; develop&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;九、冲突解决–手工&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;我们执行合并操作后，因为两个分支分别对同一个文件进行了修改，所以合并的时候就报冲突了(其实合并执行后，git把文件中凡是冲突的地方都写到当前分支的文件中了，只不过用特殊标记标注了而已)下面是合并冲突后的index.txt文件内容&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ cat index.txt&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt; HEAD&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;hello master&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;=======&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;hello develop&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt; develop&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;针对上面的文件，我们先看&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;（7个&amp;lt;） 到 =======（7个=）之间的内容为：hello master；这就是当前所在分支master&lt;br&gt;分支下面index.txt的文件内容(一般是我修改的)；再接着看从=======（7个=） 到 &amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;（7个&amp;gt;）之间的内容为：hello develop；这就是develop分支下面index.txt的文件内容(一般是别人修改的)。&lt;/p&gt;
+&lt;p&gt;所以我们现在要做的就是解决冲突，具体怎么解决冲突，有以下处理办法：&lt;/p&gt;
+&lt;p&gt; 1、把develop分支中的内容覆盖(擦除)掉master分支中的内容(就好比develop战胜)&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;文件最终内容为：hello develop
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt; 2、把master分支中的内容覆盖(擦除)掉develop分支中的内容(就好比master战胜)&lt;/p&gt;
+&lt;p&gt;   文件最终内容为：hello master&lt;/p&gt;
+&lt;p&gt; 3、把master分支中的内容与develop分支中的内容都保留(就好比develop分支和master分支和解)&lt;/p&gt;
+&lt;p&gt;   文件最终内容为：hello master hello develop&lt;/p&gt;
+&lt;p&gt;不管最终我们以何种方式解决冲突(以谁的内容为主),最终我们都需要删除index.txt文件中的其他无用的git冲突标示符(“+”、”&amp;lt;”、”=”、”&amp;gt;”)；然后我们执行添加(add)和提交(commit)操作,具体不在详述了，前面有说到！&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;十、冲突解决–工具&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;第九步中，我们已经通过手工方式解决了冲突，但是如果一个文件中有N多地方的内容都冲突，那么我们通过手工解决非常费劲，并且容易出错，所以借助工具(mergetool)解决这些体力活是明智之举。&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ git mergetool&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;This message is displayed because &lt;span class=&quot;string&quot;&gt;&#39;merge.tool&#39;&lt;/span&gt; is not configured.&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;See &lt;span class=&quot;string&quot;&gt;&#39;git mergetool --tool-help&#39;&lt;/span&gt; or &lt;span class=&quot;string&quot;&gt;&#39;git help config&#39;&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; more details.&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;string&quot;&gt;&#39;git mergetool&#39;&lt;/span&gt; will now attempt to use one of the following tools:&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;opendiff kdiff3 tkdiff xxdiff meld tortoisemerge gvimdiff diffuse diffmerge ecmerge p4merge araxis bc codecompare emerge vimdiff&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Merging:&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;index.txt&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Normal merge conflict &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;index.txt&#39;&lt;/span&gt;:&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &amp;#123;local&amp;#125;: modified file&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &amp;#123;remote&amp;#125;: &lt;span class=&quot;function&quot;&gt;modified file&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Hit return to start merge resolution &lt;span class=&quot;title&quot;&gt;tool&lt;/span&gt; &lt;span class=&quot;params&quot;&gt;(tortoisemerge)&lt;/span&gt;:&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;输入“git mergetool”命令后，直接再按一次回车键就会弹出合并工具的界面：&lt;br&gt;&lt;img src=&quot;http://soujava.com/images/gitmerge1.png&quot; alt=&quot;Alt text&quot; title=&quot;git 合并工具&quot;&gt;&lt;/p&gt;
+&lt;p&gt;你可以右键点击冲突的行内容，然后点击弹出的菜单项进行合并操作，然后可以看工具的下面区域实时显示合并后的内容效果。&lt;/p&gt;
+&lt;p&gt;通过工具合并后，我们仍然需要直接添加(add)和提交(commit)操作。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;用了git有一段时间了，在项目团队刚切入git时还是遇到了不少的阻力，各种质疑，为什么svn用的好好的突然转到git上面？为什么git操作这么复杂？等等等等；当然我作为逗比的我还是很愿意为他们一一诉说我对git的真爱的。当然并不是说svn不好，我可以说svn非常好，尤其某些
+    
+    </summary>
+    
+      <category term="git" scheme="http://www.soujava.com/categories/git/"/>
+    
+    
+      <category term="git" scheme="http://www.soujava.com/tags/git/"/>
+    
+  </entry>
   
   <entry>
     <title>java使用jxl读取excel数据时特殊符号处理</title>
@@ -45,7 +429,7 @@
     <link href="http://www.soujava.com/Linux%E6%9F%A5%E7%9C%8B%E7%AB%AF%E5%8F%A3%E5%8D%A0%E7%94%A8/"/>
     <id>http://www.soujava.com/Linux查看端口占用/</id>
     <published>2016-08-17T03:30:49.000Z</published>
-    <updated>2016-08-17T03:35:13.806Z</updated>
+    <updated>2016-08-17T07:39:55.186Z</updated>
     
     <content type="html">&lt;p&gt;在操作linux服务器的时候经常会碰到端口被占用的情况，那么如果更好的找到某个端口被什么占用呢。&lt;/p&gt;
 &lt;p&gt;一、分布操作&lt;/p&gt;
@@ -79,7 +463,7 @@
     
     </summary>
     
-      <category term="linux" scheme="http://www.soujava.com/categories/linux/"/>
+      <category term="Linux" scheme="http://www.soujava.com/categories/Linux/"/>
     
     
       <category term="网卡" scheme="http://www.soujava.com/tags/%E7%BD%91%E5%8D%A1/"/>
@@ -131,7 +515,7 @@
     <link href="http://www.soujava.com/Linux%E5%8F%8C%E7%BD%91%E5%8D%A1%E9%85%8D%E7%BD%AE-%E5%86%85%E5%A4%96%E7%BD%91%E5%90%8C%E6%97%B6%E8%AE%BF%E9%97%AE/"/>
     <id>http://www.soujava.com/Linux双网卡配置-内外网同时访问/</id>
     <published>2016-08-17T02:28:50.000Z</published>
-    <updated>2016-08-17T03:22:03.305Z</updated>
+    <updated>2016-08-19T06:09:49.268Z</updated>
     
     <content type="html">&lt;p&gt;事情的经过是这样的。。。。。；我有一台linux服务器操作系统，只能内网访问，现在需要提供给公司其他地域的同事通过VPN可以访问操作，那么就需要为这个linux操作系统配置一个新配置一个网卡，你修改网卡配置文件之前需要确保你的linux操作系统已经有两块物理网卡了，也就是说当你进入linux操作系统后，运行ifconfig命令可以看到eth0和eth1两个网卡信息，这才代表你的物理环境没有问题。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://soujava.com/images/vSphere11.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
@@ -180,10 +564,10 @@
     
     </summary>
     
-      <category term="linux" scheme="http://www.soujava.com/categories/linux/"/>
+      <category term="Linux" scheme="http://www.soujava.com/categories/Linux/"/>
     
     
-      <category term="Linux" scheme="http://www.soujava.com/tags/Linux/"/>
+      <category term="网卡" scheme="http://www.soujava.com/tags/%E7%BD%91%E5%8D%A1/"/>
     
   </entry>
   
@@ -333,7 +717,7 @@
     <link href="http://www.soujava.com/%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E7%9A%84linux%E7%B3%BB%E7%BB%9F%E6%98%AF%E5%93%AA%E4%B8%AA%E5%8F%91%E8%A1%8C%E5%95%86/"/>
     <id>http://www.soujava.com/如何查看当前的linux系统是哪个发行商/</id>
     <published>2016-08-03T08:06:33.000Z</published>
-    <updated>2016-08-03T08:35:10.953Z</updated>
+    <updated>2016-08-19T07:30:22.735Z</updated>
     
     <content type="html">&lt;p&gt;我们刚开始进入一个linux操作系统，可能只知道它是一个操作系统，但是不太清楚到底是那个发行商，比如ubuntu、Centos、Debian等等；那么当然老鸟通过查看某些目录的配置文件一眼就可以看到是什么发行商；对于新鸟来说有以下几个技巧可以查看：&lt;/p&gt;
 &lt;p&gt;一、 通用方法-适用于当前市面上绝大多数linux&lt;/p&gt;
@@ -361,10 +745,10 @@
     
     </summary>
     
-      <category term="linux" scheme="http://www.soujava.com/categories/linux/"/>
+      <category term="Linux" scheme="http://www.soujava.com/categories/Linux/"/>
     
     
-      <category term="linux" scheme="http://www.soujava.com/tags/linux/"/>
+      <category term="Linux" scheme="http://www.soujava.com/tags/Linux/"/>
     
   </entry>
   
@@ -420,7 +804,7 @@
     <link href="http://www.soujava.com/Linux%E7%B3%BB%E7%BB%9F%E6%B7%BB%E5%8A%A0%E9%85%8D%E7%BD%AE%E9%9A%8F%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8%E7%9A%84%E6%9C%8D%E5%8A%A1/"/>
     <id>http://www.soujava.com/Linux系统添加配置随开机启动的服务/</id>
     <published>2016-07-25T09:46:24.000Z</published>
-    <updated>2016-08-17T03:22:14.605Z</updated>
+    <updated>2016-08-17T07:40:27.513Z</updated>
     
     <content type="html">&lt;p&gt;在linux服务器操作系统中，经常会安装一些服务器端的软件如：tomcat、redis、MQ、Nginx等等常用的服务器组件；那么有时候服务器重启后需要用一个一个的启动命令把不同的软件启动起来；主要有以下几种场景：&lt;/p&gt;
 &lt;ol&gt;
@@ -453,7 +837,7 @@
     
     </summary>
     
-      <category term="linux" scheme="http://www.soujava.com/categories/linux/"/>
+      <category term="Linux" scheme="http://www.soujava.com/categories/Linux/"/>
     
     
       <category term="服务开机启动" scheme="http://www.soujava.com/tags/%E6%9C%8D%E5%8A%A1%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8/"/>
@@ -465,7 +849,7 @@
     <link href="http://www.soujava.com/Linux%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8%E5%90%8E%E7%BB%8F%E5%B8%B8%E9%9C%80%E8%A6%81%E9%85%8D%E7%BD%AE%E7%BD%91%E5%8D%A1/"/>
     <id>http://www.soujava.com/Linux开机启动后经常需要配置网卡/</id>
     <published>2016-07-25T09:27:42.000Z</published>
-    <updated>2016-08-17T03:35:36.430Z</updated>
+    <updated>2016-08-17T07:40:07.498Z</updated>
     
     <content type="html">&lt;p&gt;在虚拟机中安装的CentOS6操作系统，每次开机启动后，网卡默认都是关闭的；所以系统对外网络是处于中断的状态的，所以也就不能通过Xshell工具远程连接操作。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://soujava.com/images/wangka.jpg&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
@@ -484,7 +868,7 @@
     
     </summary>
     
-      <category term="linux" scheme="http://www.soujava.com/categories/linux/"/>
+      <category term="Linux" scheme="http://www.soujava.com/categories/Linux/"/>
     
     
       <category term="网卡" scheme="http://www.soujava.com/tags/%E7%BD%91%E5%8D%A1/"/>
@@ -550,382 +934,6 @@
     
     
       <category term="java8 Stream" scheme="http://www.soujava.com/tags/java8-Stream/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>java接收oracle中clob类型字段值</title>
-    <link href="http://www.soujava.com/java%E6%8E%A5%E6%94%B6oracle%E4%B8%ADclob%E7%B1%BB%E5%9E%8B%E5%AD%97%E6%AE%B5%E5%80%BC/"/>
-    <id>http://www.soujava.com/java接收oracle中clob类型字段值/</id>
-    <published>2016-07-06T08:16:33.000Z</published>
-    <updated>2016-07-06T08:40:54.414Z</updated>
-    
-    <content type="html">&lt;p&gt;oracle数据库中有一种大文本字段类型：clob;那么当我们的java程序从数据库中查询出来的数据列表用java程序如何接收处理呢？&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Clob columnContentClob = result.getClob(1); //先用大文本类型接收,getClob方法可以传入列名(columnName)重载使用
-Reader is = columnContentClob.getCharacterStream();//用reader接收
-BufferedReader bf = new BufferedReader(is);//实例化一个缓冲流
-String columnContent = bf.readLine();//读取大文本的内容
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;实例&lt;/strong&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;String driver = &amp;quot;oracle.jdbc.OracleDriver&amp;quot;;
-String url = &amp;quot;jdbc:oracle:thin:@127.0.0.1:1521/databaseName&amp;quot;;
-String username = &amp;quot;username&amp;quot;;
-String password = &amp;quot;password&amp;quot;;
-Class.forName(driver);
-Connection conn = DriverManager.getConnection(url, username, password);
-
- ResultSet rs = null;
-PreparedStatement pstmt = null;
-String query = &amp;quot;SELECT description FROM mytable WHERE id = ?&amp;quot;;
-try {
-  conn = getConnection();
-  pstmt = conn.prepareStatement(query);
-  pstmt.setInt(1, id);
-  rs = pstmt.executeQuery();
-  rs.next();
-  Clob clob = rs.getClob(1);//rs.getClob(&amp;quot;description&amp;quot;);
-
-} finally {
-  rs.close();
-  pstmt.close();
-  conn.close();
-}
-&lt;/code&gt;&lt;/pre&gt;</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;oracle数据库中有一种大文本字段类型：clob;那么当我们的java程序从数据库中查询出来的数据列表用java程序如何接收处理呢？&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;Clob columnContentClob = result.getClob(1); //先用大文本类型接
-    
-    </summary>
-    
-      <category term="java" scheme="http://www.soujava.com/categories/java/"/>
-    
-    
-      <category term="java接收clob字段" scheme="http://www.soujava.com/tags/java%E6%8E%A5%E6%94%B6clob%E5%AD%97%E6%AE%B5/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>oracle11G导出数据时空表无法导出</title>
-    <link href="http://www.soujava.com/oracle11G%E5%AF%BC%E5%87%BA%E6%95%B0%E6%8D%AE%E6%97%B6%E7%A9%BA%E8%A1%A8%E6%97%A0%E6%B3%95%E5%AF%BC%E5%87%BA/"/>
-    <id>http://www.soujava.com/oracle11G导出数据时空表无法导出/</id>
-    <published>2016-07-06T00:49:02.000Z</published>
-    <updated>2016-07-06T01:04:23.228Z</updated>
-    
-    <content type="html">&lt;p&gt;  使用oracle数据库导出命令exp导出数据库的时候，数据库中的空表无法导出，因为oracle11g 建表时，默认不分配segment,以节省磁盘空间，当表插入第一条数据时，再分配segment。当然至于想不想在oracle创建表的时候就自动分配segment,是跟oracle的一个配置参数有关的，也就是&lt;br&gt;  “deferred_segment_creation”；默认该参数为true，说明不自动分配sgement，如果设置该参数为false时，则会从此刻以后每次创建表就自动分配segment。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;注：segment就是oracle中段的概念，默认一个普通表会对应一个segment；这里的段就是物理存储的对象，而表(table)就是逻辑存储的对象。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;strong&gt;解决方法：&lt;/strong&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;1）打开命令行工具执行命令：alter system set deferred_segment_creation=false;
-2）执行之后后期创建的空表就可以正常导出了，但是在命令执行之前的空表还是无法进行导出
-3）先查询一下哪些表是空的：select table_name from user_tables where NUM_ROWS=0;
-4）下面我们通过select 来生成修改语句：
-    select &amp;apos;alter table &amp;apos;||table_name||&amp;apos; allocate extent;&amp;apos; from user_tables where num_rows=0
-     后复制生成的修改语句执行，问题解决！
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;总结：解决方法共3个途径：&lt;/strong&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;1：向空白插入一条数据，再删除掉，就分配空间了（空表比较少）。
-2：修改系统参数
-      alter system set deferred_segment_creation=false;
-     （对以后新增的表系统会分配 segment），重启数据库。
-3：批量对现有的空表分配空间
-     select &amp;apos;alter table &amp;apos; || table_name ||  &amp;apos; allocate extent;&amp;apos; as sql from all_tables where num_rows = 0 and OWNER=username ;
-&lt;/code&gt;&lt;/pre&gt;</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;  使用oracle数据库导出命令exp导出数据库的时候，数据库中的空表无法导出，因为oracle11g 建表时，默认不分配segment,以节省磁盘空间，当表插入第一条数据时，再分配segment。当然至于想不想在oracle创建表的时候就自动分配segment,是跟or
-    
-    </summary>
-    
-      <category term="oracle" scheme="http://www.soujava.com/categories/oracle/"/>
-    
-    
-      <category term="oracle导出空表" scheme="http://www.soujava.com/tags/oracle%E5%AF%BC%E5%87%BA%E7%A9%BA%E8%A1%A8/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>界面框架</title>
-    <link href="http://www.soujava.com/2016-06-30-%E7%95%8C%E9%9D%A2%E6%A1%86%E6%9E%B6/"/>
-    <id>http://www.soujava.com/2016-06-30-界面框架/</id>
-    <published>2016-06-30T08:39:11.000Z</published>
-    <updated>2016-07-01T08:20:02.726Z</updated>
-    
-    <content type="html">&lt;p&gt;&lt;strong&gt;1、布局框架&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt; 访问地址：&lt;a href=&quot;http://layout.jquery-dev.com/index.cfm&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://layout.jquery-dev.com/index.cfm&lt;/a&gt;&lt;br&gt; demo：&lt;a href=&quot;http://layout.jquery-dev.com/demos.cfm&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://layout.jquery-dev.com/demos.cfm&lt;/a&gt;&lt;br&gt; 可以满足多种复杂或者简单的布局，支持拖拉操作：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/bujv.jpg&quot; alt=&quot;Alt text&quot; title=&quot;git push&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;2、表格框架&lt;/strong&gt;&lt;br&gt;2.1、SlickGrid（&lt;a href=&quot;https://github.com/Celebio/SlickGrid）&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/Celebio/SlickGrid）&lt;/a&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;1)、支持表格的排序、列宽度的拖拽调整、表格中列的可编辑、表格中可编辑单元格中的各种控件(时间选择、下拉框、滑动条、复选框等等)、表格中添                                    加树形菜单、表格列宽度随着窗口大小自动调整；
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/biaoge1.jpg&quot; alt=&quot;Alt text&quot; title=&quot;表格&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/biaoge2.jpg&quot; alt=&quot;Alt text&quot; title=&quot;表格&quot;&gt;&lt;/p&gt;
-&lt;p&gt;   2)、可以在表格中直接框选复制-粘贴、对单元格中的值动态筛选、表格中的一些值的汇总计算以及展示、框选复制粘贴&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/biaoge3.jpg&quot; alt=&quot;Alt text&quot; title=&quot;表格&quot;&gt;&lt;/p&gt;
-&lt;p&gt;   3)、表格数据的渲染速度也非常不错，50万条静态数据一次加载渲染到表格中1-3秒时间&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/biaoge4.jpg&quot; alt=&quot;Alt text&quot; title=&quot;表格&quot;&gt;&lt;/p&gt;
-&lt;p&gt;2.2、 paramquery（&lt;a href=&quot;http://paramquery.com/grid）&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://paramquery.com/grid）&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;  1)、表格拖拉控制宽度、排序、可编辑&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/biaoge5.jpg&quot; alt=&quot;Alt text&quot; title=&quot;表格&quot;&gt;&lt;/p&gt;
-&lt;p&gt;  2)、可以对添加表格中的数据、以及对表格中的某几列数据添加横向滚动条&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/biaoge6.jpg&quot; alt=&quot;Alt text&quot; title=&quot;表格&quot;&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;3)、可以对表格头部进行复杂的嵌套汇总显示：
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/biaoge9.jpg&quot; alt=&quot;Alt text&quot; title=&quot;表格&quot;&gt;&lt;/p&gt;
-&lt;p&gt;2.3、 jqwidgets（&lt;a href=&quot;http://www.jqwidgets.com/）&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://www.jqwidgets.com/）&lt;/a&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;这个表格框架还是相当的强大的，你能想到的，你将用到的都为你提供了，总之一两句话表达不彻底，需要你去亲自体验！不过有些浏览器兼容可能会出些问题，我在使用过程中由于兼容问题，我修改了其内核js文件解决的。
-
-DEMO体验地址：http://www.jqwidgets.com/jquery-widgets-demo/
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/jqwidgets.png&quot; alt=&quot;Alt text&quot; title=&quot;表格&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;3、界面风格&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;3.1、 semantic-ui (&lt;a href=&quot;http://semantic-ui.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://semantic-ui.com/&lt;/a&gt;) &lt;/p&gt;
-&lt;p&gt;3.2、 topcoat (&lt;a href=&quot;http://topcoat.io/topcoat/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://topcoat.io/topcoat/&lt;/a&gt;) &lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;strong&gt;1、布局框架&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt; 访问地址：&lt;a href=&quot;http://layout.jquery-dev.com/index.cfm&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://layout.jquery
-    
-    </summary>
-    
-      <category term="UI" scheme="http://www.soujava.com/categories/UI/"/>
-    
-    
-      <category term="界面框架" scheme="http://www.soujava.com/tags/%E7%95%8C%E9%9D%A2%E6%A1%86%E6%9E%B6/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>页面中添加&#39;ENTER&#39;键点击事件</title>
-    <link href="http://www.soujava.com/2016-06-30-%E9%A1%B5%E9%9D%A2%E4%B8%AD%E6%B7%BB%E5%8A%A0-ENTER-%E9%94%AE%E7%82%B9%E5%87%BB%E4%BA%8B%E4%BB%B6/"/>
-    <id>http://www.soujava.com/2016-06-30-页面中添加-ENTER-键点击事件/</id>
-    <published>2016-06-30T08:31:17.000Z</published>
-    <updated>2016-07-01T08:33:45.962Z</updated>
-    
-    <content type="html">&lt;p&gt;通常有以下场景：&lt;br&gt;当输入表单完成后直接按“Enter”键进行快捷提交；当操作一个共时，弹出的提示询问框，然后直接按“Enter”键确认。&lt;br&gt;那么我们只需要通过获取当前点击的键码是否是enter键的码值即可！&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;jquery&lt;/strong&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;$(&amp;quot;body&amp;quot;).keydown(function(e){
-    if(e.keyCode==&amp;quot;13&amp;quot;){
-        alert(&amp;apos;点击了Enter键&amp;apos;);
-    }
-});
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;javascript&lt;/strong&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;document.body.onclick=function(){
-    if(e.keyCode==&amp;quot;13&amp;quot;){
-       alert(&amp;apos;点击了Enter键&amp;apos;);
-    }
-};
-&lt;/code&gt;&lt;/pre&gt;</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;通常有以下场景：&lt;br&gt;当输入表单完成后直接按“Enter”键进行快捷提交；当操作一个共时，弹出的提示询问框，然后直接按“Enter”键确认。&lt;br&gt;那么我们只需要通过获取当前点击的键码是否是enter键的码值即可！&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;jquery&lt;/stron
-    
-    </summary>
-    
-      <category term="javascript" scheme="http://www.soujava.com/categories/javascript/"/>
-    
-    
-      <category term="添加enter事件" scheme="http://www.soujava.com/tags/%E6%B7%BB%E5%8A%A0enter%E4%BA%8B%E4%BB%B6/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>关闭父窗口刷新子窗口</title>
-    <link href="http://www.soujava.com/2016-06-30-%E5%85%B3%E9%97%AD%E7%88%B6%E7%AA%97%E5%8F%A3%E5%88%B7%E6%96%B0%E5%AD%90%E7%AA%97%E5%8F%A3/"/>
-    <id>http://www.soujava.com/2016-06-30-关闭父窗口刷新子窗口/</id>
-    <published>2016-06-30T08:21:45.000Z</published>
-    <updated>2016-07-01T08:42:45.764Z</updated>
-    
-    <content type="html">&lt;p&gt;比如我访问index.html页面，其中一个功能模块需要弹出(新打开)other.html，勾选某些数据，勾选完成后，关闭other.html，并且index.html随着关闭other.html事件而刷新。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;父窗口-index.html&lt;/strong&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt; &amp;lt;html&amp;gt;  
- &amp;lt;head&amp;gt;  
-  &amp;lt;title&amp;gt;index.htmll&amp;lt;/title&amp;gt;  
-  &amp;lt;meta name=&amp;quot;Generator&amp;quot; content=&amp;quot;EditPlus&amp;quot;&amp;gt;  
-  &amp;lt;meta name=&amp;quot;Author&amp;quot; content=&amp;quot;&amp;quot;&amp;gt;  
-  &amp;lt;meta name=&amp;quot;Keywords&amp;quot; content=&amp;quot;&amp;quot;&amp;gt;  
-  &amp;lt;meta name=&amp;quot;Description&amp;quot; content=&amp;quot;&amp;quot;&amp;gt;  
-    &amp;lt;SCRIPT LANGUAGE=&amp;quot;JavaScript&amp;quot;&amp;gt;  
-    &amp;lt;!--   
-    function clicks(){   
-     window.open(&amp;quot;other.html&amp;quot;);   
-    }   
-    //--&amp;gt;  
-    &amp;lt;/SCRIPT&amp;gt;  
- &amp;lt;/head&amp;gt;  
- &amp;lt;body&amp;gt;  
- &amp;lt;a  onClick=&amp;quot;clicks();&amp;quot; target=&amp;quot;_blank&amp;quot;&amp;gt;选择数据&amp;lt;/a&amp;gt;  
- &amp;lt;/body&amp;gt;  
-&amp;lt;/html&amp;gt;  
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;子窗口-other.html&lt;/strong&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt; &amp;lt;html&amp;gt;  
- &amp;lt;head&amp;gt;  
-  &amp;lt;title&amp;gt;子窗口&amp;lt;/title&amp;gt;  
-  &amp;lt;meta name=&amp;quot;Generator&amp;quot; content=&amp;quot;EditPlus&amp;quot;&amp;gt;  
-  &amp;lt;meta name=&amp;quot;Author&amp;quot; content=&amp;quot;&amp;quot;&amp;gt;  
-  &amp;lt;meta name=&amp;quot;Keywords&amp;quot; content=&amp;quot;&amp;quot;&amp;gt;  
-  &amp;lt;meta name=&amp;quot;Description&amp;quot; content=&amp;quot;&amp;quot;&amp;gt;  
-&amp;lt;SCRIPT LANGUAGE=&amp;quot;JavaScript&amp;quot;&amp;gt;  
-&amp;lt;!--   
-function Close()   
-{
-  window.opener.location.href=&amp;quot;index.html&amp;quot;;
-}
-//--&amp;gt;  
-&amp;lt;/script&amp;gt;  
- &amp;lt;/head&amp;gt;  
- &amp;lt;body&amp;gt;  
- &amp;lt;a href=&amp;quot;javascript:Close();&amp;quot;&amp;gt;关闭当前子窗口，打开父窗口&amp;lt;/a&amp;gt;  
- &amp;lt;/body&amp;gt;  
-&amp;lt;/html&amp;gt;  
-&lt;/code&gt;&lt;/pre&gt;</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;比如我访问index.html页面，其中一个功能模块需要弹出(新打开)other.html，勾选某些数据，勾选完成后，关闭other.html，并且index.html随着关闭other.html事件而刷新。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;父窗口-index.html&lt;/s
-    
-    </summary>
-    
-      <category term="javascript" scheme="http://www.soujava.com/categories/javascript/"/>
-    
-    
-      <category term="javascript" scheme="http://www.soujava.com/tags/javascript/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Java was started but returned exit code异常</title>
-    <link href="http://www.soujava.com/2016-06-30-Java-was-started-but-returned-exit-code%E5%BC%82%E5%B8%B8/"/>
-    <id>http://www.soujava.com/2016-06-30-Java-was-started-but-returned-exit-code异常/</id>
-    <published>2016-06-30T07:56:30.000Z</published>
-    <updated>2016-06-30T08:01:09.494Z</updated>
-    
-    <content type="html">&lt;p&gt;今天eclipse启动时一直报个错：Java was started but returned exit code=-805306369………等等&lt;br&gt;将eclipse.ini内容改为：&lt;br&gt;（注：最下面的几行是调整后的配置）&lt;/p&gt;
-&lt;p&gt;-startup&lt;br&gt;plugins/org.eclipse.equinox.launcher_1.1.0.v20100507.jar&lt;br&gt;–launcher.library&lt;br&gt;plugins/org.eclipse.equinox.launcher.win32.win32.x86_64_1.1.0.v20100503&lt;br&gt;-product&lt;br&gt;org.eclipse.epp.package.jee.product&lt;br&gt;–launcher.defaultAction&lt;br&gt;openFile&lt;br&gt;–launcher.XXMaxPermSize&lt;br&gt;256M&lt;br&gt;-showsplash&lt;br&gt;org.eclipse.platform&lt;br&gt;-vmargs&lt;br&gt;-Dosgi.requiredJavaVersion=1.5&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;-Xms1024m&lt;br&gt;-Xmx1024m&lt;br&gt;-XX:MaxPermSize=128m&lt;br&gt;-XX:+CMSClassUnloadingEnabled&lt;br&gt;-XX:+CMSPermGenSweepingEnabled&lt;br&gt;-XX:+UseParallelGC&lt;br&gt;-XX:CompileCommand=exclude,org/eclipse/core/internal/dtree/DataTreeNode,forwardDeltaWith&lt;/p&gt;
-&lt;/blockquote&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;今天eclipse启动时一直报个错：Java was started but returned exit code=-805306369………等等&lt;br&gt;将eclipse.ini内容改为：&lt;br&gt;（注：最下面的几行是调整后的配置）&lt;/p&gt;
-&lt;p&gt;-startup&lt;br&gt;pl
-    
-    </summary>
-    
-      <category term="IDE" scheme="http://www.soujava.com/categories/IDE/"/>
-    
-    
-      <category term="eclipse" scheme="http://www.soujava.com/tags/eclipse/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>添加KEY后，每次push时让输入密码</title>
-    <link href="http://www.soujava.com/2016-06-28-%E6%B7%BB%E5%8A%A0KEY%E5%90%8E%EF%BC%8C%E6%AF%8F%E6%AC%A1push%E6%97%B6%E8%AE%A9%E8%BE%93%E5%85%A5%E5%AF%86%E7%A0%81/"/>
-    <id>http://www.soujava.com/2016-06-28-添加KEY后，每次push时让输入密码/</id>
-    <published>2016-06-28T10:03:13.000Z</published>
-    <updated>2016-07-01T08:47:34.526Z</updated>
-    
-    <content type="html">&lt;p&gt;我的操作系统是window环境，首先在电脑上面已经在.ssh/目录下面生成了对应的key文件，并且将id_rsa.pub文件中的公钥添加到我github账户上面的sshkey模块中&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;当从github上面clone项目时，还老是提示输入密码，如下图：&lt;blockquote&gt;
-&lt;p&gt;&lt;code&gt;Enter passphrase for key ‘/c/Users/maps/.ssh/id_rsa’:&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/getIp.jpg&quot; alt=&quot;Alt text&quot; title=&quot;git push&quot;&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;按照先后顺序执行以下两条命令：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;code&gt;$ ssh-agent bash&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;$ ssh-add /c/Users/maps/.ssh/id_rsa&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;注：这两条命令必须按照先后顺序执行；第二条命令中后半部分就是你的私钥文件id_rsa的绝对路径&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;/li&gt;
-&lt;li&gt;通过以上两个命令就可以解决上面的问题，然后我们输入ssh -T 命令测试连接git服务,提示测试成功&lt;blockquote&gt;
-&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/gitTestconnsucc.jpg&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;/li&gt;
-&lt;li&gt;最后来一个完整的图片&lt;blockquote&gt;
-&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/gitpushinputpasssucc.jpg&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;我的操作系统是window环境，首先在电脑上面已经在.ssh/目录下面生成了对应的key文件，并且将id_rsa.pub文件中的公钥添加到我github账户上面的sshkey模块中&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;当从github上面clone项目时，还老是提示输入密码，如下图：
-    
-    </summary>
-    
-      <category term="github" scheme="http://www.soujava.com/categories/github/"/>
-    
-    
-      <category term="github" scheme="http://www.soujava.com/tags/github/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>通过gitBook让网站更实用</title>
-    <link href="http://www.soujava.com/2016-06-28-%E9%80%9A%E8%BF%87gitBook%E8%AE%A9%E7%BD%91%E7%AB%99%E6%9B%B4%E5%AE%9E%E7%94%A8/"/>
-    <id>http://www.soujava.com/2016-06-28-通过gitBook让网站更实用/</id>
-    <published>2016-06-28T09:48:54.000Z</published>
-    <updated>2016-06-29T03:25:33.126Z</updated>
-    
-    <content type="html">&lt;ol&gt;
-&lt;li&gt;前两篇文章中介绍了使用github Pages功能生成静态博客系统，并且也选择了系统提供的几个博客模板，但是提供的博客模板固然不错，但是总觉得如果有目录导航整个文章目录更便于阅读，就如书本似的(左侧目录+右侧内容文章);&lt;blockquote&gt;
-&lt;p&gt;csdn上面的博客查看方式&lt;br&gt;&lt;img src=&quot;http://soujava.com/images/mycsdnblog.jpg&quot; alt=&quot;Alt text&quot;&gt;&lt;br&gt; &lt;/p&gt;&lt;p&gt;采用gitBook构建的博客&lt;br&gt; &lt;/p&gt;&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/mygitbook.jpg&quot; alt=&quot;Alt text&quot;&gt;&lt;br&gt; &lt;/p&gt;&lt;p&gt;比如上面两个博客图片比对可以感受一下(csdn上面博客和采用gitBook构建的博客)&lt;/p&gt;
- &lt;p&gt;&lt;/p&gt;&lt;/blockquote&gt;
-&lt;/li&gt;
-&lt;li&gt;gitBook是什么&lt;br&gt; &lt;p&gt;GitBook是一个基于 Node.js 的命令行工具，可使用 Github/Git 和 Markdown 来制作精美的电子书，GitBook 并非关于 Git 的教程。&lt;br&gt; GitBook支持输出多种文档格式：&lt;br&gt; ·静态站点：GitBook默认输出该种格式，生成的静态站点可直接托管搭载Github Pages服务上；&lt;br&gt; ·PDF：需要安装gitbook-pdf依赖；&lt;br&gt; ·eBook：需要安装ebook-convert；&lt;br&gt; ·单HTML网页：支持将内容输出为单页的HTML，不过一般用在将电子书格式转换为PDF或eBook的中间过程；&lt;br&gt; ·JSON：一般用于电子书的调试或元数据提取。&lt;br&gt; 使用GitBook制作电子书，必备两个文件：README.md和SUMMARY.md&lt;br&gt; &lt;/p&gt;&lt;p&gt;官网:&lt;a href=&quot;https://www.gitbook.com&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://www.gitbook.com&lt;/a&gt; &lt;/p&gt;&lt;p&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;如何使用gitBook书写文章，需要安装node.js、gitBook、markdown，下面介绍：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;1)、下载、安装node.js;官网：&lt;a href=&quot;http://nodejs.cn/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://nodejs.cn/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/nodejsdownload.jpg&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
-&lt;p&gt;下载完成后，直接双击、下一步下一步的进行傻瓜式安装即可！&lt;/p&gt;
-&lt;p&gt;2)、通过window命令安装gitbook服务；&lt;br&gt;&lt;code&gt;npm install gitbook -g&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/1.jpg&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
-&lt;p&gt;3)、通过window命令安装gitbook命令服务（gitbook-cli）；&lt;br&gt;&lt;code&gt;npm install gitbook-cli -g&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;4)、下载安装markdown；&lt;br&gt;下载地址：&lt;a href=&quot;http://markdownpad.com/download.html；&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://markdownpad.com/download.html；&lt;/a&gt;&lt;br&gt;下载完成后直接下一步下一步安装，安装成功后桌面出现快捷启动图标&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/markdown.jpg&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
-&lt;p&gt;5)、使用gitbook开始制作电子书式的博客系统；首先在你的硬盘上面新建你个存放你博客的目录，比如BLOG;然后通过window环境下面的cmd命令窗口切换到该目录下面，通过gitbook init命令初始化gitbook服务的目录结构：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/3.jpg&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
-&lt;p&gt;6)、首先介绍一下gitbook init命令的作用，首先读取SUMMARY.md文件中的目录定义结构，然后会按照该目录结构在对应博客文件夹下面生成对应的文件目录结构,&lt;br&gt;SUMMARY.md文件内容如图&lt;br&gt; &lt;/p&gt;&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/gitinit.jpg&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
-&lt;p&gt;运行gitbook init命令后生成的目录结构如图&lt;/p&gt;
-&lt;p&gt; &lt;/p&gt;&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/gitinitfile.jpg&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
-&lt;p&gt;7)、然后通过gitbook build命令将目录结构中的.md文件(markdown语法格式的文件)转换生成.html文件(静态网页文件)，可以用浏览器浏览查看;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/gitbuildbook.jpg&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
-&lt;p&gt;8)、截止到这一步我们通过gitbook构建电子书式的博客文章已经完成了，我们只需要把第7)步骤中通过gitbook build命令生成的_book文件夹下面的文件通过git提交到自己github账户下面的博客项目目录下面即可(如果之前自己账户下面的github博客没有用gitbook服务生成的目录构建博客目录的话，可以删除根目录下面旧的目录文件；如果之前已经用过gitbook服务生成的静态目录结构构建过博客目录，那么我们只需要通过git push覆盖旧文件即可)；&lt;br&gt;9)、上面没有讲到如何用markdown工具，其实在第6)步骤中通过gitbook init命令生成的以.md文件组成的目录结构就是markdown的文件，我们需要用markdown工具进行编辑操作，当然.md文件也可以用其他编辑器工具编写，只是个人感觉用markdown工具更方便一些，至于如何用markdown工具编写网页，需要你去先了解一下markdown的语法；这里就不过多介绍了，因为语法内容挺多的！&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;/li&gt;
-&lt;li&gt;总结&lt;blockquote&gt;
-&lt;p&gt;安装node.js、gitbook、markdown&lt;/p&gt;
-&lt;p&gt;通过gitbook init命令初始化目录结构&lt;/p&gt;
-&lt;p&gt;通过markdown工具编辑目录结构文章对应的.md文件&lt;/p&gt;
-&lt;p&gt;通过gitbook build命令将.md文件转换生成.html静态网页文件(默认自动存放在_book文件夹下)&lt;/p&gt;
-&lt;p&gt;通过git push命令将_book文件夹下面生成的.html静态文件推送到自己github账户下面的博客系统项目工程目录下面&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;ol&gt;
-&lt;li&gt;前两篇文章中介绍了使用github Pages功能生成静态博客系统，并且也选择了系统提供的几个博客模板，但是提供的博客模板固然不错，但是总觉得如果有目录导航整个文章目录更便于阅读，就如书本似的(左侧目录+右侧内容文章);&lt;blockquote&gt;
-&lt;p&gt;csdn上
-    
-    </summary>
-    
-      <category term="github" scheme="http://www.soujava.com/categories/github/"/>
-    
-    
-      <category term="github" scheme="http://www.soujava.com/tags/github/"/>
     
   </entry>
   

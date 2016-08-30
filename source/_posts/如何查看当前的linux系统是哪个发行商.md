@@ -1,8 +1,8 @@
 ---
 title: 如何查看当前的linux系统是哪个发行商
 date: 2016-08-03 16:06:33
-categories: linux
-tags: linux
+categories: Linux
+tags: Linux
 ---
 我们刚开始进入一个linux操作系统，可能只知道它是一个操作系统，但是不太清楚到底是那个发行商，比如ubuntu、Centos、Debian等等；那么当然老鸟通过查看某些目录的配置文件一眼就可以看到是什么发行商；对于新鸟来说有以下几个技巧可以查看：
 

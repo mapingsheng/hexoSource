@@ -1,7 +1,7 @@
 ---
 title: Linux查看端口占用
 date: 2016-08-17 11:30:49
-categories: linux
+categories: Linux
 tags: 网卡
 ---
 在操作linux服务器的时候经常会碰到端口被占用的情况，那么如果更好的找到某个端口被什么占用呢。

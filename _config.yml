@@ -54,6 +54,7 @@ category_map:
 		javascript: javascript
 		mysql: mysql
 		nodejs: nodejs
+		Linux: Linux
 tag_map:
 
 # Date / Time format

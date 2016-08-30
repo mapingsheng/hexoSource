@@ -1,7 +1,7 @@
 ---
 title: Linux系统添加配置随开机启动的服务-rc.local配置
 date: 2016-07-25 17:46:24
-categories: linux
+categories: Linux
 tags: 服务开机启动
 ---
 在linux服务器操作系统中，经常会安装一些服务器端的软件如：tomcat、redis、MQ、Nginx等等常用的服务器组件；那么有时候服务器重启后需要用一个一个的启动命令把不同的软件启动起来；主要有以下几种场景：
