@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.soujava.com/"/>
-  <updated>2016-09-28T09:12:08.475Z</updated>
+  <updated>2017-01-11T02:06:24.915Z</updated>
   <id>http://www.soujava.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://www.soujava.com/thymeleaf%E6%95%99%E7%A8%8B3-with%E5%AE%9A%E4%B9%89%E5%8F%98%E9%87%8F%E4%BD%BF%E7%94%A8/"/>
     <id>http://www.soujava.com/thymeleaf教程3-with定义变量使用/</id>
     <published>2016-09-28T08:11:44.000Z</published>
-    <updated>2016-09-28T09:12:08.475Z</updated>
+    <updated>2017-01-11T02:06:24.915Z</updated>
     
     <content type="html">&lt;p&gt;在使用thymeleaf渲染数据的时候，我们经常会用到basepath变量（访问地址前缀），一般我们在jsp中直接request对象获取拼接而成，但是在thymeleaf中如何使用呢，可以通过th:with定义并使用。&lt;/p&gt;
 &lt;h3 id=&quot;th-with用法&quot;&gt;&lt;a href=&quot;#th-with用法&quot; class=&quot;headerlink&quot; title=&quot;th:with用法&quot;&gt;&lt;/a&gt;th:with用法&lt;/h3&gt;&lt;p&gt;1、用来定义局部变量，用法如下：&lt;br&gt;&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;div th:with=&quot;name=zhangsan&quot;&amp;gt;  &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   	&amp;lt;p&amp;gt;hello &amp;lt;span th:text=&quot;$&amp;#123;name&amp;#125;&quot;&amp;gt;&amp;lt;/span&amp;gt;.&amp;lt;/p&amp;gt;  &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;/div&amp;gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
@@ -61,7 +61,7 @@
     <link href="http://www.soujava.com/Maven%E5%BF%BD%E7%95%A5%E5%85%B6%E4%BB%96%E4%BE%9D%E8%B5%96jar%E5%8C%85%E6%8F%92%E4%BB%B6/"/>
     <id>http://www.soujava.com/Maven忽略其他依赖jar包插件/</id>
     <published>2016-09-20T02:54:31.000Z</published>
-    <updated>2016-09-20T03:05:42.674Z</updated>
+    <updated>2017-01-11T02:06:24.905Z</updated>
     
     <content type="html">&lt;p&gt;我们在开发产品时，可能不同人开发不同的功能模块，比如：&lt;/p&gt;
 &lt;p&gt;•现在A开发a模块，B开发b模块&lt;/p&gt;
@@ -92,7 +92,7 @@
     <link href="http://www.soujava.com/Mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BC%96%E7%A0%81%E6%9B%B4%E6%94%B9/"/>
     <id>http://www.soujava.com/Mysql数据库编码更改/</id>
     <published>2016-09-20T02:46:29.000Z</published>
-    <updated>2016-09-20T02:51:45.224Z</updated>
+    <updated>2017-01-11T02:06:24.908Z</updated>
     
     <content type="html">&lt;p&gt;在平时的开发过程中，mysql的编码是拉丁字符，所以当向里面存储数据时，显示出来就是乱码，那么我们需要执行如下操作：&lt;/p&gt;
 &lt;h3 id=&quot;1-通过命令或者其他终端登录到mysql服务中，并执行查询目前对应的数据库的编码信息sql脚本查询，执行命令会查询出该数据库下面每一张表对应的字符编码信息&quot;&gt;&lt;a href=&quot;#1-通过命令或者其他终端登录到mysql服务中，并执行查询目前对应的数据库的编码信息sql脚本查询，执行命令会查询出该数据库下面每一张表对应的字符编码信息&quot; class=&quot;headerlink&quot; title=&quot;1.通过命令或者其他终端登录到mysql服务中，并执行查询目前对应的数据库的编码信息sql脚本查询，执行命令会查询出该数据库下面每一张表对应的字符编码信息&quot;&gt;&lt;/a&gt;1.通过命令或者其他终端登录到mysql服务中，并执行查询目前对应的数据库的编码信息sql脚本查询，执行命令会查询出该数据库下面每一张表对应的字符编码信息&lt;/h3&gt;&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/mysqlCode1.png&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
@@ -119,7 +119,7 @@
     <link href="http://www.soujava.com/RocketMQ%E5%90%AF%E5%8A%A8%E6%8A%A5%E9%94%99%E8%A7%A3%E5%86%B3/"/>
     <id>http://www.soujava.com/RocketMQ启动报错解决/</id>
     <published>2016-09-20T02:21:53.000Z</published>
-    <updated>2016-09-20T02:40:12.103Z</updated>
+    <updated>2017-01-11T02:06:24.908Z</updated>
     
     <content type="html">&lt;p&gt;最近需要用到消息服务器，就用到淘宝开源的RocketMQ消息服务器了，重新安装的一台新的linux服务器（CentOS6.4），然后安装的RocketMQ二进制包。安装成功后，在最后启动的时候，报了一个错误！&lt;/p&gt;
 &lt;blockquote&gt;
@@ -161,7 +161,7 @@
     <link href="http://www.soujava.com/java%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1Timer%E5%B0%8F%E8%AF%95%E4%B8%80%E4%B8%8B/"/>
     <id>http://www.soujava.com/java定时任务Timer小试一下/</id>
     <published>2016-09-14T07:16:26.000Z</published>
-    <updated>2016-09-14T07:25:45.027Z</updated>
+    <updated>2017-01-11T02:06:24.911Z</updated>
     
     <content type="html">&lt;p&gt;java定时任务Timer 关于定时任务，似乎跟时间操作的联系并不是很大，但是前面既然提到了定时任务，索性在这里一起解决了。设置定时任务很简单，用Timer类就搞定了。&lt;/p&gt;
 &lt;h3 id=&quot;一、我们定义一个需要定时执行的任务的类&quot;&gt;&lt;a href=&quot;#一、我们定义一个需要定时执行的任务的类&quot; class=&quot;headerlink&quot; title=&quot;一、我们定义一个需要定时执行的任务的类&quot;&gt;&lt;/a&gt;一、我们定义一个需要定时执行的任务的类&lt;/h3&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;package&lt;/span&gt; test; &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.util.Timer; &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;TimeTaskTest&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(String[] args)&lt;/span&gt;&lt;/span&gt;&amp;#123; &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		Timer timer = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Timer(); &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		timer.schedule(&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Task(), &lt;span class=&quot;number&quot;&gt;60&lt;/span&gt; * &lt;span class=&quot;number&quot;&gt;1000&lt;/span&gt;); &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125; &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
@@ -200,7 +200,7 @@
     <link href="http://www.soujava.com/%E5%A4%84%E7%90%86%E7%99%BE%E4%B8%87%E7%BA%A7%E4%BB%A5%E4%B8%8A%E7%9A%84%E6%95%B0%E6%8D%AE%E6%8F%90%E9%AB%98%E6%9F%A5%E8%AF%A2%E9%80%9F%E5%BA%A6%E7%9A%84%E6%96%B9%E6%B3%95-%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BC%98%E5%8C%96%E7%AF%87/"/>
     <id>http://www.soujava.com/处理百万级以上的数据提高查询速度的方法-数据库优化篇/</id>
     <published>2016-09-12T06:17:55.000Z</published>
-    <updated>2016-09-12T06:23:46.143Z</updated>
+    <updated>2017-01-11T02:06:24.916Z</updated>
     
     <content type="html">&lt;p&gt; &lt;strong&gt;1&lt;/strong&gt;.应尽量避免在 where 子句中使用!=或&amp;lt;&amp;gt;操作符，否则将引擎放弃使用索引而进行全表扫描。&lt;/p&gt;
 &lt;p&gt; &lt;strong&gt;2&lt;/strong&gt;.对查询进行优化，应尽量避免全表扫描，首先应考虑在 where 及 order by 涉及的列上建立索引。&lt;/p&gt;
@@ -330,7 +330,7 @@ select num from a where exists(select 1 from b where num=a.num)
     <link href="http://www.soujava.com/%E7%94%A8POI3-9%E5%86%99%E4%B8%80%E4%B8%AA%E5%9F%BA%E4%BA%8Eoffice%E7%B3%BB%E5%88%97%E6%96%87%E6%A1%A3%E7%9A%84%E8%BD%AC%E6%8D%A2%E7%B3%BB%E7%BB%9F-%E8%AE%BE%E8%AE%A1%E7%AF%87/"/>
     <id>http://www.soujava.com/用POI3-9写一个基于office系列文档的转换系统-设计篇/</id>
     <published>2016-09-12T06:11:22.000Z</published>
-    <updated>2016-09-12T06:15:34.911Z</updated>
+    <updated>2017-01-11T02:06:24.917Z</updated>
     
     <content type="html">&lt;p&gt;想用Apache的POI3.9版本编写一套基于office系列文档的一个转换系统，比如对office文档的读写操作、其中的关键字检索操作、把文档转换为html或者支持在线预览的操作等功能。&lt;/p&gt;
 &lt;h3 id=&quot;一、需求&quot;&gt;&lt;a href=&quot;#一、需求&quot; class=&quot;headerlink&quot; title=&quot;一、需求&quot;&gt;&lt;/a&gt;一、需求&lt;/h3&gt;&lt;p&gt;由于前段时间已经写了一个文档在线预览功能，就是对office文档、txt、图片、pdf等文档，可以在线预览操作，也是通过搜索引擎搜索、查看一些技术文章等调研方式写出的，基本原理也就是通过几个工具转换实现的，相关原理如下图：&lt;/p&gt;
@@ -364,7 +364,7 @@ select num from a where exists(select 1 from b where num=a.num)
     <link href="http://www.soujava.com/spring3-1-1%E5%85%A5%E9%97%A8%E8%AE%B2%E8%A7%A3%E4%BA%8C-%E6%B3%A8%E8%A7%A3%E7%AF%87/"/>
     <id>http://www.soujava.com/spring3-1-1入门讲解二-注解篇/</id>
     <published>2016-09-12T06:00:34.000Z</published>
-    <updated>2016-09-12T06:06:17.095Z</updated>
+    <updated>2017-01-11T02:06:24.913Z</updated>
     
     <content type="html">&lt;p&gt;在第一篇博客中主要讲解了如何搭建spring框架和运行示例项目，在搭建框架环境的时候，我们需要配置很文件信息；在本篇文章中主要讲解如何采用注解的方式简化开发！&lt;/p&gt;
 &lt;h3 id=&quot;一、准备篇-jar包的准备&quot;&gt;&lt;a href=&quot;#一、准备篇-jar包的准备&quot; class=&quot;headerlink&quot; title=&quot;一、准备篇-jar包的准备&quot;&gt;&lt;/a&gt;一、准备篇-jar包的准备&lt;/h3&gt;&lt;p&gt;这里就不详细说明了详见上一篇博客–spring3.1.1入门讲解一（非注解篇）中的准备篇讲解&lt;/p&gt;
@@ -401,7 +401,7 @@ select num from a where exists(select 1 from b where num=a.num)
     <link href="http://www.soujava.com/spring3-1-1%E5%85%A5%E9%97%A8%E8%AE%B2%E8%A7%A3%E4%B8%80-%E9%9D%9E%E6%B3%A8%E8%A7%A3%E7%AF%87/"/>
     <id>http://www.soujava.com/spring3-1-1入门讲解一-非注解篇/</id>
     <published>2016-09-12T05:43:45.000Z</published>
-    <updated>2016-09-12T05:59:41.549Z</updated>
+    <updated>2017-01-11T02:06:24.913Z</updated>
     
     <content type="html">&lt;p&gt;在qq群里面有很多童鞋经常提出一些问题，我搭建的spring框架示例怎么启动不起来？spring入门示例谁有？等等问题。所以就写了这篇文章，绝对手把手讲解啊！&lt;/p&gt;
 &lt;h3 id=&quot;一、准备&quot;&gt;&lt;a href=&quot;#一、准备&quot; class=&quot;headerlink&quot; title=&quot;一、准备&quot;&gt;&lt;/a&gt;一、准备&lt;/h3&gt;&lt;p&gt;1、spring版本：spring-framework-3.1.1.RELEASE&lt;/p&gt;
@@ -439,7 +439,7 @@ select num from a where exists(select 1 from b where num=a.num)
     <link href="http://www.soujava.com/%E5%B8%A6%E9%99%84%E4%BB%B6%E7%9A%84enctype%E8%A1%A8%E5%8D%95%E4%B8%AD%E6%99%AE%E9%80%9A%E5%B1%9E%E6%80%A7%E7%9A%84%E8%8E%B7%E5%8F%96/"/>
     <id>http://www.soujava.com/带附件的enctype表单中普通属性的获取/</id>
     <published>2016-09-07T01:33:04.000Z</published>
-    <updated>2016-09-07T01:46:14.788Z</updated>
+    <updated>2017-01-11T02:06:24.916Z</updated>
     
     <content type="html">&lt;p&gt;我们在平时开发过程中，经常会遇到一些表单，比如用户信息修改、数据资源添加等等，并且这些表单都会带有附件：图片、其他文件；所以我们平时开发过程中经常需要处理两种表单，一种是带附件的表单，一种是不带附件的表单；因为两种表单向后台提交数据的格式不同，后者是以流的方式将表单数据提交到后台的。所以我们下面分两块描述两种获取不同表单的方式&lt;/p&gt;
 &lt;h3 id=&quot;一、普通表单-不带文件域-，基于普通表单封装成了一个通用的方法&quot;&gt;&lt;a href=&quot;#一、普通表单-不带文件域-，基于普通表单封装成了一个通用的方法&quot; class=&quot;headerlink&quot; title=&quot;一、普通表单(不带文件域)，基于普通表单封装成了一个通用的方法&quot;&gt;&lt;/a&gt;一、普通表单(不带文件域)，基于普通表单封装成了一个通用的方法&lt;/h3&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;16&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;17&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;18&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;19&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;20&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;21&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;22&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;23&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;24&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;25&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;26&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;27&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;28&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;29&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;30&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;31&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;/**&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    * 将request对象解析处理成map&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    * &lt;span class=&quot;doctag&quot;&gt;@param&lt;/span&gt; request&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    * &lt;span class=&quot;doctag&quot;&gt;@return&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    */&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; Map&amp;lt;String,String&amp;gt; &lt;span class=&quot;title&quot;&gt;transToMAP&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(HttpServletRequest request)&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;           Map returnMap = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; HashMap();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;           Iterator entries = request.getParameterMap().entrySet().iterator();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;           Map.Entry entry;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;           &lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt; (entries.hasNext()) &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;               String name = &lt;span class=&quot;string&quot;&gt;&quot;&quot;&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;               String value = &lt;span class=&quot;string&quot;&gt;&quot;&quot;&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;               entry = (Map.Entry) entries.next();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;               name = (String) entry.getKey();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;               Object valueObj = entry.getValue();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;               &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt; == valueObj)&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;                   value = &lt;span class=&quot;string&quot;&gt;&quot;&quot;&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;               &amp;#125;&lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(valueObj &lt;span class=&quot;keyword&quot;&gt;instanceof&lt;/span&gt; String[])&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;                   String[] values = (String[])valueObj;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;                   &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; i=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;i&amp;lt;values.length;i++)&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;                       value = values[i] + &lt;span class=&quot;string&quot;&gt;&quot;,&quot;&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;                   &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;                   value = value.substring(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, value.length()-&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;               &amp;#125;&lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;                   value = valueObj.toString();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;               &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;               returnMap.put(name, value);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;           &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;       &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt;  returnMap;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   &amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
@@ -467,7 +467,7 @@ select num from a where exists(select 1 from b where num=a.num)
     <link href="http://www.soujava.com/%E5%9F%BA%E4%BA%8Egitlab%E5%BC%80%E5%8F%91%E7%9A%84%E9%92%88%E5%AF%B9git%E4%BB%93%E5%BA%93%E4%B8%AD%E7%9A%84%E9%A1%B9%E7%9B%AE%E4%BB%A3%E7%A0%81%E5%BA%93%E8%BF%9B%E8%A1%8C%E6%89%93%E5%8C%85%E3%80%81%E8%A1%A5%E4%B8%81%E5%8C%85%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/"/>
     <id>http://www.soujava.com/基于gitlab开发的针对git仓库中的项目代码库进行打包、补丁包管理工具/</id>
     <published>2016-09-02T03:20:33.000Z</published>
-    <updated>2016-09-02T03:36:04.483Z</updated>
+    <updated>2017-01-11T02:06:24.915Z</updated>
     
     <content type="html">&lt;p&gt;基于gitlab二次开发的针对git仓库中的项目代码库进行打包、补丁包管理工具，解决产品升级时发布编译的补丁包(.class、jar)繁琐问题。&lt;/p&gt;
 &lt;h4 id=&quot;平时我们开发时经常出现以下问题：&quot;&gt;&lt;a href=&quot;#平时我们开发时经常出现以下问题：&quot; class=&quot;headerlink&quot; title=&quot;平时我们开发时经常出现以下问题：&quot;&gt;&lt;/a&gt;平时我们开发时经常出现以下问题：&lt;/h4&gt;&lt;p&gt;1、同一个产品由N多人开发，那么比如涉及产品版本升级时，我们是基于编译过的文件(.class、jar包)进行升级操作的，&lt;br&gt;   所以针对这种交叉式的开发对于补丁包发布来讲是非常头疼的事情。&lt;/p&gt;
@@ -509,7 +509,7 @@ select num from a where exists(select 1 from b where num=a.num)
     <link href="http://www.soujava.com/springBoot%E7%BC%96%E5%86%99%E4%B8%8D%E5%90%8C%E9%A3%8E%E6%A0%BC%E7%9A%84restAPI%E6%8E%A5%E5%8F%A3/"/>
     <id>http://www.soujava.com/springBoot编写不同风格的restAPI接口/</id>
     <published>2016-08-31T11:38:46.000Z</published>
-    <updated>2016-08-31T12:35:35.521Z</updated>
+    <updated>2017-01-11T02:06:24.913Z</updated>
     
     <content type="html">&lt;p&gt;平时使用springboot开发后台功能模块，并且开发对外提供的restfulApi接口时也同样使用springBoot开发，目前主要用到两种方式的的restfulApi;下面分两点说明&lt;/p&gt;
 &lt;h3 id=&quot;一、静态url-动态参数-param-形式的api&quot;&gt;&lt;a href=&quot;#一、静态url-动态参数-param-形式的api&quot; class=&quot;headerlink&quot; title=&quot;一、静态url+动态参数(param)形式的api&quot;&gt;&lt;/a&gt;一、静态url+动态参数(param)形式的api&lt;/h3&gt;&lt;p&gt;接口形式：&lt;/p&gt;
@@ -545,7 +545,7 @@ select num from a where exists(select 1 from b where num=a.num)
     <link href="http://www.soujava.com/java8%E4%B8%AD%E4%BD%BF%E7%94%A8stream%E6%B5%81%E5%92%8Cfor%E5%BE%AA%E7%8E%AF%E5%88%86%E5%88%AB%E5%AF%B9%E6%95%B0%E6%8D%AE%E9%9B%86%E5%90%88%E9%81%8D%E5%8E%86%E7%9A%84%E5%B7%AE%E5%BC%82/"/>
     <id>http://www.soujava.com/java8中使用stream流和for循环分别对数据集合遍历的差异/</id>
     <published>2016-08-31T01:44:41.000Z</published>
-    <updated>2016-08-31T02:48:34.292Z</updated>
+    <updated>2017-01-11T02:06:24.910Z</updated>
     
     <content type="html">&lt;p&gt;最近在平时开发中越来越多的会用到java8新增的流处理功能Stream；用一次就上瘾的感觉啊！在处理一个稍微大一些的数据集合时（长度为10W的List&lt;map&lt;string,object&gt;&amp;gt;）,刚好对比一下用java8的stream遍历集合和用java的for循环遍历集合的效率差异！&lt;/map&lt;string,object&gt;&lt;/p&gt;
 &lt;h3 id=&quot;一、分别比较用两种方式遍历集合并输出集合中元素的效率-不在循环中加工组装集合数据&quot;&gt;&lt;a href=&quot;#一、分别比较用两种方式遍历集合并输出集合中元素的效率-不在循环中加工组装集合数据&quot; class=&quot;headerlink&quot; title=&quot;一、分别比较用两种方式遍历集合并输出集合中元素的效率(不在循环中加工组装集合数据)&quot;&gt;&lt;/a&gt;一、分别比较用两种方式遍历集合并输出集合中元素的效率(不在循环中加工组装集合数据)&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;1、声明个长度为10W的集合&lt;/strong&gt;&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;List&amp;lt;Map&amp;lt;String,Object&amp;gt;&amp;gt; listMap = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; ArrayList&amp;lt;Map&amp;lt;String,Object&amp;gt;&amp;gt;();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; i=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;i&amp;lt;&lt;span class=&quot;number&quot;&gt;100000&lt;/span&gt;;i++)&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   	Map&amp;lt;String,Object&amp;gt; map = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; HashMap&amp;lt;String,Object&amp;gt;();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    map.put(&lt;span class=&quot;string&quot;&gt;&quot;id&quot;&lt;/span&gt;, i);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    map.put(&lt;span class=&quot;string&quot;&gt;&quot;title&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;title&quot;&lt;/span&gt;+i);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    map.put(&lt;span class=&quot;string&quot;&gt;&quot;view&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;view&quot;&lt;/span&gt;+i);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    listMap.add(map);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   &amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
@@ -590,7 +590,7 @@ select num from a where exists(select 1 from b where num=a.num)
     <link href="http://www.soujava.com/thymeleaf%E6%95%99%E7%A8%8B2-%E5%90%8E%E5%8F%B0%E6%95%B0%E6%8D%AE%E5%B0%81%E8%A3%85%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93/"/>
     <id>http://www.soujava.com/thymeleaf教程2-后台数据封装与页面渲染/</id>
     <published>2016-08-23T08:32:50.000Z</published>
-    <updated>2016-08-23T09:50:25.910Z</updated>
+    <updated>2017-01-11T02:06:24.914Z</updated>
     
     <content type="html">&lt;p&gt;我们使用模板引擎的过程中，页面上面的数据肯定需要从后台传递过来，然后把数据装载到页面对应区域中，所以我们来看看如果把后台的数据在前端页面渲染。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;一、添加一个表单页面–登陆操作&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;http://soujava.com/images/thy6.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
@@ -638,7 +638,7 @@ select num from a where exists(select 1 from b where num=a.num)
     <link href="http://www.soujava.com/jquery%E8%8E%B7%E5%8F%96%E5%8D%95%E9%80%89%E6%8C%89%E9%92%AE%E5%80%BC%E7%9A%84%E8%AF%A1%E5%BC%82%E4%B9%8B%E5%A4%84/"/>
     <id>http://www.soujava.com/jquery获取单选按钮值的诡异之处/</id>
     <published>2016-08-21T04:17:10.000Z</published>
-    <updated>2016-08-21T05:08:28.128Z</updated>
+    <updated>2017-01-11T02:06:24.912Z</updated>
     
     <content type="html">&lt;p&gt;最近在使用jquery获取表单中选中的单选按钮的值时，发现了一个诡异的问题，那就是当你使用[checked]这个方式获取选中的单选按钮值时，能不能获取选中的值跟你前面用的选择器方式有关系，当你使用:radio[name=’types’]这种方式获取选中的值时是没有问题的，但是当你使用[type=’radio’][name=’language’]这种方式获取选中的值时是有问题的（如果单选按钮组中有默认选中的按钮，那么这种方式一直获取的都是默认选中的按钮；如果单选按钮组中没有默认选中的按钮，那么这种方式获取不到选中的单选按钮的值）。举例如下：&lt;/p&gt;
 &lt;p&gt;表单元素如下：&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;input type=&lt;span class=&quot;string&quot;&gt;&quot;radio&quot;&lt;/span&gt; name=&lt;span class=&quot;string&quot;&gt;&quot;language&quot;&lt;/span&gt;  value=&lt;span class=&quot;string&quot;&gt;&quot;php&quot;&lt;/span&gt;/&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;input type=&lt;span class=&quot;string&quot;&gt;&quot;radio&quot;&lt;/span&gt; name=&lt;span class=&quot;string&quot;&gt;&quot;language&quot;&lt;/span&gt;  value=&lt;span class=&quot;string&quot;&gt;&quot;mysql&quot;&lt;/span&gt;/&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;input type=&lt;span class=&quot;string&quot;&gt;&quot;radio&quot;&lt;/span&gt; name=&lt;span class=&quot;string&quot;&gt;&quot;language&quot;&lt;/span&gt;  value=&lt;span class=&quot;string&quot;&gt;&quot;java&quot;&lt;/span&gt;/&amp;gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
@@ -685,7 +685,7 @@ select num from a where exists(select 1 from b where num=a.num)
     <link href="http://www.soujava.com/%E6%95%B4%E5%9E%8B%E5%AD%97%E9%9D%A2%E5%80%BC%E4%B8%8E%E8%BF%9B%E5%88%B6%E8%BF%90%E7%AE%97%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB/"/>
     <id>http://www.soujava.com/整型字面值与进制运算之间的关系/</id>
     <published>2016-08-20T09:19:18.000Z</published>
-    <updated>2016-08-20T09:57:54.772Z</updated>
+    <updated>2017-01-11T02:06:24.917Z</updated>
     
     <content type="html">&lt;p&gt;何为字面值？说白了就是一眼看上去的内容值，比如下面的分别用几个不同进制(二进制、八进制、十进制、十六进制)表示法表示的自面值信息&lt;/p&gt;
 &lt;ol&gt;
@@ -747,7 +747,7 @@ int n =0238;（不合格）
     <link href="http://www.soujava.com/Redis-%E5%AE%89%E8%A3%85/"/>
     <id>http://www.soujava.com/Redis-安装/</id>
     <published>2016-08-19T09:21:43.000Z</published>
-    <updated>2016-08-19T09:26:17.224Z</updated>
+    <updated>2017-01-11T02:06:24.908Z</updated>
     
     <content type="html">&lt;p&gt;&lt;strong&gt;一、下载安装包&lt;/strong&gt;&lt;br&gt;  下载redis安装包，下载方式很多比如如下方式都可以：&lt;br&gt;    1)、到官网下载&lt;a href=&quot;http://redis.io需要的版本&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://redis.io需要的版本&lt;/a&gt;&lt;br&gt;    2)、在linux系统中用命令下载 $ wget &lt;a href=&quot;http://download.redis.io/releases/redis-2.8.17.tar.gz&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://download.redis.io/releases/redis-2.8.17.tar.gz&lt;/a&gt;&lt;br&gt;    下载成功后得到redis-2.8.17.tar.gz安装包&lt;br&gt;&lt;strong&gt;二、安装&lt;/strong&gt;&lt;br&gt;    1)、用命令解压缩安装包&lt;br&gt;       $ tar xzf redis-2.8.17.tar.gz&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;2)、进入解压后的文件中
@@ -777,7 +777,7 @@ int n =0238;（不合格）
     <link href="http://www.soujava.com/Mysql-Lock-wait-timeout-exceeded-try-restarting-transaction/"/>
     <id>http://www.soujava.com/Mysql-Lock-wait-timeout-exceeded-try-restarting-transaction/</id>
     <published>2016-08-19T08:46:36.000Z</published>
-    <updated>2016-08-19T08:50:24.341Z</updated>
+    <updated>2017-01-11T02:06:24.907Z</updated>
     
     <content type="html">&lt;p&gt;一个业务正在操作mysql过程中，突然报提示错误信息：Lock wait timeout exceeded; try restarting transaction。&lt;br&gt;查询发现问题原因是，在执行操作的表被另外一个操作锁定，当前操作等待另外一个操作完成时提示超时。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;一、临时解决办法&lt;/strong&gt;&lt;/p&gt;
@@ -813,7 +813,7 @@ int n =0238;（不合格）
     <link href="http://www.soujava.com/MySql%E5%AE%89%E8%A3%85%E5%90%8E%E6%B7%BB%E5%8A%A0%E7%9A%84%E7%94%A8%E6%88%B7%E4%B8%8D%E8%83%BD%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5%E7%99%BB%E9%99%86/"/>
     <id>http://www.soujava.com/MySql安装后添加的用户不能远程连接登陆/</id>
     <published>2016-08-19T08:23:54.000Z</published>
-    <updated>2016-08-19T08:41:56.928Z</updated>
+    <updated>2017-01-11T02:06:24.906Z</updated>
     
     <content type="html">&lt;p&gt;&lt;strong&gt;一、添加一个用户fileserver并授权操作&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;http://soujava.com/images/mysql1.png&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;注：添加一个可以访问所有数据库、用户名为fileserver、可以在本地和远程进行访问的、密码是fileserver的用户 &lt;/em&gt;&lt;/p&gt;
@@ -849,7 +849,7 @@ int n =0238;（不合格）
     <link href="http://www.soujava.com/CentOS-6-4%E5%86%85%E6%A0%B8%E5%8D%87%E7%BA%A7%E6%93%8D%E4%BD%9C/"/>
     <id>http://www.soujava.com/CentOS-6-4内核升级操作/</id>
     <published>2016-08-19T08:00:13.000Z</published>
-    <updated>2016-08-19T08:15:57.871Z</updated>
+    <updated>2017-01-11T02:06:24.903Z</updated>
     
     <content type="html">&lt;p&gt;Linux下涉及到系统内核的一些软件，需要对内核升级才能使用，例如Docker的最低要求是2.6.32-431等等。&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;注意：&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    如果在make menuconfig步骤报错，可尝试以下方法：&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;、修改scripts/kconfig/Makefile 文件&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;、找到HOSTLOADLIBES_mconf 在行末加入  -ltinfo&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;一、先查看当前centos的系统内核&lt;/strong&gt;&lt;/p&gt;
