@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.soujava.com/"/>
-  <updated>2017-01-11T02:06:24.915Z</updated>
+  <updated>2017-02-10T08:05:32.092Z</updated>
   <id>http://www.soujava.com/</id>
   
   <author>
@@ -14,6 +14,198 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>CentOS系统安装nodeJs</title>
+    <link href="http://www.soujava.com/CentOS%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85nodeJs/"/>
+    <id>http://www.soujava.com/CentOS系统安装nodeJs/</id>
+    <published>2017-02-09T05:11:02.000Z</published>
+    <updated>2017-02-10T08:05:32.092Z</updated>
+    
+    <content type="html">&lt;p&gt;主要介绍在Linux(CentOS)系统中，nodeJs的安装与环境配置，首先我们需要到nodeJs官网下载对应的tar安装包，然后使用命令进行安装和配置操作(一共有源代码编译安装和二进制包安装，两种安装方式都是可以的)&lt;/p&gt;
+&lt;h2 id=&quot;一、二进制包安装&quot;&gt;&lt;a href=&quot;#一、二进制包安装&quot; class=&quot;headerlink&quot; title=&quot;一、二进制包安装&quot;&gt;&lt;/a&gt;一、二进制包安装&lt;/h2&gt;&lt;p&gt;1 下载二进制包&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;cd /usr/local/develop/soft  #切换到对应的安装目录中&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;wget https://nodejs.org/dist/v6.9.5/node-v6.9.5-linux-x64.tar.xz  #下载官方的nodeJs二进制安装包&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;2 命令安装&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;tar -xvf  node-v6.9.4-linux-x64.tar.xz    #解压下载的二进制安装包&lt;/p&gt;
+&lt;p&gt;cd node-v6.9.4-linux-x64/ &amp;amp;&amp;amp; ll    #切换到已经解压的安装包目录中，并且详细列出所有的文件&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;drwxrwxr-x. &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt; maps maps    &lt;span class=&quot;number&quot;&gt;27&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;月   &lt;span class=&quot;number&quot;&gt;6&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;04&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;50&lt;/span&gt; bin&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;-rw-rw-r--. &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; maps maps &lt;span class=&quot;number&quot;&gt;55480&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;月   &lt;span class=&quot;number&quot;&gt;6&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;04&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;50&lt;/span&gt; CHANGELOG.md&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;drwxrwxr-x. &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt; maps maps    &lt;span class=&quot;number&quot;&gt;17&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;月   &lt;span class=&quot;number&quot;&gt;6&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;04&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;50&lt;/span&gt; include&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;drwxrwxr-x. &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt; maps maps    &lt;span class=&quot;number&quot;&gt;25&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;月   &lt;span class=&quot;number&quot;&gt;6&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;04&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;50&lt;/span&gt; lib&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;-rw-rw-r--. &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; maps maps &lt;span class=&quot;number&quot;&gt;60477&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;月   &lt;span class=&quot;number&quot;&gt;6&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;04&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;50&lt;/span&gt; LICENSE&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;-rw-rw-r--. &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; maps maps &lt;span class=&quot;number&quot;&gt;17440&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;月   &lt;span class=&quot;number&quot;&gt;6&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;04&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;50&lt;/span&gt; README.md&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;drwxrwxr-x. &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt; maps maps    &lt;span class=&quot;number&quot;&gt;42&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;月   &lt;span class=&quot;number&quot;&gt;6&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;04&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;50&lt;/span&gt; share&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;pre&gt;&lt;code&gt;*可以看到二进制安装包中包含bin/ 目录*
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;3 配置环境变量&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;vim /etc/profile&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;figure class=&quot;highlight php&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;export NODE_HOME=/usr/local/develop/soft/node-v6&lt;span class=&quot;number&quot;&gt;.9&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;.4&lt;/span&gt;-linux-x64&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;export PATH=$NODE_HOME/bin:$PATH&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;export NODE_PATH=$NODE_HOME/lib/node_modules:$PATH&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;blockquote&gt;
+&lt;p&gt;source /etc/profile    &lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;4 验证是否安装成功&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;node -v&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;figure class=&quot;highlight php&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;v6&lt;span class=&quot;number&quot;&gt;.9&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;.4&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;二、源代码编译安装&quot;&gt;&lt;a href=&quot;#二、源代码编译安装&quot; class=&quot;headerlink&quot; title=&quot;二、源代码编译安装&quot;&gt;&lt;/a&gt;二、源代码编译安装&lt;/h2&gt;&lt;p&gt;1 下载二进制包&lt;/p&gt;
+&lt;figure class=&quot;highlight php&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;cd /usr/local/develop/soft  &lt;span class=&quot;comment&quot;&gt;#切换到对应的安装目录中&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;wget https:&lt;span class=&quot;comment&quot;&gt;//nodejs.org/dist/v6.9.5/node-v6.9.5.tar.gz  #下载官方的nodeJs二进制安装包&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;2 命令安装&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;tar -zxvf  node-v6.9.4-linux-x64.tar.gz    #解压下载的二进制安装包&lt;/p&gt;
+&lt;p&gt;cd node-v6.9.4-linux-x64/    #切换到已经解压的安装包目录中&lt;/p&gt;
+&lt;p&gt;./configure  #配置&lt;/p&gt;
+&lt;p&gt;make&lt;/p&gt;
+&lt;p&gt;make install&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;3 配置环境变量&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;*参照二进制安装方式中的环境配置*
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;4 验证是否安装成功&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;*参照二进制安装方式中的验证*
+&lt;/code&gt;&lt;/pre&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;主要介绍在Linux(CentOS)系统中，nodeJs的安装与环境配置，首先我们需要到nodeJs官网下载对应的tar安装包，然后使用命令进行安装和配置操作(一共有源代码编译安装和二进制包安装，两种安装方式都是可以的)&lt;/p&gt;
+&lt;h2 id=&quot;一、二进制包安装&quot;&gt;&lt;a h
+    
+    </summary>
+    
+      <category term="nodeJs" scheme="http://www.soujava.com/categories/nodeJs/"/>
+    
+    
+      <category term="nodeJs" scheme="http://www.soujava.com/tags/nodeJs/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Jquery中prop和attr使用时的问题</title>
+    <link href="http://www.soujava.com/Jquery%E4%B8%ADprop%E5%92%8Cattr%E4%BD%BF%E7%94%A8%E6%97%B6%E7%9A%84%E9%97%AE%E9%A2%98/"/>
+    <id>http://www.soujava.com/Jquery中prop和attr使用时的问题/</id>
+    <published>2017-02-08T05:25:25.000Z</published>
+    <updated>2017-02-09T05:15:01.734Z</updated>
+    
+    <content type="html">&lt;p&gt;在使用jquery的attr属性处理单选按钮选中时，出现偶尔不能选中的问题，后来才知道jquery官方推荐使用prop，而再推荐使用attr。&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$(&lt;span class=&quot;string&quot;&gt;&quot;input[type=&#39;radio&#39;][name=&#39;workerType&#39;][value=&#39;IT&#39;]&quot;&lt;/span&gt;).attr(&lt;span class=&quot;string&quot;&gt;&#39;checked&#39;&lt;/span&gt;,&lt;span class=&quot;keyword&quot;&gt;true&lt;/span&gt;);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;使用attr方法操作单选按钮为选中状态时，会出现不能选中的情况（偶现）&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$(&lt;span class=&quot;string&quot;&gt;&quot;input[type=&#39;radio&#39;][name=&#39;workerType&#39;][value=&#39;IT&#39;]&quot;&lt;/span&gt;).prop(&lt;span class=&quot;string&quot;&gt;&#39;checked&#39;&lt;/span&gt;,&lt;span class=&quot;keyword&quot;&gt;true&lt;/span&gt;);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;使用prop方法操作单选按钮为选中状态时，可以正常选中&lt;/p&gt;
+&lt;p&gt;当在页面中用jquery来控制DOM元素中的属性时要用 .prop()；不要再用 .attr()，不然会出问题，官方文档也推荐这样&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在使用jquery的attr属性处理单选按钮选中时，出现偶尔不能选中的问题，后来才知道jquery官方推荐使用prop，而再推荐使用attr。&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;
+    
+    </summary>
+    
+      <category term="javascript" scheme="http://www.soujava.com/categories/javascript/"/>
+    
+    
+      <category term="jquery" scheme="http://www.soujava.com/tags/jquery/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>X进制与Y进制转换</title>
+    <link href="http://www.soujava.com/10%E8%BF%9B%E5%88%B6%E4%B8%8E2%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2/"/>
+    <id>http://www.soujava.com/10进制与2进制转换/</id>
+    <published>2017-01-20T07:23:15.000Z</published>
+    <updated>2017-01-20T08:18:57.397Z</updated>
+    
+    <content type="html">&lt;p&gt;在上一篇文章中描述了二进制、八进制、十进制、十六进制的概念和表述方法，但是在计算机的世界中，只有0和1，所以除了二进制之外的其它X进制，计算机都是不能识别的；所以需要把他们转换为二进制之后才能在计算机上面运行&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;一、十进制转换二进制&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;注:如果是10进制转换2进制的话，那么只需要拿着10进制除以2,直到商为1或者0，然后拿着商和余数组成的一串0和1数字串就是该十进制数的二进制值&lt;/em&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;把5转换为2进制&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;5/2 ——2——-1&lt;/li&gt;
+&lt;li&gt;2/2 ——1——-0&lt;/li&gt;
+&lt;li&gt;5除以2，除到最后商1，然后余数为0；所以5的二进制为:101;然后前面补0:00000101&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;把16转换为2进制&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;16/2 ——8——-0&lt;/li&gt;
+&lt;li&gt;8/2  ——4——-0&lt;/li&gt;
+&lt;li&gt;4/2  ——2——-0&lt;/li&gt;
+&lt;li&gt;2/2  ——1——-0&lt;/li&gt;
+&lt;li&gt;16除以2，除到最后商为1，然后余数为0；所以16的二进制为:10000;然后前面补0:00010000&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;把99转换为2进制&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;99/2 ——49 ——-1&lt;/li&gt;
+&lt;li&gt;49/2 ——24 ——-1&lt;/li&gt;
+&lt;li&gt;24/2 ——12 ——-0&lt;/li&gt;
+&lt;li&gt;12/2 ——6  ——-0&lt;/li&gt;
+&lt;li&gt;6/2  ——3  ——-0&lt;/li&gt;
+&lt;li&gt;3/2  ——1  ——-1&lt;/li&gt;
+&lt;li&gt;99除以2，除到最后商为1，然后余数为1；所以99的二进制为:1100011;然后前面补0:01100011&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;二、二进制表示十进制&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;注:如果是2制转换10进制的话，那么只需要把二进制串的每一位的值乘以2^索引值 [其所在串中的索引值(0开始从右向左)] 的和&lt;/em&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;把&lt;strong&gt;00000101&lt;/strong&gt;转换为10进制&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;从右向左开始—–第0位—–1—–2^0 X 1——-1&lt;/li&gt;
+&lt;li&gt;从右向左开始—–第1位—–0—–2^1 X 0——-0&lt;/li&gt;
+&lt;li&gt;从右向左开始—–第2位—–1—–2^2 X 1——-4&lt;/li&gt;
+&lt;li&gt;从右向左开始—–第3位—–0—–2^3 X 0——-0&lt;/li&gt;
+&lt;li&gt;从右向左开始—–第4位—–0—–2^4 X 0——-0&lt;/li&gt;
+&lt;li&gt;从右向左开始—–第5位—–0—–2^5 X 0——-0&lt;/li&gt;
+&lt;li&gt;从右向左开始—–第6位—–0—–2^6 X 0——-0&lt;/li&gt;
+&lt;li&gt;从右向左开始—–第7位—–0—–2^7 X 0——-0&lt;/li&gt;
+&lt;li&gt;最终&lt;strong&gt;00000101&lt;/strong&gt;二进制串对应的值为 1+0+4+0+0+0+0+0 = 5&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;把&lt;strong&gt;00010000&lt;/strong&gt;转换为2进制&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;从右向左开始—–第0位—–0—–2^0 X 0——-0&lt;/li&gt;
+&lt;li&gt;从右向左开始—–第1位—–0—–2^1 X 0——-0&lt;/li&gt;
+&lt;li&gt;从右向左开始—–第2位—–0—–2^2 X 0——-0&lt;/li&gt;
+&lt;li&gt;从右向左开始—–第3位—–0—–2^3 X 0——-0&lt;/li&gt;
+&lt;li&gt;从右向左开始—–第4位—–1—–2^4 X 1——-16&lt;/li&gt;
+&lt;li&gt;从右向左开始—–第5位—–0—–2^5 X 0——-0&lt;/li&gt;
+&lt;li&gt;从右向左开始—–第6位—–0—–2^6 X 0——-0&lt;/li&gt;
+&lt;li&gt;从右向左开始—–第7位—–0—–2^7 X 0——-0&lt;/li&gt;
+&lt;li&gt;最终&lt;strong&gt;00010000&lt;/strong&gt;二进制串对应的值为 0+0+0+0+16+0+0+0 = 16&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;把&lt;strong&gt;01100011&lt;/strong&gt;转换为2进制&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;从右向左开始—–第0位—–1—–2^0 X 1——-1&lt;/li&gt;
+&lt;li&gt;从右向左开始—–第1位—–1—–2^1 X 1——-2&lt;/li&gt;
+&lt;li&gt;从右向左开始—–第2位—–0—–2^2 X 0——-0&lt;/li&gt;
+&lt;li&gt;从右向左开始—–第3位—–0—–2^3 X 0——-0&lt;/li&gt;
+&lt;li&gt;从右向左开始—–第4位—–0—–2^4 X 1——-0&lt;/li&gt;
+&lt;li&gt;从右向左开始—–第5位—–1—–2^5 X 0——-32&lt;/li&gt;
+&lt;li&gt;从右向左开始—–第6位—–1—–2^6 X 0——-64&lt;/li&gt;
+&lt;li&gt;从右向左开始—–第7位—–0—–2^7 X 0——-0&lt;/li&gt;
+&lt;li&gt;最终&lt;strong&gt;00010000&lt;/strong&gt;二进制串对应的值为 1+2+0+0+0+32+64+0 = 99&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在上一篇文章中描述了二进制、八进制、十进制、十六进制的概念和表述方法，但是在计算机的世界中，只有0和1，所以除了二进制之外的其它X进制，计算机都是不能识别的；所以需要把他们转换为二进制之后才能在计算机上面运行&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;一、十进制转换二进制&lt;/stron
+    
+    </summary>
+    
+      <category term="java" scheme="http://www.soujava.com/categories/java/"/>
+    
+    
+      <category term="进制运算" scheme="http://www.soujava.com/tags/%E8%BF%9B%E5%88%B6%E8%BF%90%E7%AE%97/"/>
+    
+  </entry>
   
   <entry>
     <title>thymeleaf教程3--with定义变量使用</title>
@@ -685,7 +877,7 @@ select num from a where exists(select 1 from b where num=a.num)
     <link href="http://www.soujava.com/%E6%95%B4%E5%9E%8B%E5%AD%97%E9%9D%A2%E5%80%BC%E4%B8%8E%E8%BF%9B%E5%88%B6%E8%BF%90%E7%AE%97%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB/"/>
     <id>http://www.soujava.com/整型字面值与进制运算之间的关系/</id>
     <published>2016-08-20T09:19:18.000Z</published>
-    <updated>2017-01-11T02:06:24.917Z</updated>
+    <updated>2017-01-20T07:30:14.165Z</updated>
     
     <content type="html">&lt;p&gt;何为字面值？说白了就是一眼看上去的内容值，比如下面的分别用几个不同进制(二进制、八进制、十进制、十六进制)表示法表示的自面值信息&lt;/p&gt;
 &lt;ol&gt;
@@ -703,7 +895,7 @@ select num from a where exists(select 1 from b where num=a.num)
 &lt;pre&gt;&lt;code&gt;1)、十进制数会被转换成二进制，也就是把100转化成只有0和1组成的一串数字（1100100）；
     30转换成二进制数字(11110)
 2)、然后计算器把转换后的两个二进制数进行相加，最终得到二进制结果：10000010(130)；
-    实际上二进制之间加法很简单，只需要把两个二进制数右对齐，然后上下两个数(0或者1)相加，相加的和逢2进1就行了。
+    实际上二进制之间加法很简单，只需要把两个二进制数右对齐，然后上下两个数(0或者1)相加，相加的结果(和)逢2进1就行了。
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;二、八进制&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;除了人类使用的10进制、计算机使用的二进制外，其实还有八进制（以0开头，以8为基数运算）&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;8进制数字的范围是0~7,也就是说用8进制形式标示数值时，需要用0开头，
@@ -720,7 +912,7 @@ int n =0238;（不合格）
 &lt;p&gt;16进制的数字范围是0~15，而阿拉伯数字只有0~9，所以分别用A~F（a~f）替代数字10~15；也就是说用16进制表示的数值串中只能包括0~9和a|A~f|F；十六进制表示方式就是以0X开头，以16为基数进行运算&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;可以参照上面的八进制计算规则，long l5 = 0x12af;定义的变量用十进制表示方法就是：
 0x12af表示的十进制数为：15*16的0次方+10*16的1次方+2*16的2次方+1*16的3次方=4783
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;四、二进制表示十进制&lt;/strong&gt;&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;&lt;em&gt;注、用二进制表示十进制&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;从jdk7开始，我们可以直接定义变量的时候可以用二进制表示十进制字面值，不过必须使用0b或0B作为数值的前缀。&lt;/p&gt;
 &lt;p&gt;比如：int x = 0b1010;&lt;br&gt;&lt;em&gt;其实x的真实值是二进制1010运算十进制后的值10.&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;int u = 0B111010110;&lt;br&gt;&lt;em&gt;其实u的真实值是二进制111010110运算十进制后的值470.&lt;/em&gt;&lt;/p&gt;
@@ -769,108 +961,6 @@ int n =0238;（不合格）
     
     
       <category term="Redis安装" scheme="http://www.soujava.com/tags/Redis%E5%AE%89%E8%A3%85/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Mysql--Lock wait timeout exceeded try restarting transaction</title>
-    <link href="http://www.soujava.com/Mysql-Lock-wait-timeout-exceeded-try-restarting-transaction/"/>
-    <id>http://www.soujava.com/Mysql-Lock-wait-timeout-exceeded-try-restarting-transaction/</id>
-    <published>2016-08-19T08:46:36.000Z</published>
-    <updated>2017-01-11T02:06:24.907Z</updated>
-    
-    <content type="html">&lt;p&gt;一个业务正在操作mysql过程中，突然报提示错误信息：Lock wait timeout exceeded; try restarting transaction。&lt;br&gt;查询发现问题原因是，在执行操作的表被另外一个操作锁定，当前操作等待另外一个操作完成时提示超时。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;一、临时解决办法&lt;/strong&gt;&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;执行以下脚本登录mysql：mysql -h 192.168.0.166 -u user -ppassword&lt;/li&gt;
-&lt;li&gt;执行select * from information_schema.innodb_trx\G;查询当前处于锁等待的进程。查询结果只需要关注trx_mysql_thread_id所对应的值。&lt;/li&gt;
-&lt;li&gt;执行show processlist;查询当前的所有进程，找到对应的ID，执行kill命令，kill id。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;strong&gt;二、Mysql数据库设置&lt;/strong&gt;&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;设置innodb_lock_wait_timeout参数。通过show variables like ‘innodb_lock_wait_timeout’;查看当前设置的值。&lt;/li&gt;
-&lt;li&gt;执行set global innodb_lock_wait_timeout=120;设置超时时间。&lt;/li&gt;
-&lt;li&gt;设置是否自动提交事务。通过select @@autocommit;查询是否自动提交事务（1代表自动提交，0代表不自动提交）。执行set global autocommit=1;设置自动提交。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;em&gt;注：这里设置自动提交事务操作针对高并发业务是会出问题的，所以视情况而定！&lt;/em&gt;&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;一个业务正在操作mysql过程中，突然报提示错误信息：Lock wait timeout exceeded; try restarting transaction。&lt;br&gt;查询发现问题原因是，在执行操作的表被另外一个操作锁定，当前操作等待另外一个操作完成时提示超时。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Mysql" scheme="http://www.soujava.com/categories/Mysql/"/>
-    
-    
-      <category term="Mysql" scheme="http://www.soujava.com/tags/Mysql/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>MySql安装后添加的用户不能远程连接登陆</title>
-    <link href="http://www.soujava.com/MySql%E5%AE%89%E8%A3%85%E5%90%8E%E6%B7%BB%E5%8A%A0%E7%9A%84%E7%94%A8%E6%88%B7%E4%B8%8D%E8%83%BD%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5%E7%99%BB%E9%99%86/"/>
-    <id>http://www.soujava.com/MySql安装后添加的用户不能远程连接登陆/</id>
-    <published>2016-08-19T08:23:54.000Z</published>
-    <updated>2017-01-11T02:06:24.906Z</updated>
-    
-    <content type="html">&lt;p&gt;&lt;strong&gt;一、添加一个用户fileserver并授权操作&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;http://soujava.com/images/mysql1.png&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;注：添加一个可以访问所有数据库、用户名为fileserver、可以在本地和远程进行访问的、密码是fileserver的用户 &lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;二、查询刚才添加的用户是否存在&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;http://soujava.com/images/mysql2.png&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;注：可以看到刚才的fileserver用户已经创建完毕 &lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;三、用刚才添加成功的用户登陆操作报异常&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;http://soujava.com/images/mysql3.png&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;注：当用户刚才创建的用户登录并输入密码后时提示如下信息，这是因为当前的登录操作是在mysql本地客户端进行的，而上面的user表中没有对应localhost的fileserve的用户&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;四、在添加一个fileserver用户并分配可以本地localhost登录&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;http://soujava.com/images/mysql4.png&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;五、再查下刚才创建的用户是否已经存在&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;http://soujava.com/images/mysql5.png&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;六、再次用刚刚创建的fileserver登录操作，可以正常登录&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;http://soujava.com/images/mysql6.png&quot; alt=&quot;Alt text&quot;&gt;&lt;br&gt;&lt;em&gt;注：使用mysql -u 命令登录操作时默认使用localhost的域用户登录操作 &lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;七、在另外一台IP地址的电脑上面安装Navicate工具，并且连接之前安装的mysql服务&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;http://soujava.com/images/mysql7.png&quot; alt=&quot;Alt text&quot;&gt;&lt;br&gt;&lt;em&gt;注：连接时提示连接错误，因为mysql服务没有对当前IP的电脑开放远程访问的权限&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;八、在mysql配置文件中配置该IP的访问操作&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;http://soujava.com/images/mysql8.png&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;九、配置完成后重启mysql服务&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;http://soujava.com/images/mysql9.png&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;十、再次在不同IP(192.168.0.203)地址电脑上面通过Navicate连接mysql服务操作，连接成功&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;http://soujava.com/images/mysql10.png&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;strong&gt;一、添加一个用户fileserver并授权操作&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;http://soujava.com/images/mysql1.png&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;注：添加一个可以访问所有数据库、用户
-    
-    </summary>
-    
-      <category term="Mysql" scheme="http://www.soujava.com/categories/Mysql/"/>
-    
-    
-      <category term="Mysql" scheme="http://www.soujava.com/tags/Mysql/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>CentOS-6.4内核升级操作</title>
-    <link href="http://www.soujava.com/CentOS-6-4%E5%86%85%E6%A0%B8%E5%8D%87%E7%BA%A7%E6%93%8D%E4%BD%9C/"/>
-    <id>http://www.soujava.com/CentOS-6-4内核升级操作/</id>
-    <published>2016-08-19T08:00:13.000Z</published>
-    <updated>2017-01-11T02:06:24.903Z</updated>
-    
-    <content type="html">&lt;p&gt;Linux下涉及到系统内核的一些软件，需要对内核升级才能使用，例如Docker的最低要求是2.6.32-431等等。&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;注意：&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    如果在make menuconfig步骤报错，可尝试以下方法：&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;、修改scripts/kconfig/Makefile 文件&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;、找到HOSTLOADLIBES_mconf 在行末加入  -ltinfo&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;一、先查看当前centos的系统内核&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/linuxKenel1.png&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;二、下载内核包，如：linux-3.4.56.tar.xz&lt;/strong&gt;&lt;/p&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;https:&lt;span class=&quot;comment&quot;&gt;//www.kernel.org/pub/linux/kernel/v3.x/linux-3.4.56.tar.xz&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;&lt;strong&gt;三、安装内核&lt;/strong&gt;&lt;br&gt;&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;# tar -Jxvf linux-3.4.56.tar.xz&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;# mv linux-3.4.56 /usr/src/linux-3.4.56&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;# cd linux-3.4.56&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;# make mrproper #清除环境变量&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;# make menuconfig &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;# make clean&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;# make bzImage&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;# make modules&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;# make modules_install&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;# make install&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;四、编辑/etc/grub.conf文件，将default=1改成default=0&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;五、重启系统并检查内核&lt;/strong&gt;&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Linux下涉及到系统内核的一些软件，需要对内核升级才能使用，例如Docker的最低要求是2.6.32-431等等。&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div clas
-    
-    </summary>
-    
-      <category term="Linux" scheme="http://www.soujava.com/categories/Linux/"/>
-    
-    
-      <category term="Linux" scheme="http://www.soujava.com/tags/Linux/"/>
     
   </entry>
   
