@@ -1,4 +1,348 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="记录未知的，牢记已知的"><title>为github pages绑定独立域名 | soujava</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/4.1.1/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/2.2.3/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">为github pages绑定独立域名</h1><a id="logo" href="/.">soujava</a><p class="description">记录未知的，牢记已知的</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">为github pages绑定独立域名</h1><div class="post-meta">Jun 28, 2016<span> | </span><span class="category"><a href="/categories/github/">github</a></span><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> Hits</span></span></div><a data-thread-key="2016-06-28-为github-pages绑定独立域名/" href="/2016-06-28-为github-pages绑定独立域名/#comments" class="ds-thread-count"></a><div class="post-content"><blockquote>
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="github," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="soujava" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="如果想让你的博客显得更专业更高逼格，那么申请注册一个你自己的独立一级域名是必须的了，那么下面我接着上一篇博客继续讲一下如何把你的博客跟你的独立域名绑定起来！
+
+1、假设你已经有了一个独立域名了，至于那些还没有独立域名的童鞋还是先申请注册一个自己的独立域名吧，申请注册一个非常简单，我就不多啰嗦了！我的独立域名是soujava；个人感觉这个域名还算可以吧！个人是搞java开发的！
+2、不管你的域名是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="为github pages绑定独立域名">
+<meta property="og:url" content="http://www.soujava.com/2016-06-28-为github-pages绑定独立域名/index.html">
+<meta property="og:site_name" content="soujava">
+<meta property="og:description" content="如果想让你的博客显得更专业更高逼格，那么申请注册一个你自己的独立一级域名是必须的了，那么下面我接着上一篇博客继续讲一下如何把你的博客跟你的独立域名绑定起来！
+
+1、假设你已经有了一个独立域名了，至于那些还没有独立域名的童鞋还是先申请注册一个自己的独立域名吧，申请注册一个非常简单，我就不多啰嗦了！我的独立域名是soujava；个人感觉这个域名还算可以吧！个人是搞java开发的！
+2、不管你的域名是">
+<meta property="og:image" content="http://soujava.com/images/yumingmanage.jpg">
+<meta property="og:image" content="http://soujava.com/images/ippeizhi.jpg">
+<meta property="og:image" content="http://soujava.com/images/getIp.jpg">
+<meta property="og:updated_time" content="2017-01-11T02:06:24.900Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="为github pages绑定独立域名">
+<meta name="twitter:description" content="如果想让你的博客显得更专业更高逼格，那么申请注册一个你自己的独立一级域名是必须的了，那么下面我接着上一篇博客继续讲一下如何把你的博客跟你的独立域名绑定起来！
+
+1、假设你已经有了一个独立域名了，至于那些还没有独立域名的童鞋还是先申请注册一个自己的独立域名吧，申请注册一个非常简单，我就不多啰嗦了！我的独立域名是soujava；个人感觉这个域名还算可以吧！个人是搞java开发的！
+2、不管你的域名是">
+<meta name="twitter:image" content="http://soujava.com/images/yumingmanage.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://www.soujava.com/2016-06-28-为github-pages绑定独立域名/"/>
+
+  <title> 为github pages绑定独立域名 | soujava </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">soujava</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">记录未知的，牢记已知的</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                为github pages绑定独立域名
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-28T17:47:28+08:00" content="2016-06-28">
+              2016-06-28
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/github/" itemprop="url" rel="index">
+                    <span itemprop="name">github</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016-06-28-为github-pages绑定独立域名/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016-06-28-为github-pages绑定独立域名/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv"><i class="fa fa-file-o"></i>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
 <p>如果想让你的博客显得更专业更高逼格，那么申请注册一个你自己的独立一级域名是必须的了，那么下面我接着上一篇博客继续讲一下如何把你的博客跟你的独立域名绑定起来！</p>
 </blockquote>
 <p><strong><p>1、假设你已经有了一个独立域名了，至于那些还没有独立域名的童鞋还是先申请注册一个自己的独立域名吧，申请注册一个非常简单，我就不多啰嗦了！我的独立域名是<a href="http://www.soujava.com">soujava</a>；个人感觉这个域名还算可以吧！个人是搞java开发的！</p></strong></p>
@@ -13,13 +357,344 @@
 <p></p><p><img src="http://soujava.com/images/getIp.jpg" alt="Alt text"></p>
 <p><strong><p>4、将你的域名与ip在DNS上面映射配置完成后，需要等待一段时间，具体多长时间我也不太清楚，当时我是晚上配置的，第二天早上一起床就可以用配置的独立域名访问了！</p></strong></p>
 <p></p><p><code>有些域名服务提供商的DNS解析时间可能不一样，大家可以耐心等候一下！</code></p>
-</div><div class="tags"><a href="/tags/github/">github</a></div><div class="post-nav"><a href="/2016-06-28-通过gitBook让网站更实用/" class="pre">通过gitBook让网站更实用</a><a href="/2016-06-28-通过github-pages生成网站/" class="next">通过github pages生成网站</a></div><div data-thread-key="2016-06-28-为github-pages绑定独立域名/" data-title="为github pages绑定独立域名" data-url="http://www.soujava.com/2016-06-28-为github-pages绑定独立域名/" class="ds-share flat"><div class="ds-share-inline"><ul class="ds-share-icons-16"><li data-toggle="ds-share-icons-more"><a href="javascript:void(0);" class="ds-more">分享到：</a></li><li><a href="javascript:void(0);" data-service="weibo" class="ds-weibo">微博</a></li><li><a href="javascript:void(0);" data-service="qzone" class="ds-qzone">QQ空间</a></li><li><a href="javascript:void(0);" data-service="qqt" class="ds-qqt">腾讯微博</a></li><li><a href="javascript:void(0);" data-service="wechat" class="ds-wechat">微信</a></li></ul><div class="ds-share-icons-more"></div></div></div><div data-thread-key="2016-06-28-为github-pages绑定独立域名/" data-title="为github pages绑定独立域名" data-url="http://www.soujava.com/2016-06-28-为github-pages绑定独立域名/" data-author-key="1" class="ds-thread"></div></div></div></div><div class="pure-u-1-4"><div id="sidebar"><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/IDE/">IDE</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Maven/">Maven</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mybatis/">Mybatis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Mysql/">Mysql</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Nginx/">Nginx</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/RocketMQ/">RocketMQ</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tomcat/">Tomcat</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/UI/">UI</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/git/">git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/github/">github</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/javascript/">javascript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/nodeJs/">nodeJs</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/oracle/">oracle</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/spring/">spring</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/thymeleaf/">thymeleaf</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/vSphere/">vSphere</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/RocketMQ启动错误/" style="font-size: 15px;">RocketMQ启动错误</a> <a href="/tags/进制运算/" style="font-size: 15px;">进制运算</a> <a href="/tags/eclipse/" style="font-size: 15px;">eclipse</a> <a href="/tags/javascript/" style="font-size: 15px;">javascript</a> <a href="/tags/界面框架/" style="font-size: 15px;">界面框架</a> <a href="/tags/添加enter事件/" style="font-size: 15px;">添加enter事件</a> <a href="/tags/nodeJs/" style="font-size: 15px;">nodeJs</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/jquery/" style="font-size: 15px;">jquery</a> <a href="/tags/网卡/" style="font-size: 15px;">网卡</a> <a href="/tags/服务开机启动/" style="font-size: 15px;">服务开机启动</a> <a href="/tags/Mysql/" style="font-size: 15px;">Mysql</a> <a href="/tags/Maven插件/" style="font-size: 15px;">Maven插件</a> <a href="/tags/动态传入tableName/" style="font-size: 15px;">动态传入tableName</a> <a href="/tags/Redis安装/" style="font-size: 15px;">Redis安装</a> <a href="/tags/github/" style="font-size: 15px;">github</a> <a href="/tags/Tomcat日志/" style="font-size: 15px;">Tomcat日志</a> <a href="/tags/vSphere添加物理网卡/" style="font-size: 15px;">vSphere添加物理网卡</a> <a href="/tags/git/" style="font-size: 15px;">git</a> <a href="/tags/java8-Stream/" style="font-size: 15px;">java8 Stream</a> <a href="/tags/jxl/" style="font-size: 15px;">jxl</a> <a href="/tags/java定时任务/" style="font-size: 15px;">java定时任务</a> <a href="/tags/java接收clob字段/" style="font-size: 15px;">java接收clob字段</a> <a href="/tags/oracle导出空表/" style="font-size: 15px;">oracle导出空表</a> <a href="/tags/spring/" style="font-size: 15px;">spring</a> <a href="/tags/springBoot/" style="font-size: 15px;">springBoot</a> <a href="/tags/thymeleaf/" style="font-size: 15px;">thymeleaf</a> <a href="/tags/gitlab/" style="font-size: 15px;">gitlab</a> <a href="/tags/表单元素获取/" style="font-size: 15px;">表单元素获取</a> <a href="/tags/跨域/" style="font-size: 15px;">跨域</a> <a href="/tags/poi/" style="font-size: 15px;">poi</a></div></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">© <a href="/." rel="nofollow">soujava.</a><a rel="nofollow" target="_blank" href="http://www.soujava.com"> 马平升.</a><a rel="nofollow" target="_blank" href="https://github.com/mapingsheng"> Github</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=0.0.0"><script>var duoshuoQuery = {short_name:'soujava'};
-(function() {
-    var ds = document.createElement('script');
-    ds.type = 'text/javascript';ds.async = true;
-    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-    ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0]
-        || document.getElementsByTagName('body')[0]).appendChild(ds);
-})();
-</script><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/github/" rel="tag">#github</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016-06-28-通过github-pages生成网站/" rel="next" title="通过github pages生成网站">
+                <i class="fa fa-chevron-left"></i> 通过github pages生成网站
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016-06-28-通过gitBook让网站更实用/" rel="prev" title="通过gitBook让网站更实用">
+                通过gitBook让网站更实用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016-06-28-为github-pages绑定独立域名/"
+           data-title="为github pages绑定独立域名" data-url="http://www.soujava.com/2016-06-28-为github-pages绑定独立域名/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="马平升" />
+          <p class="site-author-name" itemprop="name">马平升</p>
+          <p class="site-description motion-element" itemprop="description">记录未知的，牢记已知的</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">46</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">马平升</span>
+</div>
+
+<div class="powered-by">
+  <a class="theme-link" href="http://www.soujava.com">soujava</a>
+</div>
+
+<div class="theme-info">
+  
+  <a class="theme-link" href="https://github.com/mapingsheng">
+    GitHub
+  </a>
+</div>
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv"><i class="fa fa-user"></i><span class="busuanzi-value" id="busuanzi_value_site_uv"></span></span>
+  
+
+  
+    <span class="site-pv"><i class="fa fa-eye"></i><span class="busuanzi-value" id="busuanzi_value_site_pv"></span></span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"soujava"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+</body>
+</html>
