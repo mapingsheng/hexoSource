@@ -260,6 +260,331 @@
             
               
                 
+                <a class="post-title-link" href="/Redis-使用SortedSet分页处理/" itemprop="url">
+                  Redis-使用SortedSet分页处理
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-03-23T12:53:35+08:00" content="2017-03-23">
+              2017-03-23
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Redis/" itemprop="url" rel="index">
+                    <span itemprop="name">Redis</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/Redis-使用SortedSet分页处理/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="Redis-使用SortedSet分页处理/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong>一、需求描述</strong></p>
+<p>由于app首页的数据展示需要调用6个第三方的不同数据源的rest接口，所以app首页在使用过程中会出现请求超时的问题（app端设置超时时间为5s）；所以需要对首页进行优化；</p>
+<blockquote>
+<p>1、由于app首页的数据展示非常像微信朋友圈的数据展示，即下拉时获取最新的数据，上推时获取历史数据，而在实际的使用场景中，上推动作大于5次的情况比较少(每天在微信朋友圈把5天前的动态翻出来[上推]的情况比较少吧)；所以打算把首页的前5页数据全部放入缓存中，不管是下拉获取新数据还是上推获取分页的老数据都统一从缓存中获取，可以有效减轻服务器压力。</p>
+<p>2、设定第三方rest接口调用超时时间，比如5分钟之内的首页刷新操作，只会读取缓存数据，不会触发调用第三方的rest接口。</p>
+<p>3、首页的刷新操作触发采用异步多线程调用，而不是采用串行方式处理；比如首页刷新时，调用6个第三方的rest接口时，启动6个线程并行异步去拉取数据，并且把新数据增量更新到缓存中。</p>
+</blockquote>
+<p><strong>二、业务调整</strong></p>
+<p>由于app端的分页比较特殊，比如后台数据会近实时的发生变化，所以采用常规的分页算法[(totalRecord + pageSize - 1) / pageSize;]肯定是不行的。如果仍采用这种算法，当上推刷新时，就有可能加载到上一页已经看过的数据，比如用户当前正在看第2页的历史数据，如果此时后台数据源新增了一条数据，那么当用户继续上推操作查看第3页的历史数据时，就会把第2页的最后一条数据获取，并且会把该条数据作为第3页的第一条数据进行展示，这样是有问题的。</p>
+<p>所以在数据表设计时，需要在表中增加一个自增的orderId字段参与分页，然后分页时，需要将第一页的最后一条数据的orderId回传到后台，后台拿着这个orderId进行条件判断查询并且集合上面的分页算法就可以避免上面的问题。</p>
+<p><strong>二、代码开发</strong></p>
+<blockquote>
+<p>1、熟悉redis的zAdd方法</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">ZADD key score member [[score member] [score member] ...]</div><div class="line"></div><div class="line">将一个或多个 member 元素及其 score 值加入到有序集 key 当中。</div><div class="line"></div><div class="line">如果某个 member 已经是有序集的成员，那么更新这个 member 的 score 值，并通过重新插入这个 member 元素，来保证该 member 在正确的位置上。</div><div class="line"></div><div class="line">score 值可以是整数值或双精度浮点数。</div></pre></td></tr></table></figure>
+<blockquote>
+<p>2、调用zAdd方法向缓存中添加数据(用的是jedis客户端)</p>
+</blockquote>
+<p><em>这里为了看着更加清晰，没有使用for循环</em></p>
+<blockquote>
+<blockquote>
+<p>jedis.zadd(“home_123456”, 1, a);</p>
+<p>jedis.zadd(“home_123456”, 2, b);</p>
+<p>jedis.zadd(“home_123456”, 3, c);</p>
+<p>jedis.zadd(“home_123456”, 4, d);</p>
+<p>jedis.zadd(“home_123456”, 5, e);</p>
+<p>jedis.zadd(“home_123456”, 6, f);</p>
+<p>jedis.zadd(“home_123456”, 7, g);</p>
+<p>jedis.zadd(“home_123456”, 8, h);</p>
+<p>jedis.zadd(“home_123456”, 9, i);</p>
+<p>jedis.zadd(“home_123456”, 10, j);</p>
+</blockquote>
+<p>3、熟悉zRevrangeByScore方法</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">ZREVRANGEBYSCORE key max min [WITHSCORES] [LIMIT offset count]</div><div class="line"></div><div class="line">返回有序集 key 中， score 值介于 max 和 min 之间(默认包括等于 max 或 min )的所有的成员。有序集成员按 score 值递减(从大到小)的次序排列。</div><div class="line"></div><div class="line">具有相同 score 值的成员按字典序的逆序(reverse lexicographical order )排列。</div><div class="line"></div><div class="line">min 和 max 可以是 -inf 和 +inf ，这样一来，你就可以在不知道有序集的最低和最高 score 值的情况下获取数据</div><div class="line"></div><div class="line">默认情况下，区间的取值使用闭区间 (小于等于或大于等于)，你也可以通过给参数前增加 ( 符号来使用可选的开区间 (小于或大于)。</div><div class="line"></div><div class="line">举个例子：</div><div class="line"></div><div class="line"><span class="function">ZRANGEBYSCORE <span class="title">zset</span> <span class="params">(<span class="number">1</span> <span class="number">5</span></span></span></div><div class="line">返回所有符合条件 <span class="number">1</span> &lt; score &lt;= <span class="number">5</span> 的成员，而</div><div class="line"></div><div class="line">ZRANGEBYSCORE zset (<span class="number">5</span> (<span class="number">10</span></div><div class="line">则返回所有符合条件 <span class="number">5</span> &lt; score &lt; <span class="number">10</span> 的成员。</div></pre></td></tr></table></figure>
+<blockquote>
+<p>2、调用zRevrangeByScore方法向缓存中获取分页数据</p>
+<p>比如每页按取3条数据进行分页的话,当我们在查看第1页的前提下，上推操作，获取第2页的历史数据，需要拿到上一页数据的最后一条记录的score值【key:home_123456 score:3 value c】,所以score值为3</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">jedis.zrevrangeByScore(<span class="string">"home_123456"</span>, <span class="string">"+inf"</span>, <span class="string">"("</span>+<span class="number">3</span>, <span class="number">0</span>, <span class="number">3</span>);</div><div class="line"></div><div class="line">这条代码的意思就是取出缓存中key为<span class="string">"home_123456"</span>,并且score值大于<span class="number">3</span>的数据，并且从第<span class="number">0</span>条开始一共取出<span class="number">3</span>条(有点像 limit <span class="number">0</span>,<span class="number">3</span>的作用)</div><div class="line"></div><div class="line">注：【+inf】 代表最大值不知道，所以不对区间进行最大值限制,</div><div class="line">    【<span class="string">"("</span>+<span class="number">3</span>】 等同与 【(<span class="number">3</span>】，代表sore的值要小于<span class="number">3</span></div></pre></td></tr></table></figure>
+<p>通过上面的方法可以很好的实现在缓存中进行分页获取数据，以此可以有效提示app端的性能</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/我所理解的nodeJs的两个概念/" itemprop="url">
+                  我所理解的nodeJs的两个概念
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-03-06T16:22:02+08:00" content="2017-03-06">
+              2017-03-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/nodeJs/" itemprop="url" rel="index">
+                    <span itemprop="name">nodeJs</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/我所理解的nodeJs的两个概念/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="我所理解的nodeJs的两个概念/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>仔细想了想，现将我对nodejs理解中的两个概念综述一下，以确定后续对其使用定位和深入理解。</p>
+<h2 id="1、包管理器"><a href="#1、包管理器" class="headerlink" title="1、包管理器"></a>1、包管理器</h2><p>其实nodejs有一个强大的包管理器支撑着nodejs的繁荣生态，提到这个包管理器就据下面几个例子：</p>
+<p><em>用过linux操作系统的都知道：</em></p>
+<p> 如果用的是Debian、Ubuntu操作系统的话，那么我们平时安装软件时会用到【<em>apt-get install 包名称</em>】去安装；</p>
+<p> 如果用的是Fedora/Redhat、CentOS操作系统的话，那么我们平时安装软件时会用到【<em>yum install 包名称</em>】去安装；</p>
+<p> 再举一个例子，就是平时开发中用maven管理依赖；一般如果工程依赖什么jar包，然后在pom.xml中配置这个依赖的jar包信息就行了；</p>
+<p> 通过上面三个例子是不是发现我们安装软件、添加依赖的jar包等操作时非常方便；可是有没有想到他们如果操作的，其实在后面有一个仓库；</p>
+<p> 安装软件时有一个在线软件仓库，添加jar依赖时，有一个jar包仓库(本地或远程)；当执行安装命令时，会直接从仓库中把相关软件下载下来并且自动安装，就是这么爽；<br> 其实nodejs也有类似这么一个仓库(node package manage)，简称NPM</p>
+<p> 如果安装nodejs仓库中的软件(模块)，可以通过npm命令【<em>npm install 名称</em>】；当然npm命令其实在我们安装nodejs时已经自动安装了，<br> 我们可以输入<em>npm -v</em>查看已经安装的npm的版本信息；当然如果没有安装npm的话，<br> 可以通过命令以下进行安装：</p>
+<blockquote>
+<p>curl <a href="http://npmjs.org/install.sh" target="_blank" rel="external">http://npmjs.org/install.sh</a> | sudo sh  #如果非root用户需要添加sudo sh获取管理员权限</p>
+</blockquote>
+<h2 id="2、异步事件"><a href="#2、异步事件" class="headerlink" title="2、异步事件"></a>2、异步事件</h2><p>nodejs是基于事件机制进行处理的，不像多线程那样；拿一个例子来讲，比如在线购物时，”提交订单”的操作：</p>
+<blockquote>
+<p>如果用多线程方式：</p>
+<p>a、启动一个线程判断库存，并且减库存操作(花费200ms)</p>
+<p>b、启动一个线程修改订单状态操作(花费300ms)</p>
+<p>c、启动一个线程修改购物车中商品状态操作(花费400ms)</p>
+</blockquote>
+<p>  当然上述流程只是假设，如果针对上面三个操作不使用多线程的情况，花费的时间就是三个操作的时间总和(花费900ms)；而如果采用多线程并行处理三个操作的话，那么花费的时间仅仅是三个操作中花费时间最长的一个操作的时间(花费400ms)。</p>
+<blockquote>
+<p>如果用nodejs方式：</p>
+<p>a、添加一个库存操作事件(花费50ms)</p>
+<blockquote>
+<p>a.1、判断库存(花费100ms)</p>
+<p>a.2、减库存操作(花费100ms)</p>
+</blockquote>
+<p>b、添加一个修改订单的事件(花费40ms)</p>
+<blockquote>
+<p>b.1、修改订单状态操作(花费100ms)</p>
+</blockquote>
+<p>c、添加一个修改购物车的事件(花费50ms)</p>
+<blockquote>
+<p>c.1、修改购物车中商品状态操作(花费400ms)</p>
+</blockquote>
+</blockquote>
+<p><em>注：上面的添加一个XX事件其实是将一个事件添加到事件管理器中，然后nodejs会自动且不间断的消费处理事件管理器中的事件。</em></p>
+<p>通过看到nodejs的操作步骤场景我们发现一个重要的特征就是不停的“添加一个XX事件”；<br>所以提交订单的操作时间将是(50ms+40ms+50ms=140ms)，相比多线程场景花费的时间(400ms)是不是少了很多；</p>
+<blockquote>
+<p>但是有一点我们需要注意:</p>
+<blockquote>
+<p>1、使用nodejs的场景花费 140ms，并不是提交一个订单花费了140ms，而是用户提交一个订单收到的响应是140ms；</p>
+<p>2、多线程场景虽然花费了400ms，但是提交订单这个操作全部完成了；而nodejs场景花费了140ms，但是提交订单这个操作还没有全部完成；这就是异步的概念</p>
+<p>3、所以针对提交订单这个操作使用nodejs去处理貌似有点欠缺，因为提交订单操作涉及大量的“计算”，如果采用异步去处理，可能无法保证数据原子性和一致性。<br>所以nodejs的使用场景更适合密集型IO，比如应对大流量的请求、磁盘io等等。</p>
+</blockquote>
+</blockquote>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/CentOS系统安装nodeJs/" itemprop="url">
                   CentOS系统安装nodeJs
                 </a>
@@ -2825,289 +3150,6 @@ select num from a where exists(select 1 from b where num=a.num)
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/整型字面值与进制运算之间的关系/" itemprop="url">
-                  整型字面值与进制运算之间的关系
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-20T17:19:18+08:00" content="2016-08-20">
-              2016-08-20
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/整型字面值与进制运算之间的关系/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="整型字面值与进制运算之间的关系/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>何为字面值？说白了就是一眼看上去的内容值，比如下面的分别用几个不同进制(二进制、八进制、十进制、十六进制)表示法表示的自面值信息</p>
-<ol>
-<li>二进制表示：int i = 0b111010110;其实0b111010110就是字面值</li>
-<li>八进制表示：long l3 = 0123;其实0123就是字面值</li>
-<li>十进制表示：long l2 = 225;其实225就是字面值</li>
-<li>十六进制表示：long l5 = 0x12af;其实0x12af就是二进制值</li>
-</ol>
-<p>好了上面已经描述了自面值的概念，那么整型自面值就是整数类型的字面值喽(哈哈没有开玩笑)。下面说明整型字面值与不同进制之间的关系。</p>
-<p><strong>一、十进制</strong></p>
-<p>地球上被人类采用的通用的数值表示方式，比如再正常不过的0、2、5、32、100等等；我们眼睛看到的数值就是表示其真实的值，不像其它进制表示方式，我们眼睛看到的值并不一定是其真实的值，所以我们人类一般采用十进制表示方式(10进制比较诚实，人类比较懒呗)。</p>
-<p><strong>二、二进制</strong></p>
-<p>计算机唯一能识别的只有0和1，而这里的0和1就是二进制，绝对不是指数字的0和1，这也是比较容易引起混淆的地方；</p>
-<p>举个常见的例子：我们生活中常用的算账用的计算器，我们输入100+30然后按完“=”号后，计算器屏幕上面会显示两个数相加后的结果130，    这个过程我输入的数字(100、30)或者按的按钮(+、=)和最后输出的130这几个动作，都是我们人类自己能很好识别的；我们输入十进制数字。然后计算器接收后是不识别的，实际上这个过程经历了非常复杂的转换过程：</p>
-<pre><code>1)、十进制数会被转换成二进制，也就是把100转化成只有0和1组成的一串数字（1100100）；
-    30转换成二进制数字(11110)
-2)、然后计算器把转换后的两个二进制数进行相加，最终得到二进制结果：10000010(130)；
-    实际上二进制之间加法很简单，只需要把两个二进制数右对齐，然后上下两个数(0或者1)相加，相加的结果(和)逢2进1就行了。
-</code></pre><p><strong>二、八进制</strong></p>
-<p>除了人类使用的10进制、计算机使用的二进制外，其实还有八进制（以0开头，以8为基数运算）</p>
-<pre><code>8进制数字的范围是0~7,也就是说用8进制形式标示数值时，需要用0开头，
-并且标示数值串中只能包含0~7之间的数字，例如：
-int i = 0123;
-int m = 01354;
-int n =0238;（不合格）
-
-8进制表示的数值怎么计算成人类识别的10进制呢，其实非常简单，只需要按照规则来计算就行了，
-我们就拿int i = 013;这个变量定义来讲，一共三个数字(0、1、3)；那么我们从最右侧3用索引数数就是(0[2]、1[1]、3[0]),方括号中为从右侧开始计数的索引。
-
-比如013=3*8的0次方+1*8的1次方=3+8=11；
-</code></pre><p><strong>三、十六进制</strong></p>
-<p>16进制的数字范围是0~15，而阿拉伯数字只有0~9，所以分别用A~F（a~f）替代数字10~15；也就是说用16进制表示的数值串中只能包括0~9和a|A~f|F；十六进制表示方式就是以0X开头，以16为基数进行运算</p>
-<pre><code>可以参照上面的八进制计算规则，long l5 = 0x12af;定义的变量用十进制表示方法就是：
-0x12af表示的十进制数为：15*16的0次方+10*16的1次方+2*16的2次方+1*16的3次方=4783
-</code></pre><p><strong><em>注、用二进制表示十进制</em></strong></p>
-<p>从jdk7开始，我们可以直接定义变量的时候可以用二进制表示十进制字面值，不过必须使用0b或0B作为数值的前缀。</p>
-<p>比如：int x = 0b1010;<br><em>其实x的真实值是二进制1010运算十进制后的值10.</em></p>
-<p>int u = 0B111010110;<br><em>其实u的真实值是二进制111010110运算十进制后的值470.</em></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/Redis-安装/" itemprop="url">
-                  Redis--安装
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-19T17:21:43+08:00" content="2016-08-19">
-              2016-08-19
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Redis/" itemprop="url" rel="index">
-                    <span itemprop="name">Redis</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/Redis-安装/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="Redis-安装/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><strong>一、下载安装包</strong><br>  下载redis安装包，下载方式很多比如如下方式都可以：<br>    1)、到官网下载<a href="http://redis.io需要的版本" target="_blank" rel="external">http://redis.io需要的版本</a><br>    2)、在linux系统中用命令下载 $ wget <a href="http://download.redis.io/releases/redis-2.8.17.tar.gz" target="_blank" rel="external">http://download.redis.io/releases/redis-2.8.17.tar.gz</a><br>    下载成功后得到redis-2.8.17.tar.gz安装包<br><strong>二、安装</strong><br>    1)、用命令解压缩安装包<br>       $ tar xzf redis-2.8.17.tar.gz</p>
-<pre><code>2)、进入解压后的文件中
-     $ cd redis-2.8.17
-
-3)、编译安装
-      $ make
-</code></pre><p>  注：make完后 redis-2.8.17目录下会出现编译后的redis服务程序redis-server,还有用于测试的客户端程序redis-cli<br><strong>三、启动服务</strong><br>     1)、进入到redis安装目录src下面<br>          $ cd /usr/local/redis-2.8.17/src<br>     2)、启动服务操作，启动服务主要有两种方式：<br>           A：采用默认配置方式启动(不推荐)<br>                $ ./redis-server<br>           B：采用制定配置文件启动(推荐)<br>                 $ ./redis-server ../redis.conf<br>     注：redis.conf是一个默认的配置文件。我们可以根据需要使用自己的配置文件,修改redis.conf  配置文件修改 daemonize yes ；该配置为使redis启动后可以后台运行</p>
-<p><strong>四、测试</strong><br>   1)、进入安装目录，运行redis-cli<br>         $ ./redis-cli<br>         redis&gt; set username maps<br>         redis&gt;get username<br>         “maps” </p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -3153,7 +3195,7 @@ int n =0238;（不合格）
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">46</span>
+              <span class="site-state-item-count">48</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -3170,7 +3212,7 @@ int n =0238;（不合格）
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-count">32</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
