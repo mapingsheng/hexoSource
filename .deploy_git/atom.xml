@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.soujava.com/"/>
-  <updated>2017-04-18T10:07:20.025Z</updated>
+  <updated>2017-04-20T13:20:53.398Z</updated>
   <id>http://www.soujava.com/</id>
   
   <author>
@@ -16,13 +16,83 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>java三目运算符之规则(坑)</title>
+    <link href="http://www.soujava.com/java%E4%B8%89%E7%9B%AE%E8%BF%90%E7%AE%97%E7%AC%A6%E4%B9%8B%E8%A7%84%E5%88%99-%E5%9D%91/"/>
+    <id>http://www.soujava.com/java三目运算符之规则-坑/</id>
+    <published>2017-04-20T11:40:25.000Z</published>
+    <updated>2017-04-20T13:20:53.398Z</updated>
+    
+    <content type="html">&lt;p&gt;平时开发过程中，判断操作除了使用if-else语句之外，三目运算符也经常被使用，然而在使用三目运算符过程中，我们异步都很老实，但是其使用规则则不曾了解，下面就了解一下它的使用规则。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;一、描述&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;先了解一下三目运算符的语法：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;表达式1?表达式2:表达式3;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;em&gt;当表达式1为true时，则执行表达式2；当表达式1为false时，则执行表达式3&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;先看下面的一段代码，分析一下执行结果：&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;16&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;17&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;18&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;19&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;20&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;21&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;22&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;@Test&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Test&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; i = &lt;span class=&quot;number&quot;&gt;60&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	String str1 = String.valueOf(i &amp;lt; &lt;span class=&quot;number&quot;&gt;100&lt;/span&gt; ? &lt;span class=&quot;number&quot;&gt;80&lt;/span&gt; : &lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;str1:&quot;&lt;/span&gt;+str1);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	String str2 = String.valueOf(i &amp;lt; &lt;span class=&quot;number&quot;&gt;100&lt;/span&gt; ? &lt;span class=&quot;number&quot;&gt;80&lt;/span&gt; : &lt;span class=&quot;number&quot;&gt;100.0&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;str2:&quot;&lt;/span&gt;+str2);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	String str3 = String.valueOf(i &amp;lt; &lt;span class=&quot;number&quot;&gt;100&lt;/span&gt; ? &lt;span class=&quot;number&quot;&gt;80L&lt;/span&gt; : &lt;span class=&quot;number&quot;&gt;100.0&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;str2:&quot;&lt;/span&gt;+str3);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	String str4 = String.valueOf(i &amp;lt; &lt;span class=&quot;number&quot;&gt;100&lt;/span&gt; ? &lt;span class=&quot;string&quot;&gt;&quot;80&quot;&lt;/span&gt; : &lt;span class=&quot;number&quot;&gt;100.0&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;str2:&quot;&lt;/span&gt;+str4);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	String str5 = String.valueOf(i &amp;lt; &lt;span class=&quot;number&quot;&gt;100&lt;/span&gt; ? &lt;span class=&quot;number&quot;&gt;80&lt;/span&gt; : &lt;span class=&quot;string&quot;&gt;&quot;字符串&quot;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;str2:&quot;&lt;/span&gt;+str5);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	String str6 = String.valueOf(i &amp;lt; &lt;span class=&quot;number&quot;&gt;100&lt;/span&gt; ? &lt;span class=&quot;keyword&quot;&gt;true&lt;/span&gt; : &lt;span class=&quot;number&quot;&gt;100.06&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;str6:&quot;&lt;/span&gt;+str6);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;运行之后的返回结果如下：&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;str1:&lt;span class=&quot;number&quot;&gt;80&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;str2:&lt;span class=&quot;number&quot;&gt;80.0&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;str3:&lt;span class=&quot;number&quot;&gt;80.0&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;str4:&lt;span class=&quot;number&quot;&gt;80&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;str5:&lt;span class=&quot;number&quot;&gt;80&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;str6:&lt;span class=&quot;keyword&quot;&gt;true&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;strong&gt;二、分析&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;1、String str1 = String.valueOf(i &amp;lt; 100 ? 80 : 100);&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这句代码运行结果为 str1:80,无容置疑，完全正确，也不需要过多解释了。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;2、String str2 = String.valueOf(i &amp;lt; 100 ? 80 : 100.0);&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这句代码运行结果为 str2:80.0,看到结果有点纳闷了，因为i=60；并且i&amp;lt;100;所以应该执行表达式2，应该打印出 80 才对啊，怎么会打印出 80.0为浮点数类型呢？&lt;br&gt;其实三木运算符还有一个规则：&lt;/p&gt;
+&lt;p&gt;若两个操作数是明确类型的表达式(比如变量)，则按照正常的二进制数字转换，int转为long，long转为浮点型(float、double)等&lt;/p&gt;
+&lt;p&gt;所以以上代码中，int类型的变量i会被转换为跟100.0同类型(浮点型)；看来三目运算是先执行类型检查-&amp;gt;类型转换-&amp;gt;执行运算&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;3、String str3 = String.valueOf(i &amp;lt; 100 ? 80L : 100.0);&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这句代码运行结果为 str3:80.0,此时结合第2行代码的分析可以这么判定，因为i为int型，并且表达式2(80L)中为Long型，理论上i应该会被自动转换为Long型，但是表达式3是浮点型，所以i最终会被转换为浮点型。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;4、String str4 = String.valueOf(i &amp;lt; 100 ? “80” : 100.0);&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这句代码运行结果为 str4:80,因为表达式2为字符型，表达式3是浮点型，所以浮点型可以转换为字符型，因此打印的是 str4:80&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;5、String str5 = String.valueOf(i &amp;lt; 100 ? 80 : “字符串”);&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这句代码运行结果为 str5:80；具体原因可以参照第4行代码的分析；但是在第4行代码分析的基础上，还需要再深入分析一下，表达式2和表达式3类型如果不能相互转换呢？其实三目运算符规则就是如果不能类型转换的话，就不做类型转换。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;6、String str6 = String.valueOf(i &amp;lt; 100 ? true : 100.06);&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这句代码运行结果为 str6:true，再次验证三目运算符运算时，如果不能类型转换的话，就不做类型转换。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;三、总结&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;如果两个操作数是明确类型的表达式(比如变量)，则按照正常的二进制数字转换规则，int转为long，long转为float/double等&lt;/p&gt;
+&lt;p&gt;如果两个操作数表达式类型不能相互转换，则不作转换；比如数值型都可以转换为字符串，但是字符串不能都转换为数值型。&lt;/p&gt;
+&lt;p&gt;使用三目运算时，如果使用不当，仅仅会发生自动的类型转换；语句执行流程永远不变。&lt;/p&gt;
+&lt;p&gt;在使用三目运算符时，表达式类型务必一致&lt;/p&gt;
+&lt;/blockquote&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;平时开发过程中，判断操作除了使用if-else语句之外，三目运算符也经常被使用，然而在使用三目运算符过程中，我们异步都很老实，但是其使用规则则不曾了解，下面就了解一下它的使用规则。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;一、描述&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;先了解一下三目运算符
+    
+    </summary>
+    
+      <category term="java" scheme="http://www.soujava.com/categories/java/"/>
+    
+    
+      <category term="java" scheme="http://www.soujava.com/tags/java/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Redis-定时操作篇</title>
     <link href="http://www.soujava.com/Redis-%E5%AE%9A%E6%97%B6%E6%93%8D%E4%BD%9C%E7%AF%87/"/>
     <id>http://www.soujava.com/Redis-定时操作篇/</id>
     <published>2017-04-18T09:09:35.000Z</published>
-    <updated>2017-04-18T10:07:20.025Z</updated>
+    <updated>2017-04-20T11:44:22.653Z</updated>
     
-    <content type="html">&lt;p&gt;&lt;strong&gt;一、定时描述&lt;/strong&gt;&lt;br&gt;平时开发中，经常会把一些热数据存入缓存中，并且设置失效时间，比如把用户和rest接口地址存入缓存，并设置失效时间，一方面可以提高响应速度，还可以把一部分无效的请求挡在缓存层处理；还比如把验证码存入缓存，并设置失效时间，也可以达到上述目的。redis缓存有两种定时模式：&lt;/p&gt;
+    <content type="html">&lt;p&gt;&lt;strong&gt;一、定时描述&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;平时开发中，经常会把一些热数据存入缓存中，并且设置失效时间，比如把用户和rest接口地址存入缓存，并设置失效时间，一方面可以提高响应速度，还可以把一部分无效的请求挡在缓存层处理；还比如把验证码存入缓存，并设置失效时间，也可以达到上述目的。redis缓存有两种定时模式：&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;1、设置某键值在多少秒之后失效&lt;/p&gt;
 &lt;p&gt;2、设置某键值在以后某一个时间点之后失效，比如2017年10月1日23点59分59秒失效&lt;/p&gt;
@@ -46,7 +116,8 @@
     
     <summary type="html">
     
-      &lt;p&gt;&lt;strong&gt;一、定时描述&lt;/strong&gt;&lt;br&gt;平时开发中，经常会把一些热数据存入缓存中，并且设置失效时间，比如把用户和rest接口地址存入缓存，并设置失效时间，一方面可以提高响应速度，还可以把一部分无效的请求挡在缓存层处理；还比如把验证码存入缓存，并设置失效时间，也
+      &lt;p&gt;&lt;strong&gt;一、定时描述&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;平时开发中，经常会把一些热数据存入缓存中，并且设置失效时间，比如把用户和rest接口地址存入缓存，并设置失效时间，一方面可以提高响应速度，还可以把一部分无效的请求挡在缓存层处理；还比如把验证码存入缓存，并设置失效
     
     </summary>
     
@@ -951,54 +1022,6 @@ select num from a where exists(select 1 from b where num=a.num)
     
     
       <category term="java8 Stream" scheme="http://www.soujava.com/tags/java8-Stream/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>thymeleaf教程2-后台数据封装与页面渲染</title>
-    <link href="http://www.soujava.com/thymeleaf%E6%95%99%E7%A8%8B2-%E5%90%8E%E5%8F%B0%E6%95%B0%E6%8D%AE%E5%B0%81%E8%A3%85%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93/"/>
-    <id>http://www.soujava.com/thymeleaf教程2-后台数据封装与页面渲染/</id>
-    <published>2016-08-23T08:32:50.000Z</published>
-    <updated>2017-01-11T02:06:24.914Z</updated>
-    
-    <content type="html">&lt;p&gt;我们使用模板引擎的过程中，页面上面的数据肯定需要从后台传递过来，然后把数据装载到页面对应区域中，所以我们来看看如果把后台的数据在前端页面渲染。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;一、添加一个表单页面–登陆操作&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;http://soujava.com/images/thy6.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;二、新建业务控制器(doLogin)–获取登陆表单中提交的数据&lt;/strong&gt;&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;String username = request.getParameter(&lt;span class=&quot;string&quot;&gt;&quot;username&quot;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  	String password = request.getParameter(&lt;span class=&quot;string&quot;&gt;&quot;password&quot;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  	&lt;span class=&quot;comment&quot;&gt;//实例化一个thymeleaf文本上下文&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      WebContext ctx = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; WebContext(request, response, servletContext, request.getLocale());&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//将前端登陆表单页面提交过来的数据封装到thymeleaf上下文中&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      ctx.setVariable(&lt;span class=&quot;string&quot;&gt;&quot;username&quot;&lt;/span&gt;, username);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      ctx.setVariable(&lt;span class=&quot;string&quot;&gt;&quot;password&quot;&lt;/span&gt;, password);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      &lt;span class=&quot;comment&quot;&gt;//调用模板引擎转向到对应的模板页面--desc模板页面&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      templateEngine.process(&lt;span class=&quot;string&quot;&gt;&quot;desc&quot;&lt;/span&gt;, ctx, response.getWriter());&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;三、新建模板页面(desc)–显示doLogin控制器中封装的数据&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/thy7.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;注：读取数据使用${XX}这种形式，是不是感觉很熟悉，EL表达式；而向页面html元素中渲染数据使用thymeleaf提供的标签th:text=”${XX}”这种形式。&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;四、编译工程项目–启动web服务器测试&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;1、在登陆表单中输入对应的用户名和密码，点击提交按钮&lt;br&gt;&lt;img src=&quot;http://soujava.com/images/thy1.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;1、可以看到提交表单后进入到doLogin控制器中，控制器获取数据并封装数据，然后转向到模板页面中渲染数据。&lt;br&gt;&lt;img src=&quot;http://soujava.com/images/thy2.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;五、在控制器doLogin中封装一些稍微复杂的数据集-数组&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;1、我们声明一个类型数组，然后把数组封装到thymeleaf上下文中&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;String[] types = &amp;#123;&lt;span class=&quot;string&quot;&gt;&quot;足球&quot;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&quot;篮球&quot;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&quot;羽毛球&quot;&lt;/span&gt;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   ctx.setVariable(&lt;span class=&quot;string&quot;&gt;&quot;types&quot;&lt;/span&gt;, types);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;2、在desc模板页面中遍历显示封装好的集合数据&lt;/p&gt;
-&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;p th:each=&quot;type : $&amp;#123;types&amp;#125;&quot;&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   	&amp;lt;span th:text=&quot;$&amp;#123;type&amp;#125;&quot;&amp;gt;&amp;lt;/span&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   &amp;lt;/p&amp;gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;&lt;em&gt;注：上面渲染集合数据到模板页面的代码中我们采用了th:each的方法遍历数据，这是thymeleaf提供的，其实thymeleaf提供了非常多并且非常强大的方法，后续再一一说明。&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;3、针对刚刚封装好的集合数据到页面测试一下&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/thy3.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/thy4.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;六、在控制器doLogin中封装一些稍微复杂的数据集-实体Bean&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;1、我们新建一个User的Bean实体&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;User&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; 	&lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; String firstName = &lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; String lastName = &lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; String nationality = &lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; Integer age = &lt;span class=&quot;keyword&quot;&gt;null&lt;/span&gt;；&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;final&lt;/span&gt; String firstName, &lt;span class=&quot;keyword&quot;&gt;final&lt;/span&gt; String lastName, &lt;/span&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;final&lt;/span&gt; String nationality, &lt;span class=&quot;keyword&quot;&gt;final&lt;/span&gt; Integer age) &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;super&lt;/span&gt;();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.firstName = firstName;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.lastName = lastName;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.nationality = nationality;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.age = age;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;2、在我们的doLogin业务控制器中实例化该User实体bean，并且把bean数据实体封装到thymeleaf上下文中&lt;/p&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;User user = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; User(&lt;span class=&quot;string&quot;&gt;&quot;zhang&quot;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&quot;san&quot;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&quot;china&quot;&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;25&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      ctx.setVariable(&lt;span class=&quot;string&quot;&gt;&quot;user&quot;&lt;/span&gt;, user);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;3、在desc模板页面中显示封装好的User实体bean数据&lt;br&gt;&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;p th:text=&quot;$&amp;#123;user.firstName+&#39;:&#39;+user.lastName+&#39;:&#39;+user.nationality+&#39;:&#39;+user.age&amp;#125;&quot;&amp;gt;&amp;lt;/p&amp;gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;注：我们在获取bean中的属性数据时，仍然采用EL表达式${user.firstName}的方式；然后将获取的数据显示到html元素中用th:text方法；只不过我们使用th:text时在中间使用了字符串拼接将多个属性拼接显示。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;六、总结&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;1、我们在执行业务操作的时候，需要把后台的数据集封装到thymeleaf上下文中，我们可以封装组合各种我们需要的数据，如：字符串、集合、实体bean等等&lt;br&gt;2、通过thymeleaf模板引擎转向到对应的模板页面&lt;br&gt;3、用thymeleaf提供的方法渲染后台封装的数据到页面中&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;我们使用模板引擎的过程中，页面上面的数据肯定需要从后台传递过来，然后把数据装载到页面对应区域中，所以我们来看看如果把后台的数据在前端页面渲染。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;一、添加一个表单页面–登陆操作&lt;/strong&gt;&lt;br&gt;&lt;img src=&quot;http://souja
-    
-    </summary>
-    
-      <category term="thymeleaf" scheme="http://www.soujava.com/categories/thymeleaf/"/>
-    
-    
-      <category term="thymeleaf" scheme="http://www.soujava.com/tags/thymeleaf/"/>
     
   </entry>
   
