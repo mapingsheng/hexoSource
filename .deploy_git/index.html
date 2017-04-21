@@ -260,6 +260,168 @@
             
               
                 
+                <a class="post-title-link" href="/java8使用stream对简单数据集排序/" itemprop="url">
+                  java8使用stream对简单数据集排序
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-04-21T17:40:43+08:00" content="2017-04-21">
+              2017-04-21
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/java8使用stream对简单数据集排序/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="java8使用stream对简单数据集排序/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Stream是java8新增一个工具类，在java.util.stream.*;中，不得不说的是stream功能异常强大，一旦你接触之后就不想再用哪些旧的jdk中api方法了；下面先以日常开发中的集合数据排序为例慢慢了解stream中的sorted方法。</p>
+<p><strong>一、对List数据集合排序</strong></p>
+<blockquote>
+<p>1、对List集合进行升序排列</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">streamSortTest1</span><span class="params">()</span></span>&#123;</div><div class="line"> 		<span class="comment">//定义一个简单的List数据集合</span></div><div class="line"> 		List&lt;Integer&gt; list1 = Lists.newArrayList(<span class="number">1</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">5</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">8</span>,<span class="number">2</span>); </div><div class="line">	<span class="comment">//直接调用sorted方法进行排序，val1-val2</span></div><div class="line"> 		list1 = list1.stream().sorted((val1,val2) -&gt;val1-val2).collect(Collectors.toList());</div><div class="line"> 		System.out.println(list1);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>以上代码输出结果为：[1, 2, 2, 3, 4, 5, 6, 8]；可见排序结果按照 升序 规则进行排序处理</p>
+<blockquote>
+<p>2、对List集合进行降序排列</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">streamSortTest1</span><span class="params">()</span></span>&#123;</div><div class="line"> 		<span class="comment">//定义一个简单的List数据集合</span></div><div class="line"> 		List&lt;Integer&gt; list1 = Lists.newArrayList(<span class="number">1</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">5</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">8</span>,<span class="number">2</span>); </div><div class="line">	<span class="comment">//直接调用sorted方法进行排序，val2-val1</span></div><div class="line"> 		list1 = list1.stream().sorted((val1,val2) -&gt;val2-val1).collect(Collectors.toList());</div><div class="line"> 		System.out.println(list1);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>以上代码输出结果为：[8, 6, 5, 4, 3, 2, 2, 1]；可见排序结果按照 降序 规则进行排序处理</p>
+<blockquote>
+<p>3、对List集合进行升序排列–自定义比较器</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">//先定义一个比较器，默认按照升序</span></div><div class="line">Comparator&lt;Integer&gt; compara = Comparator.comparing(u-&gt;u);</div><div class="line"><span class="comment">//在sorted方法中使用自定义的比较器进行排序</span></div><div class="line">list1 = list1.stream().sorted(compara).collect(Collectors.toList());</div><div class="line">System.out.println(list1);</div></pre></td></tr></table></figure>
+<p>以上代码输出结果为：[1, 2, 2, 3, 4, 5, 6, 8]；可见排序结果按照 升序 规则进行排序处理</p>
+<blockquote>
+<p>4、对List集合进行降序排列–自定义比较器</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">//先定义一个比较器，默认按照升序</span></div><div class="line">Comparator&lt;Integer&gt; compara = Comparator.comparing(u-&gt;u);</div><div class="line"><span class="comment">//在sorted方法中使用自定义的比较器进行排序，并且调用reversed方法反转了比较结果</span></div><div class="line">list1 = list1.stream().sorted(compara.reversed()).collect(Collectors.toList());</div><div class="line">System.out.println(list1);</div></pre></td></tr></table></figure>
+<p>以上代码输出结果为：[8, 6, 5, 4, 3, 2, 2, 1]；可见排序结果按照 降序 规则进行排序处理</p>
+<blockquote>
+<p>5、对Array数组进行升序排列</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">streamSortTest1</span><span class="params">()</span></span>&#123;</div><div class="line"> 		<span class="comment">//定义一个简单的数组集合</span></div><div class="line"> 		Integer[] array1 = &#123;<span class="number">1</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">5</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">8</span>,<span class="number">2</span>&#125;;</div><div class="line">	<span class="comment">//直接调用sorted方法进行排序,val1-val2</span></div><div class="line">	array1 = Stream.of(array1).sorted((val1,val2) -&gt; val1-val2).toArray(Integer[]::<span class="keyword">new</span>);</div><div class="line">	System.out.println(Arrays.asList(array1));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>以上代码输出结果为：[1, 2, 2, 3, 4, 5, 6, 8]；可见排序结果按照 升序 规则进行排序处理</p>
+<blockquote>
+<p>6、对Array数组进行降序排列</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">streamSortTest1</span><span class="params">()</span></span>&#123;</div><div class="line"> 		<span class="comment">//定义一个简单的数组集合</span></div><div class="line"> 		Integer[] array1 = &#123;<span class="number">1</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">5</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">8</span>,<span class="number">2</span>&#125;;</div><div class="line">	<span class="comment">//直接调用sorted方法进行排序，val2-val1</span></div><div class="line">	array1 = Stream.of(array1).sorted((val1,val2) -&gt; val2-val1).toArray(Integer[]::<span class="keyword">new</span>);</div><div class="line">	System.out.println(Arrays.asList(array1));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>以上代码输出结果为：[8, 6, 5, 4, 3, 2, 2, 1]；可见排序结果按照 降序 规则进行排序处理</p>
+<blockquote>
+<p>7、对Array数组进行升序排列–自定义比较器</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">streamSortTest1</span><span class="params">()</span></span>&#123;</div><div class="line"> 		<span class="comment">//定义一个简单的数组集合</span></div><div class="line"> 		Integer[] array1 = &#123;<span class="number">1</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">5</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">8</span>,<span class="number">2</span>&#125;;</div><div class="line">	<span class="comment">//自定义比较器，默认按照升序排序</span></div><div class="line">	Comparator&lt;Integer&gt; compara = Comparator.comparing(u-&gt;u);</div><div class="line">	<span class="comment">//直接调用sorted方法进行排序</span></div><div class="line">	array1 = Stream.of(array1).sorted(compara).toArray(Integer[]::<span class="keyword">new</span>);</div><div class="line">	System.out.println(Arrays.asList(array1));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>以上代码输出结果为：[1, 2, 2, 3, 4, 5, 6, 8]；可见排序结果按照 升序 规则进行排序处理</p>
+<blockquote>
+<p>8、对Array数组进行降序序排列–自定义比较器</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">streamSortTest1</span><span class="params">()</span></span>&#123;</div><div class="line"> 		<span class="comment">//定义一个简单的数组集合</span></div><div class="line"> 		Integer[] array1 = &#123;<span class="number">1</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">5</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">8</span>,<span class="number">2</span>&#125;;</div><div class="line">	<span class="comment">//自定义比较器，默认按照升序排序</span></div><div class="line">	Comparator&lt;Integer&gt; compara = Comparator.comparing(u-&gt;u);</div><div class="line">	<span class="comment">//直接调用sorted方法进行排序，对比较器进行了反转处理，即按照降序排序</span></div><div class="line">	array1 = Stream.of(array1).sorted(compara.reversed()).toArray(Integer[]::<span class="keyword">new</span>);</div><div class="line">	System.out.println(Arrays.asList(array1));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>以上代码输出结果为：[8, 6, 5, 4, 3, 2, 2, 1]；可见排序结果按照 降序 规则进行排序处理</p>
+<p>是不是感觉用着非常愉快，其实对复杂的数据结构更能体现！</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/java三目运算符之规则-坑/" itemprop="url">
                   java三目运算符之规则(坑)
                 </a>
@@ -3024,148 +3186,6 @@ select num from a where exists(select 1 from b where num=a.num)
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/java8中使用stream流和for循环分别对数据集合遍历的差异/" itemprop="url">
-                  java8中使用stream流和for循环分别对数据集合遍历的差异
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-31T09:44:41+08:00" content="2016-08-31">
-              2016-08-31
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/java8中使用stream流和for循环分别对数据集合遍历的差异/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="java8中使用stream流和for循环分别对数据集合遍历的差异/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>最近在平时开发中越来越多的会用到java8新增的流处理功能Stream；用一次就上瘾的感觉啊！在处理一个稍微大一些的数据集合时（长度为10W的List<map<string,object>&gt;）,刚好对比一下用java8的stream遍历集合和用java的for循环遍历集合的效率差异！</map<string,object></p>
-<h3 id="一、分别比较用两种方式遍历集合并输出集合中元素的效率-不在循环中加工组装集合数据"><a href="#一、分别比较用两种方式遍历集合并输出集合中元素的效率-不在循环中加工组装集合数据" class="headerlink" title="一、分别比较用两种方式遍历集合并输出集合中元素的效率(不在循环中加工组装集合数据)"></a>一、分别比较用两种方式遍历集合并输出集合中元素的效率(不在循环中加工组装集合数据)</h3><p><strong>1、声明个长度为10W的集合</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">List&lt;Map&lt;String,Object&gt;&gt; listMap = <span class="keyword">new</span> ArrayList&lt;Map&lt;String,Object&gt;&gt;();</div><div class="line">   <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">100000</span>;i++)&#123;</div><div class="line">   	Map&lt;String,Object&gt; map = <span class="keyword">new</span> HashMap&lt;String,Object&gt;();</div><div class="line">    map.put(<span class="string">"id"</span>, i);</div><div class="line">    map.put(<span class="string">"title"</span>, <span class="string">"title"</span>+i);</div><div class="line">    map.put(<span class="string">"view"</span>, <span class="string">"view"</span>+i);</div><div class="line">    listMap.add(map);</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
-<p><strong>2、使用java8的stream的forEach遍历集合并输出</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">listMap.stream().forEach(p -&gt; System.out.println(p.get(<span class="string">"id"</span>)+<span class="string">" "</span>+p.get(<span class="string">"title"</span>)));</div></pre></td></tr></table></figure></p>
-<p>控制台打印内容如下：花费1582毫秒<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">..... ..........</div><div class="line"><span class="number">99996</span> title99996</div><div class="line"><span class="number">99997</span> title99997</div><div class="line"><span class="number">99998</span> title99998</div><div class="line"><span class="number">99999</span> title99999</div><div class="line">花费时间：<span class="number">1582</span></div></pre></td></tr></table></figure></p>
-<p><strong>3、使用for循环遍历集合并输出</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span>(Map map:listMap)&#123;</div><div class="line">   System.out.println(map.get(<span class="string">"id"</span>)+<span class="string">" "</span>+map.get(<span class="string">"title"</span>));</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>控制台打印内容如下：花费1548毫秒<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="number">99995</span> title99995</div><div class="line"><span class="number">99996</span> title99996</div><div class="line"><span class="number">99997</span> title99997</div><div class="line"><span class="number">99998</span> title99998</div><div class="line"><span class="number">99999</span> title99999</div><div class="line">花费时间：<span class="number">1548</span></div></pre></td></tr></table></figure></p>
-<p><strong>4、小结</strong></p>
-<p> 长度为1W时：  for循环【170毫秒】    stram循环 【240毫秒】</p>
-<p> 长度为10W时： for循环【1548毫秒】    stram循环【1582毫秒】</p>
-<p> 长度为100W时：for循环【21099毫秒】   stram循环【20291毫秒】</p>
-<p> 所以个人经过上面的测试发现其实两种方式去遍历集合的效率是差不多的！</p>
-<h3 id="二、分别比较用两种方式遍历集合并输出集合中元素的效率-在循环中加工组装集合数据"><a href="#二、分别比较用两种方式遍历集合并输出集合中元素的效率-在循环中加工组装集合数据" class="headerlink" title="二、分别比较用两种方式遍历集合并输出集合中元素的效率(在循环中加工组装集合数据)"></a>二、分别比较用两种方式遍历集合并输出集合中元素的效率(在循环中加工组装集合数据)</h3><p><strong>1、声明个长度为10W的集合</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">List&lt;Map&lt;String,Object&gt;&gt; listMap = <span class="keyword">new</span> ArrayList&lt;Map&lt;String,Object&gt;&gt;();</div><div class="line">   <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">100000</span>;i++)&#123;</div><div class="line">   	Map&lt;String,Object&gt; map = <span class="keyword">new</span> HashMap&lt;String,Object&gt;();</div><div class="line">    map.put(<span class="string">"id"</span>, i);</div><div class="line">    map.put(<span class="string">"title"</span>, <span class="string">"title"</span>+i);</div><div class="line">    map.put(<span class="string">"view"</span>, <span class="string">"view"</span>+i);</div><div class="line">    listMap.add(map);</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
-<p><strong>2、声明个长度为2的集合</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//该集合中的key键就是上面长度为10W集合中的id的值</span></div><div class="line">Map&lt;String,Object&gt; mapTop = <span class="keyword">new</span> HashMap&lt;String,Object&gt;();</div><div class="line">   mapTop.put(<span class="string">"10"</span>, <span class="string">"1"</span>);</div><div class="line">   mapTop.put(<span class="string">"90"</span>, <span class="string">"0"</span>);</div></pre></td></tr></table></figure></p>
-<p>接下来我们分别用for循环和stream流循环遍历集合并且在遍历过程中向集合中追加一个新的键值对数据top:XX;</p>
-<p><strong>3、用java8的stream流遍历</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">listMap.stream().map((s)-&gt;&#123;</div><div class="line">			<span class="keyword">return</span> s.put(<span class="string">"top"</span>,mapTop.get(String.valueOf(s.get(<span class="string">"id"</span>))));</div><div class="line">		&#125;).collect(Collectors.toList());</div></pre></td></tr></table></figure></p>
-<p>上面的代码中我们通过stream流中的map进行数据追加：<br>追加前的集合数据结构：[{view=view0,id=0, title=title0},{view=view0,id=10, title=title0},…]<br>追加后的集合数据结构：[{view=view0, top=null, id=0, title=title0},{view=view10, top=1, id=10, title=title10},…]</p>
-<p>花费时间：4641毫秒</p>
-<p><strong>4、用for循环遍历</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span>(Map map:listMap)&#123;</div><div class="line">   	map.put(<span class="string">"top"</span>, mapTop.get(String.valueOf(map.get(<span class="string">"id"</span>))));</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>花费时间：5513毫秒</p>
-<p><strong>5、小结</strong></p>
-<p>当分别使用两种方式对同一集合进行遍历并且数据追加时，效率也是不相上下的，使用stream流循环稍微快那么一丁点！</p>
-<p>后来通过“科学上网”的方式，搜集到了一篇老外写的关于stream循环和for循环的文章，说的是意思是不应该用stream循环替换你的for循环！个人感觉这也因场景而定，不能一概而论，首先比如在循环过程中如果涉及复杂的数据装载和加工，那么个人感觉使用for循环比较好理解；反之则使用stream流的方式比较好；并且我们不能仅仅因为循环这一动作就下结论不太科学，比如stream的分组、过滤等等其他功能是for循环所不能及的！</p>
-<p><img src="http://soujava.com/images/javaStream2.png" alt="Alt text"></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -3211,7 +3231,7 @@ select num from a where exists(select 1 from b where num=a.num)
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">50</span>
+              <span class="site-state-item-count">51</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
