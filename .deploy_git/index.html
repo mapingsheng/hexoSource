@@ -260,6 +260,160 @@
             
               
                 
+                <a class="post-title-link" href="/java和javaScript代码进行交互初探一/" itemprop="url">
+                  java和javaScript代码进行交互初探一
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-04-22T16:34:17+08:00" content="2017-04-22">
+              2017-04-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/java和javaScript代码进行交互初探一/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="java和javaScript代码进行交互初探一/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>开发这么长时间，一直的开发思想模式就是java负责服务器端(后台)运行，js负责前端(前台)交互体验，两个语言没有任何代码级别的交互；但其实还有另一种开发模式，就是java和javascript混合开发，前后端不那么分离；即java代码可以直接调用javascript文件中定义的函数；javascript中定义的函数可以读取java代码中定义的变量数据；感觉有点意思！其实这种开发模式个人觉得也很有价值，比如下面的场景：</p>
+<blockquote>
+<p>用户在浏览一个商品，突然这个商品由于某些原因要求进行打折处理，比如打8折，即需要把该商品的价格乘以80%；</p>
+<p>因为上面说的打8折不是固定的，有可能一会打8折，一会又打5折，所以需要把这个信息在一个地方维护起来，那么我们就把打折规则封装到javascript文件定义的函数中</p>
+<p>java代码获取该商品的价格后，直接调用javascript文件中定义的打折规则函数，重新计算商品价格即可</p>
+</blockquote>
+<p><strong>一、编写javascript文件</strong></p>
+<blockquote>
+<p>1、在本地磁盘上新建一个js文件,比如在D:\maps.js</p>
+<p>2、在js文件中定义一个商品对应的打折函数</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">//该函数非常简单，就是把商品价格打8折</span></div><div class="line"><span class="function">function <span class="title">discount</span><span class="params">(money)</span></span>&#123;</div><div class="line">     <span class="keyword">return</span> money * <span class="number">0.8</span>;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p><strong>二、编写java代码</strong></p>
+<blockquote>
+<p>1、新建一个java类文件，名称随便起</p>
+<p>2、在java文件中新建一个main方法，用来写测试代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 商品消费方法</div><div class="line"> * <span class="doctag">@throws</span> ScriptException </div><div class="line"> * <span class="doctag">@throws</span> FileNotFoundException </div><div class="line"> * <span class="doctag">@throws</span> NoSuchMethodException </div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">spend</span><span class="params">(<span class="keyword">int</span> money)</span> <span class="keyword">throws</span> FileNotFoundException, ScriptException, NoSuchMethodException</span>&#123;</div><div class="line">	<span class="comment">//获取javascript执行引擎</span></div><div class="line">	ScriptEngine engine = <span class="keyword">new</span> ScriptEngineManager().getEngineByName(<span class="string">"javascript"</span>); </div><div class="line">       System.out.println(<span class="string">"该商品价格："</span>+money);</div><div class="line">        <span class="comment">//装载待执行的Js代码文件</span></div><div class="line">       engine.eval(<span class="keyword">new</span> FileReader(<span class="string">"D:/maps.js"</span>));</div><div class="line">        <span class="comment">//先判断是否可调用方法</span></div><div class="line">       <span class="keyword">if</span> (engine <span class="keyword">instanceof</span> Invocable) &#123;</div><div class="line">            Invocable in = (Invocable) engine;</div><div class="line">            <span class="comment">// 执行Js中的discount()函数</span></div><div class="line">            Double result = (Double) in.invokeFunction(<span class="string">"discount"</span>, money);</div><div class="line">            System.out.println(<span class="string">"打折后的商品价格构是："</span> + result.intValue());</div><div class="line">       &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> FileNotFoundException, ScriptException, NoSuchMethodException</span>&#123;</div><div class="line">	spend(<span class="number">100</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面代码输出结果：</p>
+<p>该商品价格：100</p>
+<p>打折后的商品价格是：80</p>
+</blockquote>
+<p><strong>三、修改javascript文件</strong></p>
+<blockquote>
+<p>1、修改maps.js文件中的打折函数，在函数中新增使用一个java代码中定义的变量</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">//说白了，就是把js函数中写死的百分比改成了重java代码中获取</span></div><div class="line"><span class="function">function <span class="title">discount</span><span class="params">(money)</span></span>&#123;</div><div class="line">    	<span class="keyword">return</span> money * dis;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</blockquote>
+<p><strong>四、修改java代码</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 商品消费方法</div><div class="line"> * <span class="doctag">@throws</span> ScriptException </div><div class="line"> * <span class="doctag">@throws</span> FileNotFoundException </div><div class="line"> * <span class="doctag">@throws</span> NoSuchMethodException </div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">spend</span><span class="params">(<span class="keyword">int</span> money)</span> <span class="keyword">throws</span> FileNotFoundException, ScriptException, NoSuchMethodException</span>&#123;</div><div class="line">	<span class="comment">//获取javascript执行引擎</span></div><div class="line">	ScriptEngine engine = <span class="keyword">new</span> ScriptEngineManager().getEngineByName(<span class="string">"javascript"</span>); </div><div class="line">	<span class="comment">//定义js函数中使用的折扣变量</span></div><div class="line">	Bindings bind = engine.createBindings();</div><div class="line">	bind.put(<span class="string">"dis"</span>, <span class="number">0.9</span>);</div><div class="line">	engine.setBindings(bind, ScriptContext.ENGINE_SCOPE);</div><div class="line">       System.out.println(<span class="string">"该商品价格："</span>+money);</div><div class="line">        <span class="comment">//装载待执行的Js代码文件</span></div><div class="line">       engine.eval(<span class="keyword">new</span> FileReader(<span class="string">"D:/maps.js"</span>));</div><div class="line">        <span class="comment">//先判断是否可调用方法</span></div><div class="line">       <span class="keyword">if</span> (engine <span class="keyword">instanceof</span> Invocable) &#123;</div><div class="line">            Invocable in = (Invocable) engine;</div><div class="line">            <span class="comment">// 执行Js中的discount()函数</span></div><div class="line">            Double result = (Double) in.invokeFunction(<span class="string">"discount"</span>, money);</div><div class="line">            System.out.println(<span class="string">"打折后的商品价格是："</span> + result.intValue());</div><div class="line">       &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> FileNotFoundException, ScriptException, NoSuchMethodException</span>&#123;</div><div class="line">	spend(<span class="number">100</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>其实上面java代码中只增加了如下代码</p>
+<p>Bindings bind = engine.createBindings();//创建一个js执行引擎的数据绑定器</p>
+<p>bind.put(“dis”, 0.9); //定义dis变量值</p>
+<p>engine.setBindings(bind, ScriptContext.ENGINE_SCOPE);</p>
+</blockquote>
+<p>上面的例子实现了简单的java代码和js代码交互功能，这样其实我们可以实现另一个场景，不需要重启服务器，就可以实时控制扩展和变更后台运行的一些灵活的业务规则。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/java8使用stream对简单数据集排序/" itemprop="url">
                   java8使用stream对简单数据集排序
                 </a>
@@ -3054,138 +3208,6 @@ select num from a where exists(select 1 from b where num=a.num)
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/springBoot编写不同风格的restAPI接口/" itemprop="url">
-                  springBoot编写不同风格的restAPI接口
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-31T19:38:46+08:00" content="2016-08-31">
-              2016-08-31
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/spring/" itemprop="url" rel="index">
-                    <span itemprop="name">spring</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/springBoot编写不同风格的restAPI接口/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="springBoot编写不同风格的restAPI接口/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>平时使用springboot开发后台功能模块，并且开发对外提供的restfulApi接口时也同样使用springBoot开发，目前主要用到两种方式的的restfulApi;下面分两点说明</p>
-<h3 id="一、静态url-动态参数-param-形式的api"><a href="#一、静态url-动态参数-param-形式的api" class="headerlink" title="一、静态url+动态参数(param)形式的api"></a>一、静态url+动态参数(param)形式的api</h3><p>接口形式：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http:<span class="comment">//localhost:8080/api/user/info?id=123</span></div></pre></td></tr></table></figure>
-<p>api代码：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@RestController</span></div><div class="line"><span class="meta">@RequestMapping</span>(<span class="string">"/api"</span>)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">userApiController</span> </span>&#123;</div><div class="line">	</div><div class="line">	<span class="meta">@Autowired</span></div><div class="line">	<span class="keyword">private</span> UserService userService;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	  * 根据用户id获取用户信息的api</div><div class="line">	  * <span class="doctag">@param</span> id 用户id</div><div class="line">	  */</div><div class="line">	<span class="meta">@RequestMapping</span>(value = <span class="string">"user/info"</span>)</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">user</span><span class="params">(@RequestParam(value = <span class="string">"id"</span>)</span> String id）</span>&#123;</div><div class="line">			方法体</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>上面的例子中使用了如下个注解：<br>1、@RestController  用来标记这是一个支持REST的控制器，其实其是@Controller扩展来的<br>2、@RequestMapping  其提供路由信息，它告诉Spring任何来自”/“路径的HTTP请求都应该被映射到该Controller入口中<br>3、@Autowired  对类成员变量、方法及构造函数进行注解，完成自动装配的工作。 用来消除set ，get方法<br>3、@RequestParam 将请求参数区数据映射到功能处理方法的参数上，比如我们的@RequestParam(value=”id”) String userId这样，我们对外公开的参数名称为id，而我们业务方法体用的参数名称为userId，该注解就是将两个参数绑定在一起</p>
-<h3 id="二、动态url-动态参数-param-形式的api"><a href="#二、动态url-动态参数-param-形式的api" class="headerlink" title="二、动态url+动态参数(param)形式的api"></a>二、动态url+动态参数(param)形式的api</h3><p>接口形式：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http:<span class="comment">//localhost:8080/api/user/&#123;id&#125;/info?status=1</span></div></pre></td></tr></table></figure>
-<p>api代码：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@RestController</span></div><div class="line"><span class="meta">@RequestMapping</span>(<span class="string">"user/&#123;id&#125;/info"</span>)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">userApiController</span> </span>&#123;</div><div class="line">	</div><div class="line">	<span class="meta">@Autowired</span></div><div class="line">	<span class="keyword">private</span> UserService userService;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">	  * 根据用户id获取用户信息的api</div><div class="line">	  * <span class="doctag">@param</span> id 用户id</div><div class="line">	  */</div><div class="line">	<span class="meta">@RequestMapping</span>(value = <span class="string">"user/info"</span>)</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">user</span><span class="params">(@PathVariable(value = <span class="string">"id"</span>)</span> String id,</span></div><div class="line">					 @<span class="title">RequestParam</span><span class="params">(value = <span class="string">"status"</span>)</span> String status）&#123;</div><div class="line">			方法体</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>上面的例子中使用了如下个注解：<br>1、@PathVariable 将方法中的参数绑定到请求url中(path)中的动态变量，比如上面例子中将path中的{id}绑定到user方法中的String id参数上面</p>
-<h3 id="三、总结"><a href="#三、总结" class="headerlink" title="三、总结"></a>三、总结</h3><p>1、如果参数不在path路径中动态传递(所有参数在?后面以键值对传递)，那么方法体中使用@RequestParam进行参数绑定(如果传递的参数名称跟方法中传递的参数名称一致的话可以不用改注解)</p>
-<p>2、如果参数在path路径中动态传递(在?前面的path路径中使用{id}这种方式传递参数，那么方法体中必须使用@PathVariable进行参数绑定)</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -3231,7 +3253,7 @@ select num from a where exists(select 1 from b where num=a.num)
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">51</span>
+              <span class="site-state-item-count">52</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
