@@ -260,6 +260,425 @@
             
               
                 
+                <a class="post-title-link" href="/设计模式-无模式/" itemprop="url">
+                  设计模式--无模式
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-04-29T15:39:08+08:00" content="2017-04-29">
+              2017-04-29
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/设计模式-无模式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="设计模式-无模式/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>搞开发几年了，深深的明白设计模式的重要性，但是确不能真正彻底的运用自如；纵观现实生活中，比比皆是设计模式的最佳实践，比如：</p>
+<blockquote>
+<p>在家里边墙面上的插座，一般都是扁孔的；自从买了一个港版的iphone后，竟然无法愉快的充电了，需要买一个转接头插在墙面的插座上才行，其实买的那个转换头就是充当一个适配器的作用，那么我们可以把这个实践称做–适配器模式</p>
+</blockquote>
+<p><img src="http://soujava.com/images/model.jpg" alt=""></p>
+<blockquote>
+<p>拿平时开的车来讲，你在北京买的车的生产厂家可能是河北制造的，你在南阳买的车的生产厂家可能是武汉制造的，但是有没有想过，同一款车的构件都是一样的，那么河北制造厂和武汉制造厂难道是全车所有配件都自己生产吗，那肯定不是的，与其称他们为制造厂，不如称他们为装配厂，因为汽车构件一般都有一个类似中央工厂的地方生产的，然后运输到各个装配厂进行组装成为整车！各个装备厂不需要关注发动机、轮胎是如何生产的，只需要把相应的部件进行组装成整车就行了，那么我们可以把这个实践称作–工程方法模式</p>
+</blockquote>
+<p><img src="http://soujava.com/images/model2.png" alt=""></p>
+<p><strong>1、第一代鸭子</strong></p>
+<p>有一个玩具公司主要生产一款明星产品“橡皮鸭”；橡皮鸭要求会呱呱叫、会游泳，但是他们的外观有多种，比如红色、黄色、黑色的；通过需求可以梳理以下内容：</p>
+<blockquote>
+<p>每一种鸭子都会呱呱叫、都会游泳</p>
+<p>鸭子可能有红色、黄色、黑色的外观</p>
+</blockquote>
+<p>好了，我们下面定义父类Duck，并且定义三个方法：呱呱叫-quack、游泳-swim、外观-display；</p>
+<blockquote>
+<p>1.1、定义父类-Duck</p>
+</blockquote>
+<p>因为所有的鸭子都会呱呱叫、会游泳，都有自己的外观，所以我们定义一个父类，把这三个共有的方法定义在父类中，并且把呱呱叫、游泳的方法进行默认的实现，唯独外观方法什么都不做，因为不同的鸭子有不同的外观，所以需要把父类的外观方法定义成抽象方法，并且让具体的子类中强制覆写父类的外观方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * <span class="doctag">@author</span> maps</div><div class="line"> * 定义一个鸭子父类</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Duck</span> </span>&#123;</div><div class="line">	<span class="comment">//呱呱叫方法</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">quack</span><span class="params">()</span></span>&#123;</div><div class="line">		System.out.println(<span class="string">"呱呱叫"</span>);</div><div class="line">	&#125;</div><div class="line">	<span class="comment">//游泳方法</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">swim</span><span class="params">()</span></span>&#123;</div><div class="line">		System.out.println(<span class="string">"游泳"</span>);</div><div class="line">	&#125;</div><div class="line">	<span class="comment">//外观方法</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">display</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>1.2、定义一个红色鸭子类-RedDuck，并且继承父类</p>
+</blockquote>
+<p>因为红色鸭子继承了父类，所以其具备了父类定义的所有方法的功能，即默认就会呱呱叫、会游泳；只是这个红色鸭子还没有颜色外观，因为父类的外观方法是抽象方法，所以子类必须覆写该抽象的外观方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * <span class="doctag">@author</span> maps</div><div class="line"> * 红色鸭子业务类</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedDuck</span> <span class="keyword">extends</span> <span class="title">Duck</span> </span>&#123;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">display</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"红头鸭"</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>1.3、定义一个绿色鸭子类-GreenDuck，并且继承父类</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * <span class="doctag">@author</span> maps</div><div class="line"> * 绿色鸭子业务类</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GreenDuck</span> <span class="keyword">extends</span> <span class="title">Duck</span> </span>&#123;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">display</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"绿头鸭"</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>1.4、定义一个测试类</p>
+</blockquote>
+<p>可以看到生产的红头鸭和绿头鸭默认都实现了父类定义的呱呱叫、游泳动作特征，只是他们都实现自己定义的外观</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">		RedDuck redDuck = <span class="keyword">new</span> RedDuck();<span class="comment">//生产一个红头鸭</span></div><div class="line">		redDuck.quack();</div><div class="line">		redDuck.swim();</div><div class="line">		redDuck.display();</div><div class="line">		System.out.println(<span class="string">"--------------------------"</span>);</div><div class="line">		GreenDuck greenDuck = <span class="keyword">new</span> GreenDuck();<span class="comment">//生产一个绿头鸭</span></div><div class="line">		greenDuck.quack();</div><div class="line">		greenDuck.swim();</div><div class="line">		greenDuck.display();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>呱呱叫</p>
+<p>游泳</p>
+<p>红头鸭</p>
+</blockquote>
+<hr>
+<p>&gt;</p>
+<blockquote>
+<p>呱呱叫</p>
+<p>游泳</p>
+<p>绿头鸭</p>
+</blockquote>
+<p><strong>2、第二代鸭子</strong></p>
+<p>第一代鸭子投入市场后，获得了广泛好评，由于最近无人机的盛行，所以公司决定对第一代鸭子进行创新，开发第二代鸭子–会飞的大黄鸭。</p>
+<p>真对这个会飞的大黄鸭新产品，我们立刻就能想到如下解决方案：</p>
+<blockquote>
+<p>在父类中定义一个fly的方法(这个方法不能是抽象方法，因为不能影响第一代鸭子的生产)，并且方法不做任何具体实现</p>
+<p>2.1、在父类中添加fly方法-Duck</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * <span class="doctag">@author</span> maps</div><div class="line"> * 定义一个鸭子抽象类</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Duck</span> </span>&#123;</div><div class="line">	<span class="comment">//呱呱叫方法</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">quack</span><span class="params">()</span></span>&#123;</div><div class="line">		System.out.println(<span class="string">"呱呱叫"</span>);</div><div class="line">	&#125;</div><div class="line">	<span class="comment">//游泳方法</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">swim</span><span class="params">()</span></span>&#123;</div><div class="line">		System.out.println(<span class="string">"游泳"</span>);</div><div class="line">	&#125;</div><div class="line">	<span class="comment">//外观方法</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">display</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">	<span class="comment">//飞行的方法</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span></span>&#123;</div><div class="line">		</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>2.2、定义大黄鸭业务类-BigYellowDuck</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * <span class="doctag">@author</span> map</div><div class="line"> * 定义大黄鸭业务类</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BigYellowDuck</span> <span class="keyword">extends</span> <span class="title">Duck</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">display</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"大黄鸭"</span>);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">super</span>.fly();</div><div class="line">		System.out.println(<span class="string">"天空中飞行"</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>2.3、定义一个测试类</p>
+</blockquote>
+<p>可以看到生产的红头鸭和绿头鸭默认都实现了父类定义的呱呱叫、游泳动作特征，只是他们都实现自己定义的外观，尤其是新定义的大黄鸭，除了自己独特的外观外，还有一个独特技能-飞行</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">		RedDuck redDuck = <span class="keyword">new</span> RedDuck();<span class="comment">//生产一个红头鸭</span></div><div class="line">		redDuck.quack();</div><div class="line">		redDuck.swim();</div><div class="line">		redDuck.display();</div><div class="line">		System.out.println(<span class="string">"--------------------------"</span>);</div><div class="line">		GreenDuck greenDuck = <span class="keyword">new</span> GreenDuck();<span class="comment">//生产一个绿头鸭</span></div><div class="line">		greenDuck.quack();</div><div class="line">		greenDuck.swim();</div><div class="line">		greenDuck.display();</div><div class="line">		System.out.println(<span class="string">"--------------------------"</span>);</div><div class="line">		BigYellowDuck yellowDuck = <span class="keyword">new</span> BigYellowDuck();<span class="comment">//生产一个会飞的大黄鸭</span></div><div class="line">		yellowDuck.quack();</div><div class="line">		yellowDuck.swim();</div><div class="line">		yellowDuck.display();</div><div class="line">		yellowDuck.fly();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>呱呱叫</p>
+<p>游泳</p>
+<p>红头鸭</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>呱呱叫</p>
+<p>游泳</p>
+<p>绿头鸭</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>呱呱叫</p>
+<p>游泳</p>
+<p>大黄鸭</p>
+<p>天空中飞行</p>
+</blockquote>
+<p>上面是基本没有应用设计模式的场景，我们思考一下其他问题，比如后期新建很多种具备各自独特功能的鸭子呢？我们是不是要在父类中定义各种对其他鸭子无用的方法，那么以后用设计模式解决吧。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/java中集合使用中遇到的-坑/" itemprop="url">
+                  java中集合使用中遇到的-坑
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-04-25T14:27:21+08:00" content="2017-04-25">
+              2017-04-25
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/java中集合使用中遇到的-坑/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="java中集合使用中遇到的-坑/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>平时开发过程中用的最多的莫过于基本类型、包装类、集合等等了，但是最近在使用集合时，偶尔使用不当会出现一些想不到的问题(bug)；为什么使用不当呢，因为我们对集合的操作都是使用JDK原生的API方法进行操作的，那么之所以使用不当，是因为对jdk源码中的api方法的不了解所致，下面就具体罗列一下具体的坑吧。</p>
+<p><strong>1、数组之间的拷贝-Arrays.copyOf()</strong></p>
+<blockquote>
+<p>我们直接用java.util.Arrays工具类的copyOf方法进行数组拷贝</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">	</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span> <span class="keyword">implements</span> <span class="title">Cloneable</span></span>&#123;</div><div class="line">	</div><div class="line">	<span class="keyword">private</span> String studentId;</div><div class="line">	<span class="keyword">private</span> String studentName;</div><div class="line">	</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">(String studentId, String studentName)</span> </span>&#123;</div><div class="line">		<span class="keyword">super</span>();</div><div class="line">		<span class="keyword">this</span>.studentId = studentId;</div><div class="line">		<span class="keyword">this</span>.studentName = studentName;</div><div class="line">	&#125;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> <span class="string">"Student [studentId="</span> + studentId + <span class="string">", studentName="</span> + studentName + <span class="string">"]"</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getStudentId</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> studentId;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setStudentId</span><span class="params">(String studentId)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.studentId = studentId;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getStudentName</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> studentName;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setStudentName</span><span class="params">(String studentName)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.studentName = studentName;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">protected</span> Student <span class="title">clone</span><span class="params">()</span> <span class="keyword">throws</span> CloneNotSupportedException </span>&#123;</div><div class="line">		Student stu = <span class="keyword">null</span>;</div><div class="line">		<span class="keyword">try</span>&#123;</div><div class="line">			stu = (Student) <span class="keyword">super</span>.clone();</div><div class="line">		&#125;<span class="keyword">catch</span>(Exception e)&#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> stu;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">int</span>[] intArray = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;;</div><div class="line"><span class="keyword">int</span>[] intTempArray = Arrays.copyOf(intArray, intArray.length);</div><div class="line">intTempArray[<span class="number">4</span>] = <span class="number">6</span>;</div><div class="line">System.out.println(<span class="string">"intArray:"</span>+Arrays.toString(intArray));</div><div class="line">System.out.println(<span class="string">"intTempArray:"</span>+Arrays.toString(intTempArray));</div><div class="line"></div><div class="line"><span class="keyword">double</span>[] doubleArray = &#123;<span class="number">1.0</span>,<span class="number">2.0</span>,<span class="number">3.0</span>,<span class="number">4.0</span>,<span class="number">5.0</span>&#125;;</div><div class="line"><span class="keyword">double</span>[] doubleTempArray = Arrays.copyOf(doubleArray, doubleArray.length);</div><div class="line">doubleTempArray[<span class="number">4</span>] = <span class="number">6.0</span>;</div><div class="line">System.out.println(<span class="string">"doubleArray:"</span>+Arrays.toString(doubleArray));</div><div class="line">System.out.println(<span class="string">"doubleTempArray:"</span>+Arrays.toString(doubleTempArray));</div><div class="line"></div><div class="line">String[] strArray = &#123;<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>,<span class="string">"d"</span>,<span class="string">"e"</span>&#125;;</div><div class="line">String[] strTempArray = Arrays.copyOf(strArray, strArray.length);</div><div class="line">strTempArray[<span class="number">4</span>] = <span class="string">"F"</span>;</div><div class="line">System.out.println(<span class="string">"strArray:"</span>+Arrays.toString(strArray));</div><div class="line">System.out.println(<span class="string">"strTempArray:"</span>+Arrays.toString(strTempArray));</div><div class="line"></div><div class="line">Student[] studentArray = &#123;<span class="keyword">new</span> Student(<span class="string">"1"</span>, <span class="string">"A"</span>),<span class="keyword">new</span> Student(<span class="string">"2"</span>, <span class="string">"B"</span>),<span class="keyword">new</span> Student(<span class="string">"3"</span>, <span class="string">"C"</span>)&#125;;</div><div class="line">Student[] studentTempArray = Arrays.copyOf(studentArray, studentArray.length);</div><div class="line">studentTempArray[<span class="number">2</span>].setStudentName(<span class="string">"D"</span>);</div><div class="line">System.out.println(<span class="string">"studentArray:"</span>+Arrays.toString(studentArray));</div><div class="line">System.out.println(<span class="string">"studentTempArray:"</span>+Arrays.toString(studentTempArray));</div></pre></td></tr></table></figure>
+<p>以上代码只是最基本的数组实例，我们直接看最后一段代码，声明了Student类型的数组，然后通过Arrays.copyOf方法进行拷贝处理，得到一个新的Student类型的数组，然后我们对新得到的Student类型的数组中的对象进行重新赋值操作，然后我们查看以下输出结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">intArray:[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]</div><div class="line">intTempArray:[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">6</span>]</div><div class="line">doubleArray:[<span class="number">1.0</span>, <span class="number">2.0</span>, <span class="number">3.0</span>, <span class="number">4.0</span>, <span class="number">5.0</span>]</div><div class="line">doubleTempArray:[<span class="number">1.0</span>, <span class="number">2.0</span>, <span class="number">3.0</span>, <span class="number">4.0</span>, <span class="number">6.0</span>]</div><div class="line">strArray:[a, b, c, d, e]</div><div class="line">strTempArray:[a, b, c, d, F]</div><div class="line">str1Array:[a, b, c, d, e]</div><div class="line">str1TempArray:[a, b, c, d, F]</div><div class="line">studentArray:[Student [studentId=<span class="number">1</span>, studentName=A], Student [studentId=<span class="number">2</span>, studentName=B], Student [studentId=<span class="number">3</span>, studentName=D]]</div><div class="line">studentTempArray:[Student [studentId=<span class="number">1</span>, studentName=A], Student [studentId=<span class="number">2</span>, studentName=B], Student [studentId=<span class="number">3</span>, studentName=D]]</div></pre></td></tr></table></figure>
+<p>可以看到上面的数组拷贝示例中，不管对老数组中的值进行更改还是对新数组中的值进行更改，都不会相互影响；而最后的Student类型的数组示例中，不管对老数组(studentArray)中的值进行更改还是对新数组(studentTempArray)中的值进行更改，都会相互影响；比如我们对拷贝生成的新数组studentTempArray中的索引为2的对象的学生姓名重新赋值，然后老数组中对应的索引的对象的学生姓名也被修改了；其实这就是所谓的数组浅拷贝，在使用Arrays.copyOf方法时要特别注意。</p>
+<p><strong>2、基本类型的数组转换为集合会出现数据类型未知错误-Arrays.asList()</strong></p>
+<p>平时开发中，也经常会遇到把一个Array数组转换成List集合，Arrays.asList(data)；但是这个方法如果使用不当，也会出现问题</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">int</span>[] intArray = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;;</div><div class="line">List list= Arrays.asList(intArray);</div><div class="line">System.out.println(<span class="string">"size:"</span>+list.size()+<span class="string">" list:"</span>+list.toString());</div></pre></td></tr></table></figure>
+<p>上面的代码很简单，就是把intArray数组转换成List，其输出结果如下：</p>
+<blockquote>
+<p>size:1 list:[[I@2a139a55]</p>
+</blockquote>
+<p>看到输出结果是不是感觉有点茫然，list的长度应该为3才对啊，并且应该直接输出其中的元素才对啊。</p>
+<p>首先我们看看asList的源码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">List&lt;T&gt; <span class="title">asList</span><span class="params">(T... a)</span> </span>&#123;</div><div class="line">       <span class="keyword">return</span> <span class="keyword">new</span> ArrayList&lt;&gt;(a);</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>asList方法输入的是一个泛型变长参数，我们知道基本类型是不能泛型化的，也就是说8个基本类型不能作为泛型参数，要想作为泛型参数就必须使用其所对应的包装类型，那前面的例子传递了一个int类型的数组,在asList方法中，直接把这个数组当作了一个参数进行处理；然后打印的集合内容是一个对象串，并不是其中的元素，这是为什么呢，我们点击上面的asList方法中的new ArrayList这个类源码中看一下：</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line">    * <span class="doctag">@serial</span> include</div><div class="line">    */</div><div class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ArrayList</span>&lt;<span class="title">E</span>&gt; <span class="keyword">extends</span> <span class="title">AbstractList</span>&lt;<span class="title">E</span>&gt;</span></div><div class="line">       <span class="keyword">implements</span> <span class="title">RandomAccess</span>, <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span></div><div class="line">   &#123;</div><div class="line">       <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = -<span class="number">2764017481108945198L</span>;</div><div class="line">       <span class="keyword">private</span> <span class="keyword">final</span> E[] a;</div><div class="line"></div><div class="line">       ArrayList(E[] array) &#123;</div><div class="line">           a = Objects.requireNonNull(array);</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       <span class="meta">@Override</span></div><div class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">size</span><span class="params">()</span> </span>&#123;</div><div class="line">           <span class="keyword">return</span> a.length;</div><div class="line">       &#125;</div><div class="line"></div><div class="line">	.......省略其他代码</div></pre></td></tr></table></figure>
+<p>查看ArrayList源码可以看到，其是Arrays类的一个静态内部类，并不是我们平时声明List集合时的ArrayList类，只不过他们都继承了AbstractList这个类，所以List list= Arrays.asList(intArray);这句代码把Arrays的静态内部类赋值给Lits实例变量才不至于报异常。并且我们可以看到ArrayList内部类中有一个泛型的数组常量:</p>
+<blockquote>
+<p>private final E[] a；</p>
+</blockquote>
+<p>所以我们也可以通过下面代码获取转换后的list集合中对应索引的数据。</p>
+<blockquote>
+<p>System.out.println(“size:”+list.size()+” list:”+((int[])list.get(0))[1]);</p>
+<p>size:3 list:1</p>
+</blockquote>
+<p>好了，重新回到刚才那个问题，已经看到asList(T… a) 方法的入参是一个泛型参数，所以我们需要传递对应的基本类型的包装类或者其他对象参数，示例如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">Integer[] integerArray = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;;</div><div class="line">List list= Arrays.asList(integerArray);</div><div class="line">System.out.println(<span class="string">"size:"</span>+list.size()+<span class="string">" list:"</span>+list.toString());</div></pre></td></tr></table></figure>
+<p>我们把上面的数组基本类型转换为其对应的包装类之后，就正常了！输出如下：</p>
+<blockquote>
+<p>size:3 list:[1, 2, 3]</p>
+</blockquote>
+<p>总结：使用Arrays.asList方法转换数组为list时，入参的类型一定不能是基本数据类型，需要传递包装类或者其它非基本数据类型</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">String[] StringArray = &#123;<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>&#125;;</div><div class="line">List list= Arrays.asList(StringArray);</div><div class="line">System.out.println(<span class="string">"size:"</span>+list.size()+<span class="string">" list:"</span>+list.toString());</div><div class="line">	</div><div class="line">Student[] studentArray = &#123;<span class="keyword">new</span> Student(<span class="string">"1"</span>,<span class="string">"A"</span>),<span class="keyword">new</span> Student(<span class="string">"2"</span>,<span class="string">"B"</span>)&#125;;</div><div class="line">List listStu = Arrays.asList(studentArray);</div><div class="line">System.out.println(<span class="string">"size:"</span>+listStu.size()+<span class="string">" list:"</span>+listStu.toString());</div></pre></td></tr></table></figure>
+<p>上面传递的非基本数组类型输出如下：</p>
+<blockquote>
+<p>size:3 list:[a, b, c]</p>
+<p>size:2 list:[Student [studentId=1, studentName=A], Student [studentId=2, studentName=B]]</p>
+</blockquote>
+<p><strong>3、数组转换为集合后不能调用add方法新增元素-Arrays.asList()</strong></p>
+<p>接着第2个坑的另一个使用方法进行说明，一般来讲我们把一个数组转换为集合之后，肯定要对集合进行增、删、改、查操作，那么我首先演示一下集合的增加操作：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">String[] StringArray = &#123;<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>&#125;;</div><div class="line">List list= Arrays.asList(StringArray);</div><div class="line">list.add(<span class="string">"d"</span>);</div><div class="line">System.out.println(<span class="string">"size:"</span>+list.size()+<span class="string">" list:"</span>+list.toString());</div></pre></td></tr></table></figure>
+<p>上面代码输出结果其实抛异常了，是下面这样：</p>
+<blockquote>
+<p>Exception in thread “main” java.lang.UnsupportedOperationException</p>
+</blockquote>
+<p>是不是很纳闷，既然可以正常把数组转换为集合，那么为什么不能向集合中添加数据呢？其实上面已经说过了，调用Arrays.asList方法后，返回的其实是Arrays的内部类，并不是我们平时声明集合时(new ArrayList() )的真正意义上的ArrayList类；之所以可以把Arrays的内部类ArrayList赋值给List类变量，是因为他们有同一个父类-AbstractList，然而List list变量指向的并不是真正意义上的集合。</p>
+<p>所以我们继续再看看Arrays的内部类ArrayList源码会发现，其中只有以下几个方法：</p>
+<blockquote>
+<p>public int size()  #元素数量</p>
+<p>public Object[] toArray() #转化为数组，实现了数组的浅拷贝</p>
+<p>public <t> T[] toArray(T[] a) </t></p>
+<p>public E get(int index) #获得指定索引的元素</p>
+<p>public E set(int index, E element) #设置制定索引元素</p>
+<p>public int indexOf(Object o) #查找元素的索引值</p>
+<p>public boolean contains(Object o) #查找元素是否存在</p>
+<p>public Spliterator<e> spliterator() #定义分割器</e></p>
+<p>public void forEach(Consumer&lt;? super E&gt; action) #遍历</p>
+<p>public void replaceAll(UnaryOperator<e> operator)</e></p>
+<p>public void sort(Comparator&lt;? super E&gt; c)</p>
+</blockquote>
+<p>是不是没有发现add方法，add方法只不过是抽象类-AbstractList的方法,我们再进入该抽象类的方法中可以看到直接抛出了一个异常，刚好就是刚才我们调用add方法时的异常，OK，一切真相大白了。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> index, E element)</span> </span>&#123;</div><div class="line">       <span class="keyword">throw</span> <span class="keyword">new</span> UnsupportedOperationException();</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p>总结，我们通过调用Arrays.asList方法把数组转换为集合后，返回的集合并不是真正意义上的ArrayList，而是Arrays的静态内部类，所以并不能调用add方法向集合中添加元素，但是可以调用内部类自己的方法从集合中获取集合元素，设置集合中的元素等操作</p>
+<p><strong>4、对生成的子列表修改元素后源集合也会被修改-subList()</strong></p>
+<p>平时开发中，将一个大的list集合截取成符合条件的集合也是很常见的事情，那么我们一般直接通过subList方法去截取，只要api有的方法我们就直接用嘛，避免重复造轮子。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">List list1 = Lists.newArrayList(<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>);</div><div class="line">List list2 = list1.subList(<span class="number">0</span>, list1.size());</div><div class="line">list2.add(<span class="string">"d"</span>);</div><div class="line">	</div><div class="line">System.out.println(<span class="string">"list1长度:"</span>+list1.size()+<span class="string">" list1元素:"</span>+list1);</div><div class="line">System.out.println(<span class="string">"list2长度:"</span>+list2.size()+<span class="string">" list2元素:"</span>+list2);</div><div class="line">	</div><div class="line">List list3 = Lists.newArrayList(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>);</div><div class="line">List list4 = list3.subList(<span class="number">0</span>, list3.size());</div><div class="line">list4.add(<span class="number">4</span>);</div><div class="line">System.out.println(<span class="string">"list3长度:"</span>+list3.size()+<span class="string">" list3元素:"</span>+list3);</div><div class="line">System.out.println(<span class="string">"list4长度:"</span>+list4.size()+<span class="string">" list4元素:"</span>+list4);</div></pre></td></tr></table></figure>
+<p>上面的代码输出为如下：</p>
+<blockquote>
+<p>list1长度:4 list1元素:[a, b, c, d]</p>
+<p>list2长度:4 list2元素:[a, b, c, d]</p>
+<p>list3长度:4 list3元素:[1, 2, 3, 4]</p>
+<p>list4长度:4 list4元素:[1, 2, 3, 4]</p>
+</blockquote>
+<p>可以看到一个现象，我们向通过subList方法生成的新集合中添加元素后，新集合和老集合都发生了变化，分析一下subList方法，可以发现SubList其实是ArrayList类的内部类，并且我们可以看到其定义的add方法如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">SubList</span> <span class="keyword">extends</span> <span class="title">AbstractList</span>&lt;<span class="title">E</span>&gt; <span class="keyword">implements</span> <span class="title">RandomAccess</span> </span>&#123;</div><div class="line">       <span class="keyword">private</span> <span class="keyword">final</span> AbstractList&lt;E&gt; parent;</div><div class="line">       <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> parentOffset;</div><div class="line">       <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> offset;</div><div class="line">       <span class="keyword">int</span> size;</div><div class="line"></div><div class="line">       SubList(AbstractList&lt;E&gt; parent,</div><div class="line">               <span class="keyword">int</span> offset, <span class="keyword">int</span> fromIndex, <span class="keyword">int</span> toIndex) &#123;</div><div class="line">           <span class="keyword">this</span>.parent = parent;</div><div class="line">           <span class="keyword">this</span>.parentOffset = fromIndex;</div><div class="line">           <span class="keyword">this</span>.offset = offset + fromIndex;</div><div class="line">           <span class="keyword">this</span>.size = toIndex - fromIndex;</div><div class="line">           <span class="keyword">this</span>.modCount = ArrayList.<span class="keyword">this</span>.modCount;</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       <span class="function"><span class="keyword">public</span> E <span class="title">set</span><span class="params">(<span class="keyword">int</span> index, E e)</span> </span>&#123;</div><div class="line">           rangeCheck(index);</div><div class="line">           checkForComodification();</div><div class="line">           E oldValue = ArrayList.<span class="keyword">this</span>.elementData(offset + index);</div><div class="line">           ArrayList.<span class="keyword">this</span>.elementData[offset + index] = e;</div><div class="line">           <span class="keyword">return</span> oldValue;</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       <span class="function"><span class="keyword">public</span> E <span class="title">get</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</div><div class="line">           rangeCheck(index);</div><div class="line">           checkForComodification();</div><div class="line">           <span class="keyword">return</span> ArrayList.<span class="keyword">this</span>.elementData(offset + index);</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">size</span><span class="params">()</span> </span>&#123;</div><div class="line">           checkForComodification();</div><div class="line">           <span class="keyword">return</span> <span class="keyword">this</span>.size;</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> index, E e)</span> </span>&#123;</div><div class="line">           rangeCheckForAdd(index);</div><div class="line">           checkForComodification();</div><div class="line">           parent.add(parentOffset + index, e);</div><div class="line">           <span class="keyword">this</span>.modCount = parent.modCount;</div><div class="line">           <span class="keyword">this</span>.size++;</div><div class="line">       &#125;</div></pre></td></tr></table></figure>
+<p>可以看到是针对parent进行的add操作，其实parent就是调用者(源集合)，并且它返回的SubList类也是AbstractList的子类，其所有的get、set、add、remove等都是在原始列表上的操作，并没有重新定义集合，从而可以说明对元素的操作其实是在源集合上进行的，所以对新截取的集合中元素的操作也就直接同步反映到源集合中。</p>
+<p>总结：subList产生的列表只是一个源集合的视图概念，所有对生成的子集合中元素的修改操作都会直接作用于源集合</p>
+<p><strong>5、对生成子列表添加元素操作会抛并发修改异常-subList()</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">List list1 = Lists.newArrayList(<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>);</div><div class="line">List list2 = list1.subList(<span class="number">0</span>, list1.size());</div><div class="line">list1.add(<span class="string">"d"</span>);</div><div class="line">	</div><div class="line">System.out.println(<span class="string">"list1长度:"</span>+list1.size()+<span class="string">" list1元素:"</span>+list1);</div><div class="line">System.out.println(<span class="string">"list2长度:"</span>+list2.size()+<span class="string">" list2元素:"</span>+list2);</div></pre></td></tr></table></figure>
+<p>上面的示例中，我们通过subList方法获取子集合list2后，对源集合list1进行元素添加，然后输出如下（报异常）：</p>
+<blockquote>
+<p>list1长度:4 list1元素:[a, b, c, d]</p>
+<p>Exception in thread “main” java.util.ConcurrentModificationException</p>
+</blockquote>
+<p>怎么报了一个并发修改异常呢，我们点击subList类可以看到其有一个add方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> index, E e)</span> </span>&#123;</div><div class="line">      rangeCheckForAdd(index); </div><div class="line">      checkForComodification(); <span class="comment">//检测判断当前修改计数器是否与子列表生成时一致</span></div><div class="line">      parent.add(parentOffset + index, e);</div><div class="line">      <span class="keyword">this</span>.modCount = parent.modCount;</div><div class="line">      <span class="keyword">this</span>.size++;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p>进入checkForComodification方法源码可以看：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">checkForComodification</span><span class="params">()</span> </span>&#123;</div><div class="line">      <span class="keyword">if</span> (ArrayList.<span class="keyword">this</span>.modCount != <span class="keyword">this</span>.modCount)</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p>上面的方法主要看if分支判断条件，其实subList中的add方法中添加了修改次数比较判断，这个modCount变量是ArrayList中的一个变量，即每次调用arrayList类的add方法时，该变量都会自增操作；当我们调用subList方法时，subList对应的内部类中的构造方法就自己初始化一个自己的modeCount值，并且是直接把源集合的modeCount变量赋值给自己的，所以调用subList构造方法后，再次针对源集合list调用add方法添加元素时，就必然会使modCount自增操作，那么自增后，再看上面的代码checkForComodification()方法中的if判断条件就为true了，那么就抛出了并发修改异常了。</p>
+<p>注：再使用subList生成子列表后，不要再修改源集合列表数据，最好保持原列表的只读状态(通过Collections.unmodifiableList)。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/java和javaScript代码进行交互初探一/" itemprop="url">
                   java和javaScript代码进行交互初探一
                 </a>
@@ -2945,269 +3364,6 @@ select num from a where exists(select 1 from b where num=a.num)
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/带附件的enctype表单中普通属性的获取/" itemprop="url">
-                  带附件的enctype表单中普通属性的获取
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-07T09:33:04+08:00" content="2016-09-07">
-              2016-09-07
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/带附件的enctype表单中普通属性的获取/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="带附件的enctype表单中普通属性的获取/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>我们在平时开发过程中，经常会遇到一些表单，比如用户信息修改、数据资源添加等等，并且这些表单都会带有附件：图片、其他文件；所以我们平时开发过程中经常需要处理两种表单，一种是带附件的表单，一种是不带附件的表单；因为两种表单向后台提交数据的格式不同，后者是以流的方式将表单数据提交到后台的。所以我们下面分两块描述两种获取不同表单的方式</p>
-<h3 id="一、普通表单-不带文件域-，基于普通表单封装成了一个通用的方法"><a href="#一、普通表单-不带文件域-，基于普通表单封装成了一个通用的方法" class="headerlink" title="一、普通表单(不带文件域)，基于普通表单封装成了一个通用的方法"></a>一、普通表单(不带文件域)，基于普通表单封装成了一个通用的方法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line">    * 将request对象解析处理成map</div><div class="line">    * <span class="doctag">@param</span> request</div><div class="line">    * <span class="doctag">@return</span></div><div class="line">    */</div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Map&lt;String,String&gt; <span class="title">transToMAP</span><span class="params">(HttpServletRequest request)</span></span>&#123;</div><div class="line">           Map returnMap = <span class="keyword">new</span> HashMap();</div><div class="line">           Iterator entries = request.getParameterMap().entrySet().iterator();</div><div class="line">           Map.Entry entry;</div><div class="line">           <span class="keyword">while</span> (entries.hasNext()) &#123;</div><div class="line">               String name = <span class="string">""</span>;</div><div class="line">               String value = <span class="string">""</span>;</div><div class="line">               entry = (Map.Entry) entries.next();</div><div class="line">               name = (String) entry.getKey();</div><div class="line">               Object valueObj = entry.getValue();</div><div class="line">               <span class="keyword">if</span>(<span class="keyword">null</span> == valueObj)&#123;</div><div class="line">                   value = <span class="string">""</span>;</div><div class="line">               &#125;<span class="keyword">else</span> <span class="keyword">if</span>(valueObj <span class="keyword">instanceof</span> String[])&#123;</div><div class="line">                   String[] values = (String[])valueObj;</div><div class="line">                   <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;values.length;i++)&#123;</div><div class="line">                       value = values[i] + <span class="string">","</span>;</div><div class="line">                   &#125;</div><div class="line">                   value = value.substring(<span class="number">0</span>, value.length()-<span class="number">1</span>);</div><div class="line">               &#125;<span class="keyword">else</span>&#123;</div><div class="line">                   value = valueObj.toString();</div><div class="line">               &#125;</div><div class="line">               returnMap.put(name, value);</div><div class="line">           &#125;</div><div class="line">       <span class="keyword">return</span>  returnMap;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
-<h3 id="一、普通表单-带文件域-，基于附件表单封装成了一个通用的方法"><a href="#一、普通表单-带文件域-，基于附件表单封装成了一个通用的方法" class="headerlink" title="一、普通表单(带文件域)，基于附件表单封装成了一个通用的方法"></a>一、普通表单(带文件域)，基于附件表单封装成了一个通用的方法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line">    * 将request对象解析处理成map</div><div class="line">    * <span class="doctag">@param</span> request</div><div class="line">    * <span class="doctag">@return</span></div><div class="line">    */</div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Map&lt;String,String&gt; <span class="title">transToMAP</span><span class="params">(HttpServletRequest request,String url)</span></span>&#123;</div><div class="line">       Map returnMap = <span class="keyword">new</span> HashMap();</div><div class="line">       <span class="keyword">boolean</span> isMultipart = ServletFileUpload.isMultipartContent(request);</div><div class="line"></div><div class="line">	<span class="comment">//如果multipart/form-data类型的表单（带附件）</span></div><div class="line">       <span class="keyword">if</span> (isMultipart)&#123;  </div><div class="line">               FileItemFactory factory = <span class="keyword">new</span> DiskFileItemFactory();</div><div class="line">               ServletFileUpload upload = <span class="keyword">new</span> ServletFileUpload( factory );</div><div class="line">               <span class="keyword">try</span> &#123;</div><div class="line">                   List&lt;FileItem&gt; uploadItemList = upload.parseRequest(request);</div><div class="line">                   <span class="keyword">for</span>( FileItem uploadItem : uploadItemList )&#123;</div><div class="line"></div><div class="line">					<span class="comment">//文件表单中的普通form表单域，比如username、phone等属性</span></div><div class="line">                       <span class="keyword">if</span>( uploadItem.isFormField() )&#123; </div><div class="line">                           String fieldName = uploadItem.getFieldName();</div><div class="line">                           String value = uploadItem.getString();</div><div class="line">                           returnMap.put(fieldName,value);</div><div class="line"></div><div class="line">                       &#125;<span class="keyword">else</span>&#123;  <span class="comment">//form表单中的file文件域</span></div><div class="line">                       	 </div><div class="line">                           <span class="keyword">try</span>&#123;</div><div class="line">                           	<span class="comment">/**</span></div><div class="line">                           	 * 1、从type="file"文件域中获取文件流、字节数组等等信息</div><div class="line">                           	 */</div><div class="line">                           	 String fieldname = uploadItem.getFieldName();</div><div class="line">                                String filename = FilenameUtils.getName(uploadItem.getName());</div><div class="line">                                InputStream filecontent = uploadItem.getInputStream();</div><div class="line">                                </div><div class="line">                                <span class="keyword">byte</span>[] bytes = uploadItem.get();</div><div class="line">                                	</div><div class="line">                                <span class="comment">/**</span></div><div class="line">                            	 * 2、把对应的文件上传到文件服务器中，或者把文件写入磁盘上面</div><div class="line">                            	 * </div><div class="line">                            	 * ........</div><div class="line">                            	 */</div><div class="line">                                </div><div class="line">                                returnMap.put(fieldname,filename);<span class="comment">//此处这是例子，具体根据你自己的业务封装</span></div><div class="line">                           &#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">                               e.printStackTrace();</div><div class="line">                           &#125; <span class="keyword">finally</span> &#123;</div><div class="line">                           &#125;</div><div class="line">                       &#125;</div><div class="line">                   &#125;</div><div class="line">               &#125; <span class="keyword">catch</span> (FileUploadException e) &#123;</div><div class="line">                   e.printStackTrace();</div><div class="line">               &#125; <span class="keyword">catch</span> (Exception e)&#123;</div><div class="line">                   e.printStackTrace();</div><div class="line">               &#125;</div><div class="line">       &#125;</div><div class="line">	<span class="keyword">return</span>  returnMap;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>注：将reques对象封装成map集合工具类，主要解决如下问题：</p>
-<p>  1、当仅仅处理简单的form表单时，可以通过该工具类之间获取request对象中的属性集合，并且针对一些特殊情况(为“空”的属性、编码转换)可以达到集中处理并统一返回</p>
-<p>  2、当仅仅处理带file的form表单时，提交到后台是已流的方式传输；解决通过request.getParameter不能获取属性的问题，并且可以集中统一处理</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/基于gitlab开发的针对git仓库中的项目代码库进行打包、补丁包管理工具/" itemprop="url">
-                  基于gitlab开发的针对git仓库中的项目代码库进行打包、补丁包管理工具
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-02T11:20:33+08:00" content="2016-09-02">
-              2016-09-02
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/git/" itemprop="url" rel="index">
-                    <span itemprop="name">git</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/基于gitlab开发的针对git仓库中的项目代码库进行打包、补丁包管理工具/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="基于gitlab开发的针对git仓库中的项目代码库进行打包、补丁包管理工具/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>基于gitlab二次开发的针对git仓库中的项目代码库进行打包、补丁包管理工具，解决产品升级时发布编译的补丁包(.class、jar)繁琐问题。</p>
-<h4 id="平时我们开发时经常出现以下问题："><a href="#平时我们开发时经常出现以下问题：" class="headerlink" title="平时我们开发时经常出现以下问题："></a>平时我们开发时经常出现以下问题：</h4><p>1、同一个产品由N多人开发，那么比如涉及产品版本升级时，我们是基于编译过的文件(.class、jar包)进行升级操作的，<br>   所以针对这种交叉式的开发对于补丁包发布来讲是非常头疼的事情。</p>
-<h4 id="功能介绍："><a href="#功能介绍：" class="headerlink" title="功能介绍："></a>功能介绍：</h4><p>1、登陆功能– 根据登陆的用户信息，将获取gitlab代码服务器中的该用户具有的所有访问权限的代码仓库列表</p>
-<p>2、打包功能– 针对某一个代码仓库，输入开始提交id(commit的ID)代号、最后提交id代号，<br>    那么将针对两个提交区间id中的代码进行编译(调用maven命令)、打包(调用maven命令)、压缩操作(程序执行)</p>
-<p>3、补丁包管理– 针对每一个人每一次的打包操作都进行记录和补丁包维护操作，比如后期涉及大版本升级(多个补丁包覆盖)可以有效追溯</p>
-<h4 id="项目源码地址："><a href="#项目源码地址：" class="headerlink" title="项目源码地址："></a>项目源码地址：</h4><p><a href="https://github.com/mapingsheng/gitlabPatchManage" target="_blank" rel="external">https://github.com/mapingsheng/gitlabPatchManage</a> </p>
-<h4 id="二次开发说明："><a href="#二次开发说明：" class="headerlink" title="二次开发说明："></a>二次开发说明：</h4><p>1、编译gitlab项目的源码包成最新的jar包()</p>
-<p>2、将编译的gitlab源码包添加到项目中、当然还有其他依赖的jar包，可以查看pom.xml文件的依赖配置</p>
-<p>3、将本项目导入你的IDE中，然后编译成war包，部署到web服务器中运行即可看到系统界面</p>
-<h4 id="配置说明："><a href="#配置说明：" class="headerlink" title="配置说明："></a>配置说明：</h4><p>1、src\main\resources是所有的资源、配置文件目录</p>
-<p>2、gitInfo.xml配置本地仓库的地址和打包后的补丁包的存放地址</p>
-<p>3、sql\文件夹下面存放数据库的相关信息表结构和初始化的数据</p>
-<p>4、context\文件夹下面存放oracle数据库连接的配置信息</p>
-<h4 id="声明："><a href="#声明：" class="headerlink" title="声明："></a>声明：</h4><p>本项目是完全根据自己随性的一个想法自由发挥开发出来的一个工具类项目，完全从什么都不了解、一头雾水到慢慢的搜集资料慢慢的琢磨出来的，</p>
-<p>所以开发过程中系统没有经过架构和层级的设计，完全是堆代码的方式开发的，所以代码写的比较龊，后期会慢慢的重构，忘理解！</p>
-<h4 id="系统界面："><a href="#系统界面：" class="headerlink" title="系统界面："></a>系统界面：</h4><p><img src="http://soujava.com/images/git1.jpg" alt="Alt text" title="登陆"></p>
-<p><img src="http://soujava.com/images/git2.jpg" alt="Alt text" title="打补丁"></p>
-<p><img src="http://soujava.com/images/git3.jpg" alt="Alt text" title="补丁记录"></p>
-<p><img src="http://soujava.com/images/git4.jpg" alt="Alt text" title="补丁记录"></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -3253,7 +3409,7 @@ select num from a where exists(select 1 from b where num=a.num)
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">52</span>
+              <span class="site-state-item-count">54</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -3261,7 +3417,7 @@ select num from a where exists(select 1 from b where num=a.num)
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-count">20</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
