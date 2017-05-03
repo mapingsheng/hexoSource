@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.soujava.com/"/>
-  <updated>2017-05-03T07:43:21.960Z</updated>
+  <updated>2017-05-03T08:09:02.704Z</updated>
   <id>http://www.soujava.com/</id>
   
   <author>
@@ -20,13 +20,14 @@
     <link href="http://www.soujava.com/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%BC%95%E5%85%A5%E6%A8%A1%E5%BC%8F%E9%9B%8F%E5%BD%A2/"/>
     <id>http://www.soujava.com/设计模式-引入模式雏形/</id>
     <published>2017-05-01T08:21:27.000Z</published>
-    <updated>2017-05-03T07:43:21.960Z</updated>
+    <updated>2017-05-03T08:09:02.704Z</updated>
     
     <content type="html">&lt;p&gt;接着上一篇文章中遗留的问题，接着探索一下设计模式的强大力量。&lt;br&gt;首先在上一篇文章中进行简单的回顾：&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;1、我们声明了一个Duck抽象类，并定义了相关的公共方法(quack、swim、fly)，并且都进行了默认的实现；但是把display外观方法定义成了抽象方法，以达到不同类型的Duck可以具有自己独特外观的目的。&lt;/p&gt;
 &lt;p&gt;2、然后定义具体的业务类(绿头鸭、大黄鸭、红头鸭)，该业务类要继承抽象类-Duck,并且覆写display方法，定义自己独特的外观。&lt;/p&gt;
 &lt;/blockquote&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;p&gt;那么针对上面的实现，通过分析具有下面的一系列问题：&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;1、比如再新加一个“跳舞鸭”业务类时，该鸭子的跳舞行为难道也要在超类Duck中定义吗？这样会导致超类很臃肿&lt;/p&gt;
@@ -46,7 +47,7 @@
 &lt;p&gt;1.3、定义不会飞行的业务类-FlyNoWay&lt;/p&gt;
 &lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;/**&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; * 定义用不会飞行的具体类，虽然实现了飞行的接口&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; * &lt;span class=&quot;doctag&quot;&gt;@author&lt;/span&gt; maps&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; */&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;FlyNoWay&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;FlyInterface&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;meta&quot;&gt;@Override&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;fly&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;不会飞行！&quot;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;p&gt;到目前为止，我们已经把飞行行为fly进行了独立定义，并且定义了不同的具体飞行行为业务类；下面我们开始独立定义另一个叫的行为quack。&lt;/p&gt;
-&lt;p&gt;2、独立定义叫的行为接口-FlyInterface&lt;/p&gt;
+&lt;p&gt;2、独立定义叫的行为接口-QuackInterface&lt;/p&gt;
 &lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;/**&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; * 独立出来的叫的行为接口&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; * &lt;span class=&quot;doctag&quot;&gt;@author&lt;/span&gt; maps&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; */&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;QuackInterface&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;/**&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	 * 定义一个叫的方法&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	 */&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;quack&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;p&gt;2.1、定义一个呱呱叫的行为类-QuackGuagua&lt;/p&gt;
 &lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;/**&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; * 定义一个呱呱叫的具体类，实现呱呱叫行为接口&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; * &lt;span class=&quot;doctag&quot;&gt;@author&lt;/span&gt; maps&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; */&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;QuackGuagua&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;QuackInterface&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;meta&quot;&gt;@Override&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;quack&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;呱呱叫&quot;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
@@ -92,7 +93,9 @@
     
       &lt;p&gt;接着上一篇文章中遗留的问题，接着探索一下设计模式的强大力量。&lt;br&gt;首先在上一篇文章中进行简单的回顾：&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;1、我们声明了一个Duck抽象类，并定义了相关的公共方法(quack、swim、fly)，并且都进行了默认的实现；但是把displ
+&lt;p&gt;1、我们声明了一个Duck抽象类，并定义了相关的公共方法(quack、swim、fly)，并且都进行了默认的实现；但是把display外观方法定义成了抽象方法，以达到不同类型的Duck可以具有自己独特外观的目的。&lt;/p&gt;
+&lt;p&gt;2、然后定义具体的业务类(绿头鸭、大黄鸭、红头鸭)，该业务类要继承抽象类-Duck,并且覆写display方法，定义自己独特的外观。&lt;/p&gt;
+&lt;/blockquote&gt;
     
     </summary>
     
@@ -108,12 +111,13 @@
     <link href="http://www.soujava.com/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E6%97%A0%E6%A8%A1%E5%BC%8F/"/>
     <id>http://www.soujava.com/设计模式-无模式/</id>
     <published>2017-04-29T07:39:08.000Z</published>
-    <updated>2017-04-29T10:49:45.042Z</updated>
+    <updated>2017-05-03T08:10:06.476Z</updated>
     
     <content type="html">&lt;p&gt;搞开发几年了，深深的明白设计模式的重要性，但是确不能真正彻底的运用自如；纵观现实生活中，比比皆是设计模式的最佳实践，比如：&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;在家里边墙面上的插座，一般都是扁孔的；自从买了一个港版的iphone后，竟然无法愉快的充电了，需要买一个转接头插在墙面的插座上才行，其实买的那个转换头就是充当一个适配器的作用，那么我们可以把这个实践称做–适配器模式&lt;/p&gt;
 &lt;/blockquote&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;p&gt;&lt;img src=&quot;http://soujava.com/images/model.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;拿平时开的车来讲，你在北京买的车的生产厂家可能是河北制造的，你在南阳买的车的生产厂家可能是武汉制造的，但是有没有想过，同一款车的构件都是一样的，那么河北制造厂和武汉制造厂难道是全车所有配件都自己生产吗，那肯定不是的，与其称他们为制造厂，不如称他们为装配厂，因为汽车构件一般都有一个类似中央工厂的地方生产的，然后运输到各个装配厂进行组装成为整车！各个装备厂不需要关注发动机、轮胎是如何生产的，只需要把相应的部件进行组装成整车就行了，那么我们可以把这个实践称作–工程方法模式&lt;/p&gt;
@@ -151,7 +155,6 @@
 &lt;p&gt;红头鸭&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;hr&gt;
-&lt;p&gt;&amp;gt;&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;呱呱叫&lt;/p&gt;
 &lt;p&gt;游泳&lt;/p&gt;
@@ -199,7 +202,8 @@
     
       &lt;p&gt;搞开发几年了，深深的明白设计模式的重要性，但是确不能真正彻底的运用自如；纵观现实生活中，比比皆是设计模式的最佳实践，比如：&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;在家里边墙面上的插座，一般都是扁孔的；自从买了一个港版的iphone后，竟然无法愉快的充电了，需要买一个转接头
+&lt;p&gt;在家里边墙面上的插座，一般都是扁孔的；自从买了一个港版的iphone后，竟然无法愉快的充电了，需要买一个转接头插在墙面的插座上才行，其实买的那个转换头就是充当一个适配器的作用，那么我们可以把这个实践称做–适配器模式&lt;/p&gt;
+&lt;/blockquote&gt;
     
     </summary>
     
@@ -215,9 +219,10 @@
     <link href="http://www.soujava.com/java%E4%B8%AD%E9%9B%86%E5%90%88%E4%BD%BF%E7%94%A8%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84-%E5%9D%91/"/>
     <id>http://www.soujava.com/java中集合使用中遇到的-坑/</id>
     <published>2017-04-25T06:27:21.000Z</published>
-    <updated>2017-04-25T11:43:54.647Z</updated>
+    <updated>2017-05-03T08:10:34.056Z</updated>
     
     <content type="html">&lt;p&gt;平时开发过程中用的最多的莫过于基本类型、包装类、集合等等了，但是最近在使用集合时，偶尔使用不当会出现一些想不到的问题(bug)；为什么使用不当呢，因为我们对集合的操作都是使用JDK原生的API方法进行操作的，那么之所以使用不当，是因为对jdk源码中的api方法的不了解所致，下面就具体罗列一下具体的坑吧。&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;p&gt;&lt;strong&gt;1、数组之间的拷贝-Arrays.copyOf()&lt;/strong&gt;&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;我们直接用java.util.Arrays工具类的copyOf方法进行数组拷贝&lt;/p&gt;
@@ -319,7 +324,7 @@
     
     <summary type="html">
     
-      &lt;p&gt;平时开发过程中用的最多的莫过于基本类型、包装类、集合等等了，但是最近在使用集合时，偶尔使用不当会出现一些想不到的问题(bug)；为什么使用不当呢，因为我们对集合的操作都是使用JDK原生的API方法进行操作的，那么之所以使用不当，是因为对jdk源码中的api方法的不了解所致，
+      &lt;p&gt;平时开发过程中用的最多的莫过于基本类型、包装类、集合等等了，但是最近在使用集合时，偶尔使用不当会出现一些想不到的问题(bug)；为什么使用不当呢，因为我们对集合的操作都是使用JDK原生的API方法进行操作的，那么之所以使用不当，是因为对jdk源码中的api方法的不了解所致，下面就具体罗列一下具体的坑吧。&lt;/p&gt;
     
     </summary>
     
@@ -335,9 +340,10 @@
     <link href="http://www.soujava.com/java%E5%92%8CjavaScript%E4%BB%A3%E7%A0%81%E8%BF%9B%E8%A1%8C%E4%BA%A4%E4%BA%92%E5%88%9D%E6%8E%A2%E4%B8%80/"/>
     <id>http://www.soujava.com/java和javaScript代码进行交互初探一/</id>
     <published>2017-04-22T08:34:17.000Z</published>
-    <updated>2017-04-22T10:12:08.315Z</updated>
+    <updated>2017-05-03T08:11:13.778Z</updated>
     
     <content type="html">&lt;p&gt;开发这么长时间，一直的开发思想模式就是java负责服务器端(后台)运行，js负责前端(前台)交互体验，两个语言没有任何代码级别的交互；但其实还有另一种开发模式，就是java和javascript混合开发，前后端不那么分离；即java代码可以直接调用javascript文件中定义的函数；javascript中定义的函数可以读取java代码中定义的变量数据；感觉有点意思！其实这种开发模式个人觉得也很有价值，比如下面的场景：&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;blockquote&gt;
 &lt;p&gt;用户在浏览一个商品，突然这个商品由于某些原因要求进行打折处理，比如打8折，即需要把该商品的价格乘以80%；&lt;/p&gt;
 &lt;p&gt;因为上面说的打8折不是固定的，有可能一会打8折，一会又打5折，所以需要把这个信息在一个地方维护起来，那么我们就把打折规则封装到javascript文件定义的函数中&lt;/p&gt;
@@ -376,7 +382,7 @@
     
     <summary type="html">
     
-      &lt;p&gt;开发这么长时间，一直的开发思想模式就是java负责服务器端(后台)运行，js负责前端(前台)交互体验，两个语言没有任何代码级别的交互；但其实还有另一种开发模式，就是java和javascript混合开发，前后端不那么分离；即java代码可以直接调用javascript文件中
+      &lt;p&gt;开发这么长时间，一直的开发思想模式就是java负责服务器端(后台)运行，js负责前端(前台)交互体验，两个语言没有任何代码级别的交互；但其实还有另一种开发模式，就是java和javascript混合开发，前后端不那么分离；即java代码可以直接调用javascript文件中定义的函数；javascript中定义的函数可以读取java代码中定义的变量数据；感觉有点意思！其实这种开发模式个人觉得也很有价值，比如下面的场景：&lt;/p&gt;
     
     </summary>
     
@@ -392,9 +398,10 @@
     <link href="http://www.soujava.com/java8%E4%BD%BF%E7%94%A8stream%E5%AF%B9%E7%AE%80%E5%8D%95%E6%95%B0%E6%8D%AE%E9%9B%86%E6%8E%92%E5%BA%8F/"/>
     <id>http://www.soujava.com/java8使用stream对简单数据集排序/</id>
     <published>2017-04-21T09:40:43.000Z</published>
-    <updated>2017-04-21T10:10:40.838Z</updated>
+    <updated>2017-05-03T08:11:29.602Z</updated>
     
     <content type="html">&lt;p&gt;Stream是java8新增一个工具类，在java.util.stream.*;中，不得不说的是stream功能异常强大，一旦你接触之后就不想再用哪些旧的jdk中api方法了；下面先以日常开发中的集合数据排序为例慢慢了解stream中的sorted方法。&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;p&gt;&lt;strong&gt;一、对List数据集合排序&lt;/strong&gt;&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;1、对List集合进行升序排列&lt;/p&gt;
@@ -442,7 +449,6 @@
     <summary type="html">
     
       &lt;p&gt;Stream是java8新增一个工具类，在java.util.stream.*;中，不得不说的是stream功能异常强大，一旦你接触之后就不想再用哪些旧的jdk中api方法了；下面先以日常开发中的集合数据排序为例慢慢了解stream中的sorted方法。&lt;/p&gt;
-&lt;p&gt;&lt;s
     
     </summary>
     
@@ -458,9 +464,10 @@
     <link href="http://www.soujava.com/java%E4%B8%89%E7%9B%AE%E8%BF%90%E7%AE%97%E7%AC%A6%E4%B9%8B%E8%A7%84%E5%88%99-%E5%9D%91/"/>
     <id>http://www.soujava.com/java三目运算符之规则-坑/</id>
     <published>2017-04-20T11:40:25.000Z</published>
-    <updated>2017-04-20T13:20:53.398Z</updated>
+    <updated>2017-05-03T08:11:43.152Z</updated>
     
     <content type="html">&lt;p&gt;平时开发过程中，判断操作除了使用if-else语句之外，三目运算符也经常被使用，然而在使用三目运算符过程中，我们异步都很老实，但是其使用规则则不曾了解，下面就了解一下它的使用规则。&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;p&gt;&lt;strong&gt;一、描述&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;先了解一下三目运算符的语法：&lt;/p&gt;
 &lt;blockquote&gt;
@@ -510,8 +517,6 @@
     <summary type="html">
     
       &lt;p&gt;平时开发过程中，判断操作除了使用if-else语句之外，三目运算符也经常被使用，然而在使用三目运算符过程中，我们异步都很老实，但是其使用规则则不曾了解，下面就了解一下它的使用规则。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;一、描述&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;先了解一下三目运算符
     
     </summary>
     
@@ -527,10 +532,11 @@
     <link href="http://www.soujava.com/Redis-%E5%AE%9A%E6%97%B6%E6%93%8D%E4%BD%9C%E7%AF%87/"/>
     <id>http://www.soujava.com/Redis-定时操作篇/</id>
     <published>2017-04-18T09:09:35.000Z</published>
-    <updated>2017-04-20T11:44:22.653Z</updated>
+    <updated>2017-05-03T08:11:58.262Z</updated>
     
     <content type="html">&lt;p&gt;&lt;strong&gt;一、定时描述&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;平时开发中，经常会把一些热数据存入缓存中，并且设置失效时间，比如把用户和rest接口地址存入缓存，并设置失效时间，一方面可以提高响应速度，还可以把一部分无效的请求挡在缓存层处理；还比如把验证码存入缓存，并设置失效时间，也可以达到上述目的。redis缓存有两种定时模式：&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;blockquote&gt;
 &lt;p&gt;1、设置某键值在多少秒之后失效&lt;/p&gt;
 &lt;p&gt;2、设置某键值在以后某一个时间点之后失效，比如2017年10月1日23点59分59秒失效&lt;/p&gt;
@@ -555,7 +561,7 @@
     <summary type="html">
     
       &lt;p&gt;&lt;strong&gt;一、定时描述&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;平时开发中，经常会把一些热数据存入缓存中，并且设置失效时间，比如把用户和rest接口地址存入缓存，并设置失效时间，一方面可以提高响应速度，还可以把一部分无效的请求挡在缓存层处理；还比如把验证码存入缓存，并设置失效
+&lt;p&gt;平时开发中，经常会把一些热数据存入缓存中，并且设置失效时间，比如把用户和rest接口地址存入缓存，并设置失效时间，一方面可以提高响应速度，还可以把一部分无效的请求挡在缓存层处理；还比如把验证码存入缓存，并设置失效时间，也可以达到上述目的。redis缓存有两种定时模式：&lt;/p&gt;
     
     </summary>
     
@@ -571,10 +577,11 @@
     <link href="http://www.soujava.com/Redis-%E4%BD%BF%E7%94%A8SortedSet%E5%88%86%E9%A1%B5%E5%A4%84%E7%90%86/"/>
     <id>http://www.soujava.com/Redis-使用SortedSet分页处理/</id>
     <published>2017-03-23T04:53:35.000Z</published>
-    <updated>2017-03-23T05:58:02.641Z</updated>
+    <updated>2017-05-03T08:12:10.118Z</updated>
     
     <content type="html">&lt;p&gt;&lt;strong&gt;一、需求描述&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;由于app首页的数据展示需要调用6个第三方的不同数据源的rest接口，所以app首页在使用过程中会出现请求超时的问题（app端设置超时时间为5s）；所以需要对首页进行优化；&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;blockquote&gt;
 &lt;p&gt;1、由于app首页的数据展示非常像微信朋友圈的数据展示，即下拉时获取最新的数据，上推时获取历史数据，而在实际的使用场景中，上推动作大于5次的情况比较少(每天在微信朋友圈把5天前的动态翻出来[上推]的情况比较少吧)；所以打算把首页的前5页数据全部放入缓存中，不管是下拉获取新数据还是上推获取分页的老数据都统一从缓存中获取，可以有效减轻服务器压力。&lt;/p&gt;
 &lt;p&gt;2、设定第三方rest接口调用超时时间，比如5分钟之内的首页刷新操作，只会读取缓存数据，不会触发调用第三方的rest接口。&lt;/p&gt;
@@ -620,8 +627,6 @@
     
       &lt;p&gt;&lt;strong&gt;一、需求描述&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;由于app首页的数据展示需要调用6个第三方的不同数据源的rest接口，所以app首页在使用过程中会出现请求超时的问题（app端设置超时时间为5s）；所以需要对首页进行优化；&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p
     
     </summary>
     
@@ -637,10 +642,11 @@
     <link href="http://www.soujava.com/%E6%88%91%E6%89%80%E7%90%86%E8%A7%A3%E7%9A%84nodeJs%E7%9A%84%E4%B8%A4%E4%B8%AA%E6%A6%82%E5%BF%B5/"/>
     <id>http://www.soujava.com/我所理解的nodeJs的两个概念/</id>
     <published>2017-03-06T08:22:02.000Z</published>
-    <updated>2017-03-06T08:41:56.024Z</updated>
+    <updated>2017-05-03T08:13:05.685Z</updated>
     
     <content type="html">&lt;p&gt;仔细想了想，现将我对nodejs理解中的两个概念综述一下，以确定后续对其使用定位和深入理解。&lt;/p&gt;
 &lt;h2 id=&quot;1、包管理器&quot;&gt;&lt;a href=&quot;#1、包管理器&quot; class=&quot;headerlink&quot; title=&quot;1、包管理器&quot;&gt;&lt;/a&gt;1、包管理器&lt;/h2&gt;&lt;p&gt;其实nodejs有一个强大的包管理器支撑着nodejs的繁荣生态，提到这个包管理器就据下面几个例子：&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;p&gt;&lt;em&gt;用过linux操作系统的都知道：&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt; 如果用的是Debian、Ubuntu操作系统的话，那么我们平时安装软件时会用到【&lt;em&gt;apt-get install 包名称&lt;/em&gt;】去安装；&lt;/p&gt;
 &lt;p&gt; 如果用的是Fedora/Redhat、CentOS操作系统的话，那么我们平时安装软件时会用到【&lt;em&gt;yum install 包名称&lt;/em&gt;】去安装；&lt;/p&gt;
@@ -690,7 +696,7 @@
     <summary type="html">
     
       &lt;p&gt;仔细想了想，现将我对nodejs理解中的两个概念综述一下，以确定后续对其使用定位和深入理解。&lt;/p&gt;
-&lt;h2 id=&quot;1、包管理器&quot;&gt;&lt;a href=&quot;#1、包管理器&quot; class=&quot;headerlink&quot; title=&quot;1、包管理器&quot;&gt;&lt;/a&gt;1、包管理器&lt;/h2&gt;&lt;p&gt;
+&lt;h2 id=&quot;1、包管理器&quot;&gt;&lt;a href=&quot;#1、包管理器&quot; class=&quot;headerlink&quot; title=&quot;1、包管理器&quot;&gt;&lt;/a&gt;1、包管理器&lt;/h2&gt;&lt;p&gt;其实nodejs有一个强大的包管理器支撑着nodejs的繁荣生态，提到这个包管理器就据下面几个例子：&lt;/p&gt;
     
     </summary>
     
@@ -706,7 +712,7 @@
     <link href="http://www.soujava.com/CentOS%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85nodeJs/"/>
     <id>http://www.soujava.com/CentOS系统安装nodeJs/</id>
     <published>2017-02-09T05:11:02.000Z</published>
-    <updated>2017-02-10T08:05:32.092Z</updated>
+    <updated>2017-05-03T08:13:33.896Z</updated>
     
     <content type="html">&lt;p&gt;主要介绍在Linux(CentOS)系统中，nodeJs的安装与环境配置，首先我们需要到nodeJs官网下载对应的tar安装包，然后使用命令进行安装和配置操作(一共有源代码编译安装和二进制包安装，两种安装方式都是可以的)&lt;/p&gt;
 &lt;h2 id=&quot;一、二进制包安装&quot;&gt;&lt;a href=&quot;#一、二进制包安装&quot; class=&quot;headerlink&quot; title=&quot;一、二进制包安装&quot;&gt;&lt;/a&gt;一、二进制包安装&lt;/h2&gt;&lt;p&gt;1 下载二进制包&lt;/p&gt;
@@ -715,6 +721,9 @@
 &lt;p&gt;2 命令安装&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;tar -xvf  node-v6.9.4-linux-x64.tar.xz    #解压下载的二进制安装包&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;blockquote&gt;
 &lt;p&gt;cd node-v6.9.4-linux-x64/ &amp;amp;&amp;amp; ll    #切换到已经解压的安装包目录中，并且详细列出所有的文件&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;drwxrwxr-x. &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt; maps maps    &lt;span class=&quot;number&quot;&gt;27&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;月   &lt;span class=&quot;number&quot;&gt;6&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;04&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;50&lt;/span&gt; bin&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;-rw-rw-r--. &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; maps maps &lt;span class=&quot;number&quot;&gt;55480&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;月   &lt;span class=&quot;number&quot;&gt;6&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;04&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;50&lt;/span&gt; CHANGELOG.md&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;drwxrwxr-x. &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt; maps maps    &lt;span class=&quot;number&quot;&gt;17&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;月   &lt;span class=&quot;number&quot;&gt;6&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;04&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;50&lt;/span&gt; include&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;drwxrwxr-x. &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt; maps maps    &lt;span class=&quot;number&quot;&gt;25&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;月   &lt;span class=&quot;number&quot;&gt;6&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;04&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;50&lt;/span&gt; lib&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;-rw-rw-r--. &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; maps maps &lt;span class=&quot;number&quot;&gt;60477&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;月   &lt;span class=&quot;number&quot;&gt;6&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;04&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;50&lt;/span&gt; LICENSE&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;-rw-rw-r--. &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; maps maps &lt;span class=&quot;number&quot;&gt;17440&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;月   &lt;span class=&quot;number&quot;&gt;6&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;04&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;50&lt;/span&gt; README.md&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;drwxrwxr-x. &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt; maps maps    &lt;span class=&quot;number&quot;&gt;42&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;月   &lt;span class=&quot;number&quot;&gt;6&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;04&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;50&lt;/span&gt; share&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
@@ -751,7 +760,13 @@
     <summary type="html">
     
       &lt;p&gt;主要介绍在Linux(CentOS)系统中，nodeJs的安装与环境配置，首先我们需要到nodeJs官网下载对应的tar安装包，然后使用命令进行安装和配置操作(一共有源代码编译安装和二进制包安装，两种安装方式都是可以的)&lt;/p&gt;
-&lt;h2 id=&quot;一、二进制包安装&quot;&gt;&lt;a h
+&lt;h2 id=&quot;一、二进制包安装&quot;&gt;&lt;a href=&quot;#一、二进制包安装&quot; class=&quot;headerlink&quot; title=&quot;一、二进制包安装&quot;&gt;&lt;/a&gt;一、二进制包安装&lt;/h2&gt;&lt;p&gt;1 下载二进制包&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;cd /usr/local/develop/soft  #切换到对应的安装目录中&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;wget https://nodejs.org/dist/v6.9.5/node-v6.9.5-linux-x64.tar.xz  #下载官方的nodeJs二进制安装包&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;2 命令安装&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;tar -xvf  node-v6.9.4-linux-x64.tar.xz    #解压下载的二进制安装包&lt;/p&gt;
+&lt;/blockquote&gt;
     
     </summary>
     
@@ -767,9 +782,10 @@
     <link href="http://www.soujava.com/Jquery%E4%B8%ADprop%E5%92%8Cattr%E4%BD%BF%E7%94%A8%E6%97%B6%E7%9A%84%E9%97%AE%E9%A2%98/"/>
     <id>http://www.soujava.com/Jquery中prop和attr使用时的问题/</id>
     <published>2017-02-08T05:25:25.000Z</published>
-    <updated>2017-02-09T05:15:01.734Z</updated>
+    <updated>2017-05-03T08:13:55.242Z</updated>
     
     <content type="html">&lt;p&gt;在使用jquery的attr属性处理单选按钮选中时，出现偶尔不能选中的问题，后来才知道jquery官方推荐使用prop，而再推荐使用attr。&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$(&lt;span class=&quot;string&quot;&gt;&quot;input[type=&#39;radio&#39;][name=&#39;workerType&#39;][value=&#39;IT&#39;]&quot;&lt;/span&gt;).attr(&lt;span class=&quot;string&quot;&gt;&#39;checked&#39;&lt;/span&gt;,&lt;span class=&quot;keyword&quot;&gt;true&lt;/span&gt;);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;p&gt;使用attr方法操作单选按钮为选中状态时，会出现不能选中的情况（偶现）&lt;/p&gt;
 &lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$(&lt;span class=&quot;string&quot;&gt;&quot;input[type=&#39;radio&#39;][name=&#39;workerType&#39;][value=&#39;IT&#39;]&quot;&lt;/span&gt;).prop(&lt;span class=&quot;string&quot;&gt;&#39;checked&#39;&lt;/span&gt;,&lt;span class=&quot;keyword&quot;&gt;true&lt;/span&gt;);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
@@ -780,7 +796,6 @@
     <summary type="html">
     
       &lt;p&gt;在使用jquery的attr属性处理单选按钮选中时，出现偶尔不能选中的问题，后来才知道jquery官方推荐使用prop，而再推荐使用attr。&lt;/p&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;
     
     </summary>
     
@@ -796,9 +811,10 @@
     <link href="http://www.soujava.com/10%E8%BF%9B%E5%88%B6%E4%B8%8E2%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2/"/>
     <id>http://www.soujava.com/10进制与2进制转换/</id>
     <published>2017-01-20T07:23:15.000Z</published>
-    <updated>2017-01-20T08:18:57.397Z</updated>
+    <updated>2017-05-03T08:14:10.665Z</updated>
     
     <content type="html">&lt;p&gt;在上一篇文章中描述了二进制、八进制、十进制、十六进制的概念和表述方法，但是在计算机的世界中，只有0和1，所以除了二进制之外的其它X进制，计算机都是不能识别的；所以需要把他们转换为二进制之后才能在计算机上面运行&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;p&gt;&lt;strong&gt;一、十进制转换二进制&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;注:如果是10进制转换2进制的话，那么只需要拿着10进制除以2,直到商为1或者0，然后拿着商和余数组成的一串0和1数字串就是该十进制数的二进制值&lt;/em&gt;&lt;/p&gt;
 &lt;ol&gt;
@@ -882,7 +898,6 @@
     <summary type="html">
     
       &lt;p&gt;在上一篇文章中描述了二进制、八进制、十进制、十六进制的概念和表述方法，但是在计算机的世界中，只有0和1，所以除了二进制之外的其它X进制，计算机都是不能识别的；所以需要把他们转换为二进制之后才能在计算机上面运行&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;一、十进制转换二进制&lt;/stron
     
     </summary>
     
@@ -898,9 +913,10 @@
     <link href="http://www.soujava.com/thymeleaf%E6%95%99%E7%A8%8B3-with%E5%AE%9A%E4%B9%89%E5%8F%98%E9%87%8F%E4%BD%BF%E7%94%A8/"/>
     <id>http://www.soujava.com/thymeleaf教程3-with定义变量使用/</id>
     <published>2016-09-28T08:11:44.000Z</published>
-    <updated>2017-01-11T02:06:24.915Z</updated>
+    <updated>2017-05-03T08:14:36.071Z</updated>
     
     <content type="html">&lt;p&gt;在使用thymeleaf渲染数据的时候，我们经常会用到basepath变量（访问地址前缀），一般我们在jsp中直接request对象获取拼接而成，但是在thymeleaf中如何使用呢，可以通过th:with定义并使用。&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;h3 id=&quot;th-with用法&quot;&gt;&lt;a href=&quot;#th-with用法&quot; class=&quot;headerlink&quot; title=&quot;th:with用法&quot;&gt;&lt;/a&gt;th:with用法&lt;/h3&gt;&lt;p&gt;1、用来定义局部变量，用法如下：&lt;br&gt;&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;div th:with=&quot;name=zhangsan&quot;&amp;gt;  &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   	&amp;lt;p&amp;gt;hello &amp;lt;span th:text=&quot;$&amp;#123;name&amp;#125;&quot;&amp;gt;&amp;lt;/span&amp;gt;.&amp;lt;/p&amp;gt;  &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;/div&amp;gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;上面的例子定义了一个变量name，值为zhangsan，然后我们在p标签中输出定义的变量。&lt;/p&gt;
 &lt;p&gt;通过上面的例子可以看出来用法规则为–th:with=”key=value”这种格式定义局部变量&lt;/p&gt;
@@ -923,7 +939,6 @@
     <summary type="html">
     
       &lt;p&gt;在使用thymeleaf渲染数据的时候，我们经常会用到basepath变量（访问地址前缀），一般我们在jsp中直接request对象获取拼接而成，但是在thymeleaf中如何使用呢，可以通过th:with定义并使用。&lt;/p&gt;
-&lt;h3 id=&quot;th-with用法&quot;&gt;&lt;a h
     
     </summary>
     
@@ -939,11 +954,12 @@
     <link href="http://www.soujava.com/Maven%E5%BF%BD%E7%95%A5%E5%85%B6%E4%BB%96%E4%BE%9D%E8%B5%96jar%E5%8C%85%E6%8F%92%E4%BB%B6/"/>
     <id>http://www.soujava.com/Maven忽略其他依赖jar包插件/</id>
     <published>2016-09-20T02:54:31.000Z</published>
-    <updated>2017-01-11T02:06:24.905Z</updated>
+    <updated>2017-05-03T08:15:11.231Z</updated>
     
     <content type="html">&lt;p&gt;我们在开发产品时，可能不同人开发不同的功能模块，比如：&lt;/p&gt;
 &lt;p&gt;•现在A开发a模块，B开发b模块&lt;/p&gt;
 &lt;p&gt;•a模块依赖modelman-1.0.0-SNAPSHOT.jar包；b模块依赖modelman-1.0.2-RELEASE.jar包；很显然目前最新的jar包版本应该都用modelman-1.0.2-RELEASE.jar这个版本&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;p&gt;•那么我们就可以把modelman-1.0.0-SNAPSHOT.jar这个jar包添加配置到下面中&lt;br&gt;    &lt;exclude&gt;com.maps:modelman:1.0.0-SNAPSHOT&lt;/exclude&gt;&lt;/p&gt;
 &lt;p&gt;•添加完成后当编译产品时则会自动检测是否还有用到modelman:1.0.0-SNAPSHOT的模块，如检测出有，那么则中断编译并提示&lt;/p&gt;
 &lt;p&gt;其实我们只需在xml配置文件中添加插件maven-enforcer-plugin配置就行了&lt;/p&gt;
@@ -954,7 +970,7 @@
     
       &lt;p&gt;我们在开发产品时，可能不同人开发不同的功能模块，比如：&lt;/p&gt;
 &lt;p&gt;•现在A开发a模块，B开发b模块&lt;/p&gt;
-&lt;p&gt;•a模块依赖modelman-1.0.0-SNAPSHOT.jar包；b模块依赖modelman-1.0.2-RELEASE.jar包；很显然目前最新的ja
+&lt;p&gt;•a模块依赖modelman-1.0.0-SNAPSHOT.jar包；b模块依赖modelman-1.0.2-RELEASE.jar包；很显然目前最新的jar包版本应该都用modelman-1.0.2-RELEASE.jar这个版本&lt;/p&gt;
     
     </summary>
     
@@ -970,10 +986,11 @@
     <link href="http://www.soujava.com/Mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BC%96%E7%A0%81%E6%9B%B4%E6%94%B9/"/>
     <id>http://www.soujava.com/Mysql数据库编码更改/</id>
     <published>2016-09-20T02:46:29.000Z</published>
-    <updated>2017-01-11T02:06:24.908Z</updated>
+    <updated>2017-05-03T08:15:30.629Z</updated>
     
     <content type="html">&lt;p&gt;在平时的开发过程中，mysql的编码是拉丁字符，所以当向里面存储数据时，显示出来就是乱码，那么我们需要执行如下操作：&lt;/p&gt;
-&lt;h3 id=&quot;1-通过命令或者其他终端登录到mysql服务中，并执行查询目前对应的数据库的编码信息sql脚本查询，执行命令会查询出该数据库下面每一张表对应的字符编码信息&quot;&gt;&lt;a href=&quot;#1-通过命令或者其他终端登录到mysql服务中，并执行查询目前对应的数据库的编码信息sql脚本查询，执行命令会查询出该数据库下面每一张表对应的字符编码信息&quot; class=&quot;headerlink&quot; title=&quot;1.通过命令或者其他终端登录到mysql服务中，并执行查询目前对应的数据库的编码信息sql脚本查询，执行命令会查询出该数据库下面每一张表对应的字符编码信息&quot;&gt;&lt;/a&gt;1.通过命令或者其他终端登录到mysql服务中，并执行查询目前对应的数据库的编码信息sql脚本查询，执行命令会查询出该数据库下面每一张表对应的字符编码信息&lt;/h3&gt;&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/mysqlCode1.png&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
+&lt;h3 id=&quot;1-通过命令或者其他终端登录到mysql服务中，并执行查询目前对应的数据库的编码信息sql脚本查询，执行命令会查询出该数据库下面每一张表对应的字符编码信息&quot;&gt;&lt;a href=&quot;#1-通过命令或者其他终端登录到mysql服务中，并执行查询目前对应的数据库的编码信息sql脚本查询，执行命令会查询出该数据库下面每一张表对应的字符编码信息&quot; class=&quot;headerlink&quot; title=&quot;1.通过命令或者其他终端登录到mysql服务中，并执行查询目前对应的数据库的编码信息sql脚本查询，执行命令会查询出该数据库下面每一张表对应的字符编码信息&quot;&gt;&lt;/a&gt;1.通过命令或者其他终端登录到mysql服务中，并执行查询目前对应的数据库的编码信息sql脚本查询，执行命令会查询出该数据库下面每一张表对应的字符编码信息&lt;/h3&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/mysqlCode1.png&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
 &lt;h3 id=&quot;2-然后执行下面的sql脚本，基于查询语句生成修改表结构编码的sql语句列表&quot;&gt;&lt;a href=&quot;#2-然后执行下面的sql脚本，基于查询语句生成修改表结构编码的sql语句列表&quot; class=&quot;headerlink&quot; title=&quot;2.然后执行下面的sql脚本，基于查询语句生成修改表结构编码的sql语句列表&quot;&gt;&lt;/a&gt;2.然后执行下面的sql脚本，基于查询语句生成修改表结构编码的sql语句列表&lt;/h3&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;select &lt;span class=&quot;title&quot;&gt;concat&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;string&quot;&gt;&#39;alter table &#39;&lt;/span&gt;, table_name,&lt;span class=&quot;string&quot;&gt;&#39; character set utf8 collate utf8_bin;&#39;&lt;/span&gt;)&lt;/span&gt; from information_schema.tables as t, information_schema.COLLATION_CHARACTER_SET_APPLICABILITY as c &lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;where c.collation_name = t.table_collation and t.table_schema=&lt;span class=&quot;string&quot;&gt;&#39;confluence&#39;&lt;/span&gt; and (c.character_set_name!=&lt;span class=&quot;string&quot;&gt;&#39;utf8&#39;&lt;/span&gt; or c.collation_name!=&lt;span class=&quot;string&quot;&gt;&#39;utf8_bin&#39;&lt;/span&gt;);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;h3 id=&quot;3-然后把第2步查询出的alter语句复制到对应的命令窗口中执行修改具体的表结构编码操作&quot;&gt;&lt;a href=&quot;#3-然后把第2步查询出的alter语句复制到对应的命令窗口中执行修改具体的表结构编码操作&quot; class=&quot;headerlink&quot; title=&quot;3.然后把第2步查询出的alter语句复制到对应的命令窗口中执行修改具体的表结构编码操作&quot;&gt;&lt;/a&gt;3.然后把第2步查询出的alter语句复制到对应的命令窗口中执行修改具体的表结构编码操作&lt;/h3&gt;&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/mysqlCode2.png&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
 </content>
@@ -981,7 +998,7 @@
     <summary type="html">
     
       &lt;p&gt;在平时的开发过程中，mysql的编码是拉丁字符，所以当向里面存储数据时，显示出来就是乱码，那么我们需要执行如下操作：&lt;/p&gt;
-&lt;h3 id=&quot;1-通过命令或者其他终端登录到mysql服务中，并执行查询目前对应的数据库的编码信息sql脚本查询，执行命令会查询出该数据库下面每一
+&lt;h3 id=&quot;1-通过命令或者其他终端登录到mysql服务中，并执行查询目前对应的数据库的编码信息sql脚本查询，执行命令会查询出该数据库下面每一张表对应的字符编码信息&quot;&gt;&lt;a href=&quot;#1-通过命令或者其他终端登录到mysql服务中，并执行查询目前对应的数据库的编码信息sql脚本查询，执行命令会查询出该数据库下面每一张表对应的字符编码信息&quot; class=&quot;headerlink&quot; title=&quot;1.通过命令或者其他终端登录到mysql服务中，并执行查询目前对应的数据库的编码信息sql脚本查询，执行命令会查询出该数据库下面每一张表对应的字符编码信息&quot;&gt;&lt;/a&gt;1.通过命令或者其他终端登录到mysql服务中，并执行查询目前对应的数据库的编码信息sql脚本查询，执行命令会查询出该数据库下面每一张表对应的字符编码信息&lt;/h3&gt;
     
     </summary>
     
@@ -997,9 +1014,10 @@
     <link href="http://www.soujava.com/RocketMQ%E5%90%AF%E5%8A%A8%E6%8A%A5%E9%94%99%E8%A7%A3%E5%86%B3/"/>
     <id>http://www.soujava.com/RocketMQ启动报错解决/</id>
     <published>2016-09-20T02:21:53.000Z</published>
-    <updated>2017-01-11T02:06:24.908Z</updated>
+    <updated>2017-05-03T08:15:42.972Z</updated>
     
     <content type="html">&lt;p&gt;最近需要用到消息服务器，就用到淘宝开源的RocketMQ消息服务器了，重新安装的一台新的linux服务器（CentOS6.4），然后安装的RocketMQ二进制包。安装成功后，在最后启动的时候，报了一个错误！&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;img src=&quot;http://soujava.com/images/rocketMQ1.png&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -1022,8 +1040,6 @@
     <summary type="html">
     
       &lt;p&gt;最近需要用到消息服务器，就用到淘宝开源的RocketMQ消息服务器了，重新安装的一台新的linux服务器（CentOS6.4），然后安装的RocketMQ二进制包。安装成功后，在最后启动的时候，报了一个错误！&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;img src=&quot;ht
     
     </summary>
     
@@ -1039,9 +1055,10 @@
     <link href="http://www.soujava.com/java%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1Timer%E5%B0%8F%E8%AF%95%E4%B8%80%E4%B8%8B/"/>
     <id>http://www.soujava.com/java定时任务Timer小试一下/</id>
     <published>2016-09-14T07:16:26.000Z</published>
-    <updated>2017-01-11T02:06:24.911Z</updated>
+    <updated>2017-05-03T08:16:09.194Z</updated>
     
     <content type="html">&lt;p&gt;java定时任务Timer 关于定时任务，似乎跟时间操作的联系并不是很大，但是前面既然提到了定时任务，索性在这里一起解决了。设置定时任务很简单，用Timer类就搞定了。&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;h3 id=&quot;一、我们定义一个需要定时执行的任务的类&quot;&gt;&lt;a href=&quot;#一、我们定义一个需要定时执行的任务的类&quot; class=&quot;headerlink&quot; title=&quot;一、我们定义一个需要定时执行的任务的类&quot;&gt;&lt;/a&gt;一、我们定义一个需要定时执行的任务的类&lt;/h3&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;package&lt;/span&gt; test; &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.util.Timer; &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;TimeTaskTest&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(String[] args)&lt;/span&gt;&lt;/span&gt;&amp;#123; &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		Timer timer = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Timer(); &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		timer.schedule(&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Task(), &lt;span class=&quot;number&quot;&gt;60&lt;/span&gt; * &lt;span class=&quot;number&quot;&gt;1000&lt;/span&gt;); &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125; &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;p&gt;注：我们的定时任务，就在这个类的main函数里执行&lt;/p&gt;
 &lt;p&gt;1、上面的代码实现了这样一个功能，当TimeTask程序启动以后，过一分钟后执行某项任务&lt;/p&gt;
@@ -1062,7 +1079,6 @@
     <summary type="html">
     
       &lt;p&gt;java定时任务Timer 关于定时任务，似乎跟时间操作的联系并不是很大，但是前面既然提到了定时任务，索性在这里一起解决了。设置定时任务很简单，用Timer类就搞定了。&lt;/p&gt;
-&lt;h3 id=&quot;一、我们定义一个需要定时执行的任务的类&quot;&gt;&lt;a href=&quot;#一、我们定义一个需
     
     </summary>
     
@@ -1078,10 +1094,11 @@
     <link href="http://www.soujava.com/%E5%A4%84%E7%90%86%E7%99%BE%E4%B8%87%E7%BA%A7%E4%BB%A5%E4%B8%8A%E7%9A%84%E6%95%B0%E6%8D%AE%E6%8F%90%E9%AB%98%E6%9F%A5%E8%AF%A2%E9%80%9F%E5%BA%A6%E7%9A%84%E6%96%B9%E6%B3%95-%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BC%98%E5%8C%96%E7%AF%87/"/>
     <id>http://www.soujava.com/处理百万级以上的数据提高查询速度的方法-数据库优化篇/</id>
     <published>2016-09-12T06:17:55.000Z</published>
-    <updated>2017-01-11T02:06:24.916Z</updated>
+    <updated>2017-05-03T08:16:32.228Z</updated>
     
     <content type="html">&lt;p&gt; &lt;strong&gt;1&lt;/strong&gt;.应尽量避免在 where 子句中使用!=或&amp;lt;&amp;gt;操作符，否则将引擎放弃使用索引而进行全表扫描。&lt;/p&gt;
 &lt;p&gt; &lt;strong&gt;2&lt;/strong&gt;.对查询进行优化，应尽量避免全表扫描，首先应考虑在 where 及 order by 涉及的列上建立索引。&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;p&gt; &lt;strong&gt;3&lt;/strong&gt;.应尽量避免在 where 子句中对字段进行 null 值判断，否则将导致引擎放弃使用索引而进行全表扫描，如：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;select id from t where num is null
 可以在num上设置默认值0，确保表中num列没有null值，然后这样查询：
@@ -1192,7 +1209,7 @@ select num from a where exists(select 1 from b where num=a.num)
     <summary type="html">
     
       &lt;p&gt; &lt;strong&gt;1&lt;/strong&gt;.应尽量避免在 where 子句中使用!=或&amp;lt;&amp;gt;操作符，否则将引擎放弃使用索引而进行全表扫描。&lt;/p&gt;
-&lt;p&gt; &lt;strong&gt;2&lt;/strong&gt;.对查询进行优化，应尽量避免全表扫描，首先应考虑在 where 及 orde
+&lt;p&gt; &lt;strong&gt;2&lt;/strong&gt;.对查询进行优化，应尽量避免全表扫描，首先应考虑在 where 及 order by 涉及的列上建立索引。&lt;/p&gt;
     
     </summary>
     
@@ -1208,10 +1225,11 @@ select num from a where exists(select 1 from b where num=a.num)
     <link href="http://www.soujava.com/%E7%94%A8POI3-9%E5%86%99%E4%B8%80%E4%B8%AA%E5%9F%BA%E4%BA%8Eoffice%E7%B3%BB%E5%88%97%E6%96%87%E6%A1%A3%E7%9A%84%E8%BD%AC%E6%8D%A2%E7%B3%BB%E7%BB%9F-%E8%AE%BE%E8%AE%A1%E7%AF%87/"/>
     <id>http://www.soujava.com/用POI3-9写一个基于office系列文档的转换系统-设计篇/</id>
     <published>2016-09-12T06:11:22.000Z</published>
-    <updated>2017-01-11T02:06:24.917Z</updated>
+    <updated>2017-05-03T08:17:03.051Z</updated>
     
     <content type="html">&lt;p&gt;想用Apache的POI3.9版本编写一套基于office系列文档的一个转换系统，比如对office文档的读写操作、其中的关键字检索操作、把文档转换为html或者支持在线预览的操作等功能。&lt;/p&gt;
 &lt;h3 id=&quot;一、需求&quot;&gt;&lt;a href=&quot;#一、需求&quot; class=&quot;headerlink&quot; title=&quot;一、需求&quot;&gt;&lt;/a&gt;一、需求&lt;/h3&gt;&lt;p&gt;由于前段时间已经写了一个文档在线预览功能，就是对office文档、txt、图片、pdf等文档，可以在线预览操作，也是通过搜索引擎搜索、查看一些技术文章等调研方式写出的，基本原理也就是通过几个工具转换实现的，相关原理如下图：&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;p&gt;&lt;img src=&quot;http://soujava.com/images/poi1.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 &lt;h3 id=&quot;二、问题&quot;&gt;&lt;a href=&quot;#二、问题&quot; class=&quot;headerlink&quot; title=&quot;二、问题&quot;&gt;&lt;/a&gt;二、问题&lt;/h3&gt;&lt;p&gt;通过上面的流程是可以实现文件转换、在线预览等功能的，但是我感觉上面的方法存在至少以下几个缺点：&lt;br&gt;1、安装过程过于繁琐，并且过于庞大，完成上面的操作需要安装将近200多兆的软件工具，不管从部署或者使用方面都不太好。&lt;/p&gt;
 &lt;p&gt;2、转换过程中对资源的浪费(占用)严重，比如内存、硬盘等资源，内存资源：转换过程中，对内存的占用过于严重，遇到大文件时可以把cpu的使用率占满，对服务器有严重的影响；硬盘资源：一个文档实现转换或预览功能，需要在硬盘上生成pdf、png(缩略图)、swf三个文件，对资源占用严重。&lt;/p&gt;
@@ -1226,7 +1244,7 @@ select num from a where exists(select 1 from b where num=a.num)
     <summary type="html">
     
       &lt;p&gt;想用Apache的POI3.9版本编写一套基于office系列文档的一个转换系统，比如对office文档的读写操作、其中的关键字检索操作、把文档转换为html或者支持在线预览的操作等功能。&lt;/p&gt;
-&lt;h3 id=&quot;一、需求&quot;&gt;&lt;a href=&quot;#一、需求&quot; class=&quot;h
+&lt;h3 id=&quot;一、需求&quot;&gt;&lt;a href=&quot;#一、需求&quot; class=&quot;headerlink&quot; title=&quot;一、需求&quot;&gt;&lt;/a&gt;一、需求&lt;/h3&gt;&lt;p&gt;由于前段时间已经写了一个文档在线预览功能，就是对office文档、txt、图片、pdf等文档，可以在线预览操作，也是通过搜索引擎搜索、查看一些技术文章等调研方式写出的，基本原理也就是通过几个工具转换实现的，相关原理如下图：&lt;/p&gt;
     
     </summary>
     
@@ -1242,10 +1260,11 @@ select num from a where exists(select 1 from b where num=a.num)
     <link href="http://www.soujava.com/spring3-1-1%E5%85%A5%E9%97%A8%E8%AE%B2%E8%A7%A3%E4%BA%8C-%E6%B3%A8%E8%A7%A3%E7%AF%87/"/>
     <id>http://www.soujava.com/spring3-1-1入门讲解二-注解篇/</id>
     <published>2016-09-12T06:00:34.000Z</published>
-    <updated>2017-01-11T02:06:24.913Z</updated>
+    <updated>2017-05-03T08:17:27.686Z</updated>
     
     <content type="html">&lt;p&gt;在第一篇博客中主要讲解了如何搭建spring框架和运行示例项目，在搭建框架环境的时候，我们需要配置很文件信息；在本篇文章中主要讲解如何采用注解的方式简化开发！&lt;/p&gt;
 &lt;h3 id=&quot;一、准备篇-jar包的准备&quot;&gt;&lt;a href=&quot;#一、准备篇-jar包的准备&quot; class=&quot;headerlink&quot; title=&quot;一、准备篇-jar包的准备&quot;&gt;&lt;/a&gt;一、准备篇-jar包的准备&lt;/h3&gt;&lt;p&gt;这里就不详细说明了详见上一篇博客–spring3.1.1入门讲解一（非注解篇）中的准备篇讲解&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;h3 id=&quot;二、环境搭建篇&quot;&gt;&lt;a href=&quot;#二、环境搭建篇&quot; class=&quot;headerlink&quot; title=&quot;二、环境搭建篇&quot;&gt;&lt;/a&gt;二、环境搭建篇&lt;/h3&gt;&lt;p&gt;1、在web.xml文件中添加的配置跟上一篇的配置代码一样，直接复制过去就行了。 &lt;/p&gt;
 &lt;p&gt;2、配置spring-mvc.xml，重点就在这里，重点配置如下：&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;1）如果像我们采用非注解的方式去创建和访问controller控制器时，我们都需要在spring-mvc.xml文件中添加如下配置
@@ -1263,7 +1282,7 @@ select num from a where exists(select 1 from b where num=a.num)
     <summary type="html">
     
       &lt;p&gt;在第一篇博客中主要讲解了如何搭建spring框架和运行示例项目，在搭建框架环境的时候，我们需要配置很文件信息；在本篇文章中主要讲解如何采用注解的方式简化开发！&lt;/p&gt;
-&lt;h3 id=&quot;一、准备篇-jar包的准备&quot;&gt;&lt;a href=&quot;#一、准备篇-jar包的准备&quot; class
+&lt;h3 id=&quot;一、准备篇-jar包的准备&quot;&gt;&lt;a href=&quot;#一、准备篇-jar包的准备&quot; class=&quot;headerlink&quot; title=&quot;一、准备篇-jar包的准备&quot;&gt;&lt;/a&gt;一、准备篇-jar包的准备&lt;/h3&gt;&lt;p&gt;这里就不详细说明了详见上一篇博客–spring3.1.1入门讲解一（非注解篇）中的准备篇讲解&lt;/p&gt;
     
     </summary>
     

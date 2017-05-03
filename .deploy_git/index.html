@@ -329,73 +329,16 @@
 
       
         
-          
-            <p>接着上一篇文章中遗留的问题，接着探索一下设计模式的强大力量。<br>首先在上一篇文章中进行简单的回顾：</p>
+          <p>接着上一篇文章中遗留的问题，接着探索一下设计模式的强大力量。<br>首先在上一篇文章中进行简单的回顾：</p>
 <blockquote>
 <p>1、我们声明了一个Duck抽象类，并定义了相关的公共方法(quack、swim、fly)，并且都进行了默认的实现；但是把display外观方法定义成了抽象方法，以达到不同类型的Duck可以具有自己独特外观的目的。</p>
 <p>2、然后定义具体的业务类(绿头鸭、大黄鸭、红头鸭)，该业务类要继承抽象类-Duck,并且覆写display方法，定义自己独特的外观。</p>
 </blockquote>
-<p>那么针对上面的实现，通过分析具有下面的一系列问题：</p>
-<blockquote>
-<p>1、比如再新加一个“跳舞鸭”业务类时，该鸭子的跳舞行为难道也要在超类Duck中定义吗？这样会导致超类很臃肿</p>
-<p>2、如果对某个行为进行动态扩展怎么办？比如有些飞行行为是用翅膀飞行，有些飞行行为是用火箭动力飞行等等，难道我们要把那些需要火箭动力飞行的所有业务类中的fly方法都要一个一个的重新改一遍吗？</p>
-</blockquote>
-<p>针对以上问题我们慢慢进行设计一下吧。</p>
-<p><strong>一、第三代鸭子–把不同的行为进行独立定义(把变化的和不变化的分开)</strong></p>
-<p>其实做法就是“把会变化的部分取出并封装起来，以便以后可以轻易的改动或扩展此部分，而不影响不需要变化的其它部分”，那么下面我们这么设计，把飞行的行为fly、叫的行为quack单独抽取出来，定义成为不同的业务类，这样的话以后我们基于这些行为类扩展出不同的具体行为，比如我们可以扩展fly行为(用翅膀飞行、用火箭动力飞行、静止)。</p>
-<p>在前几代鸭子产品开发中，我们一直使用的是定义父类的方式来约束对应的行为方法，然后子类通过继承父类，即可拥有父类的方法；但是如果子类有差异化的行为时，就需要覆写父类的默认方法了；但是还有一种情况，就是子类如果定义自己独特的行为方法时，那么就只能在自己内部进行定义和实现了，因为java单重继承关系的约束 ，所以为以后扩展或者行为复用造成了麻烦。</p>
-<p>下面我们将采用采用接口进行定义不同的行为，然后其它因为类实现具体的接口即可获得其需要的行为；归结来讲就是：“针对接口编程，而不是针对实现编程”。</p>
-<p>1、独立定义飞行的行为接口-FlyInterface</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 独立出来的飞行的业务接口</div><div class="line"> * <span class="doctag">@author</span> maps</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">FlyInterface</span> </span>&#123;</div><div class="line">	</div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 定义一个飞行方法</div><div class="line">	 */</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>1.1、定义用翅膀飞行的业务类-FlyWithWings</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 定义用翅膀飞行的具体类,实现飞行方法</div><div class="line"> * <span class="doctag">@author</span> maps</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FlyWithWings</span> <span class="keyword">implements</span> <span class="title">FlyInterface</span> </span>&#123;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"用翅膀飞行"</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>1.2、定义用火箭动力飞行的业务类-FlyRocketPowered</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 定义用火箭动力飞行的具体类,实现飞行接口</div><div class="line"> * <span class="doctag">@author</span> maps</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FlyRocketPowered</span> <span class="keyword">implements</span> <span class="title">FlyInterface</span> </span>&#123;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"利用火箭动力飞行"</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>1.3、定义不会飞行的业务类-FlyNoWay</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 定义用不会飞行的具体类，虽然实现了飞行的接口</div><div class="line"> * <span class="doctag">@author</span> maps</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FlyNoWay</span> <span class="keyword">implements</span> <span class="title">FlyInterface</span> </span>&#123;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"不会飞行！"</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>到目前为止，我们已经把飞行行为fly进行了独立定义，并且定义了不同的具体飞行行为业务类；下面我们开始独立定义另一个叫的行为quack。</p>
-<p>2、独立定义叫的行为接口-FlyInterface</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 独立出来的叫的行为接口</div><div class="line"> * <span class="doctag">@author</span> maps</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">QuackInterface</span> </span>&#123;</div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 定义一个叫的方法</div><div class="line">	 */</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">quack</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>2.1、定义一个呱呱叫的行为类-QuackGuagua</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 定义一个呱呱叫的具体类，实现呱呱叫行为接口</div><div class="line"> * <span class="doctag">@author</span> maps</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">QuackGuagua</span> <span class="keyword">implements</span> <span class="title">QuackInterface</span></span>&#123;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">quack</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"呱呱叫"</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>2.2、定义一个不会叫的业务类-QuackNoWay</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 定义一个不会叫的业务类</div><div class="line"> * <span class="doctag">@author</span> maps</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">QuackNoWay</span> <span class="keyword">implements</span> <span class="title">QuackInterface</span> </span>&#123;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">quack</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"不会叫"</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>2.3、定义一个吱吱叫的业务类-QuackZhiZhi</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 定义一个吱吱叫的业务类，实现独立叫的行为接口</div><div class="line"> * <span class="doctag">@author</span> maps</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">QuackZhiZhi</span> <span class="keyword">implements</span> <span class="title">QuackInterface</span> </span>&#123;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">quack</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"吱吱叫"</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>到目前为止，我们已经把叫的行为quack进行了独立定义，并且定义了不同的具体叫的行为业务类；其实已经可以观察到，我们把飞行fly和叫quack行为定义成独立的行为，可以让飞行和叫的动作被其他的对象复用，因为这些行为已经与具体的鸭子类无关了，而我们也可以后期新增一些行为，不会影响到既有的行为类，也不会影响“使用”到飞行行为的鸭子类。</p>
-<p>2、重构定义鸭子业务类-Duck</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 定义一个鸭子的业务类，并且声明已经独立定义的飞行、叫的行为接口</div><div class="line"> * <span class="doctag">@author</span> maps</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Duck</span> </span>&#123;</div><div class="line">	FlyInterface flyInterface;</div><div class="line">	QuackInterface quackInterface;</div><div class="line">	</div><div class="line">	Duck()&#123;&#125;</div><div class="line">	</div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 将“叫”的行为委托给接口行为类，这样就可以在不同的业务类中初始化不同的行为类</div><div class="line">	 */</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">quack</span><span class="params">()</span></span>&#123;</div><div class="line">		quackInterface.quack();</div><div class="line">	&#125;</div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 将“飞行”的行为委托给接口行为类，这样就可以在不同的业务类中初始化不同的行为类</div><div class="line">	 */</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span></span>&#123;</div><div class="line">		flyInterface.fly();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>在我们定义Duck类中，把已经定义好的两个独立行为接口作为变量引入到了类中，这样的话，接下来我们在新建Duck类的具体子类时就可以拥有父类Duck声明的接口变量，并且可以动态实例化父类Duck中的接口变量为不同的行为接口实例。</p>
-<p>2.1、重构定义绿头鸭业务类-GreenDuck</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 绿头鸭业务类</div><div class="line"> * <span class="doctag">@author</span> maps</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GreenDuck</span> <span class="keyword">extends</span> <span class="title">Duck</span> </span>&#123;</div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 1、因为绿头鸭类继承了Duck，所以可以继承拥有父类中的飞行、叫两个接口实例变量(flyInterface、quackInterface)</div><div class="line">	 * 2、所以我们在构造函数中将继承的接口实例变量进行初始化操作：</div><div class="line">	 *    1)、把飞行接口变量初始化成“用翅膀飞行”的具体行为</div><div class="line">	 *    2)、把叫的接口变量初始化成“呱呱叫”具体行为</div><div class="line">	 */</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">GreenDuck</span><span class="params">()</span></span>&#123;</div><div class="line">		flyInterface = <span class="keyword">new</span> FlyWithWings();</div><div class="line">		quackInterface = <span class="keyword">new</span> QuackGuagua();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>可以看到上面我们定义的绿头鸭业务类中分别把父类中的flyInterface接口变量实例化为用翅膀飞行的具体行为类、把父类中的接口变量quackInterface实例化为呱呱叫具体行为类。</p>
-<p>2.2、重构定义绿头鸭业务类-RedDuck</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 红头鸭业务类</div><div class="line"> * <span class="doctag">@author</span> maps</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedDuck</span> <span class="keyword">extends</span> <span class="title">Duck</span> </span>&#123;</div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 1、因为绿头鸭类继承了Duck，所以可以继承拥有父类中的飞行、叫两个接口实例变量(flyInterface、quackInterface)</div><div class="line">	 * 2、所以我们在构造函数中将继承的接口实例变量进行初始化操作：</div><div class="line">	 *    1)、把飞行接口变量初始化成用“火箭动力”飞行的具体行为</div><div class="line">	 *    2)、把叫的接口变量初始化成“吱吱叫”具体行为</div><div class="line">	 */</div><div class="line">	RedDuck()&#123;</div><div class="line">		flyInterface = <span class="keyword">new</span> FlyRocketPowered();</div><div class="line">		quackInterface = <span class="keyword">new</span> QuackZhiZhi();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>3、定义一个测试类，在测试方法中测试绿头鸭和红头鸭的飞行和叫的行为</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">	Duck greenDuck = <span class="keyword">new</span> GreenDuck();</div><div class="line">	greenDuck.quack();</div><div class="line">	greenDuck.fly();</div><div class="line">	System.out.println(<span class="string">"-----------------------------"</span>);</div><div class="line">	Duck redDuck = <span class="keyword">new</span> RedDuck();</div><div class="line">	redDuck.quack();</div><div class="line">	redDuck.fly();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>上面测试代码输出如下：</p>
-<blockquote>
-<p>呱呱叫</p>
-<p>用翅膀飞行</p>
-</blockquote>
-<hr>
-<blockquote>
-<p>吱吱叫</p>
-<p>利用火箭动力飞行</p>
-</blockquote>
-<p>通过上面的测试代码输出可以看出我们不同的Duck子类中，实例化了不同的接口行为变量，然后他们便具有了不同的行为操作。</p>
-<p>思考一个问题，比如后续再添加其他行为时怎么办，比如添加一个“跳跃”行为时，并且有单腿跳跃和双腿跳跃具体行为，我们可以如下扩展：</p>
-<blockquote>
-<p>定义一个“跳跃”的接口</p>
-<p>定义一个具体的“单腿跳跃”行为类，该类实现上面定义的“跳跃”接口</p>
-<p>定义一个具体的“双腿跳跃”行为类，该类实现上面定义的“跳跃”接口</p>
-<p>在Duck这个父类中，添加一个“跳跃”接口类型的变量</p>
-<p>在Duck这个父类中，再新定义一个“跳跃”的行为的方法，并且在方法中调用“跳跃”接口变量中的跳跃方法</p>
-<p>如果我们只需要为“红头鸭”添加其中的“单腿跳跃”行为时，则只需要在红头鸭中构造方中实例化父类的跳跃接口变量为具体的单腿跳跃行为类即可</p>
-</blockquote>
-<p>通过对前两代鸭子工程的重构和扩展，发现系统扩展性更好了！这就是设计模式的魅力所在！！后续将继续深入探索并运用他。</p>
-
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/设计模式-引入模式雏形/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -512,92 +455,15 @@
 
       
         
-          
-            <p>搞开发几年了，深深的明白设计模式的重要性，但是确不能真正彻底的运用自如；纵观现实生活中，比比皆是设计模式的最佳实践，比如：</p>
+          <p>搞开发几年了，深深的明白设计模式的重要性，但是确不能真正彻底的运用自如；纵观现实生活中，比比皆是设计模式的最佳实践，比如：</p>
 <blockquote>
 <p>在家里边墙面上的插座，一般都是扁孔的；自从买了一个港版的iphone后，竟然无法愉快的充电了，需要买一个转接头插在墙面的插座上才行，其实买的那个转换头就是充当一个适配器的作用，那么我们可以把这个实践称做–适配器模式</p>
 </blockquote>
-<p><img src="http://soujava.com/images/model.jpg" alt=""></p>
-<blockquote>
-<p>拿平时开的车来讲，你在北京买的车的生产厂家可能是河北制造的，你在南阳买的车的生产厂家可能是武汉制造的，但是有没有想过，同一款车的构件都是一样的，那么河北制造厂和武汉制造厂难道是全车所有配件都自己生产吗，那肯定不是的，与其称他们为制造厂，不如称他们为装配厂，因为汽车构件一般都有一个类似中央工厂的地方生产的，然后运输到各个装配厂进行组装成为整车！各个装备厂不需要关注发动机、轮胎是如何生产的，只需要把相应的部件进行组装成整车就行了，那么我们可以把这个实践称作–工程方法模式</p>
-</blockquote>
-<p><img src="http://soujava.com/images/model2.png" alt=""></p>
-<p><strong>1、第一代鸭子</strong></p>
-<p>有一个玩具公司主要生产一款明星产品“橡皮鸭”；橡皮鸭要求会呱呱叫、会游泳，但是他们的外观有多种，比如红色、黄色、黑色的；通过需求可以梳理以下内容：</p>
-<blockquote>
-<p>每一种鸭子都会呱呱叫、都会游泳</p>
-<p>鸭子可能有红色、黄色、黑色的外观</p>
-</blockquote>
-<p>好了，我们下面定义父类Duck，并且定义三个方法：呱呱叫-quack、游泳-swim、外观-display；</p>
-<blockquote>
-<p>1.1、定义父类-Duck</p>
-</blockquote>
-<p>因为所有的鸭子都会呱呱叫、会游泳，都有自己的外观，所以我们定义一个父类，把这三个共有的方法定义在父类中，并且把呱呱叫、游泳的方法进行默认的实现，唯独外观方法什么都不做，因为不同的鸭子有不同的外观，所以需要把父类的外观方法定义成抽象方法，并且让具体的子类中强制覆写父类的外观方法：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * <span class="doctag">@author</span> maps</div><div class="line"> * 定义一个鸭子父类</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Duck</span> </span>&#123;</div><div class="line">	<span class="comment">//呱呱叫方法</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">quack</span><span class="params">()</span></span>&#123;</div><div class="line">		System.out.println(<span class="string">"呱呱叫"</span>);</div><div class="line">	&#125;</div><div class="line">	<span class="comment">//游泳方法</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">swim</span><span class="params">()</span></span>&#123;</div><div class="line">		System.out.println(<span class="string">"游泳"</span>);</div><div class="line">	&#125;</div><div class="line">	<span class="comment">//外观方法</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">display</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<blockquote>
-<p>1.2、定义一个红色鸭子类-RedDuck，并且继承父类</p>
-</blockquote>
-<p>因为红色鸭子继承了父类，所以其具备了父类定义的所有方法的功能，即默认就会呱呱叫、会游泳；只是这个红色鸭子还没有颜色外观，因为父类的外观方法是抽象方法，所以子类必须覆写该抽象的外观方法</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * <span class="doctag">@author</span> maps</div><div class="line"> * 红色鸭子业务类</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedDuck</span> <span class="keyword">extends</span> <span class="title">Duck</span> </span>&#123;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">display</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"红头鸭"</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<blockquote>
-<p>1.3、定义一个绿色鸭子类-GreenDuck，并且继承父类</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * <span class="doctag">@author</span> maps</div><div class="line"> * 绿色鸭子业务类</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GreenDuck</span> <span class="keyword">extends</span> <span class="title">Duck</span> </span>&#123;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">display</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"绿头鸭"</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<blockquote>
-<p>1.4、定义一个测试类</p>
-</blockquote>
-<p>可以看到生产的红头鸭和绿头鸭默认都实现了父类定义的呱呱叫、游泳动作特征，只是他们都实现自己定义的外观</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">		RedDuck redDuck = <span class="keyword">new</span> RedDuck();<span class="comment">//生产一个红头鸭</span></div><div class="line">		redDuck.quack();</div><div class="line">		redDuck.swim();</div><div class="line">		redDuck.display();</div><div class="line">		System.out.println(<span class="string">"--------------------------"</span>);</div><div class="line">		GreenDuck greenDuck = <span class="keyword">new</span> GreenDuck();<span class="comment">//生产一个绿头鸭</span></div><div class="line">		greenDuck.quack();</div><div class="line">		greenDuck.swim();</div><div class="line">		greenDuck.display();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<blockquote>
-<p>呱呱叫</p>
-<p>游泳</p>
-<p>红头鸭</p>
-</blockquote>
-<hr>
-<p>&gt;</p>
-<blockquote>
-<p>呱呱叫</p>
-<p>游泳</p>
-<p>绿头鸭</p>
-</blockquote>
-<p><strong>2、第二代鸭子</strong></p>
-<p>第一代鸭子投入市场后，获得了广泛好评，由于最近无人机的盛行，所以公司决定对第一代鸭子进行创新，开发第二代鸭子–会飞的大黄鸭。</p>
-<p>真对这个会飞的大黄鸭新产品，我们立刻就能想到如下解决方案：</p>
-<blockquote>
-<p>在父类中定义一个fly的方法(这个方法不能是抽象方法，因为不能影响第一代鸭子的生产)，并且方法不做任何具体实现</p>
-<p>2.1、在父类中添加fly方法-Duck</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * <span class="doctag">@author</span> maps</div><div class="line"> * 定义一个鸭子抽象类</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Duck</span> </span>&#123;</div><div class="line">	<span class="comment">//呱呱叫方法</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">quack</span><span class="params">()</span></span>&#123;</div><div class="line">		System.out.println(<span class="string">"呱呱叫"</span>);</div><div class="line">	&#125;</div><div class="line">	<span class="comment">//游泳方法</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">swim</span><span class="params">()</span></span>&#123;</div><div class="line">		System.out.println(<span class="string">"游泳"</span>);</div><div class="line">	&#125;</div><div class="line">	<span class="comment">//外观方法</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">display</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">	<span class="comment">//飞行的方法</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span></span>&#123;</div><div class="line">		</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<blockquote>
-<p>2.2、定义大黄鸭业务类-BigYellowDuck</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * <span class="doctag">@author</span> map</div><div class="line"> * 定义大黄鸭业务类</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BigYellowDuck</span> <span class="keyword">extends</span> <span class="title">Duck</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">display</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"大黄鸭"</span>);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">super</span>.fly();</div><div class="line">		System.out.println(<span class="string">"天空中飞行"</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<blockquote>
-<p>2.3、定义一个测试类</p>
-</blockquote>
-<p>可以看到生产的红头鸭和绿头鸭默认都实现了父类定义的呱呱叫、游泳动作特征，只是他们都实现自己定义的外观，尤其是新定义的大黄鸭，除了自己独特的外观外，还有一个独特技能-飞行</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">	<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">		RedDuck redDuck = <span class="keyword">new</span> RedDuck();<span class="comment">//生产一个红头鸭</span></div><div class="line">		redDuck.quack();</div><div class="line">		redDuck.swim();</div><div class="line">		redDuck.display();</div><div class="line">		System.out.println(<span class="string">"--------------------------"</span>);</div><div class="line">		GreenDuck greenDuck = <span class="keyword">new</span> GreenDuck();<span class="comment">//生产一个绿头鸭</span></div><div class="line">		greenDuck.quack();</div><div class="line">		greenDuck.swim();</div><div class="line">		greenDuck.display();</div><div class="line">		System.out.println(<span class="string">"--------------------------"</span>);</div><div class="line">		BigYellowDuck yellowDuck = <span class="keyword">new</span> BigYellowDuck();<span class="comment">//生产一个会飞的大黄鸭</span></div><div class="line">		yellowDuck.quack();</div><div class="line">		yellowDuck.swim();</div><div class="line">		yellowDuck.display();</div><div class="line">		yellowDuck.fly();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<blockquote>
-<p>呱呱叫</p>
-<p>游泳</p>
-<p>红头鸭</p>
-</blockquote>
-<hr>
-<blockquote>
-<p>呱呱叫</p>
-<p>游泳</p>
-<p>绿头鸭</p>
-</blockquote>
-<hr>
-<blockquote>
-<p>呱呱叫</p>
-<p>游泳</p>
-<p>大黄鸭</p>
-<p>天空中飞行</p>
-</blockquote>
-<p>上面是基本没有应用设计模式的场景，我们思考一下其他问题，比如后期新建很多种具备各自独特功能的鸭子呢？我们是不是要在父类中定义各种对其他鸭子无用的方法，那么以后用设计模式解决吧。</p>
-
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/设计模式-无模式/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -714,107 +580,12 @@
 
       
         
-          
-            <p>平时开发过程中用的最多的莫过于基本类型、包装类、集合等等了，但是最近在使用集合时，偶尔使用不当会出现一些想不到的问题(bug)；为什么使用不当呢，因为我们对集合的操作都是使用JDK原生的API方法进行操作的，那么之所以使用不当，是因为对jdk源码中的api方法的不了解所致，下面就具体罗列一下具体的坑吧。</p>
-<p><strong>1、数组之间的拷贝-Arrays.copyOf()</strong></p>
-<blockquote>
-<p>我们直接用java.util.Arrays工具类的copyOf方法进行数组拷贝</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">	</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span> <span class="keyword">implements</span> <span class="title">Cloneable</span></span>&#123;</div><div class="line">	</div><div class="line">	<span class="keyword">private</span> String studentId;</div><div class="line">	<span class="keyword">private</span> String studentName;</div><div class="line">	</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">(String studentId, String studentName)</span> </span>&#123;</div><div class="line">		<span class="keyword">super</span>();</div><div class="line">		<span class="keyword">this</span>.studentId = studentId;</div><div class="line">		<span class="keyword">this</span>.studentName = studentName;</div><div class="line">	&#125;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> <span class="string">"Student [studentId="</span> + studentId + <span class="string">", studentName="</span> + studentName + <span class="string">"]"</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getStudentId</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> studentId;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setStudentId</span><span class="params">(String studentId)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.studentId = studentId;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getStudentName</span><span class="params">()</span> </span>&#123;</div><div class="line">		<span class="keyword">return</span> studentName;</div><div class="line">	&#125;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setStudentName</span><span class="params">(String studentName)</span> </span>&#123;</div><div class="line">		<span class="keyword">this</span>.studentName = studentName;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">protected</span> Student <span class="title">clone</span><span class="params">()</span> <span class="keyword">throws</span> CloneNotSupportedException </span>&#123;</div><div class="line">		Student stu = <span class="keyword">null</span>;</div><div class="line">		<span class="keyword">try</span>&#123;</div><div class="line">			stu = (Student) <span class="keyword">super</span>.clone();</div><div class="line">		&#125;<span class="keyword">catch</span>(Exception e)&#123;</div><div class="line">			e.printStackTrace();</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> stu;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">int</span>[] intArray = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;;</div><div class="line"><span class="keyword">int</span>[] intTempArray = Arrays.copyOf(intArray, intArray.length);</div><div class="line">intTempArray[<span class="number">4</span>] = <span class="number">6</span>;</div><div class="line">System.out.println(<span class="string">"intArray:"</span>+Arrays.toString(intArray));</div><div class="line">System.out.println(<span class="string">"intTempArray:"</span>+Arrays.toString(intTempArray));</div><div class="line"></div><div class="line"><span class="keyword">double</span>[] doubleArray = &#123;<span class="number">1.0</span>,<span class="number">2.0</span>,<span class="number">3.0</span>,<span class="number">4.0</span>,<span class="number">5.0</span>&#125;;</div><div class="line"><span class="keyword">double</span>[] doubleTempArray = Arrays.copyOf(doubleArray, doubleArray.length);</div><div class="line">doubleTempArray[<span class="number">4</span>] = <span class="number">6.0</span>;</div><div class="line">System.out.println(<span class="string">"doubleArray:"</span>+Arrays.toString(doubleArray));</div><div class="line">System.out.println(<span class="string">"doubleTempArray:"</span>+Arrays.toString(doubleTempArray));</div><div class="line"></div><div class="line">String[] strArray = &#123;<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>,<span class="string">"d"</span>,<span class="string">"e"</span>&#125;;</div><div class="line">String[] strTempArray = Arrays.copyOf(strArray, strArray.length);</div><div class="line">strTempArray[<span class="number">4</span>] = <span class="string">"F"</span>;</div><div class="line">System.out.println(<span class="string">"strArray:"</span>+Arrays.toString(strArray));</div><div class="line">System.out.println(<span class="string">"strTempArray:"</span>+Arrays.toString(strTempArray));</div><div class="line"></div><div class="line">Student[] studentArray = &#123;<span class="keyword">new</span> Student(<span class="string">"1"</span>, <span class="string">"A"</span>),<span class="keyword">new</span> Student(<span class="string">"2"</span>, <span class="string">"B"</span>),<span class="keyword">new</span> Student(<span class="string">"3"</span>, <span class="string">"C"</span>)&#125;;</div><div class="line">Student[] studentTempArray = Arrays.copyOf(studentArray, studentArray.length);</div><div class="line">studentTempArray[<span class="number">2</span>].setStudentName(<span class="string">"D"</span>);</div><div class="line">System.out.println(<span class="string">"studentArray:"</span>+Arrays.toString(studentArray));</div><div class="line">System.out.println(<span class="string">"studentTempArray:"</span>+Arrays.toString(studentTempArray));</div></pre></td></tr></table></figure>
-<p>以上代码只是最基本的数组实例，我们直接看最后一段代码，声明了Student类型的数组，然后通过Arrays.copyOf方法进行拷贝处理，得到一个新的Student类型的数组，然后我们对新得到的Student类型的数组中的对象进行重新赋值操作，然后我们查看以下输出结果：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">intArray:[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]</div><div class="line">intTempArray:[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">6</span>]</div><div class="line">doubleArray:[<span class="number">1.0</span>, <span class="number">2.0</span>, <span class="number">3.0</span>, <span class="number">4.0</span>, <span class="number">5.0</span>]</div><div class="line">doubleTempArray:[<span class="number">1.0</span>, <span class="number">2.0</span>, <span class="number">3.0</span>, <span class="number">4.0</span>, <span class="number">6.0</span>]</div><div class="line">strArray:[a, b, c, d, e]</div><div class="line">strTempArray:[a, b, c, d, F]</div><div class="line">str1Array:[a, b, c, d, e]</div><div class="line">str1TempArray:[a, b, c, d, F]</div><div class="line">studentArray:[Student [studentId=<span class="number">1</span>, studentName=A], Student [studentId=<span class="number">2</span>, studentName=B], Student [studentId=<span class="number">3</span>, studentName=D]]</div><div class="line">studentTempArray:[Student [studentId=<span class="number">1</span>, studentName=A], Student [studentId=<span class="number">2</span>, studentName=B], Student [studentId=<span class="number">3</span>, studentName=D]]</div></pre></td></tr></table></figure>
-<p>可以看到上面的数组拷贝示例中，不管对老数组中的值进行更改还是对新数组中的值进行更改，都不会相互影响；而最后的Student类型的数组示例中，不管对老数组(studentArray)中的值进行更改还是对新数组(studentTempArray)中的值进行更改，都会相互影响；比如我们对拷贝生成的新数组studentTempArray中的索引为2的对象的学生姓名重新赋值，然后老数组中对应的索引的对象的学生姓名也被修改了；其实这就是所谓的数组浅拷贝，在使用Arrays.copyOf方法时要特别注意。</p>
-<p><strong>2、基本类型的数组转换为集合会出现数据类型未知错误-Arrays.asList()</strong></p>
-<p>平时开发中，也经常会遇到把一个Array数组转换成List集合，Arrays.asList(data)；但是这个方法如果使用不当，也会出现问题</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">int</span>[] intArray = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;;</div><div class="line">List list= Arrays.asList(intArray);</div><div class="line">System.out.println(<span class="string">"size:"</span>+list.size()+<span class="string">" list:"</span>+list.toString());</div></pre></td></tr></table></figure>
-<p>上面的代码很简单，就是把intArray数组转换成List，其输出结果如下：</p>
-<blockquote>
-<p>size:1 list:[[I@2a139a55]</p>
-</blockquote>
-<p>看到输出结果是不是感觉有点茫然，list的长度应该为3才对啊，并且应该直接输出其中的元素才对啊。</p>
-<p>首先我们看看asList的源码：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">List&lt;T&gt; <span class="title">asList</span><span class="params">(T... a)</span> </span>&#123;</div><div class="line">       <span class="keyword">return</span> <span class="keyword">new</span> ArrayList&lt;&gt;(a);</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
-<blockquote>
-<p>asList方法输入的是一个泛型变长参数，我们知道基本类型是不能泛型化的，也就是说8个基本类型不能作为泛型参数，要想作为泛型参数就必须使用其所对应的包装类型，那前面的例子传递了一个int类型的数组,在asList方法中，直接把这个数组当作了一个参数进行处理；然后打印的集合内容是一个对象串，并不是其中的元素，这是为什么呢，我们点击上面的asList方法中的new ArrayList这个类源码中看一下：</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line">    * <span class="doctag">@serial</span> include</div><div class="line">    */</div><div class="line">   <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ArrayList</span>&lt;<span class="title">E</span>&gt; <span class="keyword">extends</span> <span class="title">AbstractList</span>&lt;<span class="title">E</span>&gt;</span></div><div class="line">       <span class="keyword">implements</span> <span class="title">RandomAccess</span>, <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span></div><div class="line">   &#123;</div><div class="line">       <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = -<span class="number">2764017481108945198L</span>;</div><div class="line">       <span class="keyword">private</span> <span class="keyword">final</span> E[] a;</div><div class="line"></div><div class="line">       ArrayList(E[] array) &#123;</div><div class="line">           a = Objects.requireNonNull(array);</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       <span class="meta">@Override</span></div><div class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">size</span><span class="params">()</span> </span>&#123;</div><div class="line">           <span class="keyword">return</span> a.length;</div><div class="line">       &#125;</div><div class="line"></div><div class="line">	.......省略其他代码</div></pre></td></tr></table></figure>
-<p>查看ArrayList源码可以看到，其是Arrays类的一个静态内部类，并不是我们平时声明List集合时的ArrayList类，只不过他们都继承了AbstractList这个类，所以List list= Arrays.asList(intArray);这句代码把Arrays的静态内部类赋值给Lits实例变量才不至于报异常。并且我们可以看到ArrayList内部类中有一个泛型的数组常量:</p>
-<blockquote>
-<p>private final E[] a；</p>
-</blockquote>
-<p>所以我们也可以通过下面代码获取转换后的list集合中对应索引的数据。</p>
-<blockquote>
-<p>System.out.println(“size:”+list.size()+” list:”+((int[])list.get(0))[1]);</p>
-<p>size:3 list:1</p>
-</blockquote>
-<p>好了，重新回到刚才那个问题，已经看到asList(T… a) 方法的入参是一个泛型参数，所以我们需要传递对应的基本类型的包装类或者其他对象参数，示例如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">Integer[] integerArray = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;;</div><div class="line">List list= Arrays.asList(integerArray);</div><div class="line">System.out.println(<span class="string">"size:"</span>+list.size()+<span class="string">" list:"</span>+list.toString());</div></pre></td></tr></table></figure>
-<p>我们把上面的数组基本类型转换为其对应的包装类之后，就正常了！输出如下：</p>
-<blockquote>
-<p>size:3 list:[1, 2, 3]</p>
-</blockquote>
-<p>总结：使用Arrays.asList方法转换数组为list时，入参的类型一定不能是基本数据类型，需要传递包装类或者其它非基本数据类型</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">String[] StringArray = &#123;<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>&#125;;</div><div class="line">List list= Arrays.asList(StringArray);</div><div class="line">System.out.println(<span class="string">"size:"</span>+list.size()+<span class="string">" list:"</span>+list.toString());</div><div class="line">	</div><div class="line">Student[] studentArray = &#123;<span class="keyword">new</span> Student(<span class="string">"1"</span>,<span class="string">"A"</span>),<span class="keyword">new</span> Student(<span class="string">"2"</span>,<span class="string">"B"</span>)&#125;;</div><div class="line">List listStu = Arrays.asList(studentArray);</div><div class="line">System.out.println(<span class="string">"size:"</span>+listStu.size()+<span class="string">" list:"</span>+listStu.toString());</div></pre></td></tr></table></figure>
-<p>上面传递的非基本数组类型输出如下：</p>
-<blockquote>
-<p>size:3 list:[a, b, c]</p>
-<p>size:2 list:[Student [studentId=1, studentName=A], Student [studentId=2, studentName=B]]</p>
-</blockquote>
-<p><strong>3、数组转换为集合后不能调用add方法新增元素-Arrays.asList()</strong></p>
-<p>接着第2个坑的另一个使用方法进行说明，一般来讲我们把一个数组转换为集合之后，肯定要对集合进行增、删、改、查操作，那么我首先演示一下集合的增加操作：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">String[] StringArray = &#123;<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>&#125;;</div><div class="line">List list= Arrays.asList(StringArray);</div><div class="line">list.add(<span class="string">"d"</span>);</div><div class="line">System.out.println(<span class="string">"size:"</span>+list.size()+<span class="string">" list:"</span>+list.toString());</div></pre></td></tr></table></figure>
-<p>上面代码输出结果其实抛异常了，是下面这样：</p>
-<blockquote>
-<p>Exception in thread “main” java.lang.UnsupportedOperationException</p>
-</blockquote>
-<p>是不是很纳闷，既然可以正常把数组转换为集合，那么为什么不能向集合中添加数据呢？其实上面已经说过了，调用Arrays.asList方法后，返回的其实是Arrays的内部类，并不是我们平时声明集合时(new ArrayList() )的真正意义上的ArrayList类；之所以可以把Arrays的内部类ArrayList赋值给List类变量，是因为他们有同一个父类-AbstractList，然而List list变量指向的并不是真正意义上的集合。</p>
-<p>所以我们继续再看看Arrays的内部类ArrayList源码会发现，其中只有以下几个方法：</p>
-<blockquote>
-<p>public int size()  #元素数量</p>
-<p>public Object[] toArray() #转化为数组，实现了数组的浅拷贝</p>
-<p>public <t> T[] toArray(T[] a) </t></p>
-<p>public E get(int index) #获得指定索引的元素</p>
-<p>public E set(int index, E element) #设置制定索引元素</p>
-<p>public int indexOf(Object o) #查找元素的索引值</p>
-<p>public boolean contains(Object o) #查找元素是否存在</p>
-<p>public Spliterator<e> spliterator() #定义分割器</e></p>
-<p>public void forEach(Consumer&lt;? super E&gt; action) #遍历</p>
-<p>public void replaceAll(UnaryOperator<e> operator)</e></p>
-<p>public void sort(Comparator&lt;? super E&gt; c)</p>
-</blockquote>
-<p>是不是没有发现add方法，add方法只不过是抽象类-AbstractList的方法,我们再进入该抽象类的方法中可以看到直接抛出了一个异常，刚好就是刚才我们调用add方法时的异常，OK，一切真相大白了。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> index, E element)</span> </span>&#123;</div><div class="line">       <span class="keyword">throw</span> <span class="keyword">new</span> UnsupportedOperationException();</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
-<p>总结，我们通过调用Arrays.asList方法把数组转换为集合后，返回的集合并不是真正意义上的ArrayList，而是Arrays的静态内部类，所以并不能调用add方法向集合中添加元素，但是可以调用内部类自己的方法从集合中获取集合元素，设置集合中的元素等操作</p>
-<p><strong>4、对生成的子列表修改元素后源集合也会被修改-subList()</strong></p>
-<p>平时开发中，将一个大的list集合截取成符合条件的集合也是很常见的事情，那么我们一般直接通过subList方法去截取，只要api有的方法我们就直接用嘛，避免重复造轮子。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">List list1 = Lists.newArrayList(<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>);</div><div class="line">List list2 = list1.subList(<span class="number">0</span>, list1.size());</div><div class="line">list2.add(<span class="string">"d"</span>);</div><div class="line">	</div><div class="line">System.out.println(<span class="string">"list1长度:"</span>+list1.size()+<span class="string">" list1元素:"</span>+list1);</div><div class="line">System.out.println(<span class="string">"list2长度:"</span>+list2.size()+<span class="string">" list2元素:"</span>+list2);</div><div class="line">	</div><div class="line">List list3 = Lists.newArrayList(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>);</div><div class="line">List list4 = list3.subList(<span class="number">0</span>, list3.size());</div><div class="line">list4.add(<span class="number">4</span>);</div><div class="line">System.out.println(<span class="string">"list3长度:"</span>+list3.size()+<span class="string">" list3元素:"</span>+list3);</div><div class="line">System.out.println(<span class="string">"list4长度:"</span>+list4.size()+<span class="string">" list4元素:"</span>+list4);</div></pre></td></tr></table></figure>
-<p>上面的代码输出为如下：</p>
-<blockquote>
-<p>list1长度:4 list1元素:[a, b, c, d]</p>
-<p>list2长度:4 list2元素:[a, b, c, d]</p>
-<p>list3长度:4 list3元素:[1, 2, 3, 4]</p>
-<p>list4长度:4 list4元素:[1, 2, 3, 4]</p>
-</blockquote>
-<p>可以看到一个现象，我们向通过subList方法生成的新集合中添加元素后，新集合和老集合都发生了变化，分析一下subList方法，可以发现SubList其实是ArrayList类的内部类，并且我们可以看到其定义的add方法如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">SubList</span> <span class="keyword">extends</span> <span class="title">AbstractList</span>&lt;<span class="title">E</span>&gt; <span class="keyword">implements</span> <span class="title">RandomAccess</span> </span>&#123;</div><div class="line">       <span class="keyword">private</span> <span class="keyword">final</span> AbstractList&lt;E&gt; parent;</div><div class="line">       <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> parentOffset;</div><div class="line">       <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> offset;</div><div class="line">       <span class="keyword">int</span> size;</div><div class="line"></div><div class="line">       SubList(AbstractList&lt;E&gt; parent,</div><div class="line">               <span class="keyword">int</span> offset, <span class="keyword">int</span> fromIndex, <span class="keyword">int</span> toIndex) &#123;</div><div class="line">           <span class="keyword">this</span>.parent = parent;</div><div class="line">           <span class="keyword">this</span>.parentOffset = fromIndex;</div><div class="line">           <span class="keyword">this</span>.offset = offset + fromIndex;</div><div class="line">           <span class="keyword">this</span>.size = toIndex - fromIndex;</div><div class="line">           <span class="keyword">this</span>.modCount = ArrayList.<span class="keyword">this</span>.modCount;</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       <span class="function"><span class="keyword">public</span> E <span class="title">set</span><span class="params">(<span class="keyword">int</span> index, E e)</span> </span>&#123;</div><div class="line">           rangeCheck(index);</div><div class="line">           checkForComodification();</div><div class="line">           E oldValue = ArrayList.<span class="keyword">this</span>.elementData(offset + index);</div><div class="line">           ArrayList.<span class="keyword">this</span>.elementData[offset + index] = e;</div><div class="line">           <span class="keyword">return</span> oldValue;</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       <span class="function"><span class="keyword">public</span> E <span class="title">get</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;</div><div class="line">           rangeCheck(index);</div><div class="line">           checkForComodification();</div><div class="line">           <span class="keyword">return</span> ArrayList.<span class="keyword">this</span>.elementData(offset + index);</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">size</span><span class="params">()</span> </span>&#123;</div><div class="line">           checkForComodification();</div><div class="line">           <span class="keyword">return</span> <span class="keyword">this</span>.size;</div><div class="line">       &#125;</div><div class="line"></div><div class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> index, E e)</span> </span>&#123;</div><div class="line">           rangeCheckForAdd(index);</div><div class="line">           checkForComodification();</div><div class="line">           parent.add(parentOffset + index, e);</div><div class="line">           <span class="keyword">this</span>.modCount = parent.modCount;</div><div class="line">           <span class="keyword">this</span>.size++;</div><div class="line">       &#125;</div></pre></td></tr></table></figure>
-<p>可以看到是针对parent进行的add操作，其实parent就是调用者(源集合)，并且它返回的SubList类也是AbstractList的子类，其所有的get、set、add、remove等都是在原始列表上的操作，并没有重新定义集合，从而可以说明对元素的操作其实是在源集合上进行的，所以对新截取的集合中元素的操作也就直接同步反映到源集合中。</p>
-<p>总结：subList产生的列表只是一个源集合的视图概念，所有对生成的子集合中元素的修改操作都会直接作用于源集合</p>
-<p><strong>5、对生成子列表添加元素操作会抛并发修改异常-subList()</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">List list1 = Lists.newArrayList(<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>);</div><div class="line">List list2 = list1.subList(<span class="number">0</span>, list1.size());</div><div class="line">list1.add(<span class="string">"d"</span>);</div><div class="line">	</div><div class="line">System.out.println(<span class="string">"list1长度:"</span>+list1.size()+<span class="string">" list1元素:"</span>+list1);</div><div class="line">System.out.println(<span class="string">"list2长度:"</span>+list2.size()+<span class="string">" list2元素:"</span>+list2);</div></pre></td></tr></table></figure>
-<p>上面的示例中，我们通过subList方法获取子集合list2后，对源集合list1进行元素添加，然后输出如下（报异常）：</p>
-<blockquote>
-<p>list1长度:4 list1元素:[a, b, c, d]</p>
-<p>Exception in thread “main” java.util.ConcurrentModificationException</p>
-</blockquote>
-<p>怎么报了一个并发修改异常呢，我们点击subList类可以看到其有一个add方法</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> index, E e)</span> </span>&#123;</div><div class="line">      rangeCheckForAdd(index); </div><div class="line">      checkForComodification(); <span class="comment">//检测判断当前修改计数器是否与子列表生成时一致</span></div><div class="line">      parent.add(parentOffset + index, e);</div><div class="line">      <span class="keyword">this</span>.modCount = parent.modCount;</div><div class="line">      <span class="keyword">this</span>.size++;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
-<p>进入checkForComodification方法源码可以看：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">checkForComodification</span><span class="params">()</span> </span>&#123;</div><div class="line">      <span class="keyword">if</span> (ArrayList.<span class="keyword">this</span>.modCount != <span class="keyword">this</span>.modCount)</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
-<p>上面的方法主要看if分支判断条件，其实subList中的add方法中添加了修改次数比较判断，这个modCount变量是ArrayList中的一个变量，即每次调用arrayList类的add方法时，该变量都会自增操作；当我们调用subList方法时，subList对应的内部类中的构造方法就自己初始化一个自己的modeCount值，并且是直接把源集合的modeCount变量赋值给自己的，所以调用subList构造方法后，再次针对源集合list调用add方法添加元素时，就必然会使modCount自增操作，那么自增后，再看上面的代码checkForComodification()方法中的if判断条件就为true了，那么就抛出了并发修改异常了。</p>
-<p>注：再使用subList生成子列表后，不要再修改源集合列表数据，最好保持原列表的只读状态(通过Collections.unmodifiableList)。</p>
-
-          
+          <p>平时开发过程中用的最多的莫过于基本类型、包装类、集合等等了，但是最近在使用集合时，偶尔使用不当会出现一些想不到的问题(bug)；为什么使用不当呢，因为我们对集合的操作都是使用JDK原生的API方法进行操作的，那么之所以使用不当，是因为对jdk源码中的api方法的不了解所致，下面就具体罗列一下具体的坑吧。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/java中集合使用中遇到的-坑/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -931,44 +702,12 @@
 
       
         
-          
-            <p>开发这么长时间，一直的开发思想模式就是java负责服务器端(后台)运行，js负责前端(前台)交互体验，两个语言没有任何代码级别的交互；但其实还有另一种开发模式，就是java和javascript混合开发，前后端不那么分离；即java代码可以直接调用javascript文件中定义的函数；javascript中定义的函数可以读取java代码中定义的变量数据；感觉有点意思！其实这种开发模式个人觉得也很有价值，比如下面的场景：</p>
-<blockquote>
-<p>用户在浏览一个商品，突然这个商品由于某些原因要求进行打折处理，比如打8折，即需要把该商品的价格乘以80%；</p>
-<p>因为上面说的打8折不是固定的，有可能一会打8折，一会又打5折，所以需要把这个信息在一个地方维护起来，那么我们就把打折规则封装到javascript文件定义的函数中</p>
-<p>java代码获取该商品的价格后，直接调用javascript文件中定义的打折规则函数，重新计算商品价格即可</p>
-</blockquote>
-<p><strong>一、编写javascript文件</strong></p>
-<blockquote>
-<p>1、在本地磁盘上新建一个js文件,比如在D:\maps.js</p>
-<p>2、在js文件中定义一个商品对应的打折函数</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">//该函数非常简单，就是把商品价格打8折</span></div><div class="line"><span class="function">function <span class="title">discount</span><span class="params">(money)</span></span>&#123;</div><div class="line">     <span class="keyword">return</span> money * <span class="number">0.8</span>;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
-<p><strong>二、编写java代码</strong></p>
-<blockquote>
-<p>1、新建一个java类文件，名称随便起</p>
-<p>2、在java文件中新建一个main方法，用来写测试代码</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 商品消费方法</div><div class="line"> * <span class="doctag">@throws</span> ScriptException </div><div class="line"> * <span class="doctag">@throws</span> FileNotFoundException </div><div class="line"> * <span class="doctag">@throws</span> NoSuchMethodException </div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">spend</span><span class="params">(<span class="keyword">int</span> money)</span> <span class="keyword">throws</span> FileNotFoundException, ScriptException, NoSuchMethodException</span>&#123;</div><div class="line">	<span class="comment">//获取javascript执行引擎</span></div><div class="line">	ScriptEngine engine = <span class="keyword">new</span> ScriptEngineManager().getEngineByName(<span class="string">"javascript"</span>); </div><div class="line">       System.out.println(<span class="string">"该商品价格："</span>+money);</div><div class="line">        <span class="comment">//装载待执行的Js代码文件</span></div><div class="line">       engine.eval(<span class="keyword">new</span> FileReader(<span class="string">"D:/maps.js"</span>));</div><div class="line">        <span class="comment">//先判断是否可调用方法</span></div><div class="line">       <span class="keyword">if</span> (engine <span class="keyword">instanceof</span> Invocable) &#123;</div><div class="line">            Invocable in = (Invocable) engine;</div><div class="line">            <span class="comment">// 执行Js中的discount()函数</span></div><div class="line">            Double result = (Double) in.invokeFunction(<span class="string">"discount"</span>, money);</div><div class="line">            System.out.println(<span class="string">"打折后的商品价格构是："</span> + result.intValue());</div><div class="line">       &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> FileNotFoundException, ScriptException, NoSuchMethodException</span>&#123;</div><div class="line">	spend(<span class="number">100</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>上面代码输出结果：</p>
-<p>该商品价格：100</p>
-<p>打折后的商品价格是：80</p>
-</blockquote>
-<p><strong>三、修改javascript文件</strong></p>
-<blockquote>
-<p>1、修改maps.js文件中的打折函数，在函数中新增使用一个java代码中定义的变量</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">//说白了，就是把js函数中写死的百分比改成了重java代码中获取</span></div><div class="line"><span class="function">function <span class="title">discount</span><span class="params">(money)</span></span>&#123;</div><div class="line">    	<span class="keyword">return</span> money * dis;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</blockquote>
-<p><strong>四、修改java代码</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 商品消费方法</div><div class="line"> * <span class="doctag">@throws</span> ScriptException </div><div class="line"> * <span class="doctag">@throws</span> FileNotFoundException </div><div class="line"> * <span class="doctag">@throws</span> NoSuchMethodException </div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">spend</span><span class="params">(<span class="keyword">int</span> money)</span> <span class="keyword">throws</span> FileNotFoundException, ScriptException, NoSuchMethodException</span>&#123;</div><div class="line">	<span class="comment">//获取javascript执行引擎</span></div><div class="line">	ScriptEngine engine = <span class="keyword">new</span> ScriptEngineManager().getEngineByName(<span class="string">"javascript"</span>); </div><div class="line">	<span class="comment">//定义js函数中使用的折扣变量</span></div><div class="line">	Bindings bind = engine.createBindings();</div><div class="line">	bind.put(<span class="string">"dis"</span>, <span class="number">0.9</span>);</div><div class="line">	engine.setBindings(bind, ScriptContext.ENGINE_SCOPE);</div><div class="line">       System.out.println(<span class="string">"该商品价格："</span>+money);</div><div class="line">        <span class="comment">//装载待执行的Js代码文件</span></div><div class="line">       engine.eval(<span class="keyword">new</span> FileReader(<span class="string">"D:/maps.js"</span>));</div><div class="line">        <span class="comment">//先判断是否可调用方法</span></div><div class="line">       <span class="keyword">if</span> (engine <span class="keyword">instanceof</span> Invocable) &#123;</div><div class="line">            Invocable in = (Invocable) engine;</div><div class="line">            <span class="comment">// 执行Js中的discount()函数</span></div><div class="line">            Double result = (Double) in.invokeFunction(<span class="string">"discount"</span>, money);</div><div class="line">            System.out.println(<span class="string">"打折后的商品价格是："</span> + result.intValue());</div><div class="line">       &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> FileNotFoundException, ScriptException, NoSuchMethodException</span>&#123;</div><div class="line">	spend(<span class="number">100</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<blockquote>
-<p>其实上面java代码中只增加了如下代码</p>
-<p>Bindings bind = engine.createBindings();//创建一个js执行引擎的数据绑定器</p>
-<p>bind.put(“dis”, 0.9); //定义dis变量值</p>
-<p>engine.setBindings(bind, ScriptContext.ENGINE_SCOPE);</p>
-</blockquote>
-<p>上面的例子实现了简单的java代码和js代码交互功能，这样其实我们可以实现另一个场景，不需要重启服务器，就可以实时控制扩展和变更后台运行的一些灵活的业务规则。</p>
-
-          
+          <p>开发这么长时间，一直的开发思想模式就是java负责服务器端(后台)运行，js负责前端(前台)交互体验，两个语言没有任何代码级别的交互；但其实还有另一种开发模式，就是java和javascript混合开发，前后端不那么分离；即java代码可以直接调用javascript文件中定义的函数；javascript中定义的函数可以读取java代码中定义的变量数据；感觉有点意思！其实这种开发模式个人觉得也很有价值，比如下面的场景：</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/java和javaScript代码进行交互初探一/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -1085,52 +824,12 @@
 
       
         
-          
-            <p>Stream是java8新增一个工具类，在java.util.stream.*;中，不得不说的是stream功能异常强大，一旦你接触之后就不想再用哪些旧的jdk中api方法了；下面先以日常开发中的集合数据排序为例慢慢了解stream中的sorted方法。</p>
-<p><strong>一、对List数据集合排序</strong></p>
-<blockquote>
-<p>1、对List集合进行升序排列</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">streamSortTest1</span><span class="params">()</span></span>&#123;</div><div class="line"> 		<span class="comment">//定义一个简单的List数据集合</span></div><div class="line"> 		List&lt;Integer&gt; list1 = Lists.newArrayList(<span class="number">1</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">5</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">8</span>,<span class="number">2</span>); </div><div class="line">	<span class="comment">//直接调用sorted方法进行排序，val1-val2</span></div><div class="line"> 		list1 = list1.stream().sorted((val1,val2) -&gt;val1-val2).collect(Collectors.toList());</div><div class="line"> 		System.out.println(list1);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>以上代码输出结果为：[1, 2, 2, 3, 4, 5, 6, 8]；可见排序结果按照 升序 规则进行排序处理</p>
-<blockquote>
-<p>2、对List集合进行降序排列</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">streamSortTest1</span><span class="params">()</span></span>&#123;</div><div class="line"> 		<span class="comment">//定义一个简单的List数据集合</span></div><div class="line"> 		List&lt;Integer&gt; list1 = Lists.newArrayList(<span class="number">1</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">5</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">8</span>,<span class="number">2</span>); </div><div class="line">	<span class="comment">//直接调用sorted方法进行排序，val2-val1</span></div><div class="line"> 		list1 = list1.stream().sorted((val1,val2) -&gt;val2-val1).collect(Collectors.toList());</div><div class="line"> 		System.out.println(list1);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>以上代码输出结果为：[8, 6, 5, 4, 3, 2, 2, 1]；可见排序结果按照 降序 规则进行排序处理</p>
-<blockquote>
-<p>3、对List集合进行升序排列–自定义比较器</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">//先定义一个比较器，默认按照升序</span></div><div class="line">Comparator&lt;Integer&gt; compara = Comparator.comparing(u-&gt;u);</div><div class="line"><span class="comment">//在sorted方法中使用自定义的比较器进行排序</span></div><div class="line">list1 = list1.stream().sorted(compara).collect(Collectors.toList());</div><div class="line">System.out.println(list1);</div></pre></td></tr></table></figure>
-<p>以上代码输出结果为：[1, 2, 2, 3, 4, 5, 6, 8]；可见排序结果按照 升序 规则进行排序处理</p>
-<blockquote>
-<p>4、对List集合进行降序排列–自定义比较器</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">//先定义一个比较器，默认按照升序</span></div><div class="line">Comparator&lt;Integer&gt; compara = Comparator.comparing(u-&gt;u);</div><div class="line"><span class="comment">//在sorted方法中使用自定义的比较器进行排序，并且调用reversed方法反转了比较结果</span></div><div class="line">list1 = list1.stream().sorted(compara.reversed()).collect(Collectors.toList());</div><div class="line">System.out.println(list1);</div></pre></td></tr></table></figure>
-<p>以上代码输出结果为：[8, 6, 5, 4, 3, 2, 2, 1]；可见排序结果按照 降序 规则进行排序处理</p>
-<blockquote>
-<p>5、对Array数组进行升序排列</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">streamSortTest1</span><span class="params">()</span></span>&#123;</div><div class="line"> 		<span class="comment">//定义一个简单的数组集合</span></div><div class="line"> 		Integer[] array1 = &#123;<span class="number">1</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">5</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">8</span>,<span class="number">2</span>&#125;;</div><div class="line">	<span class="comment">//直接调用sorted方法进行排序,val1-val2</span></div><div class="line">	array1 = Stream.of(array1).sorted((val1,val2) -&gt; val1-val2).toArray(Integer[]::<span class="keyword">new</span>);</div><div class="line">	System.out.println(Arrays.asList(array1));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>以上代码输出结果为：[1, 2, 2, 3, 4, 5, 6, 8]；可见排序结果按照 升序 规则进行排序处理</p>
-<blockquote>
-<p>6、对Array数组进行降序排列</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">streamSortTest1</span><span class="params">()</span></span>&#123;</div><div class="line"> 		<span class="comment">//定义一个简单的数组集合</span></div><div class="line"> 		Integer[] array1 = &#123;<span class="number">1</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">5</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">8</span>,<span class="number">2</span>&#125;;</div><div class="line">	<span class="comment">//直接调用sorted方法进行排序，val2-val1</span></div><div class="line">	array1 = Stream.of(array1).sorted((val1,val2) -&gt; val2-val1).toArray(Integer[]::<span class="keyword">new</span>);</div><div class="line">	System.out.println(Arrays.asList(array1));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>以上代码输出结果为：[8, 6, 5, 4, 3, 2, 2, 1]；可见排序结果按照 降序 规则进行排序处理</p>
-<blockquote>
-<p>7、对Array数组进行升序排列–自定义比较器</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">streamSortTest1</span><span class="params">()</span></span>&#123;</div><div class="line"> 		<span class="comment">//定义一个简单的数组集合</span></div><div class="line"> 		Integer[] array1 = &#123;<span class="number">1</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">5</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">8</span>,<span class="number">2</span>&#125;;</div><div class="line">	<span class="comment">//自定义比较器，默认按照升序排序</span></div><div class="line">	Comparator&lt;Integer&gt; compara = Comparator.comparing(u-&gt;u);</div><div class="line">	<span class="comment">//直接调用sorted方法进行排序</span></div><div class="line">	array1 = Stream.of(array1).sorted(compara).toArray(Integer[]::<span class="keyword">new</span>);</div><div class="line">	System.out.println(Arrays.asList(array1));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>以上代码输出结果为：[1, 2, 2, 3, 4, 5, 6, 8]；可见排序结果按照 升序 规则进行排序处理</p>
-<blockquote>
-<p>8、对Array数组进行降序序排列–自定义比较器</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">streamSortTest1</span><span class="params">()</span></span>&#123;</div><div class="line"> 		<span class="comment">//定义一个简单的数组集合</span></div><div class="line"> 		Integer[] array1 = &#123;<span class="number">1</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">5</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">8</span>,<span class="number">2</span>&#125;;</div><div class="line">	<span class="comment">//自定义比较器，默认按照升序排序</span></div><div class="line">	Comparator&lt;Integer&gt; compara = Comparator.comparing(u-&gt;u);</div><div class="line">	<span class="comment">//直接调用sorted方法进行排序，对比较器进行了反转处理，即按照降序排序</span></div><div class="line">	array1 = Stream.of(array1).sorted(compara.reversed()).toArray(Integer[]::<span class="keyword">new</span>);</div><div class="line">	System.out.println(Arrays.asList(array1));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>以上代码输出结果为：[8, 6, 5, 4, 3, 2, 2, 1]；可见排序结果按照 降序 规则进行排序处理</p>
-<p>是不是感觉用着非常愉快，其实对复杂的数据结构更能体现！</p>
-
-          
+          <p>Stream是java8新增一个工具类，在java.util.stream.*;中，不得不说的是stream功能异常强大，一旦你接触之后就不想再用哪些旧的jdk中api方法了；下面先以日常开发中的集合数据排序为例慢慢了解stream中的sorted方法。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/java8使用stream对简单数据集排序/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -1247,54 +946,12 @@
 
       
         
-          
-            <p>平时开发过程中，判断操作除了使用if-else语句之外，三目运算符也经常被使用，然而在使用三目运算符过程中，我们异步都很老实，但是其使用规则则不曾了解，下面就了解一下它的使用规则。</p>
-<p><strong>一、描述</strong></p>
-<p>先了解一下三目运算符的语法：</p>
-<blockquote>
-<p>表达式1?表达式2:表达式3;</p>
-</blockquote>
-<p><em>当表达式1为true时，则执行表达式2；当表达式1为false时，则执行表达式3</em></p>
-<p>先看下面的一段代码，分析一下执行结果：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">@Test</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Test</span><span class="params">()</span></span>&#123;</div><div class="line">	<span class="keyword">int</span> i = <span class="number">60</span>;</div><div class="line">	String str1 = String.valueOf(i &lt; <span class="number">100</span> ? <span class="number">80</span> : <span class="number">100</span>);</div><div class="line">	System.out.println(<span class="string">"str1:"</span>+str1);</div><div class="line">	</div><div class="line">	String str2 = String.valueOf(i &lt; <span class="number">100</span> ? <span class="number">80</span> : <span class="number">100.0</span>);</div><div class="line">	System.out.println(<span class="string">"str2:"</span>+str2);</div><div class="line">	</div><div class="line">	String str3 = String.valueOf(i &lt; <span class="number">100</span> ? <span class="number">80L</span> : <span class="number">100.0</span>);</div><div class="line">	System.out.println(<span class="string">"str2:"</span>+str3);</div><div class="line">	</div><div class="line">	String str4 = String.valueOf(i &lt; <span class="number">100</span> ? <span class="string">"80"</span> : <span class="number">100.0</span>);</div><div class="line">	System.out.println(<span class="string">"str2:"</span>+str4);</div><div class="line">	</div><div class="line">	String str5 = String.valueOf(i &lt; <span class="number">100</span> ? <span class="number">80</span> : <span class="string">"字符串"</span>);</div><div class="line">	System.out.println(<span class="string">"str2:"</span>+str5);</div><div class="line"></div><div class="line">	String str6 = String.valueOf(i &lt; <span class="number">100</span> ? <span class="keyword">true</span> : <span class="number">100.06</span>);</div><div class="line">	System.out.println(<span class="string">"str6:"</span>+str6);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>运行之后的返回结果如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">str1:<span class="number">80</span></div><div class="line"></div><div class="line">str2:<span class="number">80.0</span></div><div class="line"></div><div class="line">str3:<span class="number">80.0</span></div><div class="line"></div><div class="line">str4:<span class="number">80</span></div><div class="line"></div><div class="line">str5:<span class="number">80</span></div><div class="line"></div><div class="line">str6:<span class="keyword">true</span></div></pre></td></tr></table></figure>
-<p><strong>二、分析</strong></p>
-<blockquote>
-<p>1、String str1 = String.valueOf(i &lt; 100 ? 80 : 100);</p>
-</blockquote>
-<p>这句代码运行结果为 str1:80,无容置疑，完全正确，也不需要过多解释了。</p>
-<blockquote>
-<p>2、String str2 = String.valueOf(i &lt; 100 ? 80 : 100.0);</p>
-</blockquote>
-<p>这句代码运行结果为 str2:80.0,看到结果有点纳闷了，因为i=60；并且i&lt;100;所以应该执行表达式2，应该打印出 80 才对啊，怎么会打印出 80.0为浮点数类型呢？<br>其实三木运算符还有一个规则：</p>
-<p>若两个操作数是明确类型的表达式(比如变量)，则按照正常的二进制数字转换，int转为long，long转为浮点型(float、double)等</p>
-<p>所以以上代码中，int类型的变量i会被转换为跟100.0同类型(浮点型)；看来三目运算是先执行类型检查-&gt;类型转换-&gt;执行运算</p>
-<blockquote>
-<p>3、String str3 = String.valueOf(i &lt; 100 ? 80L : 100.0);</p>
-</blockquote>
-<p>这句代码运行结果为 str3:80.0,此时结合第2行代码的分析可以这么判定，因为i为int型，并且表达式2(80L)中为Long型，理论上i应该会被自动转换为Long型，但是表达式3是浮点型，所以i最终会被转换为浮点型。</p>
-<blockquote>
-<p>4、String str4 = String.valueOf(i &lt; 100 ? “80” : 100.0);</p>
-</blockquote>
-<p>这句代码运行结果为 str4:80,因为表达式2为字符型，表达式3是浮点型，所以浮点型可以转换为字符型，因此打印的是 str4:80</p>
-<blockquote>
-<p>5、String str5 = String.valueOf(i &lt; 100 ? 80 : “字符串”);</p>
-</blockquote>
-<p>这句代码运行结果为 str5:80；具体原因可以参照第4行代码的分析；但是在第4行代码分析的基础上，还需要再深入分析一下，表达式2和表达式3类型如果不能相互转换呢？其实三目运算符规则就是如果不能类型转换的话，就不做类型转换。</p>
-<blockquote>
-<p>6、String str6 = String.valueOf(i &lt; 100 ? true : 100.06);</p>
-</blockquote>
-<p>这句代码运行结果为 str6:true，再次验证三目运算符运算时，如果不能类型转换的话，就不做类型转换。</p>
-<p><strong>三、总结</strong></p>
-<blockquote>
-<p>如果两个操作数是明确类型的表达式(比如变量)，则按照正常的二进制数字转换规则，int转为long，long转为float/double等</p>
-<p>如果两个操作数表达式类型不能相互转换，则不作转换；比如数值型都可以转换为字符串，但是字符串不能都转换为数值型。</p>
-<p>使用三目运算时，如果使用不当，仅仅会发生自动的类型转换；语句执行流程永远不变。</p>
-<p>在使用三目运算符时，表达式类型务必一致</p>
-</blockquote>
-
-          
+          <p>平时开发过程中，判断操作除了使用if-else语句之外，三目运算符也经常被使用，然而在使用三目运算符过程中，我们异步都很老实，但是其使用规则则不曾了解，下面就了解一下它的使用规则。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/java三目运算符之规则-坑/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -1411,30 +1068,13 @@
 
       
         
-          
-            <p><strong>一、定时描述</strong></p>
+          <p><strong>一、定时描述</strong></p>
 <p>平时开发中，经常会把一些热数据存入缓存中，并且设置失效时间，比如把用户和rest接口地址存入缓存，并设置失效时间，一方面可以提高响应速度，还可以把一部分无效的请求挡在缓存层处理；还比如把验证码存入缓存，并设置失效时间，也可以达到上述目的。redis缓存有两种定时模式：</p>
-<blockquote>
-<p>1、设置某键值在多少秒之后失效</p>
-<p>2、设置某键值在以后某一个时间点之后失效，比如2017年10月1日23点59分59秒失效</p>
-</blockquote>
-<p><strong>二、设置某键值在多少秒之后失效</strong></p>
-<blockquote>
-<p><strong>EXPIRE key seconds</strong></p>
-<p>为给定 key 设置生存时间，当 key 过期时(生存时间为 0 )，它会被自动删除;当 key 不存在或者不能为 key 设置生存时间时(比如在低于 2.1.3 版本的 Redis 中你尝试更新 key 的生存时间)，返回 0。</p>
-<p>可以对一个已经带有生存时间的 key 执行 EXPIRE 命令，新指定的生存时间会取代旧的生存时间。</p>
-<p>注：Redis 2.4 版本中，就算 key 已经过期，但还是可能在过期之后一秒钟之内被访问到；而在新的 Redis 2.6 版本中，延迟已经精确到1毫秒。</p>
-</blockquote>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">127.0.0.1:6379&gt; set username maps #先设置键-值</div><div class="line"></div><div class="line">OK</div><div class="line"></div><div class="line">127.0.0.1:6379&gt; ttl username  #此时还没有为key设置失效时间，所以用ttl时返回-1</div><div class="line"></div><div class="line">(integer) -1</div><div class="line"></div><div class="line"></div><div class="line">127.0.0.1:6379&gt; expire username 30 #设置过期时间为30秒</div><div class="line"></div><div class="line">(integer) 1</div><div class="line"></div><div class="line">127.0.0.1:6379&gt; ttl username #查看剩余失效时间</div><div class="line"></div><div class="line">(integer) 25</div><div class="line"></div><div class="line">127.0.0.1:6379&gt; ttl username  #查看剩余失效时间</div><div class="line"></div><div class="line">(integer) 23</div><div class="line"></div><div class="line">127.0.0.1:6379&gt; ttl username  #查看剩余失效时间</div><div class="line"></div><div class="line">(integer) 22</div><div class="line"></div><div class="line">127.0.0.1:6379&gt; expire username 50  #重新设置(更新）失效时间为50秒，如果key已经失效，则返回0</div><div class="line"></div><div class="line">(integer) 1</div><div class="line"></div><div class="line">127.0.0.1:6379&gt; ttl username #查看剩余失效时间</div><div class="line"></div><div class="line">(integer) 47</div><div class="line"></div><div class="line">127.0.0.1:6379&gt; ttl username #查看剩余失效时间</div><div class="line"></div><div class="line">(integer) 46</div><div class="line"></div><div class="line">127.0.0.1:6379&gt; ttl username #当该键已经达到失效时间时，则自动失效，ttl查看时返回-2</div><div class="line"></div><div class="line">(integer) -2</div><div class="line"></div><div class="line">127.0.0.1:6379&gt; keys username  #可以通过keys命令查看已经失效的键是否存在</div><div class="line"></div><div class="line">(empty list or set)</div></pre></td></tr></table></figure>
-<p><strong>三、设置某键值在以后某一个时间点之后失效</strong></p>
-<blockquote>
-<p><strong>EXPIREAT key timestamp</strong></p>
-<p>将key键在将来UNIX时间戳timestamp点失效</p>
-<p>如果生存时间设置成功，返回 1，当 key 不存在或没办法设置生存时间，返回 0</p>
-<p>注：EXPIREAT的设置规则跟EXPIRE命令一样</p>
-</blockquote>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">127.0.0.1:6379&gt; set username maps #先设置键-值</div><div class="line"></div><div class="line">OK</div><div class="line"></div><div class="line">127.0.0.1:6379&gt; ttl username  #此时还没有为key设置失效时间，所以用ttl时返回-1</div><div class="line"></div><div class="line">(integer) -1</div><div class="line"></div><div class="line">127.0.0.1:6379&gt; expireat username 1491494400000 # 这个 key 将在 2017-04-07 00:00:00 过期</div><div class="line"></div><div class="line">(integer) 1</div><div class="line"></div><div class="line">127.0.0.1:6379&gt; ttl username  #查看剩余失效时间 </div><div class="line"></div><div class="line">(integer) 1490001890019</div></pre></td></tr></table></figure>
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/Redis-定时操作篇/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -1551,50 +1191,13 @@
 
       
         
-          
-            <p><strong>一、需求描述</strong></p>
+          <p><strong>一、需求描述</strong></p>
 <p>由于app首页的数据展示需要调用6个第三方的不同数据源的rest接口，所以app首页在使用过程中会出现请求超时的问题（app端设置超时时间为5s）；所以需要对首页进行优化；</p>
-<blockquote>
-<p>1、由于app首页的数据展示非常像微信朋友圈的数据展示，即下拉时获取最新的数据，上推时获取历史数据，而在实际的使用场景中，上推动作大于5次的情况比较少(每天在微信朋友圈把5天前的动态翻出来[上推]的情况比较少吧)；所以打算把首页的前5页数据全部放入缓存中，不管是下拉获取新数据还是上推获取分页的老数据都统一从缓存中获取，可以有效减轻服务器压力。</p>
-<p>2、设定第三方rest接口调用超时时间，比如5分钟之内的首页刷新操作，只会读取缓存数据，不会触发调用第三方的rest接口。</p>
-<p>3、首页的刷新操作触发采用异步多线程调用，而不是采用串行方式处理；比如首页刷新时，调用6个第三方的rest接口时，启动6个线程并行异步去拉取数据，并且把新数据增量更新到缓存中。</p>
-</blockquote>
-<p><strong>二、业务调整</strong></p>
-<p>由于app端的分页比较特殊，比如后台数据会近实时的发生变化，所以采用常规的分页算法[(totalRecord + pageSize - 1) / pageSize;]肯定是不行的。如果仍采用这种算法，当上推刷新时，就有可能加载到上一页已经看过的数据，比如用户当前正在看第2页的历史数据，如果此时后台数据源新增了一条数据，那么当用户继续上推操作查看第3页的历史数据时，就会把第2页的最后一条数据获取，并且会把该条数据作为第3页的第一条数据进行展示，这样是有问题的。</p>
-<p>所以在数据表设计时，需要在表中增加一个自增的orderId字段参与分页，然后分页时，需要将第一页的最后一条数据的orderId回传到后台，后台拿着这个orderId进行条件判断查询并且集合上面的分页算法就可以避免上面的问题。</p>
-<p><strong>二、代码开发</strong></p>
-<blockquote>
-<p>1、熟悉redis的zAdd方法</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">ZADD key score member [[score member] [score member] ...]</div><div class="line"></div><div class="line">将一个或多个 member 元素及其 score 值加入到有序集 key 当中。</div><div class="line"></div><div class="line">如果某个 member 已经是有序集的成员，那么更新这个 member 的 score 值，并通过重新插入这个 member 元素，来保证该 member 在正确的位置上。</div><div class="line"></div><div class="line">score 值可以是整数值或双精度浮点数。</div></pre></td></tr></table></figure>
-<blockquote>
-<p>2、调用zAdd方法向缓存中添加数据(用的是jedis客户端)</p>
-</blockquote>
-<p><em>这里为了看着更加清晰，没有使用for循环</em></p>
-<blockquote>
-<blockquote>
-<p>jedis.zadd(“home_123456”, 1, a);</p>
-<p>jedis.zadd(“home_123456”, 2, b);</p>
-<p>jedis.zadd(“home_123456”, 3, c);</p>
-<p>jedis.zadd(“home_123456”, 4, d);</p>
-<p>jedis.zadd(“home_123456”, 5, e);</p>
-<p>jedis.zadd(“home_123456”, 6, f);</p>
-<p>jedis.zadd(“home_123456”, 7, g);</p>
-<p>jedis.zadd(“home_123456”, 8, h);</p>
-<p>jedis.zadd(“home_123456”, 9, i);</p>
-<p>jedis.zadd(“home_123456”, 10, j);</p>
-</blockquote>
-<p>3、熟悉zRevrangeByScore方法</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">ZREVRANGEBYSCORE key max min [WITHSCORES] [LIMIT offset count]</div><div class="line"></div><div class="line">返回有序集 key 中， score 值介于 max 和 min 之间(默认包括等于 max 或 min )的所有的成员。有序集成员按 score 值递减(从大到小)的次序排列。</div><div class="line"></div><div class="line">具有相同 score 值的成员按字典序的逆序(reverse lexicographical order )排列。</div><div class="line"></div><div class="line">min 和 max 可以是 -inf 和 +inf ，这样一来，你就可以在不知道有序集的最低和最高 score 值的情况下获取数据</div><div class="line"></div><div class="line">默认情况下，区间的取值使用闭区间 (小于等于或大于等于)，你也可以通过给参数前增加 ( 符号来使用可选的开区间 (小于或大于)。</div><div class="line"></div><div class="line">举个例子：</div><div class="line"></div><div class="line"><span class="function">ZRANGEBYSCORE <span class="title">zset</span> <span class="params">(<span class="number">1</span> <span class="number">5</span></span></span></div><div class="line">返回所有符合条件 <span class="number">1</span> &lt; score &lt;= <span class="number">5</span> 的成员，而</div><div class="line"></div><div class="line">ZRANGEBYSCORE zset (<span class="number">5</span> (<span class="number">10</span></div><div class="line">则返回所有符合条件 <span class="number">5</span> &lt; score &lt; <span class="number">10</span> 的成员。</div></pre></td></tr></table></figure>
-<blockquote>
-<p>2、调用zRevrangeByScore方法向缓存中获取分页数据</p>
-<p>比如每页按取3条数据进行分页的话,当我们在查看第1页的前提下，上推操作，获取第2页的历史数据，需要拿到上一页数据的最后一条记录的score值【key:home_123456 score:3 value c】,所以score值为3</p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">jedis.zrevrangeByScore(<span class="string">"home_123456"</span>, <span class="string">"+inf"</span>, <span class="string">"("</span>+<span class="number">3</span>, <span class="number">0</span>, <span class="number">3</span>);</div><div class="line"></div><div class="line">这条代码的意思就是取出缓存中key为<span class="string">"home_123456"</span>,并且score值大于<span class="number">3</span>的数据，并且从第<span class="number">0</span>条开始一共取出<span class="number">3</span>条(有点像 limit <span class="number">0</span>,<span class="number">3</span>的作用)</div><div class="line"></div><div class="line">注：【+inf】 代表最大值不知道，所以不对区间进行最大值限制,</div><div class="line">    【<span class="string">"("</span>+<span class="number">3</span>】 等同与 【(<span class="number">3</span>】，代表sore的值要小于<span class="number">3</span></div></pre></td></tr></table></figure>
-<p>通过上面的方法可以很好的实现在缓存中进行分页获取数据，以此可以有效提示app端的性能</p>
-
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/Redis-使用SortedSet分页处理/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -1711,55 +1314,13 @@
 
       
         
-          
-            <p>仔细想了想，现将我对nodejs理解中的两个概念综述一下，以确定后续对其使用定位和深入理解。</p>
+          <p>仔细想了想，现将我对nodejs理解中的两个概念综述一下，以确定后续对其使用定位和深入理解。</p>
 <h2 id="1、包管理器"><a href="#1、包管理器" class="headerlink" title="1、包管理器"></a>1、包管理器</h2><p>其实nodejs有一个强大的包管理器支撑着nodejs的繁荣生态，提到这个包管理器就据下面几个例子：</p>
-<p><em>用过linux操作系统的都知道：</em></p>
-<p> 如果用的是Debian、Ubuntu操作系统的话，那么我们平时安装软件时会用到【<em>apt-get install 包名称</em>】去安装；</p>
-<p> 如果用的是Fedora/Redhat、CentOS操作系统的话，那么我们平时安装软件时会用到【<em>yum install 包名称</em>】去安装；</p>
-<p> 再举一个例子，就是平时开发中用maven管理依赖；一般如果工程依赖什么jar包，然后在pom.xml中配置这个依赖的jar包信息就行了；</p>
-<p> 通过上面三个例子是不是发现我们安装软件、添加依赖的jar包等操作时非常方便；可是有没有想到他们如果操作的，其实在后面有一个仓库；</p>
-<p> 安装软件时有一个在线软件仓库，添加jar依赖时，有一个jar包仓库(本地或远程)；当执行安装命令时，会直接从仓库中把相关软件下载下来并且自动安装，就是这么爽；<br> 其实nodejs也有类似这么一个仓库(node package manage)，简称NPM</p>
-<p> 如果安装nodejs仓库中的软件(模块)，可以通过npm命令【<em>npm install 名称</em>】；当然npm命令其实在我们安装nodejs时已经自动安装了，<br> 我们可以输入<em>npm -v</em>查看已经安装的npm的版本信息；当然如果没有安装npm的话，<br> 可以通过命令以下进行安装：</p>
-<blockquote>
-<p>curl <a href="http://npmjs.org/install.sh" target="_blank" rel="external">http://npmjs.org/install.sh</a> | sudo sh  #如果非root用户需要添加sudo sh获取管理员权限</p>
-</blockquote>
-<h2 id="2、异步事件"><a href="#2、异步事件" class="headerlink" title="2、异步事件"></a>2、异步事件</h2><p>nodejs是基于事件机制进行处理的，不像多线程那样；拿一个例子来讲，比如在线购物时，”提交订单”的操作：</p>
-<blockquote>
-<p>如果用多线程方式：</p>
-<p>a、启动一个线程判断库存，并且减库存操作(花费200ms)</p>
-<p>b、启动一个线程修改订单状态操作(花费300ms)</p>
-<p>c、启动一个线程修改购物车中商品状态操作(花费400ms)</p>
-</blockquote>
-<p>  当然上述流程只是假设，如果针对上面三个操作不使用多线程的情况，花费的时间就是三个操作的时间总和(花费900ms)；而如果采用多线程并行处理三个操作的话，那么花费的时间仅仅是三个操作中花费时间最长的一个操作的时间(花费400ms)。</p>
-<blockquote>
-<p>如果用nodejs方式：</p>
-<p>a、添加一个库存操作事件(花费50ms)</p>
-<blockquote>
-<p>a.1、判断库存(花费100ms)</p>
-<p>a.2、减库存操作(花费100ms)</p>
-</blockquote>
-<p>b、添加一个修改订单的事件(花费40ms)</p>
-<blockquote>
-<p>b.1、修改订单状态操作(花费100ms)</p>
-</blockquote>
-<p>c、添加一个修改购物车的事件(花费50ms)</p>
-<blockquote>
-<p>c.1、修改购物车中商品状态操作(花费400ms)</p>
-</blockquote>
-</blockquote>
-<p><em>注：上面的添加一个XX事件其实是将一个事件添加到事件管理器中，然后nodejs会自动且不间断的消费处理事件管理器中的事件。</em></p>
-<p>通过看到nodejs的操作步骤场景我们发现一个重要的特征就是不停的“添加一个XX事件”；<br>所以提交订单的操作时间将是(50ms+40ms+50ms=140ms)，相比多线程场景花费的时间(400ms)是不是少了很多；</p>
-<blockquote>
-<p>但是有一点我们需要注意:</p>
-<blockquote>
-<p>1、使用nodejs的场景花费 140ms，并不是提交一个订单花费了140ms，而是用户提交一个订单收到的响应是140ms；</p>
-<p>2、多线程场景虽然花费了400ms，但是提交订单这个操作全部完成了；而nodejs场景花费了140ms，但是提交订单这个操作还没有全部完成；这就是异步的概念</p>
-<p>3、所以针对提交订单这个操作使用nodejs去处理貌似有点欠缺，因为提交订单操作涉及大量的“计算”，如果采用异步去处理，可能无法保证数据原子性和一致性。<br>所以nodejs的使用场景更适合密集型IO，比如应对大流量的请求、磁盘io等等。</p>
-</blockquote>
-</blockquote>
-
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/我所理解的nodeJs的两个概念/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -1876,47 +1437,19 @@
 
       
         
-          
-            <p>主要介绍在Linux(CentOS)系统中，nodeJs的安装与环境配置，首先我们需要到nodeJs官网下载对应的tar安装包，然后使用命令进行安装和配置操作(一共有源代码编译安装和二进制包安装，两种安装方式都是可以的)</p>
+          <p>主要介绍在Linux(CentOS)系统中，nodeJs的安装与环境配置，首先我们需要到nodeJs官网下载对应的tar安装包，然后使用命令进行安装和配置操作(一共有源代码编译安装和二进制包安装，两种安装方式都是可以的)</p>
 <h2 id="一、二进制包安装"><a href="#一、二进制包安装" class="headerlink" title="一、二进制包安装"></a>一、二进制包安装</h2><p>1 下载二进制包</p>
 <p><code>cd /usr/local/develop/soft  #切换到对应的安装目录中</code></p>
 <p><code>wget https://nodejs.org/dist/v6.9.5/node-v6.9.5-linux-x64.tar.xz  #下载官方的nodeJs二进制安装包</code></p>
 <p>2 命令安装</p>
 <blockquote>
 <p>tar -xvf  node-v6.9.4-linux-x64.tar.xz    #解压下载的二进制安装包</p>
-<p>cd node-v6.9.4-linux-x64/ &amp;&amp; ll    #切换到已经解压的安装包目录中，并且详细列出所有的文件</p>
 </blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">drwxrwxr-x. <span class="number">2</span> maps maps    <span class="number">27</span> <span class="number">1</span>月   <span class="number">6</span> <span class="number">04</span>:<span class="number">50</span> bin</div><div class="line">-rw-rw-r--. <span class="number">1</span> maps maps <span class="number">55480</span> <span class="number">1</span>月   <span class="number">6</span> <span class="number">04</span>:<span class="number">50</span> CHANGELOG.md</div><div class="line">drwxrwxr-x. <span class="number">3</span> maps maps    <span class="number">17</span> <span class="number">1</span>月   <span class="number">6</span> <span class="number">04</span>:<span class="number">50</span> include</div><div class="line">drwxrwxr-x. <span class="number">3</span> maps maps    <span class="number">25</span> <span class="number">1</span>月   <span class="number">6</span> <span class="number">04</span>:<span class="number">50</span> lib</div><div class="line">-rw-rw-r--. <span class="number">1</span> maps maps <span class="number">60477</span> <span class="number">1</span>月   <span class="number">6</span> <span class="number">04</span>:<span class="number">50</span> LICENSE</div><div class="line">-rw-rw-r--. <span class="number">1</span> maps maps <span class="number">17440</span> <span class="number">1</span>月   <span class="number">6</span> <span class="number">04</span>:<span class="number">50</span> README.md</div><div class="line">drwxrwxr-x. <span class="number">5</span> maps maps    <span class="number">42</span> <span class="number">1</span>月   <span class="number">6</span> <span class="number">04</span>:<span class="number">50</span> share</div></pre></td></tr></table></figure>
-<pre><code>*可以看到二进制安装包中包含bin/ 目录*
-</code></pre><p>3 配置环境变量</p>
-<blockquote>
-<p>vim /etc/profile</p>
-</blockquote>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">export NODE_HOME=/usr/local/develop/soft/node-v6<span class="number">.9</span><span class="number">.4</span>-linux-x64</div><div class="line">export PATH=$NODE_HOME/bin:$PATH</div><div class="line">export NODE_PATH=$NODE_HOME/lib/node_modules:$PATH</div></pre></td></tr></table></figure>
-<blockquote>
-<p>source /etc/profile    </p>
-</blockquote>
-<p>4 验证是否安装成功</p>
-<blockquote>
-<p>node -v</p>
-</blockquote>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">v6<span class="number">.9</span><span class="number">.4</span></div></pre></td></tr></table></figure>
-<h2 id="二、源代码编译安装"><a href="#二、源代码编译安装" class="headerlink" title="二、源代码编译安装"></a>二、源代码编译安装</h2><p>1 下载二进制包</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd /usr/local/develop/soft  <span class="comment">#切换到对应的安装目录中</span></div><div class="line">wget https:<span class="comment">//nodejs.org/dist/v6.9.5/node-v6.9.5.tar.gz  #下载官方的nodeJs二进制安装包</span></div></pre></td></tr></table></figure>
-<p>2 命令安装</p>
-<blockquote>
-<p>tar -zxvf  node-v6.9.4-linux-x64.tar.gz    #解压下载的二进制安装包</p>
-<p>cd node-v6.9.4-linux-x64/    #切换到已经解压的安装包目录中</p>
-<p>./configure  #配置</p>
-<p>make</p>
-<p>make install</p>
-</blockquote>
-<p>3 配置环境变量</p>
-<pre><code>*参照二进制安装方式中的环境配置*
-</code></pre><p>4 验证是否安装成功</p>
-<pre><code>*参照二进制安装方式中的验证*
-</code></pre>
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/CentOS系统安装nodeJs/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -2033,15 +1566,12 @@
 
       
         
-          
-            <p>在使用jquery的attr属性处理单选按钮选中时，出现偶尔不能选中的问题，后来才知道jquery官方推荐使用prop，而再推荐使用attr。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$(<span class="string">"input[type='radio'][name='workerType'][value='IT']"</span>).attr(<span class="string">'checked'</span>,<span class="keyword">true</span>);</div></pre></td></tr></table></figure>
-<p>使用attr方法操作单选按钮为选中状态时，会出现不能选中的情况（偶现）</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$(<span class="string">"input[type='radio'][name='workerType'][value='IT']"</span>).prop(<span class="string">'checked'</span>,<span class="keyword">true</span>);</div></pre></td></tr></table></figure>
-<p>使用prop方法操作单选按钮为选中状态时，可以正常选中</p>
-<p>当在页面中用jquery来控制DOM元素中的属性时要用 .prop()；不要再用 .attr()，不然会出问题，官方文档也推荐这样</p>
-
-          
+          <p>在使用jquery的attr属性处理单选按钮选中时，出现偶尔不能选中的问题，后来才知道jquery官方推荐使用prop，而再推荐使用attr。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/Jquery中prop和attr使用时的问题/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -2158,88 +1688,12 @@
 
       
         
-          
-            <p>在上一篇文章中描述了二进制、八进制、十进制、十六进制的概念和表述方法，但是在计算机的世界中，只有0和1，所以除了二进制之外的其它X进制，计算机都是不能识别的；所以需要把他们转换为二进制之后才能在计算机上面运行</p>
-<p><strong>一、十进制转换二进制</strong></p>
-<p><em>注:如果是10进制转换2进制的话，那么只需要拿着10进制除以2,直到商为1或者0，然后拿着商和余数组成的一串0和1数字串就是该十进制数的二进制值</em></p>
-<ol>
-<li><p>把5转换为2进制</p>
-<ul>
-<li>5/2 ——2——-1</li>
-<li>2/2 ——1——-0</li>
-<li>5除以2，除到最后商1，然后余数为0；所以5的二进制为:101;然后前面补0:00000101</li>
-</ul>
-</li>
-<li><p>把16转换为2进制</p>
-<ul>
-<li>16/2 ——8——-0</li>
-<li>8/2  ——4——-0</li>
-<li>4/2  ——2——-0</li>
-<li>2/2  ——1——-0</li>
-<li>16除以2，除到最后商为1，然后余数为0；所以16的二进制为:10000;然后前面补0:00010000</li>
-</ul>
-</li>
-<li><p>把99转换为2进制</p>
-<ul>
-<li>99/2 ——49 ——-1</li>
-<li>49/2 ——24 ——-1</li>
-<li>24/2 ——12 ——-0</li>
-<li>12/2 ——6  ——-0</li>
-<li>6/2  ——3  ——-0</li>
-<li>3/2  ——1  ——-1</li>
-<li>99除以2，除到最后商为1，然后余数为1；所以99的二进制为:1100011;然后前面补0:01100011</li>
-</ul>
-</li>
-</ol>
-<p><strong>二、二进制表示十进制</strong></p>
-<p><em>注:如果是2制转换10进制的话，那么只需要把二进制串的每一位的值乘以2^索引值 [其所在串中的索引值(0开始从右向左)] 的和</em></p>
-<ol>
-<li><p>把<strong>00000101</strong>转换为10进制</p>
-<ul>
-<li>从右向左开始—–第0位—–1—–2^0 X 1——-1</li>
-<li>从右向左开始—–第1位—–0—–2^1 X 0——-0</li>
-<li>从右向左开始—–第2位—–1—–2^2 X 1——-4</li>
-<li>从右向左开始—–第3位—–0—–2^3 X 0——-0</li>
-<li>从右向左开始—–第4位—–0—–2^4 X 0——-0</li>
-<li>从右向左开始—–第5位—–0—–2^5 X 0——-0</li>
-<li>从右向左开始—–第6位—–0—–2^6 X 0——-0</li>
-<li>从右向左开始—–第7位—–0—–2^7 X 0——-0</li>
-<li>最终<strong>00000101</strong>二进制串对应的值为 1+0+4+0+0+0+0+0 = 5</li>
-</ul>
-</li>
-</ol>
-<ol>
-<li><p>把<strong>00010000</strong>转换为2进制</p>
-<ul>
-<li>从右向左开始—–第0位—–0—–2^0 X 0——-0</li>
-<li>从右向左开始—–第1位—–0—–2^1 X 0——-0</li>
-<li>从右向左开始—–第2位—–0—–2^2 X 0——-0</li>
-<li>从右向左开始—–第3位—–0—–2^3 X 0——-0</li>
-<li>从右向左开始—–第4位—–1—–2^4 X 1——-16</li>
-<li>从右向左开始—–第5位—–0—–2^5 X 0——-0</li>
-<li>从右向左开始—–第6位—–0—–2^6 X 0——-0</li>
-<li>从右向左开始—–第7位—–0—–2^7 X 0——-0</li>
-<li>最终<strong>00010000</strong>二进制串对应的值为 0+0+0+0+16+0+0+0 = 16</li>
-</ul>
-</li>
-</ol>
-<ol>
-<li><p>把<strong>01100011</strong>转换为2进制</p>
-<ul>
-<li>从右向左开始—–第0位—–1—–2^0 X 1——-1</li>
-<li>从右向左开始—–第1位—–1—–2^1 X 1——-2</li>
-<li>从右向左开始—–第2位—–0—–2^2 X 0——-0</li>
-<li>从右向左开始—–第3位—–0—–2^3 X 0——-0</li>
-<li>从右向左开始—–第4位—–0—–2^4 X 1——-0</li>
-<li>从右向左开始—–第5位—–1—–2^5 X 0——-32</li>
-<li>从右向左开始—–第6位—–1—–2^6 X 0——-64</li>
-<li>从右向左开始—–第7位—–0—–2^7 X 0——-0</li>
-<li>最终<strong>00010000</strong>二进制串对应的值为 1+2+0+0+0+32+64+0 = 99</li>
-</ul>
-</li>
-</ol>
-
-          
+          <p>在上一篇文章中描述了二进制、八进制、十进制、十六进制的概念和表述方法，但是在计算机的世界中，只有0和1，所以除了二进制之外的其它X进制，计算机都是不能识别的；所以需要把他们转换为二进制之后才能在计算机上面运行</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/10进制与2进制转换/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -2356,27 +1810,12 @@
 
       
         
-          
-            <p>在使用thymeleaf渲染数据的时候，我们经常会用到basepath变量（访问地址前缀），一般我们在jsp中直接request对象获取拼接而成，但是在thymeleaf中如何使用呢，可以通过th:with定义并使用。</p>
-<h3 id="th-with用法"><a href="#th-with用法" class="headerlink" title="th:with用法"></a>th:with用法</h3><p>1、用来定义局部变量，用法如下：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;div th:with="name=zhangsan"&gt;  </div><div class="line">   	&lt;p&gt;hello &lt;span th:text="$&#123;name&#125;"&gt;&lt;/span&gt;.&lt;/p&gt;  </div><div class="line">&lt;/div&gt;</div></pre></td></tr></table></figure></p>
-<p>上面的例子定义了一个变量name，值为zhangsan，然后我们在p标签中输出定义的变量。</p>
-<p>通过上面的例子可以看出来用法规则为–th:with=”key=value”这种格式定义局部变量</p>
-<p>2、用来定义多个局部变量，用法如下：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;div th:with="name=zhangsan,age=25"&gt;  </div><div class="line">   	&lt;p&gt;hello &lt;span th:text="$&#123;name&#125;"&gt;&lt;/span&gt;.&lt;/p&gt;  </div><div class="line">&lt;/div&gt;</div></pre></td></tr></table></figure>
-<p>上面的例子定义了第一个变量name，值为zhangsan;第二个变量age，值为25。</p>
-<h3 id="th-with范围"><a href="#th-with范围" class="headerlink" title="th:with范围"></a>th:with范围</h3><p>1、我们在定义变量的时候其实是存在范围限制的，我们定义的变量，只能在我们所定义的标签内部使用<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;div th:with="name=zhangsan"&gt;  </div><div class="line">   	&lt;p id="inner"&gt;hello &lt;span th:text="$&#123;name&#125;"&gt;&lt;/span&gt;.&lt;/p&gt;  </div><div class="line">&lt;/div&gt; </div><div class="line">&lt;p id="outer"&gt;hello &lt;span th:text="$&#123;name&#125;"&gt;&lt;/span&gt;.&lt;/p&gt;</div></pre></td></tr></table></figure></p>
-<p>上面的例子中我们在div标签中定义了一个name变量，然后分别在div标签内部和外部的p标签上面进行使用，其实在id为outer的p标签上面是不能取到变量</p>
-<p>name的值的。因为我们定义的变量name是在div标签上面的，所以只能在div标签内部进行使用。这就是范围</p>
-<h3 id="th-with定义对象"><a href="#th-with定义对象" class="headerlink" title="th:with定义对象"></a>th:with定义对象</h3><p>我们前面仅仅使用th:with定义简单的变量，其实也可以用来定义对象，比如我们通过后台返回的数据封装VO对象，我们就可以在这里定义，</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;div th:with="user=$&#123;userList[0]&#125;"&gt;  </div><div class="line">   	&lt;p&gt;The name of the first person is &lt;span th:text="$&#123;user.userName&#125;"&gt;Julius Caesar&lt;/span&gt;.&lt;/p&gt;  </div><div class="line">&lt;/div&gt;</div></pre></td></tr></table></figure>
-<p>我们定义变量user为list中的一个索引对象，然后我们就可以使用变量中的属性了。</p>
-<h3 id="th-with定义的变量在js中如何使用"><a href="#th-with定义的变量在js中如何使用" class="headerlink" title="th:with定义的变量在js中如何使用"></a>th:with定义的变量在js中如何使用</h3><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;head th:with="name=zhangsan"&gt; </div><div class="line">	&lt;script type="text/javascript" th:inline="javascript"&gt;</div><div class="line">		var name = [[$&#123;columnListJson&#125;]];</div><div class="line">	&lt;/script&gt;</div><div class="line"></div><div class="line">&lt;/head&gt;</div></pre></td></tr></table></figure>
-<p>上面的例子中有三个地方需要注意：</p>
-<p>1、如果在js中需要使用变量，那么就要考虑前面提到的使用范围问题</p>
-<p>2、如果在js中使用那么需要在<script>标签中添加 th:inline=”javascript”</p>
-<p>3、在js标签中获取变量时，需要采用[[$变量名称]]的方式获取使用</p>
-</script></p>
-          
+          <p>在使用thymeleaf渲染数据的时候，我们经常会用到basepath变量（访问地址前缀），一般我们在jsp中直接request对象获取拼接而成，但是在thymeleaf中如何使用呢，可以通过th:with定义并使用。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/thymeleaf教程3-with定义变量使用/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -2493,16 +1932,14 @@
 
       
         
-          
-            <p>我们在开发产品时，可能不同人开发不同的功能模块，比如：</p>
+          <p>我们在开发产品时，可能不同人开发不同的功能模块，比如：</p>
 <p>•现在A开发a模块，B开发b模块</p>
 <p>•a模块依赖modelman-1.0.0-SNAPSHOT.jar包；b模块依赖modelman-1.0.2-RELEASE.jar包；很显然目前最新的jar包版本应该都用modelman-1.0.2-RELEASE.jar这个版本</p>
-<p>•那么我们就可以把modelman-1.0.0-SNAPSHOT.jar这个jar包添加配置到下面中<br>    <exclude>com.maps:modelman:1.0.0-SNAPSHOT</exclude></p>
-<p>•添加完成后当编译产品时则会自动检测是否还有用到modelman:1.0.0-SNAPSHOT的模块，如检测出有，那么则中断编译并提示</p>
-<p>其实我们只需在xml配置文件中添加插件maven-enforcer-plugin配置就行了</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">&lt;plugin&gt;</div><div class="line">		&lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</div><div class="line">		&lt;artifactId&gt;maven-enforcer-plugin&lt;/artifactId&gt;</div><div class="line">		&lt;version&gt;1.2&lt;/version&gt;</div><div class="line">		&lt;executions&gt;</div><div class="line">			&lt;execution&gt;</div><div class="line">				&lt;id&gt;enforce-banned-dependencies&lt;/id&gt;</div><div class="line">				&lt;goals&gt;</div><div class="line">					&lt;goal&gt;enforce&lt;/goal&gt;</div><div class="line">				&lt;/goals&gt;</div><div class="line">				&lt;configuration&gt;</div><div class="line">					&lt;rules&gt;</div><div class="line">						&lt;bannedDependencies&gt;</div><div class="line">							&lt;searchTransitive&gt;true&lt;/searchTransitive&gt;</div><div class="line">							&lt;excludes&gt;</div><div class="line">								&lt;!--在下面添加忽略的相关jar包 --&gt;</div><div class="line">								&lt;exclude&gt;com.maps:modelman:1.0.0-SNAPSHOT&lt;/exclude&gt;</div><div class="line">								&lt;exclude&gt;com.maps:dictionary:1.0.0-SNAPSHOT&lt;/exclude&gt;</div><div class="line">								&lt;exclude&gt;com.maps:flow&lt;/exclude&gt;</div><div class="line">							&lt;/excludes&gt;</div><div class="line">						&lt;/bannedDependencies&gt;</div><div class="line">					&lt;/rules&gt;</div><div class="line">					&lt;fail&gt;true&lt;/fail&gt;</div><div class="line">				&lt;/configuration&gt;</div><div class="line">			&lt;/execution&gt;</div><div class="line">		&lt;/executions&gt;</div><div class="line">&lt;/plugin&gt;</div></pre></td></tr></table></figure>
-
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/Maven忽略其他依赖jar包插件/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -2619,13 +2056,13 @@
 
       
         
-          
-            <p>在平时的开发过程中，mysql的编码是拉丁字符，所以当向里面存储数据时，显示出来就是乱码，那么我们需要执行如下操作：</p>
-<h3 id="1-通过命令或者其他终端登录到mysql服务中，并执行查询目前对应的数据库的编码信息sql脚本查询，执行命令会查询出该数据库下面每一张表对应的字符编码信息"><a href="#1-通过命令或者其他终端登录到mysql服务中，并执行查询目前对应的数据库的编码信息sql脚本查询，执行命令会查询出该数据库下面每一张表对应的字符编码信息" class="headerlink" title="1.通过命令或者其他终端登录到mysql服务中，并执行查询目前对应的数据库的编码信息sql脚本查询，执行命令会查询出该数据库下面每一张表对应的字符编码信息"></a>1.通过命令或者其他终端登录到mysql服务中，并执行查询目前对应的数据库的编码信息sql脚本查询，执行命令会查询出该数据库下面每一张表对应的字符编码信息</h3><p><img src="http://soujava.com/images/mysqlCode1.png" alt="Alt text"></p>
-<h3 id="2-然后执行下面的sql脚本，基于查询语句生成修改表结构编码的sql语句列表"><a href="#2-然后执行下面的sql脚本，基于查询语句生成修改表结构编码的sql语句列表" class="headerlink" title="2.然后执行下面的sql脚本，基于查询语句生成修改表结构编码的sql语句列表"></a>2.然后执行下面的sql脚本，基于查询语句生成修改表结构编码的sql语句列表</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function">select <span class="title">concat</span><span class="params">(<span class="string">'alter table '</span>, table_name,<span class="string">' character set utf8 collate utf8_bin;'</span>)</span> from information_schema.tables as t, information_schema.COLLATION_CHARACTER_SET_APPLICABILITY as c </span></div><div class="line">where c.collation_name = t.table_collation and t.table_schema=<span class="string">'confluence'</span> and (c.character_set_name!=<span class="string">'utf8'</span> or c.collation_name!=<span class="string">'utf8_bin'</span>);</div></pre></td></tr></table></figure>
-<h3 id="3-然后把第2步查询出的alter语句复制到对应的命令窗口中执行修改具体的表结构编码操作"><a href="#3-然后把第2步查询出的alter语句复制到对应的命令窗口中执行修改具体的表结构编码操作" class="headerlink" title="3.然后把第2步查询出的alter语句复制到对应的命令窗口中执行修改具体的表结构编码操作"></a>3.然后把第2步查询出的alter语句复制到对应的命令窗口中执行修改具体的表结构编码操作</h3><p><img src="http://soujava.com/images/mysqlCode2.png" alt="Alt text"></p>
-
-          
+          <p>在平时的开发过程中，mysql的编码是拉丁字符，所以当向里面存储数据时，显示出来就是乱码，那么我们需要执行如下操作：</p>
+<h3 id="1-通过命令或者其他终端登录到mysql服务中，并执行查询目前对应的数据库的编码信息sql脚本查询，执行命令会查询出该数据库下面每一张表对应的字符编码信息"><a href="#1-通过命令或者其他终端登录到mysql服务中，并执行查询目前对应的数据库的编码信息sql脚本查询，执行命令会查询出该数据库下面每一张表对应的字符编码信息" class="headerlink" title="1.通过命令或者其他终端登录到mysql服务中，并执行查询目前对应的数据库的编码信息sql脚本查询，执行命令会查询出该数据库下面每一张表对应的字符编码信息"></a>1.通过命令或者其他终端登录到mysql服务中，并执行查询目前对应的数据库的编码信息sql脚本查询，执行命令会查询出该数据库下面每一张表对应的字符编码信息</h3>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/Mysql数据库编码更改/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -2742,27 +2179,12 @@
 
       
         
-          
-            <p>最近需要用到消息服务器，就用到淘宝开源的RocketMQ消息服务器了，重新安装的一台新的linux服务器（CentOS6.4），然后安装的RocketMQ二进制包。安装成功后，在最后启动的时候，报了一个错误！</p>
-<blockquote>
-<p><img src="http://soujava.com/images/rocketMQ1.png" alt="Alt text"></p>
-</blockquote>
-<p>注：根据上面的错误提示信息可以看到是因为刚刚安装的Centos操作系统的主机名称没有配置导致启动MQ服务时住不到主机</p>
-<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>1、vim /etc/hosts   </p>
-<p>添加如下主机名配置信息</p>
-<blockquote>
-<p><img src="http://soujava.com/images/rocketMQ2.png" alt="Alt text"></p>
-</blockquote>
-<p>2、service network stop  </p>
-<p>关闭网卡</p>
-<p>3、service network start  </p>
-<p>启动网卡</p>
-<p>4、再重新执行MQ的启动服务命令后，可以看到下面的提示信息代表服务已经启动成功</p>
-<blockquote>
-<p><img src="http://soujava.com/images/rocketMQ3.png" alt="Alt text"></p>
-</blockquote>
-
-          
+          <p>最近需要用到消息服务器，就用到淘宝开源的RocketMQ消息服务器了，重新安装的一台新的linux服务器（CentOS6.4），然后安装的RocketMQ二进制包。安装成功后，在最后启动的时候，报了一个错误！</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/RocketMQ启动报错解决/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -2879,25 +2301,12 @@
 
       
         
-          
-            <p>java定时任务Timer 关于定时任务，似乎跟时间操作的联系并不是很大，但是前面既然提到了定时任务，索性在这里一起解决了。设置定时任务很简单，用Timer类就搞定了。</p>
-<h3 id="一、我们定义一个需要定时执行的任务的类"><a href="#一、我们定义一个需要定时执行的任务的类" class="headerlink" title="一、我们定义一个需要定时执行的任务的类"></a>一、我们定义一个需要定时执行的任务的类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> test; </div><div class="line"><span class="keyword">import</span> java.util.Timer; </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TimeTaskTest</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123; </div><div class="line">		Timer timer = <span class="keyword">new</span> Timer(); </div><div class="line">		timer.schedule(<span class="keyword">new</span> Task(), <span class="number">60</span> * <span class="number">1000</span>); </div><div class="line">	&#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>注：我们的定时任务，就在这个类的main函数里执行</p>
-<p>1、上面的代码实现了这样一个功能，当TimeTask程序启动以后，过一分钟后执行某项任务</p>
-<p>2、很简单吧：先new一个Timer对象，然后调用它的schedule方法，这个方法有四个重载的方法，这里我们用其中一个，<br>public void schedule(TimerTask task,long delay) </p>
-<p>首先，第一个参数第一个参数就是我们要执行的任务。这是一个TimerTask对象，确切点说是一个实现TimerTask的类的对象，因为TimerTask是个抽象类。上面的代码里 面，Task就是我们自己定义的实现了TimerTask的类，因为是在同一个包里面，所以没有显性的import进来。Task类的代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> test; </div><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.TimerTask; </div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Task</span> <span class="keyword">extends</span> <span class="title">TimerTask</span> </span>&#123; </div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123; </div><div class="line">		System.out.println(<span class="string">"定时任务执行"</span>); </div><div class="line">	&#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>我们的Task必须实现TimerTask的方法run，要执行的任务就在这个run方法里面，这里，我们只让它往控制台打一行字。</p>
-<p>第二个参数第二个参数是一个long型的值。这是延迟的时间，就是从程序开始以后，再过多少时间来执行定时任务。这个long型的值是毫秒数，<br>所以前面我们的程序里面，过一分钟后执行用的参数值就是 60 * 1000。</p>
-<h3 id="二、循环执行任务"><a href="#二、循环执行任务" class="headerlink" title="二、循环执行任务"></a>二、循环执行任务</h3><p>循环执行设置定时任务的时候，往往我们需要重复的执行这样任务，每隔一段时间执行一次，而上面的方法是只执行一次的，<br>这样就用到了schedule方法的是另一个重载函数<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">schedule</span><span class="params">(TimerTask task,<span class="keyword">long</span> delay,<span class="keyword">long</span> period)</span></span></div></pre></td></tr></table></figure></p>
-<p>前两个参数就不用说什么了，最后一个参数就是间隔的时间，又是个long型的毫秒数（看来java里涉及到时间的，跟这个long是脱不了干系了），<br>比如我们希望上面的任务从第一次执行后，每个一分钟执行一次，第三个参数值赋60 * 1000就ok了。</p>
-<h3 id="三、定时"><a href="#三、定时" class="headerlink" title="三、定时"></a>三、定时</h3><p>指定执行时间既然号称是定时任务，我们肯定希望由我们来指定任务指定的时间，显然上面的方法就不中用了，因为我们不知道程序什么时间开始运行，<br>就没办法确定需要延时多少。没关系，schedule四个重载的方法还没用完呢。用下面这个就OK了：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">schedule</span><span class="params">(TimerTask task,Date time)</span></span></div></pre></td></tr></table></figure>
-<p>比如，我们希望定时任务2006年7月2日0时0分执行，只要给第二个参数传一个时间设置为2006年7月2日0时0分的Date对象就可以了。<br>有一种情况是，可能我们的程序启动的时候，已经是2006年7月3日了，这样的话，程序一启动，定时任务就开始执行了。</p>
-<p>schedule最后一个重载的方法是<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">schedule</span><span class="params">(TimerTask task,Date firstTime,<span class="keyword">long</span> period)</span></span></div></pre></td></tr></table></figure></p>
-<h3 id="四、扩展"><a href="#四、扩展" class="headerlink" title="四、扩展"></a>四、扩展</h3><p>j2ee中的定时任务在实际的项目中，往往定时任务需要对web工程中的资源进行操作，这样一来，用上面的单个程序的方式可能就有点力不从心了，因为很多web工程的资源它操作不到。解决的办法是，使用Servlet，把执行定时任务的那些代码放到Servlet的init()函数里就可以了，这个easy，就没有必要再写示例代码了吧</p>
-
-          
+          <p>java定时任务Timer 关于定时任务，似乎跟时间操作的联系并不是很大，但是前面既然提到了定时任务，索性在这里一起解决了。设置定时任务很简单，用Timer类就搞定了。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/java定时任务Timer小试一下/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -3014,116 +2423,13 @@
 
       
         
-          
-            <p> <strong>1</strong>.应尽量避免在 where 子句中使用!=或&lt;&gt;操作符，否则将引擎放弃使用索引而进行全表扫描。</p>
+          <p> <strong>1</strong>.应尽量避免在 where 子句中使用!=或&lt;&gt;操作符，否则将引擎放弃使用索引而进行全表扫描。</p>
 <p> <strong>2</strong>.对查询进行优化，应尽量避免全表扫描，首先应考虑在 where 及 order by 涉及的列上建立索引。</p>
-<p> <strong>3</strong>.应尽量避免在 where 子句中对字段进行 null 值判断，否则将导致引擎放弃使用索引而进行全表扫描，如：</p>
-<pre><code>select id from t where num is null
-可以在num上设置默认值0，确保表中num列没有null值，然后这样查询：
-select id from t where num=0
-</code></pre><p> <strong>4</strong>.应尽量避免在 where 子句中使用 or 来连接条件，否则将导致引擎放弃使用索引而进行全表扫描，如：</p>
-<pre><code>select id from t where num=10 or num=20
-可以这样查询：
-select id from t where num=10
-union all
-select id from t where num=20
-</code></pre><p> <strong>5</strong>.下面的查询也将导致全表扫描：(不能前置百分号)</p>
-<pre><code> select id from t where name like ‘%abc%’
-若要提高效率，可以考虑全文检索。
-</code></pre><p> <strong>6</strong>.in 和 not in 也要慎用，否则会导致全表扫描，如：</p>
-<pre><code>select id from t where num in(1,2,3)
-对于连续的数值，能用 between 就不要用 in 了：
-select id from t where num between 1 and 3
-</code></pre><p> <strong>7</strong>.如果在 where 子句中使用参数，也会导致全表扫描。因为SQL只有在运行时才会解析局部变量，但优化程序不能将访问计划的选择推迟到运行时；它必须在编译时进行选择。然 而，如果在编译时建立访问计划，变量的值还是未知的，因而无法作为索引选择的输入项。如下面语句将进行全表扫描：</p>
-<pre><code>select id from t where num=@num
-可以改为强制查询使用索引：
-select id from t with(index(索引名)) where num=@num
-</code></pre><p> <strong>8</strong>.应尽量避免在 where 子句中对字段进行表达式操作，这将导致引擎放弃使用索引而进行全表扫描。如：</p>
-<pre><code>select id from t where num/2=100
-应改为:
-select id from t where num=100*2
-</code></pre><p> <strong>9</strong>.应尽量避免在where子句中对字段进行函数操作，这将导致引擎放弃使用索引而进行全表扫描。如：</p>
-<pre><code>select id from t where substring(name,1,3)=’abc’–name以abc开头的id
-select id from t where datediff(day,createdate,’2005-11-30′)=0–’2005-11-30′生成的id
-应改为:
-select id from t where name like ‘abc%’
-select id from t where createdate&gt;=’2005-11-30′ and createdate&lt;’2005-12-1′
-</code></pre><p> <strong>10</strong>.不要在 where 子句中的“=”左边进行函数、算术运算或其他表达式运算，否则系统将可能无法正确使用索引。</p>
-<p> <strong>11</strong>.在使用索引字段作为条件时，如果该索引是复合索引，那么必须使用到该索引中的第一个字段作为条件时才能保证系统使用该索引，否则该索引将不会被使 用，并且应尽可能的让字段顺序与索引顺序相一致。</p>
-<p> <strong>12</strong>.不要写一些没有意义的查询，如需要生成一个空表结构：</p>
-<pre><code>select col1,col2 into #t from t where 1=0
-这类代码不会返回任何结果集，但是会消耗系统资源的，应改成这样：
-create table #t(…)
-</code></pre><p> <strong>13</strong>.很多时候用 exists 代替 in 是一个好的选择：</p>
-<pre><code>select num from a where num in(select num from b)
-用下面的语句替换：
-select num from a where exists(select 1 from b where num=a.num)
-</code></pre><p> <strong>14</strong>.并不是所有索引对查询都有效，SQL是根据表中数据来进行查询优化的，当索引列有大量数据重复时，SQL查询可能不会去利用索引，如一表中有字段 sex，male、female几乎各一半，那么即使在sex上建了索引也对查询效率起不了作用。</p>
-<p> <strong>15</strong>.索引并不是越多越好，索引固然可以提高相应的 select 的效率，但同时也降低了 insert 及 update 的效率，因为 insert 或 update 时有可能会重建索引，所以怎样建索引需要慎重考虑，视具体情况而定。一个表的索引数最好不要超过6个，若太多则应考虑一些不常使用到的列上建的索引是否有 必要。</p>
-<p> <strong>16</strong>.应尽可能的避免更新 clustered 索引数据列，因为 clustered 索引数据列的顺序就是表记录的物理存储顺序，一旦该列值改变将导致整个表记录的顺序的调整，会耗费相当大的资源。若应用系统需要频繁更新 clustered 索引数据列，那么需要考虑是否应将该索引建为 clustered 索引。</p>
-<p> <strong>17</strong>.尽量使用数字型字段，若只含数值信息的字段尽量不要设计为字符型，这会降低查询和连接的性能，并会增加存储开销。这是因为引擎在处理查询和连接时会 逐个比较字符串中每一个字符，而对于数字型而言只需要比较一次就够了。</p>
-<p> <strong>18</strong>.尽可能的使用 varchar/nvarchar 代替 char/nchar ，因为首先变长字段存储空间小，可以节省存储空间，其次对于查询来说，在一个相对较小的字段内搜索效率显然要高些。</p>
-<p> <strong>19</strong>.任何地方都不要使用 select <em> from t ，用具体的字段列表代替“</em>”，不要返回用不到的任何字段。</p>
-<p> <strong>20</strong>.尽量使用表变量来代替临时表。如果表变量包含大量数据，请注意索引非常有限（只有主键索引）。</p>
-<p> <strong>21</strong>.避免频繁创建和删除临时表，以减少系统表资源的消耗。</p>
-<p> <strong>22</strong>.临时表并不是不可使用，适当地使用它们可以使某些例程更有效，例如，当需要重复引用大型表或常用表中的某个数据集时。但是，对于一次性事件，最好使 用导出表。</p>
-<p> <strong>23</strong>.在新建临时表时，如果一次性插入数据量很大，那么可以使用 select into 代替 create table，避免造成大量 log ，以提高速度；如果数据量不大，为了缓和系统表的资源，应先create table，然后insert。</p>
-<p> <strong>24</strong>.如果使用到了临时表，在存储过程的最后务必将所有的临时表显式删除，先 truncate table ，然后 drop table ，这样可以避免系统表的较长时间锁定。</p>
-<p> <strong>25</strong>.尽量避免使用游标，因为游标的效率较差，如果游标操作的数据超过1万行，那么就应该考虑改写。</p>
-<p> <strong>26</strong>.使用基于游标的方法或临时表方法之前，应先寻找基于集的解决方案来解决问题，基于集的方法通常更有效。</p>
-<p> <strong>27</strong>.与临时表一样，游标并不是不可使用。对小型数据集使用 FAST_FORWARD 游标通常要优于其他逐行处理方法，尤其是在必须引用几个表才能获得所需的数据时。在结果集中包括“合计”的例程通常要比使用游标执行的速度快。如果开发时 间允许，基于游标的方法和基于集的方法都可以尝试一下，看哪一种方法的效果更好。</p>
-<p> <strong>28</strong>.在所有的存储过程和触发器的开始处设置 SET NOCOUNT ON ，在结束时设置 SET NOCOUNT OFF 。无需在执行存储过程和触发器的每个语句后向客户端发送 DONE_IN_PROC 消息。</p>
-<p> <strong>29</strong>.尽量避免向客户端返回大数据量，若数据量过大，应该考虑相应需求是否合理。</p>
-<p> <strong>30</strong>.尽量避免大事务操作，提高系统并发能力。</p>
-<p>####　一、查询速度慢的原因：</p>
-<p>1、没有索引或者没有用到索引(这是查询慢最常见的问题，是程序设计的缺陷) </p>
-<p>2、I/O吞吐量小，形成了瓶颈效应。  </p>
-<p>3、没有创建计算列导致查询不优化。 </p>
-<p>4、内存不足  </p>
-<p>5、网络速度慢  </p>
-<p>6、查询出的数据量过大（可以采用多次查询，其他的方法降低数据量）  </p>
-<p>7、锁或者死锁(这也是查询慢最常见的问题，是程序设计的缺陷)  </p>
-<p>8、sp_lock,sp_who,活动的用户查看,原因是读写竞争资源。</p>
-<p>9、返回了不必要的行和列  </p>
-<p>10、查询语句不好，没有优化  </p>
-<p>####　可以通过如下方法来优化查询  </p>
-<p>1、把数据、日志、索引放到不同的I/O设备上，增加读取速度，以前可以将Tempdb应放在RAID0上，SQL2000不在支持。数据量（尺寸）越大，提高I/O越重要.  </p>
-<p>2、纵向、横向分割表，减少表的尺寸(sp_spaceuse)  </p>
-<p>3、升级硬件  </p>
-<p>4、根据查询条件,建立索引,优化索引、优化访问方式，限制结果集的数据量。注意填充因子要适当（最好是使用默认值0）。索引应该尽量小，使用字节数小的列建索引好（参照索引的创建）,不要对有限的几个值的字段建单一索引如性别字段  </p>
-<p>5、提高网速;  </p>
-<p>6、扩大服务器的内存,Windows   2000和SQL   server   2000能支持4-8G的内存。配置虚拟内存：虚拟内存大小应基于计算机上并发运行的服务进行配置。运行   Microsoft   SQL   Server?   2000   时，可考虑将虚拟内存大小设置为计算机中安装的物理内存的   1.5   倍。如果另外安装了全文检索功能，并打算运行   Microsoft   搜索服务以便执行全文索引和查询，可考虑：将虚拟内存大小配置为至少是计算机中安装的物理内存的   3   倍。将   SQL   Server   max   server   memory   服务器配置选项配置为物理内存的   1.5   倍（虚拟内存大小设置的一半）。  </p>
-<p>8、如果是使用like进行查询的话，简单的使用index是不行的，但是全文索引，耗空间。   like   ‘a%’   使用索引   like   ‘%a’   不使用索引用   like   ‘%a%’   查询时，查询耗时和字段值总长度成正比,所以不能用CHAR类型，而是VARCHAR。对于字段的值很长的建全文索引。  </p>
-<p>9、DB   Server   和APPLication   Server   分离；OLTP和OLAP分离  </p>
-<p>11、重建索引   DBCC   REINDEX   ,DBCC   INDEXDEFRAG,收缩数据和日志   DBCC   SHRINKDB,DBCC   SHRINKFILE.   设置自动收缩日志.对于大的数据库不要设置数据库自动增长，它会降低服务器的性能。   在T-sql的写法上有很大的讲究，下面列出常见的要点：首先，DBMS处理查询计划的过程是这样的：<br>    1、   查询语句的词法、语法检查<br>    2、   将语句提交给DBMS的查询优化器<br>    3、   优化器做代数优化和存取路径的优化<br>    4、   由预编译模块生成查询规划<br>    5、   然后在合适的时间提交给系统处理执行<br>    6、   最后将执行结果返回给用户其次，看一下SQL   SERVER的数据存放的结构：一个页面的大小为8K(8060)字节，8个页面为一个盘区，按照B树存放。  </p>
-<p>13、在查询Select语句中用Where字句限制返回的行数,避免表扫描,如果返回不必要的数据，浪费了服务器的I/O资源，加重了网络的负担降低性能。如果表很大，在表扫描的期间将表锁住，禁止其他的联接访问表,后果严重。  </p>
-<p>16、用Profiler来跟踪查询，得到查询所需的时间，找出SQL的问题所在;用索引优化器优化索引  </p>
-<p>17、注意UNion和UNion   all   的区别。UNION   all好  </p>
-<p>18、注意使用DISTINCT，在没有必要时不要用，它同UNION一样会使查询变慢。重复的记录在查询里是没有问题的  </p>
-<p>19、查询时不要返回不需要的行、列  </p>
-<p>20、用sp_configure   ‘query   governor   cost   limit’或者SET   QUERY_GOVERNOR_COST_LIMIT来限制查询消耗的资源。当评估查询消耗的资源超出限制时，服务器自动取消查询,在查询之前就扼杀掉。 SET   LOCKTIME设置锁的时间  </p>
-<p>21、用select   top   100   /   10   Percent   来限制用户返回的行数或者SET   ROWCOUNT来限制操作的行  </p>
-<p>22、在SQL2000以前，一般不要用如下的字句 “IS   NULL”,   “ &lt;&gt; “,   “!=”,   “!&gt; “,   “! &lt;”,   “NOT”,   “NOT   EXISTS”,   “NOT   IN”,   “NOT   LIKE”,   and   “LIKE   ‘%500’”，因为他们不走索引全是表扫描。<br>也不要在WHere字句中的列名加函数，如Convert，substring等,如果必须用函数的时候，创建计算列再创建索引来替代.还可以变通写法：WHERE   SUBSTRING(firstname,1,1)   =   ‘m’改为WHERE   firstname   like   ‘m%’（索引扫描），一定要将函数和列名分开。并且索引不能建得太多和太大。<br>NOT   IN会多次扫描表，使用EXISTS、NOT   EXISTS   ，IN   ,   LEFT   OUTER   JOIN   来替代，特别是左连接,而Exists比IN更快，最慢的是NOT操作.如果列的值含有空，以前它的索引不起作用，现在2000的优化器能够处理了。相同的是IS   NULL，“NOT”,   “NOT   EXISTS”,   “NOT   IN”能优化她，而” &lt;&gt; ”等还是不能优化，用不到索引。  </p>
-<p>24、如果使用了IN或者OR等时发现查询没有走索引，使用显示申明指定索引：   SELECT   *   FROM   PersonMember   (INDEX   =   IX_Title)   WHERE   processid   IN   (‘男’，‘女’)  </p>
-<p>25、将需要查询的结果预先计算好放在表中，查询的时候再SELECT。这在SQL7.0以前是最重要的手段。例如医院的住院费计算。  </p>
-<p>26、MIN()   和   MAX()能使用到合适的索引  </p>
-<p>28、如果要插入大的二进制值到Image列，使用存储过程，千万不要用内嵌INsert来插入(不知JAVA是否)。因为这样应用程序首先将二进制值转换成字符串（尺寸是它的两倍），服务器受到字符后又将他转换成二进制值.存储过程就没有这些动作:   方法：Create   procedure   p_insert   as   insert   into   table(Fimage)   values   (@image),   在前台调用这个存储过程传入二进制参数，这样处理速度明显改善。  </p>
-<p>29、Between在某些时候比IN速度更快,Between能够更快地根据索引找到范围。用查询优化器可见到差别。   select   <em>   from   chineseresume   where   title   in   (‘男’,’女’)   Select   </em>   from   chineseresume   where   between   ‘男’   and   ‘女’   是一样的。由于in会在比较多次，所以有时会慢些。  </p>
-<p>32、用OR的字句可以分解成多个查询，并且通过UNION   连接多个查询。他们的速度只同是否使用索引有关,如果查询需要用到联合索引，用UNION   all执行的效率更高.多个OR的字句没有用到索引，改写成UNION的形式再试图与索引匹配。一个关键的问题是否用到索引。  </p>
-<p>34、没有必要时不要用DISTINCT和ORDER   BY，这些动作可以改在客户端执行。它们增加了额外的开销。这同UNION   和UNION   ALL一样的道理。   SELECT   top   20   ad.companyname,comid,position,ad.referenceid,worklocation,   convert(varchar(10),ad.postDate,120)   as   postDate1,workyear,degreedescription   FROM   jobcn_query.dbo.COMPANYAD_query   ad   where   referenceID   in(‘JCNAD00329667’,’JCNAD132168’,’JCNAD00337748’,’JCNAD00338345’,’JCNAD00333138’,’JCNAD00303570’,   ‘JCNAD00303569’,’JCNAD00303568’,’JCNAD00306698’,’JCNAD00231935’,’JCNAD00231933’,’JCNAD00254567’,   ‘JCNAD00254585’,’JCNAD00254608’,’JCNAD00254607’,’JCNAD00258524’,’JCNAD00332133’,’JCNAD00268618’,   ‘JCNAD00279196’,’JCNAD00268613’)   order   by   postdate   desc  </p>
-<p>35、在IN后面值的列表中，将出现最频繁的值放在最前面，出现得最少的放在最后面，减少判断的次数  </p>
-<p>36、当用SELECT   INTO时，它会锁住系统表(sysobjects，sysindexes等等)，阻塞其他的连接的存取。创建临时表时用显示申明语句，而不是 select   INTO.   drop   table   t_lxh   begin   tran   select   <em>   into   t_lxh   from   chineseresume   where   name   =   ‘XYZ’   –commit   在另一个连接中SELECT   </em>   from   sysobjects可以看到   SELECT   INTO   会锁住系统表，Create   table   也会锁系统表(不管是临时表还是系统表)。所以千万不要在事物内使用它！！！这样的话如果是经常要用的临时表请使用实表，或者临时表变量。  </p>
-<p>37、一般在GROUP   BY   个HAVING字句之前就能剔除多余的行，所以尽量不要用它们来做剔除行的工作。他们的执行顺序应该如下最优：select   的Where字句选择所有合适的行，Group   By用来分组个统计行，Having字句用来剔除多余的分组。这样Group   By   个Having的开销小，查询快.对于大的数据行进行分组和Having十分消耗资源。如果Group   BY的目的不包括计算，只是分组，那么用Distinct更快  </p>
-<p>38、一次更新多条记录比分多次更新每次一条快,就是说批处理好  </p>
-<p>39、少用临时表，尽量用结果集和Table类性的变量来代替它,Table   类型的变量比临时表好  </p>
-<p>40、在SQL2000下，计算字段是可以索引的，需要满足的条件如下：  </p>
-<p>  a、计算字段的表达是确定的<br>  b、不能用在TEXT,Ntext，Image数据类型<br>  c、必须配制如下选项   ANSI_NULLS   =   ON,   ANSI_PADDINGS   =   ON,   …….  </p>
-<p>42、不要在一句话里再三的使用相同的函数，浪费资源,将结果放在变量里再调用更快  </p>
-<p>43、SELECT   COUNT(*)的效率教低，尽量变通他的写法，而EXISTS快.同时请注意区别：   select   count(Field   of   null)   from   Table   和   select   count(Field   of   NOT   null)   from   Table   的返回值是不同的。  </p>
-<p>47、分析select   emp_name   form   employee   where   salary   &gt;   3000   在此语句中若salary是Float类型的，则优化器对其进行优化为Convert(float,3000)，因为3000是个整数，我们应在编程时使用3000.0而不要等运行时让DBMS进行转化。同样字符和整型数据的转换。</p>
-<p>注：此篇文章为之前本地收藏转载，具体源ｕｒｌ地址找不到了！特此说明！</p>
-
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/处理百万级以上的数据提高查询速度的方法-数据库优化篇/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -3240,20 +2546,13 @@ select num from a where exists(select 1 from b where num=a.num)
 
       
         
-          
-            <p>想用Apache的POI3.9版本编写一套基于office系列文档的一个转换系统，比如对office文档的读写操作、其中的关键字检索操作、把文档转换为html或者支持在线预览的操作等功能。</p>
+          <p>想用Apache的POI3.9版本编写一套基于office系列文档的一个转换系统，比如对office文档的读写操作、其中的关键字检索操作、把文档转换为html或者支持在线预览的操作等功能。</p>
 <h3 id="一、需求"><a href="#一、需求" class="headerlink" title="一、需求"></a>一、需求</h3><p>由于前段时间已经写了一个文档在线预览功能，就是对office文档、txt、图片、pdf等文档，可以在线预览操作，也是通过搜索引擎搜索、查看一些技术文章等调研方式写出的，基本原理也就是通过几个工具转换实现的，相关原理如下图：</p>
-<p><img src="http://soujava.com/images/poi1.png" alt=""></p>
-<h3 id="二、问题"><a href="#二、问题" class="headerlink" title="二、问题"></a>二、问题</h3><p>通过上面的流程是可以实现文件转换、在线预览等功能的，但是我感觉上面的方法存在至少以下几个缺点：<br>1、安装过程过于繁琐，并且过于庞大，完成上面的操作需要安装将近200多兆的软件工具，不管从部署或者使用方面都不太好。</p>
-<p>2、转换过程中对资源的浪费(占用)严重，比如内存、硬盘等资源，内存资源：转换过程中，对内存的占用过于严重，遇到大文件时可以把cpu的使用率占满，对服务器有严重的影响；硬盘资源：一个文档实现转换或预览功能，需要在硬盘上生成pdf、png(缩略图)、swf三个文件，对资源占用严重。</p>
-<p>3、转换效率不高，对大文件转换速度比较慢，还经常出现卡死的现象；转换过程中对文档中的一些公式或者特殊字体没有很好的支持，会出现乱码或者其他不可读的字符情况。</p>
-<h3 id="三、改进"><a href="#三、改进" class="headerlink" title="三、改进"></a>三、改进</h3><p>想通过其他方式实现上述的功能，通过POI、通过jcob两种方式。</p>
-<p>注：因为jcob不能在linux中使用，故目前选择POI方案。</p>
-<h3 id="三、疑惑"><a href="#三、疑惑" class="headerlink" title="三、疑惑"></a>三、疑惑</h3><p>1、我通过简单的例子实现了word文档的操作(目前只对word文档先做测试)，我的思路是把word中的内容写入到html中，然后通过访问html实现浏览操作，但是word中的一些格式在html中无法很好的展现(我还没有研究出来)</p>
-<p>2、我的目的是把word中的内容实现在线预览操作，目前正在尝试POI操作，不知还有没有其他解决方案(最好不依赖于操作系统)。请做过或了解类似功能或者对POI熟悉的朋友们给个指引，一起探讨分享，感激不尽。</p>
-<p>结语：本篇博文的目的是：分享我之前所做的有关文件转换和预览功能原理，然后请教大家有关这个实现有没有更好的解决方案。请大家看到后给出评论，写上你们的所思所想，一方面给我一个方向，另一方面大家共同探讨。</p>
-
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/用POI3-9写一个基于office系列文档的转换系统-设计篇/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -3370,23 +2669,13 @@ select num from a where exists(select 1 from b where num=a.num)
 
       
         
-          
-            <p>在第一篇博客中主要讲解了如何搭建spring框架和运行示例项目，在搭建框架环境的时候，我们需要配置很文件信息；在本篇文章中主要讲解如何采用注解的方式简化开发！</p>
+          <p>在第一篇博客中主要讲解了如何搭建spring框架和运行示例项目，在搭建框架环境的时候，我们需要配置很文件信息；在本篇文章中主要讲解如何采用注解的方式简化开发！</p>
 <h3 id="一、准备篇-jar包的准备"><a href="#一、准备篇-jar包的准备" class="headerlink" title="一、准备篇-jar包的准备"></a>一、准备篇-jar包的准备</h3><p>这里就不详细说明了详见上一篇博客–spring3.1.1入门讲解一（非注解篇）中的准备篇讲解</p>
-<h3 id="二、环境搭建篇"><a href="#二、环境搭建篇" class="headerlink" title="二、环境搭建篇"></a>二、环境搭建篇</h3><p>1、在web.xml文件中添加的配置跟上一篇的配置代码一样，直接复制过去就行了。 </p>
-<p>2、配置spring-mvc.xml，重点就在这里，重点配置如下：</p>
-<pre><code>1）如果像我们采用非注解的方式去创建和访问controller控制器时，我们都需要在spring-mvc.xml文件中添加如下配置
-&lt;bean name=&quot;/hello&quot; class=&quot;com.spring.mvc.HelloWorldController&quot;/&gt;
-
-2）、那么我们如果采用注解的方式创建和访问controller控制器时，我们就不需要在spring-mvc.xml中配置bean啦；但是需要在spring-mvc.xml添加如下配置：
-&lt;!-- 在com.spring.mvc包下寻找控制器组件 --&gt;      
-&lt;context:component-scan base-package=&quot;com.spring.mvc&quot;&gt;&lt;/context:component-scan&gt;
-</code></pre><p>上面配置的作用就是让spring自动去扫描com.spring.mvc包下面的controller类（当然我们当创建controller后还需要添加@Controller注解来标示）。</p>
-<p>3、在src下面创建com.spring.mvc包，然后添加controller类：HelloWorldAnnocationController.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.spring.mvc;  </div><div class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;  </div><div class="line"><span class="keyword">import</span> org.springframework.stereotype.Controller;  </div><div class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;  </div><div class="line"><span class="keyword">import</span> org.springframework.web.servlet.ModelAndView;  </div><div class="line">  </div><div class="line"><span class="comment">/** </span></div><div class="line"> * 页面控制器 </div><div class="line"> *  </div><div class="line"> * <span class="doctag">@version</span> 1.0 2015-02-11 下午05:39:25 </div><div class="line"> */  </div><div class="line"><span class="comment">//使用注解@Controller声明该类是一个控制器       </span></div><div class="line"><span class="meta">@Controller</span>  </div><div class="line"><span class="meta">@RequestMapping</span>(value=<span class="string">"helloWorldAnnocationController"</span>)  </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorldAnnocationController</span></span>&#123;  </div><div class="line">     <span class="comment">//使用注解@RequestMapping声明这个控制器处理index.html的请求       </span></div><div class="line">      <span class="meta">@RequestMapping</span>(<span class="string">"/hello"</span>)  </div><div class="line">      <span class="function"><span class="keyword">public</span> ModelAndView <span class="title">helloAnotherWorld</span><span class="params">( <span class="keyword">final</span> HttpServletRequest request)</span></span>&#123;     </div><div class="line">          ModelAndView mv = <span class="keyword">new</span> ModelAndView();  </div><div class="line">            <span class="comment">// 添加模型数据，可以是任意的POJO对象  </span></div><div class="line">            mv.addObject(<span class="string">"message"</span>, <span class="string">"Hello World!"</span>);  </div><div class="line">            <span class="comment">// 设置逻辑视图名，视图解析器会根据该名字解析到具体的视图页面，然后就自动从WebContent/view/下面查找hello.jsp视图页面  </span></div><div class="line">            mv.setViewName(<span class="string">"hello"</span>);  </div><div class="line">        <span class="comment">//将model的数据交给文件名为helloSpringMVC，后缀名为vm（在applicationContext.xml里面设置）的文件显示       </span></div><div class="line">        <span class="keyword">return</span> mv;      </div><div class="line">      &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>4、在view/目录下面添加hello.jsp页面<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&lt;%@ page language="java" contentType="text/html; charset=utf-8"  </div><div class="line">   pageEncoding="utf-8"%&gt;  </div><div class="line">&lt;%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%&gt;  </div><div class="line">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"&gt;  </div><div class="line">&lt;html&gt;  </div><div class="line">    &lt;head&gt;  </div><div class="line">        &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"&gt;  </div><div class="line">        &lt;title&gt;Insert title here&lt;/title&gt;  </div><div class="line">    &lt;/head&gt;  </div><div class="line">    &lt;body&gt;  </div><div class="line">        $&#123;message&#125;  </div><div class="line">    &lt;/body&gt;  </div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure></p>
-<p>5、访问注解版的controller控制器</p>
-
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/spring3-1-1入门讲解二-注解篇/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>

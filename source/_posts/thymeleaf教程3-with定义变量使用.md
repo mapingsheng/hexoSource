@@ -6,6 +6,8 @@ tags: thymeleaf
 ---
 在使用thymeleaf渲染数据的时候，我们经常会用到basepath变量（访问地址前缀），一般我们在jsp中直接request对象获取拼接而成，但是在thymeleaf中如何使用呢，可以通过th:with定义并使用。
 
+<!--more-->
+
 ### th:with用法
 
 1、用来定义局部变量，用法如下：

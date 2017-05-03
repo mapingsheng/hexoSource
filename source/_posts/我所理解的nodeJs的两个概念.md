@@ -10,6 +10,8 @@ tags: nodeJs
 
 其实nodejs有一个强大的包管理器支撑着nodejs的繁荣生态，提到这个包管理器就据下面几个例子：
 
+<!--more-->
+
 *用过linux操作系统的都知道：*
 
  如果用的是Debian、Ubuntu操作系统的话，那么我们平时安装软件时会用到【*apt-get install 包名称*】去安装；

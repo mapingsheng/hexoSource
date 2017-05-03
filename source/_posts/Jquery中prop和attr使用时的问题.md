@@ -6,6 +6,8 @@ tags: jquery
 ---
 在使用jquery的attr属性处理单选按钮选中时，出现偶尔不能选中的问题，后来才知道jquery官方推荐使用prop，而再推荐使用attr。
 
+<!--more-->
+
 ```java
  $("input[type='radio'][name='workerType'][value='IT']").attr('checked',true);
 ```

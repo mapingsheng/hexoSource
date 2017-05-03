@@ -10,6 +10,8 @@ tags: Maven插件
 
 •a模块依赖modelman-1.0.0-SNAPSHOT.jar包；b模块依赖modelman-1.0.2-RELEASE.jar包；很显然目前最新的jar包版本应该都用modelman-1.0.2-RELEASE.jar这个版本
 
+<!--more-->
+
 •那么我们就可以把modelman-1.0.0-SNAPSHOT.jar这个jar包添加配置到下面中
 	<exclude>com.maps:modelman:1.0.0-SNAPSHOT</exclude>
 

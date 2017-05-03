@@ -6,6 +6,8 @@ tags: java
 ---
 Stream是java8新增一个工具类，在java.util.stream.*;中，不得不说的是stream功能异常强大，一旦你接触之后就不想再用哪些旧的jdk中api方法了；下面先以日常开发中的集合数据排序为例慢慢了解stream中的sorted方法。
 
+<!--more-->
+
 **一、对List数据集合排序**
 
 >1、对List集合进行升序排列

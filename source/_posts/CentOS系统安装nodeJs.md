@@ -20,6 +20,8 @@ tags: nodeJs
 
 >tar -xvf  node-v6.9.4-linux-x64.tar.xz	#解压下载的二进制安装包
 	
+<!--more-->
+
 >cd node-v6.9.4-linux-x64/ && ll    #切换到已经解压的安装包目录中，并且详细列出所有的文件
 
 ```java

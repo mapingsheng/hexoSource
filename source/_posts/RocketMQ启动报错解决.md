@@ -6,6 +6,8 @@ tags: RocketMQ启动错误
 ---
 最近需要用到消息服务器，就用到淘宝开源的RocketMQ消息服务器了，重新安装的一台新的linux服务器（CentOS6.4），然后安装的RocketMQ二进制包。安装成功后，在最后启动的时候，报了一个错误！
 
+<!--more-->
+
 >![Alt text](http://soujava.com/images/rocketMQ1.png)
 
 注：根据上面的错误提示信息可以看到是因为刚刚安装的Centos操作系统的主机名称没有配置导致启动MQ服务时住不到主机

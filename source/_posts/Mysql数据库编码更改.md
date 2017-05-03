@@ -8,6 +8,8 @@ tags: Mysql
 
 ### 1.通过命令或者其他终端登录到mysql服务中，并执行查询目前对应的数据库的编码信息sql脚本查询，执行命令会查询出该数据库下面每一张表对应的字符编码信息
 
+<!--more-->
+
 ![Alt text](http://soujava.com/images/mysqlCode1.png)
 
 ### 2.然后执行下面的sql脚本，基于查询语句生成修改表结构编码的sql语句列表
