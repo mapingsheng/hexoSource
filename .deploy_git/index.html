@@ -260,6 +260,189 @@
             
               
                 
+                <a class="post-title-link" href="/设计模式-引入模式雏形/" itemprop="url">
+                  设计模式--引入模式雏形
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-05-01T16:21:27+08:00" content="2017-05-01">
+              2017-05-01
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/设计模式-引入模式雏形/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="设计模式-引入模式雏形/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>接着上一篇文章中遗留的问题，接着探索一下设计模式的强大力量。<br>首先在上一篇文章中进行简单的回顾：</p>
+<blockquote>
+<p>1、我们声明了一个Duck抽象类，并定义了相关的公共方法(quack、swim、fly)，并且都进行了默认的实现；但是把display外观方法定义成了抽象方法，以达到不同类型的Duck可以具有自己独特外观的目的。</p>
+<p>2、然后定义具体的业务类(绿头鸭、大黄鸭、红头鸭)，该业务类要继承抽象类-Duck,并且覆写display方法，定义自己独特的外观。</p>
+</blockquote>
+<p>那么针对上面的实现，通过分析具有下面的一系列问题：</p>
+<blockquote>
+<p>1、比如再新加一个“跳舞鸭”业务类时，该鸭子的跳舞行为难道也要在超类Duck中定义吗？这样会导致超类很臃肿</p>
+<p>2、如果对某个行为进行动态扩展怎么办？比如有些飞行行为是用翅膀飞行，有些飞行行为是用火箭动力飞行等等，难道我们要把那些需要火箭动力飞行的所有业务类中的fly方法都要一个一个的重新改一遍吗？</p>
+</blockquote>
+<p>针对以上问题我们慢慢进行设计一下吧。</p>
+<p><strong>一、第三代鸭子–把不同的行为进行独立定义(把变化的和不变化的分开)</strong></p>
+<p>其实做法就是“把会变化的部分取出并封装起来，以便以后可以轻易的改动或扩展此部分，而不影响不需要变化的其它部分”，那么下面我们这么设计，把飞行的行为fly、叫的行为quack单独抽取出来，定义成为不同的业务类，这样的话以后我们基于这些行为类扩展出不同的具体行为，比如我们可以扩展fly行为(用翅膀飞行、用火箭动力飞行、静止)。</p>
+<p>在前几代鸭子产品开发中，我们一直使用的是定义父类的方式来约束对应的行为方法，然后子类通过继承父类，即可拥有父类的方法；但是如果子类有差异化的行为时，就需要覆写父类的默认方法了；但是还有一种情况，就是子类如果定义自己独特的行为方法时，那么就只能在自己内部进行定义和实现了，因为java单重继承关系的约束 ，所以为以后扩展或者行为复用造成了麻烦。</p>
+<p>下面我们将采用采用接口进行定义不同的行为，然后其它因为类实现具体的接口即可获得其需要的行为；归结来讲就是：“针对接口编程，而不是针对实现编程”。</p>
+<p>1、独立定义飞行的行为接口-FlyInterface</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 独立出来的飞行的业务接口</div><div class="line"> * <span class="doctag">@author</span> maps</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">FlyInterface</span> </span>&#123;</div><div class="line">	</div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 定义一个飞行方法</div><div class="line">	 */</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>1.1、定义用翅膀飞行的业务类-FlyWithWings</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 定义用翅膀飞行的具体类,实现飞行方法</div><div class="line"> * <span class="doctag">@author</span> maps</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FlyWithWings</span> <span class="keyword">implements</span> <span class="title">FlyInterface</span> </span>&#123;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"用翅膀飞行"</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>1.2、定义用火箭动力飞行的业务类-FlyRocketPowered</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 定义用火箭动力飞行的具体类,实现飞行接口</div><div class="line"> * <span class="doctag">@author</span> maps</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FlyRocketPowered</span> <span class="keyword">implements</span> <span class="title">FlyInterface</span> </span>&#123;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"利用火箭动力飞行"</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>1.3、定义不会飞行的业务类-FlyNoWay</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 定义用不会飞行的具体类，虽然实现了飞行的接口</div><div class="line"> * <span class="doctag">@author</span> maps</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FlyNoWay</span> <span class="keyword">implements</span> <span class="title">FlyInterface</span> </span>&#123;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"不会飞行！"</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>到目前为止，我们已经把飞行行为fly进行了独立定义，并且定义了不同的具体飞行行为业务类；下面我们开始独立定义另一个叫的行为quack。</p>
+<p>2、独立定义叫的行为接口-FlyInterface</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 独立出来的叫的行为接口</div><div class="line"> * <span class="doctag">@author</span> maps</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">QuackInterface</span> </span>&#123;</div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 定义一个叫的方法</div><div class="line">	 */</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">quack</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>2.1、定义一个呱呱叫的行为类-QuackGuagua</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 定义一个呱呱叫的具体类，实现呱呱叫行为接口</div><div class="line"> * <span class="doctag">@author</span> maps</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">QuackGuagua</span> <span class="keyword">implements</span> <span class="title">QuackInterface</span></span>&#123;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">quack</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"呱呱叫"</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>2.2、定义一个不会叫的业务类-QuackNoWay</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 定义一个不会叫的业务类</div><div class="line"> * <span class="doctag">@author</span> maps</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">QuackNoWay</span> <span class="keyword">implements</span> <span class="title">QuackInterface</span> </span>&#123;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">quack</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"不会叫"</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>2.3、定义一个吱吱叫的业务类-QuackZhiZhi</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 定义一个吱吱叫的业务类，实现独立叫的行为接口</div><div class="line"> * <span class="doctag">@author</span> maps</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">QuackZhiZhi</span> <span class="keyword">implements</span> <span class="title">QuackInterface</span> </span>&#123;</div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">quack</span><span class="params">()</span> </span>&#123;</div><div class="line">		System.out.println(<span class="string">"吱吱叫"</span>);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>到目前为止，我们已经把叫的行为quack进行了独立定义，并且定义了不同的具体叫的行为业务类；其实已经可以观察到，我们把飞行fly和叫quack行为定义成独立的行为，可以让飞行和叫的动作被其他的对象复用，因为这些行为已经与具体的鸭子类无关了，而我们也可以后期新增一些行为，不会影响到既有的行为类，也不会影响“使用”到飞行行为的鸭子类。</p>
+<p>2、重构定义鸭子业务类-Duck</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 定义一个鸭子的业务类，并且声明已经独立定义的飞行、叫的行为接口</div><div class="line"> * <span class="doctag">@author</span> maps</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Duck</span> </span>&#123;</div><div class="line">	FlyInterface flyInterface;</div><div class="line">	QuackInterface quackInterface;</div><div class="line">	</div><div class="line">	Duck()&#123;&#125;</div><div class="line">	</div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 将“叫”的行为委托给接口行为类，这样就可以在不同的业务类中初始化不同的行为类</div><div class="line">	 */</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">quack</span><span class="params">()</span></span>&#123;</div><div class="line">		quackInterface.quack();</div><div class="line">	&#125;</div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 将“飞行”的行为委托给接口行为类，这样就可以在不同的业务类中初始化不同的行为类</div><div class="line">	 */</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">fly</span><span class="params">()</span></span>&#123;</div><div class="line">		flyInterface.fly();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在我们定义Duck类中，把已经定义好的两个独立行为接口作为变量引入到了类中，这样的话，接下来我们在新建Duck类的具体子类时就可以拥有父类Duck声明的接口变量，并且可以动态实例化父类Duck中的接口变量为不同的行为接口实例。</p>
+<p>2.1、重构定义绿头鸭业务类-GreenDuck</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 绿头鸭业务类</div><div class="line"> * <span class="doctag">@author</span> maps</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GreenDuck</span> <span class="keyword">extends</span> <span class="title">Duck</span> </span>&#123;</div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 1、因为绿头鸭类继承了Duck，所以可以继承拥有父类中的飞行、叫两个接口实例变量(flyInterface、quackInterface)</div><div class="line">	 * 2、所以我们在构造函数中将继承的接口实例变量进行初始化操作：</div><div class="line">	 *    1)、把飞行接口变量初始化成“用翅膀飞行”的具体行为</div><div class="line">	 *    2)、把叫的接口变量初始化成“呱呱叫”具体行为</div><div class="line">	 */</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">GreenDuck</span><span class="params">()</span></span>&#123;</div><div class="line">		flyInterface = <span class="keyword">new</span> FlyWithWings();</div><div class="line">		quackInterface = <span class="keyword">new</span> QuackGuagua();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以看到上面我们定义的绿头鸭业务类中分别把父类中的flyInterface接口变量实例化为用翅膀飞行的具体行为类、把父类中的接口变量quackInterface实例化为呱呱叫具体行为类。</p>
+<p>2.2、重构定义绿头鸭业务类-RedDuck</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 红头鸭业务类</div><div class="line"> * <span class="doctag">@author</span> maps</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedDuck</span> <span class="keyword">extends</span> <span class="title">Duck</span> </span>&#123;</div><div class="line">	<span class="comment">/**</span></div><div class="line">	 * 1、因为绿头鸭类继承了Duck，所以可以继承拥有父类中的飞行、叫两个接口实例变量(flyInterface、quackInterface)</div><div class="line">	 * 2、所以我们在构造函数中将继承的接口实例变量进行初始化操作：</div><div class="line">	 *    1)、把飞行接口变量初始化成用“火箭动力”飞行的具体行为</div><div class="line">	 *    2)、把叫的接口变量初始化成“吱吱叫”具体行为</div><div class="line">	 */</div><div class="line">	RedDuck()&#123;</div><div class="line">		flyInterface = <span class="keyword">new</span> FlyRocketPowered();</div><div class="line">		quackInterface = <span class="keyword">new</span> QuackZhiZhi();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>3、定义一个测试类，在测试方法中测试绿头鸭和红头鸭的飞行和叫的行为</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">	Duck greenDuck = <span class="keyword">new</span> GreenDuck();</div><div class="line">	greenDuck.quack();</div><div class="line">	greenDuck.fly();</div><div class="line">	System.out.println(<span class="string">"-----------------------------"</span>);</div><div class="line">	Duck redDuck = <span class="keyword">new</span> RedDuck();</div><div class="line">	redDuck.quack();</div><div class="line">	redDuck.fly();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面测试代码输出如下：</p>
+<blockquote>
+<p>呱呱叫</p>
+<p>用翅膀飞行</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>吱吱叫</p>
+<p>利用火箭动力飞行</p>
+</blockquote>
+<p>通过上面的测试代码输出可以看出我们不同的Duck子类中，实例化了不同的接口行为变量，然后他们便具有了不同的行为操作。</p>
+<p>思考一个问题，比如后续再添加其他行为时怎么办，比如添加一个“跳跃”行为时，并且有单腿跳跃和双腿跳跃具体行为，我们可以如下扩展：</p>
+<blockquote>
+<p>定义一个“跳跃”的接口</p>
+<p>定义一个具体的“单腿跳跃”行为类，该类实现上面定义的“跳跃”接口</p>
+<p>定义一个具体的“双腿跳跃”行为类，该类实现上面定义的“跳跃”接口</p>
+<p>在Duck这个父类中，添加一个“跳跃”接口类型的变量</p>
+<p>在Duck这个父类中，再新定义一个“跳跃”的行为的方法，并且在方法中调用“跳跃”接口变量中的跳跃方法</p>
+<p>如果我们只需要为“红头鸭”添加其中的“单腿跳跃”行为时，则只需要在红头鸭中构造方中实例化父类的跳跃接口变量为具体的单腿跳跃行为类即可</p>
+</blockquote>
+<p>通过对前两代鸭子工程的重构和扩展，发现系统扩展性更好了！这就是设计模式的魅力所在！！后续将继续深入探索并运用他。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/设计模式-无模式/" itemprop="url">
                   设计模式--无模式
                 </a>
@@ -3230,140 +3413,6 @@ select num from a where exists(select 1 from b where num=a.num)
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/spring3-1-1入门讲解一-非注解篇/" itemprop="url">
-                  spring3.1.1入门讲解一(非注解篇)
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-12T13:43:45+08:00" content="2016-09-12">
-              2016-09-12
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/spring/" itemprop="url" rel="index">
-                    <span itemprop="name">spring</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/spring3-1-1入门讲解一-非注解篇/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="spring3-1-1入门讲解一-非注解篇/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>在qq群里面有很多童鞋经常提出一些问题，我搭建的spring框架示例怎么启动不起来？spring入门示例谁有？等等问题。所以就写了这篇文章，绝对手把手讲解啊！</p>
-<h3 id="一、准备"><a href="#一、准备" class="headerlink" title="一、准备"></a>一、准备</h3><p>1、spring版本：spring-framework-3.1.1.RELEASE</p>
-<p>2、jar包：spring包下面的dist文件夹下的所有jar包</p>
-<p><img src="http://soujava.com/images/spring1.jpg" alt=""></p>
-<p>3、第三方jar包：<br>    jsp标签包：jstl-api-1.2.jar、standard.jar</p>
-<pre><code>日志包：commons-logging-1.0.4.jar
-</code></pre><h3 id="二、环境搭建"><a href="#二、环境搭建" class="headerlink" title="二、环境搭建"></a>二、环境搭建</h3><p>1、新建Dynamic Web Project项目：spring</p>
-<p><img src="http://soujava.com/images/spring2.png" alt=""></p>
-<p>2、在web.xml文件中添加如下配置<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">&lt;servlet&gt;  </div><div class="line">    &lt;servlet-name&gt;spring&lt;/servlet-name&gt;  </div><div class="line">    &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;  </div><div class="line">    &lt;init-param&gt;  </div><div class="line"> 	&lt;description&gt;加载/WEB-INF/spring-mvc/目录下的所有XML作为Spring MVC的配置文件&lt;/description&gt;  </div><div class="line"> 	&lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;  </div><div class="line"> 	&lt;param-value&gt;/WEB-INF/spring-mvc*.xml&lt;/param-value&gt;  </div><div class="line"> &lt;/init-param&gt;  </div><div class="line">    	&lt;!-- load-on-startup：表示启动容器时初始化该Servlet --&gt;  </div><div class="line">    	&lt;load-on-startup&gt;1&lt;/load-on-startup&gt;  </div><div class="line">	&lt;/servlet&gt;  </div><div class="line">	&lt;servlet-mapping&gt;  </div><div class="line">    &lt;servlet-name&gt;spring&lt;/servlet-name&gt;  </div><div class="line">    &lt;!-- url-pattern：表示哪些请求交给Spring Web MVC处理， "/"是用来定义默认servlet映射的。也可以如"*.action"表示拦截所有以action为扩展名的请求。 --&gt;  </div><div class="line">    &lt;url-pattern&gt;*.action&lt;/url-pattern&gt;  </div><div class="line">	&lt;/servlet-mapping&gt;</div></pre></td></tr></table></figure></p>
-<p>3、在WEB-INF目录下面创建spring-mvc.xml文件：（这里的文件需要在web.xml文件中进行配置的，详见第2步）<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">	&lt;?xml version="1.0" encoding="UTF-8"?&gt;  </div><div class="line">	&lt;beans xmlns="http://www.springframework.org/schema/beans"  </div><div class="line">	    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  </div><div class="line">	    xmlns:context="http://www.springframework.org/schema/context"  </div><div class="line">	    xmlns:mvc="http://www.springframework.org/schema/mvc"  </div><div class="line">	    xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd  </div><div class="line">	        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd  </div><div class="line">	        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd"&gt;  </div><div class="line">   </div><div class="line">    	&lt;bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping" /&gt;  </div><div class="line">  </div><div class="line">	    &lt;!-- 表示所有实现了org.springframework.web.servlet.mvc.Controller接口的Bean可以作为Spring Web MVC中的处理器。如果需要其他类型的处理器可以通过实现HadlerAdapter来解决。--&gt;  </div><div class="line">	    &lt;bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter" /&gt;  </div><div class="line">	      </div><div class="line">	     &lt;!-- InternalResourceViewResolver：用于支持Servlet、JSP视图解析；  </div><div class="line">	         viewClass：JstlView表示JSP模板页面需要使用JSTL标签库，classpath中必须包含jstl的相关jar包；  </div><div class="line">	         prefix和suffix：查找视图页面的前缀和后缀（前缀[逻辑视图名]后缀），比如传进来的逻辑视图名为hello，则该jsp视图页面应该存放在“view/hello.jsp”； --&gt;</div><div class="line">		 &lt;bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"&gt;  </div><div class="line">	        &lt;property name="viewClass" value="org.springframework.web.servlet.view.JstlView" /&gt;  </div><div class="line">	        &lt;property name="prefix" value="/view/" /&gt;  </div><div class="line">	        &lt;property name="suffix" value=".jsp" /&gt;  </div><div class="line">	    &lt;/bean&gt;</div><div class="line"></div><div class="line">		&lt;bean name="/hello" class="com.spring.mvc.HelloWorldController"/&gt;  </div><div class="line">		&lt;!--注意这里的类路径不要错了，如果不用注解的话，那么每当新建一个controller类就需要在这里配置一下 --&gt; </div><div class="line">  </div><div class="line">&lt;/beans&gt;</div></pre></td></tr></table></figure></p>
-<p>4、在src下面添加controller类：HelloWorldController.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.spring.mvc;  </div><div class="line"> </div><div class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;  </div><div class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;  </div><div class="line">  </div><div class="line"><span class="keyword">import</span> org.springframework.web.context.request.RequestContextHolder;  </div><div class="line"><span class="keyword">import</span> org.springframework.web.context.request.ServletRequestAttributes;  </div><div class="line"><span class="keyword">import</span> org.springframework.web.servlet.ModelAndView;  </div><div class="line"><span class="keyword">import</span> org.springframework.web.servlet.mvc.Controller;  </div><div class="line">  </div><div class="line">  </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorldController</span> <span class="keyword">implements</span> <span class="title">Controller</span> </span>&#123;  </div><div class="line">      </div><div class="line">    <span class="function"><span class="keyword">public</span> ModelAndView <span class="title">handleRequest</span><span class="params">(HttpServletRequest arg0, HttpServletResponse arg1)</span> <span class="keyword">throws</span> Exception </span>&#123;  </div><div class="line">          </div><div class="line">       HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();  </div><div class="line"></div><div class="line">        ModelAndView mv = <span class="keyword">new</span> ModelAndView();  </div><div class="line">        <span class="comment">// 添加模型数据，可以是任意的POJO对象  </span></div><div class="line">        mv.addObject(<span class="string">"message"</span>, <span class="string">"Hello World!"</span>);  </div><div class="line">        <span class="comment">// 设置逻辑视图名，视图解析器会根据该名字解析到具体的视图页面,即WebContent/view/hello.jsp  </span></div><div class="line">        mv.setViewName(<span class="string">"hello"</span>);  </div><div class="line">        <span class="keyword">return</span> mv;  </div><div class="line">    &#125;</div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
-<p>4、在WebContent/view/目录下面添加hello.jsp页面<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&lt;%@ page language="java" contentType="text/html; charset=utf-8"  </div><div class="line">   pageEncoding="utf-8"%&gt;  </div><div class="line">&lt;%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%&gt;  </div><div class="line">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"&gt;  </div><div class="line">&lt;html&gt;  </div><div class="line">    &lt;head&gt;  </div><div class="line">        &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"&gt;  </div><div class="line">        &lt;title&gt;Insert title here&lt;/title&gt;  </div><div class="line">    &lt;/head&gt;  </div><div class="line">    &lt;body&gt;  </div><div class="line">        $&#123;message&#125;  </div><div class="line">    &lt;/body&gt;  </div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure></p>
-<p>5、启动tomcat服务器，访问一下</p>
-<p><img src="http://soujava.com/images/spring3.jpg" alt=""></p>
-<p>注：我们的访问url中包括了/hello.action；当以.action为后缀的访问路径都将被DispatcherServlet拦截过滤（web.xml文件中已经配置），然后/hello前缀将被映射到HelloWorldController控制器处理（spring-mvc.xml文件中已经配置）</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -3409,7 +3458,7 @@ select num from a where exists(select 1 from b where num=a.num)
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">54</span>
+              <span class="site-state-item-count">55</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
