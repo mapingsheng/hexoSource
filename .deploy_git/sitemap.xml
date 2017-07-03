@@ -254,14 +254,14 @@
   </url>
   
   <url>
-    <loc>http://www.soujava.com/%E5%B8%A6%E9%99%84%E4%BB%B6%E7%9A%84enctype%E8%A1%A8%E5%8D%95%E4%B8%AD%E6%99%AE%E9%80%9A%E5%B1%9E%E6%80%A7%E7%9A%84%E8%8E%B7%E5%8F%96/</loc>
+    <loc>http://www.soujava.com/%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E7%9A%84linux%E7%B3%BB%E7%BB%9F%E6%98%AF%E5%93%AA%E4%B8%AA%E5%8F%91%E8%A1%8C%E5%95%86/</loc>
     
     <lastmod>2017-01-11T02:06:24.916Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.soujava.com/%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E7%9A%84linux%E7%B3%BB%E7%BB%9F%E6%98%AF%E5%93%AA%E4%B8%AA%E5%8F%91%E8%A1%8C%E5%95%86/</loc>
+    <loc>http://www.soujava.com/%E5%B8%A6%E9%99%84%E4%BB%B6%E7%9A%84enctype%E8%A1%A8%E5%8D%95%E4%B8%AD%E6%99%AE%E9%80%9A%E5%B1%9E%E6%80%A7%E7%9A%84%E8%8E%B7%E5%8F%96/</loc>
     
     <lastmod>2017-01-11T02:06:24.916Z</lastmod>
     
@@ -275,13 +275,6 @@
   </url>
   
   <url>
-    <loc>http://www.soujava.com/thymeleaf%E6%95%99%E7%A8%8B2-%E5%90%8E%E5%8F%B0%E6%95%B0%E6%8D%AE%E5%B0%81%E8%A3%85%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93/</loc>
-    
-    <lastmod>2017-01-11T02:06:24.914Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.soujava.com/thymeleaf%E6%95%99%E7%A8%8B1-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</loc>
     
     <lastmod>2017-01-11T02:06:24.914Z</lastmod>
@@ -289,9 +282,9 @@
   </url>
   
   <url>
-    <loc>http://www.soujava.com/spring3-1-1%E5%85%A5%E9%97%A8%E8%AE%B2%E8%A7%A3%E4%B8%80-%E9%9D%9E%E6%B3%A8%E8%A7%A3%E7%AF%87/</loc>
+    <loc>http://www.soujava.com/thymeleaf%E6%95%99%E7%A8%8B2-%E5%90%8E%E5%8F%B0%E6%95%B0%E6%8D%AE%E5%B0%81%E8%A3%85%E4%B8%8E%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93/</loc>
     
-    <lastmod>2017-01-11T02:06:24.913Z</lastmod>
+    <lastmod>2017-01-11T02:06:24.914Z</lastmod>
     
   </url>
   
@@ -303,14 +296,21 @@
   </url>
   
   <url>
-    <loc>http://www.soujava.com/jquery%E8%8E%B7%E5%8F%96%E5%8D%95%E9%80%89%E6%8C%89%E9%92%AE%E5%80%BC%E7%9A%84%E8%AF%A1%E5%BC%82%E4%B9%8B%E5%A4%84/</loc>
+    <loc>http://www.soujava.com/spring3-1-1%E5%85%A5%E9%97%A8%E8%AE%B2%E8%A7%A3%E4%B8%80-%E9%9D%9E%E6%B3%A8%E8%A7%A3%E7%AF%87/</loc>
+    
+    <lastmod>2017-01-11T02:06:24.913Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.soujava.com/oracle11G%E5%AF%BC%E5%87%BA%E6%95%B0%E6%8D%AE%E6%97%B6%E7%A9%BA%E8%A1%A8%E6%97%A0%E6%B3%95%E5%AF%BC%E5%87%BA/</loc>
     
     <lastmod>2017-01-11T02:06:24.912Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.soujava.com/oracle11G%E5%AF%BC%E5%87%BA%E6%95%B0%E6%8D%AE%E6%97%B6%E7%A9%BA%E8%A1%A8%E6%97%A0%E6%B3%95%E5%AF%BC%E5%87%BA/</loc>
+    <loc>http://www.soujava.com/jquery%E8%8E%B7%E5%8F%96%E5%8D%95%E9%80%89%E6%8C%89%E9%92%AE%E5%80%BC%E7%9A%84%E8%AF%A1%E5%BC%82%E4%B9%8B%E5%A4%84/</loc>
     
     <lastmod>2017-01-11T02:06:24.912Z</lastmod>
     
@@ -331,14 +331,14 @@
   </url>
   
   <url>
-    <loc>http://www.soujava.com/java%E4%BD%BF%E7%94%A8jxl%E8%AF%BB%E5%8F%96excel%E6%95%B0%E6%8D%AE%E6%97%B6%E7%89%B9%E6%AE%8A%E7%AC%A6%E5%8F%B7%E5%A4%84%E7%90%86/</loc>
+    <loc>http://www.soujava.com/java8%E4%B8%AD%E4%BD%BF%E7%94%A8stream%E6%B5%81%E5%92%8Cfor%E5%BE%AA%E7%8E%AF%E5%88%86%E5%88%AB%E5%AF%B9%E6%95%B0%E6%8D%AE%E9%9B%86%E5%90%88%E9%81%8D%E5%8E%86%E7%9A%84%E5%B7%AE%E5%BC%82/</loc>
     
     <lastmod>2017-01-11T02:06:24.910Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.soujava.com/java8%E4%B8%AD%E4%BD%BF%E7%94%A8stream%E6%B5%81%E5%92%8Cfor%E5%BE%AA%E7%8E%AF%E5%88%86%E5%88%AB%E5%AF%B9%E6%95%B0%E6%8D%AE%E9%9B%86%E5%90%88%E9%81%8D%E5%8E%86%E7%9A%84%E5%B7%AE%E5%BC%82/</loc>
+    <loc>http://www.soujava.com/java%E4%BD%BF%E7%94%A8jxl%E8%AF%BB%E5%8F%96excel%E6%95%B0%E6%8D%AE%E6%97%B6%E7%89%B9%E6%AE%8A%E7%AC%A6%E5%8F%B7%E5%A4%84%E7%90%86/</loc>
     
     <lastmod>2017-01-11T02:06:24.910Z</lastmod>
     
@@ -373,14 +373,14 @@
   </url>
   
   <url>
-    <loc>http://www.soujava.com/Mybatis%E5%8A%A8%E6%80%81%E4%BC%A0%E5%85%A5tableName-%E9%9D%9E%E9%A2%84%E7%BC%96%E8%AF%91-STATEMENT/</loc>
+    <loc>http://www.soujava.com/Mysql-Lock-wait-timeout-exceeded-try-restarting-transaction/</loc>
     
     <lastmod>2017-01-11T02:06:24.907Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.soujava.com/Mysql-Lock-wait-timeout-exceeded-try-restarting-transaction/</loc>
+    <loc>http://www.soujava.com/Mybatis%E5%8A%A8%E6%80%81%E4%BC%A0%E5%85%A5tableName-%E9%9D%9E%E9%A2%84%E7%BC%96%E8%AF%91-STATEMENT/</loc>
     
     <lastmod>2017-01-11T02:06:24.907Z</lastmod>
     
@@ -415,14 +415,14 @@
   </url>
   
   <url>
-    <loc>http://www.soujava.com/CentOS-6-4%E5%86%85%E6%A0%B8%E5%8D%87%E7%BA%A7%E6%93%8D%E4%BD%9C/</loc>
+    <loc>http://www.soujava.com/2016-06-30-%E7%95%8C%E9%9D%A2%E6%A1%86%E6%9E%B6/</loc>
     
     <lastmod>2017-01-11T02:06:24.903Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.soujava.com/2016-06-30-%E7%95%8C%E9%9D%A2%E6%A1%86%E6%9E%B6/</loc>
+    <loc>http://www.soujava.com/CentOS-6-4%E5%86%85%E6%A0%B8%E5%8D%87%E7%BA%A7%E6%93%8D%E4%BD%9C/</loc>
     
     <lastmod>2017-01-11T02:06:24.903Z</lastmod>
     
@@ -450,13 +450,6 @@
   </url>
   
   <url>
-    <loc>http://www.soujava.com/2016-06-28-%E9%80%9A%E8%BF%87gitBook%E8%AE%A9%E7%BD%91%E7%AB%99%E6%9B%B4%E5%AE%9E%E7%94%A8/</loc>
-    
-    <lastmod>2017-01-11T02:06:24.901Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.soujava.com/2016-06-28-%E6%B7%BB%E5%8A%A0KEY%E5%90%8E%EF%BC%8C%E6%AF%8F%E6%AC%A1push%E6%97%B6%E8%AE%A9%E8%BE%93%E5%85%A5%E5%AF%86%E7%A0%81/</loc>
     
     <lastmod>2017-01-11T02:06:24.901Z</lastmod>
@@ -465,6 +458,13 @@
   
   <url>
     <loc>http://www.soujava.com/2016-06-28-%E9%80%9A%E8%BF%87github-pages%E7%94%9F%E6%88%90%E7%BD%91%E7%AB%99/</loc>
+    
+    <lastmod>2017-01-11T02:06:24.901Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.soujava.com/2016-06-28-%E9%80%9A%E8%BF%87gitBook%E8%AE%A9%E7%BD%91%E7%AB%99%E6%9B%B4%E5%AE%9E%E7%94%A8/</loc>
     
     <lastmod>2017-01-11T02:06:24.901Z</lastmod>
     
