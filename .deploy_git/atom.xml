@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.soujava.com/"/>
-  <updated>2017-05-25T06:42:21.257Z</updated>
+  <updated>2017-07-03T12:56:34.290Z</updated>
   <id>http://www.soujava.com/</id>
   
   <author>
@@ -14,6 +14,70 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>jersey-1--轻量级Rest接口后台服务框架搭建</title>
+    <link href="http://www.soujava.com/jersey-1-%E8%BD%BB%E9%87%8F%E7%BA%A7Rest%E6%8E%A5%E5%8F%A3%E5%90%8E%E5%8F%B0%E6%9C%8D%E5%8A%A1%E6%A1%86%E6%9E%B6%E6%90%AD%E5%BB%BA/"/>
+    <id>http://www.soujava.com/jersey-1-轻量级Rest接口后台服务框架搭建/</id>
+    <published>2017-07-03T11:28:20.000Z</published>
+    <updated>2017-07-03T12:56:34.290Z</updated>
+    
+    <content type="html">&lt;p&gt;随着项目的收尾与上线，忽然感觉到犹如悟空丢掉金箍棒双手释然之感；但这种感觉也犹如隐鼠出洞惶恐至极；或许把一个项目做完之后的反思与感悟可以让我这个大龄coder对这种悚然之感得以慰藉！&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;&lt;strong&gt;一、项目背景&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;由于手机app端用到了&lt;em&gt;*&lt;/em&gt;公司的IM中间件产品，说白了就是在手机中添加一个跟微信聊天一样的功能；该版本app已经上线，但是需要对这个IM中的群组、单聊等活跃度进行数据分析，把聊天数据进行采集，然后存入大数据平台，通过数据分析系统进行分析报表处理。所以迫切需要做一个数据中转服务系统，要求这套系统短小精悍，越轻量级越好，关键是研发周期就5天！！！！&lt;/p&gt;
+&lt;p&gt;项目框架图&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/jerseykuangjiatu.png&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;二、技术调研&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;后来经过技术调研，看中了jersey这个rest框架，简单了解试用之后就当机立断的选用了。首先看他的简介：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/jerseyabort.png&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
+&lt;p&gt;归纳一下就是：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;一个开源的RESTful Web服务框架，可以非常简单的开发rest服务，并且支持各种数据类型&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;基于底层的JAX-RS API实现&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;三、项目搭建&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;1. 添加依赖&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;基于maven新建web工程，然后在pom.xml文件中添加相关的依赖&lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;16&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;17&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;18&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;19&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;20&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;21&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;22&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;23&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;24&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;25&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;26&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;27&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;28&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;29&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;30&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;31&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;32&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;33&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;34&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;35&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;36&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;37&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;dependency&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;lt;groupId&amp;gt;com.sun.jersey&amp;lt;/groupId&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;lt;artifactId&amp;gt;jersey-core&amp;lt;/artifactId&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;lt;version&amp;gt;1.19.4&amp;lt;/version&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;/dependency&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&amp;lt;dependency&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;lt;groupId&amp;gt;com.sun.jersey&amp;lt;/groupId&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;lt;artifactId&amp;gt;jersey-server&amp;lt;/artifactId&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;lt;version&amp;gt;1.19.4&amp;lt;/version&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;/dependency&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;dependency&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;lt;groupId&amp;gt;com.sun.jersey&amp;lt;/groupId&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;lt;artifactId&amp;gt;jersey-servlet&amp;lt;/artifactId&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;lt;version&amp;gt;1.19.4&amp;lt;/version&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;/dependency&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;dependency&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;lt;groupId&amp;gt;com.sun.jersey&amp;lt;/groupId&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;lt;artifactId&amp;gt;jersey-bundle&amp;lt;/artifactId&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;lt;version&amp;gt;1.19.4&amp;lt;/version&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;/dependency&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;dependency&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;lt;groupId&amp;gt;com.sun.jersey&amp;lt;/groupId&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;lt;artifactId&amp;gt;jersey-json&amp;lt;/artifactId&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;lt;version&amp;gt;1.19.4&amp;lt;/version&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;/dependency&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   &amp;lt;dependency&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &amp;lt;groupId&amp;gt;junit&amp;lt;/groupId&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &amp;lt;artifactId&amp;gt;junit&amp;lt;/artifactId&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &amp;lt;version&amp;gt;3.8.1&amp;lt;/version&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &amp;lt;scope&amp;gt;test&amp;lt;/scope&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   &amp;lt;/dependency&amp;gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;strong&gt;2. 新建一个rest接口的数据封装类-HelloWordVO&lt;/strong&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;16&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;17&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;18&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;package&lt;/span&gt; com.maps.vo;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; java.io.Serializable;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;HelloWordVO&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Serializable&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;long&lt;/span&gt; serialVersionUID = &lt;span class=&quot;number&quot;&gt;9129043716825852339L&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; String notice;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; String &lt;span class=&quot;title&quot;&gt;getNotice&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; notice;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;setNotice&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(String notice)&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.notice = notice;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;strong&gt;3. 新建一个rest接口的服务类(控制器)-HelloWordController&lt;/strong&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;16&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;17&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;18&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;19&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;20&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;21&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;package&lt;/span&gt; com.maps.rest;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; javax.ws.rs.GET;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; javax.ws.rs.Path;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; javax.ws.rs.Produces;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; com.maps.vo.HelloWordVO;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;@Path&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&quot;/&quot;&lt;/span&gt;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;HelloWordController&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;meta&quot;&gt;@GET&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;meta&quot;&gt;@Path&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&quot;/helloWord&quot;&lt;/span&gt;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;meta&quot;&gt;@Produces&lt;/span&gt;(&amp;#123; &lt;span class=&quot;string&quot;&gt;&quot;application/json&quot;&lt;/span&gt; &amp;#125;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; HelloWordVO &lt;span class=&quot;title&quot;&gt;helloWord&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		HelloWordVO helloword = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; HelloWordVO();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		helloword.setNotice(&lt;span class=&quot;string&quot;&gt;&quot;helloword&quot;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; helloword;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;strong&gt;4. 配置src/main/webapp/WEB-INF/web.xml&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;对于一个web工程来讲，必不可少的就是servlet，说白了，所有的请求响应都是基于servlet处理的，而servlet又需要运行在servlet容器中，所以我们在web.xml中配置servlet容器&lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;16&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;17&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;18&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;19&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;20&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;21&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;22&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;23&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;24&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;25&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;26&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;27&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;28&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;29&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;30&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;31&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;32&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;33&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;34&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;web-app xmlns=&quot;http://java.sun.com/xml/ns/javaee&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	xsi:schemaLocation=&quot;http://java.sun.com/xml/ns/javaee  http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd&quot;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	version=&quot;3.0&quot;&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;lt;servlet&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    	&amp;lt;!-- 配置servlet容器运行的容器 --&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&amp;lt;servlet-name&amp;gt;jersey&amp;lt;/servlet-name&amp;gt; &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&amp;lt;servlet-class&amp;gt;com.sun.jersey.spi.container.servlet.ServletContainer&amp;lt;/servlet-class&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&amp;lt;!-- 配置servlet容器初始化的类的路径，就好比spring中的 &amp;lt;context:component-scan base-package=&quot;com.*&quot; /&amp;gt;的功能 --&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&amp;lt;init-param&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            &amp;lt;param-name&amp;gt;com.sun.jersey.config.property.packages&amp;lt;/param-name&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;			&amp;lt;param-value&amp;gt;com.maps&amp;lt;/param-value&amp;gt; &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&amp;lt;/init-param&amp;gt; &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&amp;lt;!-- 开启简单的java对象直接映射转换json的功能，说白了就是可以在相应中直接在方法中对应的的java对象作为响应返回 ，&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		就好比spring中的   @RestController的功能 --&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&amp;lt;init-param&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            &amp;lt;param-name&amp;gt;com.sun.jersey.api.json.POJOMappingFeature&amp;lt;/param-name&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            &amp;lt;param-value&amp;gt;true&amp;lt;/param-value&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &amp;lt;/init-param&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&amp;lt;load-on-startup&amp;gt;1&amp;lt;/load-on-startup&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;lt;/servlet&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;lt;servlet-mapping&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &amp;lt;servlet-name&amp;gt;jersey&amp;lt;/servlet-name&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &amp;lt;url-pattern&amp;gt;/*&amp;lt;/url-pattern&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;lt;/servlet-mapping&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &amp;lt;display-name&amp;gt;Archetype Created Web Application&amp;lt;/display-name&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;/web-app&amp;gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;em&gt;到现在为止，我们的rest服务接口已经开发完毕了&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;5. 运行pom.xml编译项目工程&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;clean install package&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;4. 启动tomcat服务器,并访问helloWord对应的rest接口&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/jerseyhello.png&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;四、小结&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;首先搭建一个项目开发框架非常快速简单，几分钟就可以搭建完成，对比用springMvc去搭建的话可想而知&lt;/p&gt;
+&lt;p&gt;对于一个纯净版的工程，整个项目编译完成后的程序文件总大小仅仅3M，而对于一个纯净版的springMVC项目至少要30M，启动该项目仅仅3秒左右，而启动springmvc项目则要10秒以上&lt;/p&gt;
+&lt;p&gt;上面的与springMvc对比不是为了说他不好，主要取决于技术定位与应用场景；当然springmvc可以轻而易举做的事情，jersey就不一定可以&lt;/p&gt;
+&lt;/blockquote&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;随着项目的收尾与上线，忽然感觉到犹如悟空丢掉金箍棒双手释然之感；但这种感觉也犹如隐鼠出洞惶恐至极；或许把一个项目做完之后的反思与感悟可以让我这个大龄coder对这种悚然之感得以慰藉！&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="jersey" scheme="http://www.soujava.com/categories/jersey/"/>
+    
+    
+      <category term="java" scheme="http://www.soujava.com/tags/java/"/>
+    
+  </entry>
   
   <entry>
     <title>设计模式--单例模式</title>
@@ -1604,76 +1668,6 @@
     
       &lt;p&gt;仔细想了想，现将我对nodejs理解中的两个概念综述一下，以确定后续对其使用定位和深入理解。&lt;/p&gt;
 &lt;h2 id=&quot;1、包管理器&quot;&gt;&lt;a href=&quot;#1、包管理器&quot; class=&quot;headerlink&quot; title=&quot;1、包管理器&quot;&gt;&lt;/a&gt;1、包管理器&lt;/h2&gt;&lt;p&gt;其实nodejs有一个强大的包管理器支撑着nodejs的繁荣生态，提到这个包管理器就据下面几个例子：&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="nodeJs" scheme="http://www.soujava.com/categories/nodeJs/"/>
-    
-    
-      <category term="nodeJs" scheme="http://www.soujava.com/tags/nodeJs/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>CentOS系统安装nodeJs</title>
-    <link href="http://www.soujava.com/CentOS%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85nodeJs/"/>
-    <id>http://www.soujava.com/CentOS系统安装nodeJs/</id>
-    <published>2017-02-09T05:11:02.000Z</published>
-    <updated>2017-05-03T08:13:33.896Z</updated>
-    
-    <content type="html">&lt;p&gt;主要介绍在Linux(CentOS)系统中，nodeJs的安装与环境配置，首先我们需要到nodeJs官网下载对应的tar安装包，然后使用命令进行安装和配置操作(一共有源代码编译安装和二进制包安装，两种安装方式都是可以的)&lt;/p&gt;
-&lt;h2 id=&quot;一、二进制包安装&quot;&gt;&lt;a href=&quot;#一、二进制包安装&quot; class=&quot;headerlink&quot; title=&quot;一、二进制包安装&quot;&gt;&lt;/a&gt;一、二进制包安装&lt;/h2&gt;&lt;p&gt;1 下载二进制包&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;cd /usr/local/develop/soft  #切换到对应的安装目录中&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;wget https://nodejs.org/dist/v6.9.5/node-v6.9.5-linux-x64.tar.xz  #下载官方的nodeJs二进制安装包&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;2 命令安装&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;tar -xvf  node-v6.9.4-linux-x64.tar.xz    #解压下载的二进制安装包&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;blockquote&gt;
-&lt;p&gt;cd node-v6.9.4-linux-x64/ &amp;amp;&amp;amp; ll    #切换到已经解压的安装包目录中，并且详细列出所有的文件&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;drwxrwxr-x. &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt; maps maps    &lt;span class=&quot;number&quot;&gt;27&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;月   &lt;span class=&quot;number&quot;&gt;6&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;04&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;50&lt;/span&gt; bin&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;-rw-rw-r--. &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; maps maps &lt;span class=&quot;number&quot;&gt;55480&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;月   &lt;span class=&quot;number&quot;&gt;6&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;04&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;50&lt;/span&gt; CHANGELOG.md&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;drwxrwxr-x. &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt; maps maps    &lt;span class=&quot;number&quot;&gt;17&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;月   &lt;span class=&quot;number&quot;&gt;6&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;04&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;50&lt;/span&gt; include&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;drwxrwxr-x. &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt; maps maps    &lt;span class=&quot;number&quot;&gt;25&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;月   &lt;span class=&quot;number&quot;&gt;6&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;04&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;50&lt;/span&gt; lib&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;-rw-rw-r--. &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; maps maps &lt;span class=&quot;number&quot;&gt;60477&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;月   &lt;span class=&quot;number&quot;&gt;6&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;04&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;50&lt;/span&gt; LICENSE&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;-rw-rw-r--. &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; maps maps &lt;span class=&quot;number&quot;&gt;17440&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;月   &lt;span class=&quot;number&quot;&gt;6&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;04&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;50&lt;/span&gt; README.md&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;drwxrwxr-x. &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt; maps maps    &lt;span class=&quot;number&quot;&gt;42&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;月   &lt;span class=&quot;number&quot;&gt;6&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;04&lt;/span&gt;:&lt;span class=&quot;number&quot;&gt;50&lt;/span&gt; share&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;pre&gt;&lt;code&gt;*可以看到二进制安装包中包含bin/ 目录*
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;3 配置环境变量&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;vim /etc/profile&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;figure class=&quot;highlight php&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;export NODE_HOME=/usr/local/develop/soft/node-v6&lt;span class=&quot;number&quot;&gt;.9&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;.4&lt;/span&gt;-linux-x64&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;export PATH=$NODE_HOME/bin:$PATH&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;export NODE_PATH=$NODE_HOME/lib/node_modules:$PATH&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;blockquote&gt;
-&lt;p&gt;source /etc/profile    &lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;4 验证是否安装成功&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;node -v&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;figure class=&quot;highlight php&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;v6&lt;span class=&quot;number&quot;&gt;.9&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;.4&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h2 id=&quot;二、源代码编译安装&quot;&gt;&lt;a href=&quot;#二、源代码编译安装&quot; class=&quot;headerlink&quot; title=&quot;二、源代码编译安装&quot;&gt;&lt;/a&gt;二、源代码编译安装&lt;/h2&gt;&lt;p&gt;1 下载二进制包&lt;/p&gt;
-&lt;figure class=&quot;highlight php&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;cd /usr/local/develop/soft  &lt;span class=&quot;comment&quot;&gt;#切换到对应的安装目录中&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;wget https:&lt;span class=&quot;comment&quot;&gt;//nodejs.org/dist/v6.9.5/node-v6.9.5.tar.gz  #下载官方的nodeJs二进制安装包&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;2 命令安装&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;tar -zxvf  node-v6.9.4-linux-x64.tar.gz    #解压下载的二进制安装包&lt;/p&gt;
-&lt;p&gt;cd node-v6.9.4-linux-x64/    #切换到已经解压的安装包目录中&lt;/p&gt;
-&lt;p&gt;./configure  #配置&lt;/p&gt;
-&lt;p&gt;make&lt;/p&gt;
-&lt;p&gt;make install&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;3 配置环境变量&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;*参照二进制安装方式中的环境配置*
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;4 验证是否安装成功&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;*参照二进制安装方式中的验证*
-&lt;/code&gt;&lt;/pre&gt;</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;主要介绍在Linux(CentOS)系统中，nodeJs的安装与环境配置，首先我们需要到nodeJs官网下载对应的tar安装包，然后使用命令进行安装和配置操作(一共有源代码编译安装和二进制包安装，两种安装方式都是可以的)&lt;/p&gt;
-&lt;h2 id=&quot;一、二进制包安装&quot;&gt;&lt;a href=&quot;#一、二进制包安装&quot; class=&quot;headerlink&quot; title=&quot;一、二进制包安装&quot;&gt;&lt;/a&gt;一、二进制包安装&lt;/h2&gt;&lt;p&gt;1 下载二进制包&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;cd /usr/local/develop/soft  #切换到对应的安装目录中&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;wget https://nodejs.org/dist/v6.9.5/node-v6.9.5-linux-x64.tar.xz  #下载官方的nodeJs二进制安装包&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;2 命令安装&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;tar -xvf  node-v6.9.4-linux-x64.tar.xz    #解压下载的二进制安装包&lt;/p&gt;
-&lt;/blockquote&gt;
     
     </summary>
     
