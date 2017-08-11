@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.soujava.com/"/>
-  <updated>2017-07-04T12:37:31.609Z</updated>
+  <updated>2017-07-14T09:42:11.803Z</updated>
   <id>http://www.soujava.com/</id>
   
   <author>
@@ -14,6 +14,119 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>jersey-3--轻量级Rest接口服务开发之入参</title>
+    <link href="http://www.soujava.com/jersey-3-%E8%BD%BB%E9%87%8F%E7%BA%A7Rest%E6%8E%A5%E5%8F%A3%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91%E4%B9%8B%E5%85%A5%E5%8F%82/"/>
+    <id>http://www.soujava.com/jersey-3-轻量级Rest接口服务开发之入参/</id>
+    <published>2017-07-14T07:48:18.000Z</published>
+    <updated>2017-07-14T09:42:11.803Z</updated>
+    
+    <content type="html">&lt;p&gt;本篇文章我主要描述一下通过javax.ws框架开发rest服务接口时，基本的入参操作，主要包括入参类型的全局设定和方法级别设定、参数的默认值等等。&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;&lt;strong&gt;一、全局入参设定&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;通过在类上面添加注解 &lt;em&gt;@Consumes(MediaType.类型)&lt;/em&gt; 即可限定全局入参类型的设置，比如 &lt;em&gt;@Consumes(MediaType.TEXT_PLAIN)&lt;/em&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;新建控制器类&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;16&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;17&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;18&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;19&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;20&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;package&lt;/span&gt; com.maps.rest;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; javax.ws.rs.Consumes;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; javax.ws.rs.DefaultValue;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; javax.ws.rs.GET;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; javax.ws.rs.POST;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; javax.ws.rs.Path;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; javax.ws.rs.Produces;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; javax.ws.rs.QueryParam;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; javax.ws.rs.core.MediaType;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; com.maps.vo.UserVO;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;@Path&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&quot;param&quot;&lt;/span&gt;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;@Consumes&lt;/span&gt;(MediaType.TEXT_PLAIN)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;ParameterController&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;上面的控制器将是我们下面要开发的rest接口服务类，rest接口访问入口为 &lt;em&gt;/param&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;1. 新建一个方法，方法层级上面不加 &lt;em&gt;@Consumes&lt;/em&gt; 注解&lt;/strong&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;/**&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; * 不设置方法的入参类型，则默认为类级别所注解的&lt;span class=&quot;doctag&quot;&gt;@Consumes&lt;/span&gt;类型,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; * 并且方法中的入参没有 &lt;span class=&quot;doctag&quot;&gt;@QueryParam&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; * &lt;span class=&quot;doctag&quot;&gt;@param&lt;/span&gt; userId&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; * &lt;span class=&quot;doctag&quot;&gt;@return&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; */&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;@GET&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;@Path&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&quot;/paramForClassNoparam&quot;&lt;/span&gt;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; String &lt;span class=&quot;title&quot;&gt;paramForClassNoparam&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(String userId)&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; userId;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;该rest接口发布后，我们分两种情况访问该rest接口&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;访问 &lt;a href=&quot;http://servername/param/paramForClassNoparam，该rest接口的请求将会到达对应方法体中，并且可以正常执行方法中的业务代码。&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://servername/param/paramForClassNoparam，该rest接口的请求将会到达对应方法体中，并且可以正常执行方法中的业务代码。&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;blockquote&gt;
+&lt;p&gt;访问 &lt;a href=&quot;http://servername/param/paramForClassNoparam?userId=zhangsan，通过方法代码我们可以看到方法有一个String类型的入参userId，所以我们请求该rest接口时，在url中传递这个参数值；请求这个rest接口地址后，方法中的业务代码可以正常运行，但是传递的参数值是无法获取到的，这是因为我们在方法入参中没有通过&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://servername/param/paramForClassNoparam?userId=zhangsan，通过方法代码我们可以看到方法有一个String类型的入参userId，所以我们请求该rest接口时，在url中传递这个参数值；请求这个rest接口地址后，方法中的业务代码可以正常运行，但是传递的参数值是无法获取到的，这是因为我们在方法入参中没有通过&lt;/a&gt; &lt;em&gt;@QueryParam&lt;/em&gt; 指定具体的入参；所以我们上面的rest方法等同于无参数的方法，其实我们可以认为方法中的userId入参是多余的。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;小结：在开发rest接口中，如果方法层级上面没有声明注解Consumes，将默认采用全局(类注解)入参注解类型；如果在对应的方法中没有使用注解QueryParam声明具体的参数，那么该参数是毫无意义的，因为请求该接口时将无法获取到对应的传递的参数值。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2. 新建一个方法，入参前面添加 &lt;em&gt;@QueryParam&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;/**&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; * 不设置方法的入参类型，则默认为类级别所注解的&lt;span class=&quot;doctag&quot;&gt;@Consumes&lt;/span&gt;类型&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; * &lt;span class=&quot;doctag&quot;&gt;@param&lt;/span&gt; userId&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; * &lt;span class=&quot;doctag&quot;&gt;@return&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; */&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;@GET&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;@Path&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&quot;/paramForClass&quot;&lt;/span&gt;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; String &lt;span class=&quot;title&quot;&gt;paramForClass&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(@QueryParam(&lt;span class=&quot;string&quot;&gt;&quot;userId&quot;&lt;/span&gt;)&lt;/span&gt; String userId)&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; userId;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;该rest接口发布后，我们分两种情况访问该rest接口&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;访问 &lt;a href=&quot;http://servername/param/paramForClass，该rest接口的请求将会到达对应方法体中，并且可以正常执行方法中的业务代码,但是由于我们没有传递对应的userId参数，所以rest接口将不会有任何内容输出，并且响应状态码为204&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://servername/param/paramForClass，该rest接口的请求将会到达对应方法体中，并且可以正常执行方法中的业务代码,但是由于我们没有传递对应的userId参数，所以rest接口将不会有任何内容输出，并且响应状态码为204&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/paramForClass.png&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;blockquote&gt;
+&lt;p&gt;访问 &lt;a href=&quot;http://servername/param/paramForClass?userId=zhangsan，该rest接口的请求将会到达对应的方法体中，并且可以正常执行方法体中的业务代码，并且将会输出对应的入参userId传递的具体值。&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://servername/param/paramForClass?userId=zhangsan，该rest接口的请求将会到达对应的方法体中，并且可以正常执行方法体中的业务代码，并且将会输出对应的入参userId传递的具体值。&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/paramForClass2.png&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
+&lt;p&gt;小结：我们在对应的rest接口方法中，通过注解QueryParam指定具体的参数后，如果在请求该rest接口时，不传递对应的参数，那么方法体中获取到的该参数默认为null；如果在请求rest接口时，传递了具体声明的参数，那么方法体中就可以正常获取到该参数的值&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;3. 新建一个方法，方法层级声明 &lt;em&gt;@Consumes&lt;/em&gt; 注解为json类型，入参声明 &lt;em&gt;@QueryParam&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;/**&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; * 设置入参类型为字符串类型，在方法上面的注解&lt;span class=&quot;doctag&quot;&gt;@Consumes&lt;/span&gt;将覆盖掉类级别的注解&lt;span class=&quot;doctag&quot;&gt;@Consumes&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; * 比如类级别的入参类型为字符串类型，而方法级别的入参类型为json类型，所以该方法的入参类型为json类型&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; * &lt;span class=&quot;doctag&quot;&gt;@param&lt;/span&gt; userId&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; * &lt;span class=&quot;doctag&quot;&gt;@return&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; */&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;@GET&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;@Path&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&quot;/paramForMethod&quot;&lt;/span&gt;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;@Consumes&lt;/span&gt;(MediaType.APPLICATION_JSON)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; String &lt;span class=&quot;title&quot;&gt;paramForMethod&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(@QueryParam(&lt;span class=&quot;string&quot;&gt;&quot;userId&quot;&lt;/span&gt;)&lt;/span&gt; String userId)&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; userId; &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;该rest接口发布后，我们访问该rest接口&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;访问 &lt;a href=&quot;http://servername/param/paramForMethod?userId=zhangsanfeng，该rest接口的请求将会到达对应方法体中，并且可以正常执行方法中的业务代码,并且传递的userId参数值也将直接输出。&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://servername/param/paramForMethod?userId=zhangsanfeng，该rest接口的请求将会到达对应方法体中，并且可以正常执行方法中的业务代码,并且传递的userId参数值也将直接输出。&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;小结：我们在方法层级上面使用了注解Consumes指定了入参类型为json，其实该rest方法应该接受json类型的入参才对吧？实际上我们仍然可以正常传递字符串类型的参数userId，所以可以判定通过Consumes注解指定的入参类型并不是必须条件。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;4. 新建一个方法，方法层级声明 &lt;em&gt;@Consumes&lt;/em&gt; 注解为xml类型，入参声明 &lt;em&gt;@QueryParam&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;@GET&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;@Path&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&quot;/paramForMethodXml&quot;&lt;/span&gt;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;@Consumes&lt;/span&gt;(MediaType.APPLICATION_XML)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; String &lt;span class=&quot;title&quot;&gt;paramForMethodText&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(@QueryParam(&lt;span class=&quot;string&quot;&gt;&quot;userId&quot;&lt;/span&gt;)&lt;/span&gt; String userId)&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; userId; &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;该rest接口发布后，我们访问该rest接口&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;访问 &lt;a href=&quot;http://servername/param/paramForMethodXml?userId=zhangsan，该rest接口的请求将会到达对应方法体中，并且可以正常执行方法中的业务代码,并且传递的userId参数值也将直接输出。&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://servername/param/paramForMethodXml?userId=zhangsan，该rest接口的请求将会到达对应方法体中，并且可以正常执行方法中的业务代码,并且传递的userId参数值也将直接输出。&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;小结：我们在方法层级上面使用了注解Consumes指定了入参类型为xml,实际上面我们仍然可以传递字符串类型的参数&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;5. 新建一个方法，入参通过 &lt;em&gt;@QueryParam&lt;/em&gt; 注解声明参数名称&lt;/strong&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;/**&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; * 在方法的入参中设置入参名称&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; * &lt;span class=&quot;doctag&quot;&gt;@param&lt;/span&gt; id&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; * &lt;span class=&quot;doctag&quot;&gt;@return&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; */&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;@GET&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;@Path&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&quot;/paramName&quot;&lt;/span&gt;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; String &lt;span class=&quot;title&quot;&gt;paramName&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(@QueryParam(&lt;span class=&quot;string&quot;&gt;&quot;userId&quot;&lt;/span&gt;)&lt;/span&gt; String id)&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; id;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;该rest接口发布后，我们访问该rest接口&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;访问 &lt;a href=&quot;http://servername/param/paramName?userId=zhangsan，该rest接口的请求将会到达对应方法体中，并且可以正常执行方法中的业务代码,并且传递的userId参数值也将直接输出。&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://servername/param/paramName?userId=zhangsan，该rest接口的请求将会到达对应方法体中，并且可以正常执行方法中的业务代码,并且传递的userId参数值也将直接输出。&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;小结：这个rest接口我们通过QueryParam单独声明了入参名称，也就是说通过QueryParam注解声明的参数名称跟方法真实的入参名称是不同的，但是我们通过注解QueryParam声明以后，请求rest接口时，传递的userId参数名称的值就会自动赋值到真实的入参id上面。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;6. 通过注解 &lt;em&gt;@QueryParam&lt;/em&gt; &lt;em&gt;@DefaultValue&lt;/em&gt; 为参数声明默认值&lt;/strong&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;/**&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; * 为入参设置默认值&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; * &lt;span class=&quot;doctag&quot;&gt;@param&lt;/span&gt; userId&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; * &lt;span class=&quot;doctag&quot;&gt;@return&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; */&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;@GET&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;@Path&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&quot;/paramDefultValue&quot;&lt;/span&gt;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; String &lt;span class=&quot;title&quot;&gt;defaultParamValue&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(@DefaultValue(&lt;span class=&quot;string&quot;&gt;&quot;123456&quot;&lt;/span&gt;)&lt;/span&gt; @&lt;span class=&quot;title&quot;&gt;QueryParam&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;string&quot;&gt;&quot;userId&quot;&lt;/span&gt;)&lt;/span&gt; String userId)&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; userId;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;该rest接口发布后，我们分两种情况访问该rest接口&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;访问 &lt;a href=&quot;http://servername/param/paramDefultValue，该rest接口的请求将会到达对应方法体中，并且可以正常执行方法中的业务代码,虽然由于我们没有传递对应的userId参数，但是通过注解DefaultValue设定默认值后，我们仍然可以下方法体中获取到入参userId的值为123456&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://servername/param/paramDefultValue，该rest接口的请求将会到达对应方法体中，并且可以正常执行方法中的业务代码,虽然由于我们没有传递对应的userId参数，但是通过注解DefaultValue设定默认值后，我们仍然可以下方法体中获取到入参userId的值为123456&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;blockquote&gt;
+&lt;p&gt;访问 &lt;a href=&quot;http://servername/param/paramDefultValue?userId=zhangsan，该rest接口对应的方法体可以正常执行，响应输出zhangsan，因为我们请求rest接口时，传递了userId参数，所以方法体中我们通过注解DefaultValue设定的默认值就被覆盖了。&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://servername/param/paramDefultValue?userId=zhangsan，该rest接口对应的方法体可以正常执行，响应输出zhangsan，因为我们请求rest接口时，传递了userId参数，所以方法体中我们通过注解DefaultValue设定的默认值就被覆盖了。&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;小结：当我们使用注解DefaultValue声明入参默认值后，当我们请求rest接口时，不传递对应的参数时，方法体中获取的参数值就是我们设定的默认值。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;7. 通过注解 &lt;em&gt;@QueryParam&lt;/em&gt; 设定后，请求rest接口的入参类型&lt;/strong&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;/**&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; * 设置入参的类型&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; * &lt;span class=&quot;doctag&quot;&gt;@param&lt;/span&gt; userId&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; * &lt;span class=&quot;doctag&quot;&gt;@param&lt;/span&gt; age&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; * &lt;span class=&quot;doctag&quot;&gt;@return&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; */&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;@GET&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;@Path&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&quot;paramType&quot;&lt;/span&gt;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; String &lt;span class=&quot;title&quot;&gt;paramType&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(@QueryParam(&lt;span class=&quot;string&quot;&gt;&quot;userId&quot;&lt;/span&gt;)&lt;/span&gt; String userId, @&lt;span class=&quot;title&quot;&gt;QueryParam&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;string&quot;&gt;&quot;age&quot;&lt;/span&gt;)&lt;/span&gt; Integer age)&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt;  userId+&lt;span class=&quot;string&quot;&gt;&quot; &quot;&lt;/span&gt;+age;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;该rest接口发布后，我们分两种情况访问该rest接口&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;访问 &lt;a href=&quot;http://servername/param/paramType?userId=zhangsan&amp;amp;age=27，该rest接口的请求将会到达对应方法体中，并且可以正常执行方法中的业务代码,该请求响应输出zhangsan&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://servername/param/paramType?userId=zhangsan&amp;amp;age=27，该rest接口的请求将会到达对应方法体中，并且可以正常执行方法中的业务代码,该请求响应输出zhangsan&lt;/a&gt; 27&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;blockquote&gt;
+&lt;p&gt;访问 &lt;a href=&quot;http://servername/param/paramType?userId=zhangsan&amp;amp;age=strs&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://servername/param/paramType?userId=zhangsan&amp;amp;age=strs&lt;/a&gt; ，报404错误，因为我们的入参age的类型参数值类型传递错误&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;小结：我们通过 QueryParam 注解声明入参后，请求rest接口时，传递的参数类型需要满足 兼容性；否则将报404错误。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;8. 通过注解 &lt;em&gt;@QueryParam&lt;/em&gt; 设定后，请求rest接口的入参类型为boolean类型&lt;/strong&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;@GET&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;@Path&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&quot;paramTypeForBool&quot;&lt;/span&gt;)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; String &lt;span class=&quot;title&quot;&gt;paramTypeForBool&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(@QueryParam(&lt;span class=&quot;string&quot;&gt;&quot;flg&quot;&lt;/span&gt;)&lt;/span&gt; Boolean flg, @&lt;span class=&quot;title&quot;&gt;QueryParam&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;string&quot;&gt;&quot;status&quot;&lt;/span&gt;)&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;boolean&lt;/span&gt; status)&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt;  &lt;span class=&quot;string&quot;&gt;&quot; &quot;&lt;/span&gt;+flg+&lt;span class=&quot;string&quot;&gt;&quot; &quot;&lt;/span&gt;+status;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;该rest接口发布后，我们分三种情况访问该rest接口&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;访问 &lt;a href=&quot;http://servername/param/paramTypeForBool，该rest接口的请求将会到达对应方法体中，并且可以正常执行方法中的业务代码,只是我们没有传递具体参数值，所以Boolean类型的flg就为null，boolean类型的flg就为false。&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://servername/param/paramTypeForBool，该rest接口的请求将会到达对应方法体中，并且可以正常执行方法中的业务代码,只是我们没有传递具体参数值，所以Boolean类型的flg就为null，boolean类型的flg就为false。&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;blockquote&gt;
+&lt;p&gt;访问 &lt;a href=&quot;http://servername/param/paramTypeForBool?flg=str&amp;amp;status=str&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://servername/param/paramTypeForBool?flg=str&amp;amp;status=str&lt;/a&gt; ，该请求响应输出为 false false。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;blockquote&gt;
+&lt;p&gt;访问 &lt;a href=&quot;http://servername/param/paramTypeForBool?flg=true&amp;amp;status=true&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://servername/param/paramTypeForBool?flg=true&amp;amp;status=true&lt;/a&gt; ，该请求响应输出为 true true。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;小结：当入参类型布尔类型时，当类型是包装类-Boolean时，如果入参不传的话，接收的为null；当类型不是包装类-boolean时，如果参数不传的话，接收的值为false；当类型不是包装类-boolean时，如果传递的参数值类型为非boolan(不兼容),则方法体中的接收到的值为false。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本篇文章我主要描述一下通过javax.ws框架开发rest服务接口时，基本的入参操作，主要包括入参类型的全局设定和方法级别设定、参数的默认值等等。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="jersey" scheme="http://www.soujava.com/categories/jersey/"/>
+    
+    
+      <category term="java" scheme="http://www.soujava.com/tags/java/"/>
+    
+  </entry>
   
   <entry>
     <title>jersey-2--轻量级Rest接口后台服务常规接口开发</title>
@@ -1649,71 +1762,6 @@
     
       &lt;p&gt;&lt;strong&gt;一、定时描述&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;平时开发中，经常会把一些热数据存入缓存中，并且设置失效时间，比如把用户和rest接口地址存入缓存，并设置失效时间，一方面可以提高响应速度，还可以把一部分无效的请求挡在缓存层处理；还比如把验证码存入缓存，并设置失效时间，也可以达到上述目的。redis缓存有两种定时模式：&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Redis" scheme="http://www.soujava.com/categories/Redis/"/>
-    
-    
-      <category term="Redis" scheme="http://www.soujava.com/tags/Redis/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Redis-使用SortedSet分页处理</title>
-    <link href="http://www.soujava.com/Redis-%E4%BD%BF%E7%94%A8SortedSet%E5%88%86%E9%A1%B5%E5%A4%84%E7%90%86/"/>
-    <id>http://www.soujava.com/Redis-使用SortedSet分页处理/</id>
-    <published>2017-03-23T04:53:35.000Z</published>
-    <updated>2017-05-03T08:12:10.118Z</updated>
-    
-    <content type="html">&lt;p&gt;&lt;strong&gt;一、需求描述&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;由于app首页的数据展示需要调用6个第三方的不同数据源的rest接口，所以app首页在使用过程中会出现请求超时的问题（app端设置超时时间为5s）；所以需要对首页进行优化；&lt;/p&gt;
-&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;blockquote&gt;
-&lt;p&gt;1、由于app首页的数据展示非常像微信朋友圈的数据展示，即下拉时获取最新的数据，上推时获取历史数据，而在实际的使用场景中，上推动作大于5次的情况比较少(每天在微信朋友圈把5天前的动态翻出来[上推]的情况比较少吧)；所以打算把首页的前5页数据全部放入缓存中，不管是下拉获取新数据还是上推获取分页的老数据都统一从缓存中获取，可以有效减轻服务器压力。&lt;/p&gt;
-&lt;p&gt;2、设定第三方rest接口调用超时时间，比如5分钟之内的首页刷新操作，只会读取缓存数据，不会触发调用第三方的rest接口。&lt;/p&gt;
-&lt;p&gt;3、首页的刷新操作触发采用异步多线程调用，而不是采用串行方式处理；比如首页刷新时，调用6个第三方的rest接口时，启动6个线程并行异步去拉取数据，并且把新数据增量更新到缓存中。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;strong&gt;二、业务调整&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;由于app端的分页比较特殊，比如后台数据会近实时的发生变化，所以采用常规的分页算法[(totalRecord + pageSize - 1) / pageSize;]肯定是不行的。如果仍采用这种算法，当上推刷新时，就有可能加载到上一页已经看过的数据，比如用户当前正在看第2页的历史数据，如果此时后台数据源新增了一条数据，那么当用户继续上推操作查看第3页的历史数据时，就会把第2页的最后一条数据获取，并且会把该条数据作为第3页的第一条数据进行展示，这样是有问题的。&lt;/p&gt;
-&lt;p&gt;所以在数据表设计时，需要在表中增加一个自增的orderId字段参与分页，然后分页时，需要将第一页的最后一条数据的orderId回传到后台，后台拿着这个orderId进行条件判断查询并且集合上面的分页算法就可以避免上面的问题。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;二、代码开发&lt;/strong&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;1、熟悉redis的zAdd方法&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;ZADD key score member [[score member] [score member] ...]&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;将一个或多个 member 元素及其 score 值加入到有序集 key 当中。&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;如果某个 member 已经是有序集的成员，那么更新这个 member 的 score 值，并通过重新插入这个 member 元素，来保证该 member 在正确的位置上。&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;score 值可以是整数值或双精度浮点数。&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;blockquote&gt;
-&lt;p&gt;2、调用zAdd方法向缓存中添加数据(用的是jedis客户端)&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;em&gt;这里为了看着更加清晰，没有使用for循环&lt;/em&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;blockquote&gt;
-&lt;p&gt;jedis.zadd(“home_123456”, 1, a);&lt;/p&gt;
-&lt;p&gt;jedis.zadd(“home_123456”, 2, b);&lt;/p&gt;
-&lt;p&gt;jedis.zadd(“home_123456”, 3, c);&lt;/p&gt;
-&lt;p&gt;jedis.zadd(“home_123456”, 4, d);&lt;/p&gt;
-&lt;p&gt;jedis.zadd(“home_123456”, 5, e);&lt;/p&gt;
-&lt;p&gt;jedis.zadd(“home_123456”, 6, f);&lt;/p&gt;
-&lt;p&gt;jedis.zadd(“home_123456”, 7, g);&lt;/p&gt;
-&lt;p&gt;jedis.zadd(“home_123456”, 8, h);&lt;/p&gt;
-&lt;p&gt;jedis.zadd(“home_123456”, 9, i);&lt;/p&gt;
-&lt;p&gt;jedis.zadd(“home_123456”, 10, j);&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;3、熟悉zRevrangeByScore方法&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;16&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;17&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;18&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ZREVRANGEBYSCORE key max min [WITHSCORES] [LIMIT offset count]&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;返回有序集 key 中， score 值介于 max 和 min 之间(默认包括等于 max 或 min )的所有的成员。有序集成员按 score 值递减(从大到小)的次序排列。&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;具有相同 score 值的成员按字典序的逆序(reverse lexicographical order )排列。&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;min 和 max 可以是 -inf 和 +inf ，这样一来，你就可以在不知道有序集的最低和最高 score 值的情况下获取数据&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;默认情况下，区间的取值使用闭区间 (小于等于或大于等于)，你也可以通过给参数前增加 ( 符号来使用可选的开区间 (小于或大于)。&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;举个例子：&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;ZRANGEBYSCORE &lt;span class=&quot;title&quot;&gt;zset&lt;/span&gt; &lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;返回所有符合条件 &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt; &amp;lt; score &amp;lt;= &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt; 的成员，而&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ZRANGEBYSCORE zset (&lt;span class=&quot;number&quot;&gt;5&lt;/span&gt; (&lt;span class=&quot;number&quot;&gt;10&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;则返回所有符合条件 &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt; &amp;lt; score &amp;lt; &lt;span class=&quot;number&quot;&gt;10&lt;/span&gt; 的成员。&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;blockquote&gt;
-&lt;p&gt;2、调用zRevrangeByScore方法向缓存中获取分页数据&lt;/p&gt;
-&lt;p&gt;比如每页按取3条数据进行分页的话,当我们在查看第1页的前提下，上推操作，获取第2页的历史数据，需要拿到上一页数据的最后一条记录的score值【key:home_123456 score:3 value c】,所以score值为3&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;jedis.zrevrangeByScore(&lt;span class=&quot;string&quot;&gt;&quot;home_123456&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;+inf&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;(&quot;&lt;/span&gt;+&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;这条代码的意思就是取出缓存中key为&lt;span class=&quot;string&quot;&gt;&quot;home_123456&quot;&lt;/span&gt;,并且score值大于&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;的数据，并且从第&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;条开始一共取出&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;条(有点像 limit &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;的作用)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;注：【+inf】 代表最大值不知道，所以不对区间进行最大值限制,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    【&lt;span class=&quot;string&quot;&gt;&quot;(&quot;&lt;/span&gt;+&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;】 等同与 【(&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;】，代表sore的值要小于&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;通过上面的方法可以很好的实现在缓存中进行分页获取数据，以此可以有效提示app端的性能&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;strong&gt;一、需求描述&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;由于app首页的数据展示需要调用6个第三方的不同数据源的rest接口，所以app首页在使用过程中会出现请求超时的问题（app端设置超时时间为5s）；所以需要对首页进行优化；&lt;/p&gt;
     
     </summary>
     
