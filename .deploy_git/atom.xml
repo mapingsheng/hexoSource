@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.soujava.com/"/>
-  <updated>2017-08-11T04:29:47.483Z</updated>
+  <updated>2017-09-27T08:38:06.449Z</updated>
   <id>http://www.soujava.com/</id>
   
   <author>
@@ -14,6 +14,139 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Linux服务器中查看log日志技巧</title>
+    <link href="http://www.soujava.com/Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%AD%E6%9F%A5%E7%9C%8Blog%E6%97%A5%E5%BF%97%E6%8A%80%E5%B7%A7/"/>
+    <id>http://www.soujava.com/Linux服务器中查看log日志技巧/</id>
+    <published>2017-09-27T03:17:07.000Z</published>
+    <updated>2017-09-27T08:38:06.449Z</updated>
+    
+    <content type="html">&lt;p&gt;平时开发过程中，一般应用程序都会部署在linux操作系统上面，不管在什么阶段(开发、测试、线上)，难免会出现各种各样的问题，有些时候应该是bug，有些时候可能是偶然事件；不管出现什么问题，我们都需要找出问题所在，并且快速解决它；通常的做法无非是以下两种策略：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/log0.jpg&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;再次复现问题，并实时监控日志，排查出问题&lt;/li&gt;
+&lt;li&gt;分析已有的日志数据，一步一步的分析排查问题&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;一般服务上面的日志文件都比较大，少则数GB；多则数TB；如果我们把一个数GB的日志文件放到window系统的电脑中进行分析，仅仅去打开这个日志文件，估计电脑就会卡爆，更别说全局搜索关键字啦。然而在Linux服务器上面直接通过一些命令去操作分析这个数GB的日志文件，那是轻而易举的事情，下面我们可以看到一个服务器中日志文件的大小是&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/log1.png&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
+&lt;p&gt;一、&lt;strong&gt;查看日志信息的相关命令&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;tail -f catalina.out&lt;/p&gt;
+&lt;p&gt; 该命令可以实时查看新输出的增量log日志信息，所以适合查看访问量不大的应用服务，比如访问量很高，后台日志输出速度非常快，每秒千行的速度，用肉眼是根本无法看出什么日志的。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;tail -n 1000 catalina.out&lt;/p&gt;
+&lt;p&gt; 查看日志文件中最后(最新)的1000行日志信息，这种方式适合查询‘复现问题操作时，查看该复现操作所产生的所有相关的日志信息’比较有用，比上面的tail -f 命令的好处就是可以快速查看最后操作的日志信息，有点快照的概念&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;tail -n +100 catalina.out&lt;/p&gt;
+&lt;p&gt; 从日志文件的第100行开始向后展示；这种方式适用于针对日志文件很大时的问题排查，跟上面的命令大同小异吧&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;sed -n ‘10,15p’ catalina.out&lt;/p&gt;
+&lt;p&gt; 查看日志文件的第10~15行的日志信息，这种方式适合针对历史产生的日志信息进行分析排查，比如我们可以先大概定位到问题发生的日期区间，然后用sed命令把这个日期区间的所有相关日志信息进行输出排查。    &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;cat catalina.out&lt;/p&gt;
+&lt;p&gt; 该命令输出整个日志文件的所有日志信息，所以该命令适合查看日志文件比较小的情况下使用，所以该命令一般都会结合其他命令去使用。比如：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;cat catalina.out | head -n 1000 | tail -n +500&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt; 查看日志文件从1000行开始显示，查看500行的日志信息，即查看1000~1500行的日志数据。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;grep&lt;/p&gt;
+&lt;p&gt; 如果想更加快速的排查分析日志文件中的日志数据，不会少了grep命令的使用，这么强大的搜索命令绝对可以让你排查问题的时候洋洋得意如沐春风。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;二、&lt;strong&gt;模拟现实场景进行问题排查&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;9月25日，收到反馈平台的系统通知，有用户反馈大概上午10点30分左右，IM功能模块无法正常使用，发送的消息都是失败状态。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;问题分析步骤&lt;ul&gt;
+&lt;li&gt;&lt;blockquote&gt;
+&lt;p&gt;1.先大概找出9月25日 10点30分左右的日志数据&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;cat catalina.out | grep ‘2017-09-26 10:30’&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/log2.png&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;2.再次根据实际的情况，缩小数据查找分析范围，比如在查看10点30分产生的数据时，从第176行开始查看&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;cat catalina.out | grep ‘2017-09-26 10:30’ | tail -n +176&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/log3.png&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
+&lt;p&gt;通过以上两步不停的缩小范围，相信很快就可以定位到问题所在了。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;平时开发过程中，一般应用程序都会部署在linux操作系统上面，不管在什么阶段(开发、测试、线上)，难免会出现各种各样的问题，有些时候应该是bug，有些时候可能是偶然事件；不管出现什么问题，我们都需要找出问题所在，并且快速解决它；通常的做法无非是以下两种策略：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/log0.jpg&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Linux" scheme="http://www.soujava.com/categories/Linux/"/>
+    
+    
+      <category term="Linux" scheme="http://www.soujava.com/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>最近开发app后台的一些小结</title>
+    <link href="http://www.soujava.com/%E6%9C%80%E8%BF%91%E5%BC%80%E5%8F%91app%E5%90%8E%E5%8F%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E7%BB%93/"/>
+    <id>http://www.soujava.com/最近开发app后台的一些小结/</id>
+    <published>2017-09-23T08:31:08.000Z</published>
+    <updated>2017-09-23T09:20:26.544Z</updated>
+    
+    <content type="html">&lt;p&gt;最近负责一个app产品后台的开发，主要包括app所有rest数据接口层的开发、第三方接口数据的融合过滤、第三方应用的接入(比如IM聊天、群组、电话虚拟拨号等等)、系统后台的管理配置等等，通过这个app后台的开发，也踩过不少坑，挖过不少雷，下面主要做一下小结：&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;&lt;strong&gt;一、产品与技术是彼此成就&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;产品初期设计一个产品时一般都会描述这个产品的愿景(定位、受众、解决的痛点、达到的目标)，所以起初这些描述性概念对应开发来讲就感觉毫无意义，然而开发过程中也必然会出现很多细节问题，当然也会扯皮，比如开发会质问产品怎么会设计这么鸡肋的功能，产品也会反驳各种说辞，总之有点各不相让的势头；主要是由于彼此的关注点不同，所以考虑的问题的角度也不同；后来大家都转变了一下思路，产品描述功能时，沉下心去聆听；因为产品设计一个功能肯定是做了充分的分析的（比如竞品分析、用户习惯、功能特性等等）；并且在产品绩效考核上面也要做到目标一致，比如产品月活人数达到什么量级，绩效是什么；性能达到什么量级，绩效是什么等等；总之来讲产品和技术是彼此成就的，需要彼此摆正心态，大家拧成一股绳，荣辱与共，一起把这个产品做好，一起体现每个人不同的价值观(升职加薪、精神愉悦)；&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;二、设计初期UI和UE一定要思路统一&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;产品在设计一个app产品时一般都会画出原型(简单的界面展现+完善的交互指引)，为什么说需要完善的交互指引呢，因为后台开发可以根据每一个交互场景定义不同的数据封装基类，是使用继承还是使用组合等等都是根据交互进行定义的；项目评审会完成后，一般UI和UE就会着手开始具体的设计工作，两者一定要紧密配合，不然到后期容易出现各种细节问题，比如app中常见的图文数据列表页面，UI会设计好具体的界面，但是如果UE不及时参与的话，UI可能就会漏掉当后台接口无数据返回时的交互；当在开发阶段才发现这样问题的话，可能就会浪费时间；&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;三、各端的开发都要详细的参照UI进行开发&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;开发阶段，需要非常仔细的看看UI图，因为所有的功能点都在UI图上面体现，包括开发完成后，测试部门编写的测试用例都是基于UI图进行的；并且在看UI图的时候，需要抽取最小单元的数据集，然后定义各自的数据封装类，这些类就是rest接口的属性体现。所以在开发之前，先仔细分析UI图，可以避免大量的冗余类产生。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;四、开发时多替客户端着想&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;我们在开发rest接口时，一定要充分的减轻客户端的工作量，要知道客户端展示不像平时开发的web界面展示那样，平时web界面展示数据时，页面中可能很多循环、逻辑判定等等；但是客户端则完全不能这么搞，不然客户端性能会非常的慢，并且代码会非常臃肿，后期难以维护，所以我们在提供rest接口时，后台能多做点事情就把它做了，比如一个app的ui上面，需要展示学生答题正确率；我们后台在提供接口时，就直接把这个正确率计算好返回到前端显示就行了，不要再给客户端返回一个分子、分母让客户端自己计算，不然客户端还要判断分母是否为0，还要处理小数点后面的位数等等；&lt;/p&gt;
+&lt;p&gt;还比如一些状态标示，有些图文内容点击阅读后，可能需要显示已读、未读标示，那么后台也直接把状态值和状态值对应的title在接口中返回就行了；这样客户端拿到接口结果集时只需要直接显示即可，不会做太多的逻辑判定；这样做完一个app产品下来，客户端的小伙伴会非常愿意给你配合，因为很多事情我们后台都帮他们做了。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;五、效率 效率 效率 -缓存&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;app不像web开发，打开一个浏览器如果响应慢的情况下，可以再刷新一下，或者看其他的内容，在app端完全不是这样的，app端如有打开一下页面时，如果一直loading状态，可能会跟用户的感觉就是这个卡顿了，所以体验非常不好，要么app自动接收loading(一般都有一个超时值)，并给出提示，或者迫不得已，用户自己通过杀进程的方式把app进程给kill掉。这样是体验极差的，所以当app调用rest接口向后台请求数据时，一定要非常快的把数据返回给客户端。&lt;/p&gt;
+&lt;p&gt;所以后台接口层面的数据调用能从缓存中获取就从缓存中获取，尽量不要直接读库操作(不管你是mysql也好，mongodb也好)，不然会非常影响效率；当然缓存也不要单点的支撑整个系统，需要分布式的去支撑整个系统，比如采用codis等等；还有就是不可能把整个app的后台数据都存入缓存，所以把什么数据存入缓存，多长时间失效等等都需要根据不同的业务功能场景进行设定和平衡。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;六、效率 效率 效率 -异步&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;同一个接口可能调用很多数据源，比如常见的app首页，这样的情况下面，效率可想而知，所以在已经使用缓存的基础上，采用异步线程机制，每个请求都采用异步加载的方式去获取数据并且更新缓存，异步加载也可以通过多线程、消息队列去实现；当然那些操作是可以采用异步，哪些操作是不能采用异步是有本质区别的，比如用户的收藏行为，这就可以在后台采用异步处理操作；登录操作肯定是不能采用异步处理的；所以我们需要区分场景和业务，并且异步也可能会出现数据丢失、数据不一致的风险。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;七、DB层面的优化&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;之前问一个搞DBA的同学，如何才能让数据库查询跟快，他说了一句很NB的话，无论怎么优化都不如换上SSD！确实是很高端的感悟！这句话我们平时做开发的可能就不那么好理解，因为考虑问题的角度不同，比如某某单位有10个窗口，同时有100个人去排队办理业务；如果让DBA去优化可能就说再开10个窗口，而让开发去优化可能就会说将业务分类办理，一个窗口只办理同一类的业务(读写分类的概念)等等。&lt;/p&gt;
+&lt;p&gt;所以回归到app后台开发上面来讲，在DB层，如果访问量很大时，一定要先做读写分离，一般是通过多数据源去实现；做完读写分离后，如果基础数据量也很大时，一定要分表操作，但是分表根据什么维度去分，比如用户类型、用户所属地区码等等因素，一定要慎重去操作，不然后期容易发生跨表查询的问题。&lt;/p&gt;
+&lt;p&gt;app端的后台开发一般都是单表操作，不会太过分追求数据库设计三范式规范，所以适当的冗余设计表结构也将会带来不错的性能提升。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;八、集群环境下的定时任务&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;一般服务器都是集群部署，肯定也有定时任务，所以一定要避免集群环境下面多定时任务重复执行的问题，我在这块可是栽过跟头，我们的使用场景是每天晚上10点中统计数据，然后发送IM消息到APP端，但是由于集群环境，所以到10点钟时，每台服务器上面的定时器都开始执行，所以app也就收到了多条重复数据，后来通过缓存加锁得以解决。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;九、rest接口的版本&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;针对app接口的开发不可避免的就是版本问题，我们采用的策略就是通过接口path路径区分版本号，期初我们采用的是app端调用接口时，需要在header中传入版本号，但是后来发现当每一次发版，这个接口的业务都会变化的时候，简直就是一个噩梦，因为你需要在原来的接口方法中做很多适配操作，并且还要兼容老版本的app请求访问，一旦出现什么问题，排查起来将非常困难；所以后来我们就采用了path路径的方式区分适配不同版本的接口调用；一般rest层内部的service业务方法要最小粒度的实现其功能，这样的话，针对新版本的rest接口，我们只需要组合不同的service业务方法即可。&lt;/p&gt;
+&lt;p&gt;rest接口的兼容性要考虑周到，在开发rest接口时要站在产品的角度去考虑这个接口能否充分满足他们的要求，比如我们开发一个图文列表数据接口，用户点击某一条图文内容后，该条图文就是已读标识，那么当这个产品上线后，产品突然发现如果用户点击某条图文后，在回到列表时，应该把用户已经看过的那条图文给不显示；所以如果当时设计后台rest接口时，入参中刚好有一个状态参数，默认查询所有的，如果此时要满足看后消失的需求时，我们只需要在后台把这个接口的入参默认值改成未读状态就行了；改完后后台发一次版就ok了，这样的功能改动对APP端是无感知的，也避免了APP端的发版升级。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;十、一定要知道别人对你做了什么&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;平时开发中一定要多打log，多埋点；不然当出现什么问题的时候，我们压根都无从查起，非常被动，因为你不知道用户执行了什么操作，产生了什么bug，这个bug是什么操作导致的等等；如果有条件的话就把ELK搭建上。如果在高大上一点就引入第三方专业做系统监控产品的公司。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;最近负责一个app产品后台的开发，主要包括app所有rest数据接口层的开发、第三方接口数据的融合过滤、第三方应用的接入(比如IM聊天、群组、电话虚拟拨号等等)、系统后台的管理配置等等，通过这个app后台的开发，也踩过不少坑，挖过不少雷，下面主要做一下小结：&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="jersey" scheme="http://www.soujava.com/categories/jersey/"/>
+    
+    
+      <category term="java" scheme="http://www.soujava.com/tags/java/"/>
+    
+  </entry>
   
   <entry>
     <title>jersey-4--轻量级Rest接口服务开发之对象入参</title>
@@ -1644,140 +1777,6 @@
     <summary type="html">
     
       &lt;p&gt;开发这么长时间，一直的开发思想模式就是java负责服务器端(后台)运行，js负责前端(前台)交互体验，两个语言没有任何代码级别的交互；但其实还有另一种开发模式，就是java和javascript混合开发，前后端不那么分离；即java代码可以直接调用javascript文件中定义的函数；javascript中定义的函数可以读取java代码中定义的变量数据；感觉有点意思！其实这种开发模式个人觉得也很有价值，比如下面的场景：&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="java" scheme="http://www.soujava.com/categories/java/"/>
-    
-    
-      <category term="java" scheme="http://www.soujava.com/tags/java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>java8使用stream对简单数据集排序</title>
-    <link href="http://www.soujava.com/java8%E4%BD%BF%E7%94%A8stream%E5%AF%B9%E7%AE%80%E5%8D%95%E6%95%B0%E6%8D%AE%E9%9B%86%E6%8E%92%E5%BA%8F/"/>
-    <id>http://www.soujava.com/java8使用stream对简单数据集排序/</id>
-    <published>2017-04-21T09:40:43.000Z</published>
-    <updated>2017-05-03T08:11:29.602Z</updated>
-    
-    <content type="html">&lt;p&gt;Stream是java8新增一个工具类，在java.util.stream.*;中，不得不说的是stream功能异常强大，一旦你接触之后就不想再用哪些旧的jdk中api方法了；下面先以日常开发中的集合数据排序为例慢慢了解stream中的sorted方法。&lt;/p&gt;
-&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;p&gt;&lt;strong&gt;一、对List数据集合排序&lt;/strong&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;1、对List集合进行升序排列&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;streamSortTest1&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; 		&lt;span class=&quot;comment&quot;&gt;//定义一个简单的List数据集合&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; 		List&amp;lt;Integer&amp;gt; list1 = Lists.newArrayList(&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;6&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;8&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;); &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//直接调用sorted方法进行排序，val1-val2&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; 		list1 = list1.stream().sorted((val1,val2) -&amp;gt;val1-val2).collect(Collectors.toList());&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; 		System.out.println(list1);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;以上代码输出结果为：[1, 2, 2, 3, 4, 5, 6, 8]；可见排序结果按照 升序 规则进行排序处理&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;2、对List集合进行降序排列&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;streamSortTest1&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; 		&lt;span class=&quot;comment&quot;&gt;//定义一个简单的List数据集合&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; 		List&amp;lt;Integer&amp;gt; list1 = Lists.newArrayList(&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;6&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;8&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;); &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//直接调用sorted方法进行排序，val2-val1&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; 		list1 = list1.stream().sorted((val1,val2) -&amp;gt;val2-val1).collect(Collectors.toList());&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; 		System.out.println(list1);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;以上代码输出结果为：[8, 6, 5, 4, 3, 2, 2, 1]；可见排序结果按照 降序 规则进行排序处理&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;3、对List集合进行升序排列–自定义比较器&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//先定义一个比较器，默认按照升序&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Comparator&amp;lt;Integer&amp;gt; compara = Comparator.comparing(u-&amp;gt;u);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//在sorted方法中使用自定义的比较器进行排序&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;list1 = list1.stream().sorted(compara).collect(Collectors.toList());&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;System.out.println(list1);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;以上代码输出结果为：[1, 2, 2, 3, 4, 5, 6, 8]；可见排序结果按照 升序 规则进行排序处理&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;4、对List集合进行降序排列–自定义比较器&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//先定义一个比较器，默认按照升序&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Comparator&amp;lt;Integer&amp;gt; compara = Comparator.comparing(u-&amp;gt;u);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//在sorted方法中使用自定义的比较器进行排序，并且调用reversed方法反转了比较结果&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;list1 = list1.stream().sorted(compara.reversed()).collect(Collectors.toList());&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;System.out.println(list1);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;以上代码输出结果为：[8, 6, 5, 4, 3, 2, 2, 1]；可见排序结果按照 降序 规则进行排序处理&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;5、对Array数组进行升序排列&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;streamSortTest1&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; 		&lt;span class=&quot;comment&quot;&gt;//定义一个简单的数组集合&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; 		Integer[] array1 = &amp;#123;&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;6&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;8&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//直接调用sorted方法进行排序,val1-val2&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	array1 = Stream.of(array1).sorted((val1,val2) -&amp;gt; val1-val2).toArray(Integer[]::&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	System.out.println(Arrays.asList(array1));&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;以上代码输出结果为：[1, 2, 2, 3, 4, 5, 6, 8]；可见排序结果按照 升序 规则进行排序处理&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;6、对Array数组进行降序排列&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;streamSortTest1&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; 		&lt;span class=&quot;comment&quot;&gt;//定义一个简单的数组集合&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; 		Integer[] array1 = &amp;#123;&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;6&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;8&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//直接调用sorted方法进行排序，val2-val1&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	array1 = Stream.of(array1).sorted((val1,val2) -&amp;gt; val2-val1).toArray(Integer[]::&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	System.out.println(Arrays.asList(array1));&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;以上代码输出结果为：[8, 6, 5, 4, 3, 2, 2, 1]；可见排序结果按照 降序 规则进行排序处理&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;7、对Array数组进行升序排列–自定义比较器&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;streamSortTest1&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; 		&lt;span class=&quot;comment&quot;&gt;//定义一个简单的数组集合&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; 		Integer[] array1 = &amp;#123;&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;6&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;8&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//自定义比较器，默认按照升序排序&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	Comparator&amp;lt;Integer&amp;gt; compara = Comparator.comparing(u-&amp;gt;u);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//直接调用sorted方法进行排序&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	array1 = Stream.of(array1).sorted(compara).toArray(Integer[]::&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	System.out.println(Arrays.asList(array1));&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;以上代码输出结果为：[1, 2, 2, 3, 4, 5, 6, 8]；可见排序结果按照 升序 规则进行排序处理&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;8、对Array数组进行降序序排列–自定义比较器&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;streamSortTest1&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; 		&lt;span class=&quot;comment&quot;&gt;//定义一个简单的数组集合&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; 		Integer[] array1 = &amp;#123;&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;6&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;8&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//自定义比较器，默认按照升序排序&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	Comparator&amp;lt;Integer&amp;gt; compara = Comparator.comparing(u-&amp;gt;u);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//直接调用sorted方法进行排序，对比较器进行了反转处理，即按照降序排序&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	array1 = Stream.of(array1).sorted(compara.reversed()).toArray(Integer[]::&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	System.out.println(Arrays.asList(array1));&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;以上代码输出结果为：[8, 6, 5, 4, 3, 2, 2, 1]；可见排序结果按照 降序 规则进行排序处理&lt;/p&gt;
-&lt;p&gt;是不是感觉用着非常愉快，其实对复杂的数据结构更能体现！&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Stream是java8新增一个工具类，在java.util.stream.*;中，不得不说的是stream功能异常强大，一旦你接触之后就不想再用哪些旧的jdk中api方法了；下面先以日常开发中的集合数据排序为例慢慢了解stream中的sorted方法。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="java" scheme="http://www.soujava.com/categories/java/"/>
-    
-    
-      <category term="java" scheme="http://www.soujava.com/tags/java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>java三目运算符之规则(坑)</title>
-    <link href="http://www.soujava.com/java%E4%B8%89%E7%9B%AE%E8%BF%90%E7%AE%97%E7%AC%A6%E4%B9%8B%E8%A7%84%E5%88%99-%E5%9D%91/"/>
-    <id>http://www.soujava.com/java三目运算符之规则-坑/</id>
-    <published>2017-04-20T11:40:25.000Z</published>
-    <updated>2017-05-03T08:11:43.152Z</updated>
-    
-    <content type="html">&lt;p&gt;平时开发过程中，判断操作除了使用if-else语句之外，三目运算符也经常被使用，然而在使用三目运算符过程中，我们异步都很老实，但是其使用规则则不曾了解，下面就了解一下它的使用规则。&lt;/p&gt;
-&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;p&gt;&lt;strong&gt;一、描述&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;先了解一下三目运算符的语法：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;表达式1?表达式2:表达式3;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;em&gt;当表达式1为true时，则执行表达式2；当表达式1为false时，则执行表达式3&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;先看下面的一段代码，分析一下执行结果：&lt;/p&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;16&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;17&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;18&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;19&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;20&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;21&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;22&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;@Test&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Test&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; i = &lt;span class=&quot;number&quot;&gt;60&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	String str1 = String.valueOf(i &amp;lt; &lt;span class=&quot;number&quot;&gt;100&lt;/span&gt; ? &lt;span class=&quot;number&quot;&gt;80&lt;/span&gt; : &lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;str1:&quot;&lt;/span&gt;+str1);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	String str2 = String.valueOf(i &amp;lt; &lt;span class=&quot;number&quot;&gt;100&lt;/span&gt; ? &lt;span class=&quot;number&quot;&gt;80&lt;/span&gt; : &lt;span class=&quot;number&quot;&gt;100.0&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;str2:&quot;&lt;/span&gt;+str2);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	String str3 = String.valueOf(i &amp;lt; &lt;span class=&quot;number&quot;&gt;100&lt;/span&gt; ? &lt;span class=&quot;number&quot;&gt;80L&lt;/span&gt; : &lt;span class=&quot;number&quot;&gt;100.0&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;str2:&quot;&lt;/span&gt;+str3);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	String str4 = String.valueOf(i &amp;lt; &lt;span class=&quot;number&quot;&gt;100&lt;/span&gt; ? &lt;span class=&quot;string&quot;&gt;&quot;80&quot;&lt;/span&gt; : &lt;span class=&quot;number&quot;&gt;100.0&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;str2:&quot;&lt;/span&gt;+str4);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	String str5 = String.valueOf(i &amp;lt; &lt;span class=&quot;number&quot;&gt;100&lt;/span&gt; ? &lt;span class=&quot;number&quot;&gt;80&lt;/span&gt; : &lt;span class=&quot;string&quot;&gt;&quot;字符串&quot;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;str2:&quot;&lt;/span&gt;+str5);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	String str6 = String.valueOf(i &amp;lt; &lt;span class=&quot;number&quot;&gt;100&lt;/span&gt; ? &lt;span class=&quot;keyword&quot;&gt;true&lt;/span&gt; : &lt;span class=&quot;number&quot;&gt;100.06&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;str6:&quot;&lt;/span&gt;+str6);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;运行之后的返回结果如下：&lt;/p&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;str1:&lt;span class=&quot;number&quot;&gt;80&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;str2:&lt;span class=&quot;number&quot;&gt;80.0&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;str3:&lt;span class=&quot;number&quot;&gt;80.0&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;str4:&lt;span class=&quot;number&quot;&gt;80&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;str5:&lt;span class=&quot;number&quot;&gt;80&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;str6:&lt;span class=&quot;keyword&quot;&gt;true&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;&lt;strong&gt;二、分析&lt;/strong&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;1、String str1 = String.valueOf(i &amp;lt; 100 ? 80 : 100);&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;这句代码运行结果为 str1:80,无容置疑，完全正确，也不需要过多解释了。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;2、String str2 = String.valueOf(i &amp;lt; 100 ? 80 : 100.0);&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;这句代码运行结果为 str2:80.0,看到结果有点纳闷了，因为i=60；并且i&amp;lt;100;所以应该执行表达式2，应该打印出 80 才对啊，怎么会打印出 80.0为浮点数类型呢？&lt;br&gt;其实三木运算符还有一个规则：&lt;/p&gt;
-&lt;p&gt;若两个操作数是明确类型的表达式(比如变量)，则按照正常的二进制数字转换，int转为long，long转为浮点型(float、double)等&lt;/p&gt;
-&lt;p&gt;所以以上代码中，int类型的变量i会被转换为跟100.0同类型(浮点型)；看来三目运算是先执行类型检查-&amp;gt;类型转换-&amp;gt;执行运算&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;3、String str3 = String.valueOf(i &amp;lt; 100 ? 80L : 100.0);&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;这句代码运行结果为 str3:80.0,此时结合第2行代码的分析可以这么判定，因为i为int型，并且表达式2(80L)中为Long型，理论上i应该会被自动转换为Long型，但是表达式3是浮点型，所以i最终会被转换为浮点型。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;4、String str4 = String.valueOf(i &amp;lt; 100 ? “80” : 100.0);&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;这句代码运行结果为 str4:80,因为表达式2为字符型，表达式3是浮点型，所以浮点型可以转换为字符型，因此打印的是 str4:80&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;5、String str5 = String.valueOf(i &amp;lt; 100 ? 80 : “字符串”);&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;这句代码运行结果为 str5:80；具体原因可以参照第4行代码的分析；但是在第4行代码分析的基础上，还需要再深入分析一下，表达式2和表达式3类型如果不能相互转换呢？其实三目运算符规则就是如果不能类型转换的话，就不做类型转换。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;6、String str6 = String.valueOf(i &amp;lt; 100 ? true : 100.06);&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;这句代码运行结果为 str6:true，再次验证三目运算符运算时，如果不能类型转换的话，就不做类型转换。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;三、总结&lt;/strong&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;如果两个操作数是明确类型的表达式(比如变量)，则按照正常的二进制数字转换规则，int转为long，long转为float/double等&lt;/p&gt;
-&lt;p&gt;如果两个操作数表达式类型不能相互转换，则不作转换；比如数值型都可以转换为字符串，但是字符串不能都转换为数值型。&lt;/p&gt;
-&lt;p&gt;使用三目运算时，如果使用不当，仅仅会发生自动的类型转换；语句执行流程永远不变。&lt;/p&gt;
-&lt;p&gt;在使用三目运算符时，表达式类型务必一致&lt;/p&gt;
-&lt;/blockquote&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;平时开发过程中，判断操作除了使用if-else语句之外，三目运算符也经常被使用，然而在使用三目运算符过程中，我们异步都很老实，但是其使用规则则不曾了解，下面就了解一下它的使用规则。&lt;/p&gt;
     
     </summary>
     
