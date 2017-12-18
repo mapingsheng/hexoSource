@@ -260,6 +260,122 @@
             
               
                 
+                <a class="post-title-link" href="/前台向后台上传文件报net-ERR-CONNECTION-RESET问题入坑/" itemprop="url">
+                  前台向后台上传文件报net::ERR_CONNECTION_RESET问题入坑
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-12-11T22:23:33+08:00" content="2017-12-11">
+              2017-12-11
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>近期接手了一个备课系统的项目，该项目的特点是前后端分离的架构；前端(nodejs)-&gt;后台(java);今天在扩展新功能时，前端上传调用后台的rest接口上传文件时，有一个很诡异的问题，当上传的文件小于30M时，可以正常上传；当上传的文件大于30M时，在浏览器下面(F12)就会报出了net::ERR_CONNECTION_RESET的错误，错误信息如下图：</p>
+<p><img src="http://soujava.com/images/bk.png" alt="Alt text"></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/前台向后台上传文件报net-ERR-CONNECTION-RESET问题入坑/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/Linux服务器中查看log日志技巧/" itemprop="url">
                   Linux服务器中查看log日志技巧
                 </a>
@@ -1275,122 +1391,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/设计模式-装饰者模式/" itemprop="url">
-                  设计模式--装饰者模式
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-05-16T14:30:53+08:00" content="2017-05-16">
-              2017-05-16
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/设计模式/" itemprop="url" rel="index">
-                    <span itemprop="name">设计模式</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>装饰者模式顾名思义就是装饰，既然是装饰就需要由装饰者和被装饰者构成，举个例子我们在工位上面放了一盆绿植，那么就可以描述为用绿植装饰了工位（工位是被装饰者，绿植是装饰者）。所以实现一个装饰者模式需要有装饰者和被装饰者元素构成；其实说到装饰者模式，还有一个特性就是在装饰过程中不能本质的改变(代码变化)被装饰者的行为状态，仅仅通过装饰者的装饰就可以轻松的改变被装饰者的行为，而不需要变更被装饰者。</p>
-<p>下面用一个例子来具体实现一下装饰者模式，就拿我们生活中购买汽车来举例，比如我们买车时都分很多型号，就拿宝马来讲，分为宝马3系、宝马5系、宝马X5、宝马M6等等；然而每一个系列的车型又分为很多种配置，比如低配(乞丐版)、中配(舒适版)、高配(豪华版)、自定义(自选配置)。下面就以宝马X5、宝马M6系列为例进行实现。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/设计模式-装饰者模式/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1436,7 +1436,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">71</span>
+              <span class="site-state-item-count">72</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

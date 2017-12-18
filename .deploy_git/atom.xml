@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.soujava.com/"/>
-  <updated>2017-09-27T08:38:06.449Z</updated>
+  <updated>2017-12-11T14:45:28.457Z</updated>
   <id>http://www.soujava.com/</id>
   
   <author>
@@ -14,6 +14,37 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>前台向后台上传文件报net::ERR_CONNECTION_RESET问题入坑</title>
+    <link href="http://www.soujava.com/%E5%89%8D%E5%8F%B0%E5%90%91%E5%90%8E%E5%8F%B0%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E6%8A%A5net-ERR-CONNECTION-RESET%E9%97%AE%E9%A2%98%E5%85%A5%E5%9D%91/"/>
+    <id>http://www.soujava.com/前台向后台上传文件报net-ERR-CONNECTION-RESET问题入坑/</id>
+    <published>2017-12-11T14:23:33.000Z</published>
+    <updated>2017-12-11T14:45:28.457Z</updated>
+    
+    <content type="html">&lt;p&gt;近期接手了一个备课系统的项目，该项目的特点是前后端分离的架构；前端(nodejs)-&amp;gt;后台(java);今天在扩展新功能时，前端上传调用后台的rest接口上传文件时，有一个很诡异的问题，当上传的文件小于30M时，可以正常上传；当上传的文件大于30M时，在浏览器下面(F12)就会报出了net::ERR_CONNECTION_RESET的错误，错误信息如下图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/bk.png&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;说实在话，这种错误还是第一次见到；当时一头雾水，然后开始排查后台代码，新添加了添加了大量的log调试信息，发现前台上传文件调用后台接口时，响应压根没有到达方法层级上面；然后继续排查是否有拦截器、过滤器等等做了前置处理；后来发现并没有的。&lt;/p&gt;
+&lt;p&gt;然后就想到应该是网关的限制问题，后来联系运维说明下相关的情况，让他们排查；没想到果然就是这个问题，是因为他们在NGINX的配置文件中设置了 &lt;strong&gt;client_max_body_size&lt;/strong&gt; 参数值;后来运维把对应的大小调整了以后，就正常了！&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这是逼着走超级全栈路线的节凑啊&lt;/p&gt;
+&lt;/blockquote&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;近期接手了一个备课系统的项目，该项目的特点是前后端分离的架构；前端(nodejs)-&amp;gt;后台(java);今天在扩展新功能时，前端上传调用后台的rest接口上传文件时，有一个很诡异的问题，当上传的文件小于30M时，可以正常上传；当上传的文件大于30M时，在浏览器下面(F12)就会报出了net::ERR_CONNECTION_RESET的错误，错误信息如下图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/bk.png&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="java" scheme="http://www.soujava.com/categories/java/"/>
+    
+    
+      <category term="java" scheme="http://www.soujava.com/tags/java/"/>
+    
+  </entry>
   
   <entry>
     <title>Linux服务器中查看log日志技巧</title>
@@ -1719,64 +1750,6 @@
     <summary type="html">
     
       &lt;p&gt;平时开发过程中用的最多的莫过于基本类型、包装类、集合等等了，但是最近在使用集合时，偶尔使用不当会出现一些想不到的问题(bug)；为什么使用不当呢，因为我们对集合的操作都是使用JDK原生的API方法进行操作的，那么之所以使用不当，是因为对jdk源码中的api方法的不了解所致，下面就具体罗列一下具体的坑吧。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="java" scheme="http://www.soujava.com/categories/java/"/>
-    
-    
-      <category term="java" scheme="http://www.soujava.com/tags/java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>java和javaScript代码进行交互初探一</title>
-    <link href="http://www.soujava.com/java%E5%92%8CjavaScript%E4%BB%A3%E7%A0%81%E8%BF%9B%E8%A1%8C%E4%BA%A4%E4%BA%92%E5%88%9D%E6%8E%A2%E4%B8%80/"/>
-    <id>http://www.soujava.com/java和javaScript代码进行交互初探一/</id>
-    <published>2017-04-22T08:34:17.000Z</published>
-    <updated>2017-05-03T08:11:13.778Z</updated>
-    
-    <content type="html">&lt;p&gt;开发这么长时间，一直的开发思想模式就是java负责服务器端(后台)运行，js负责前端(前台)交互体验，两个语言没有任何代码级别的交互；但其实还有另一种开发模式，就是java和javascript混合开发，前后端不那么分离；即java代码可以直接调用javascript文件中定义的函数；javascript中定义的函数可以读取java代码中定义的变量数据；感觉有点意思！其实这种开发模式个人觉得也很有价值，比如下面的场景：&lt;/p&gt;
-&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;blockquote&gt;
-&lt;p&gt;用户在浏览一个商品，突然这个商品由于某些原因要求进行打折处理，比如打8折，即需要把该商品的价格乘以80%；&lt;/p&gt;
-&lt;p&gt;因为上面说的打8折不是固定的，有可能一会打8折，一会又打5折，所以需要把这个信息在一个地方维护起来，那么我们就把打折规则封装到javascript文件定义的函数中&lt;/p&gt;
-&lt;p&gt;java代码获取该商品的价格后，直接调用javascript文件中定义的打折规则函数，重新计算商品价格即可&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;strong&gt;一、编写javascript文件&lt;/strong&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;1、在本地磁盘上新建一个js文件,比如在D:\maps.js&lt;/p&gt;
-&lt;p&gt;2、在js文件中定义一个商品对应的打折函数&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//该函数非常简单，就是把商品价格打8折&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;function &lt;span class=&quot;title&quot;&gt;discount&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(money)&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; money * &lt;span class=&quot;number&quot;&gt;0.8&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   &amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;&lt;strong&gt;二、编写java代码&lt;/strong&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;1、新建一个java类文件，名称随便起&lt;/p&gt;
-&lt;p&gt;2、在java文件中新建一个main方法，用来写测试代码&lt;/p&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;16&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;17&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;18&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;19&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;20&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;21&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;22&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;23&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;24&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;25&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;/**&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; * 商品消费方法&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; * &lt;span class=&quot;doctag&quot;&gt;@throws&lt;/span&gt; ScriptException &lt;/div&gt;&lt;div class=&quot;line&quot;&gt; * &lt;span class=&quot;doctag&quot;&gt;@throws&lt;/span&gt; FileNotFoundException &lt;/div&gt;&lt;div class=&quot;line&quot;&gt; * &lt;span class=&quot;doctag&quot;&gt;@throws&lt;/span&gt; NoSuchMethodException &lt;/div&gt;&lt;div class=&quot;line&quot;&gt; */&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;spend&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; money)&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;throws&lt;/span&gt; FileNotFoundException, ScriptException, NoSuchMethodException&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//获取javascript执行引擎&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	ScriptEngine engine = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; ScriptEngineManager().getEngineByName(&lt;span class=&quot;string&quot;&gt;&quot;javascript&quot;&lt;/span&gt;); &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;       System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;该商品价格：&quot;&lt;/span&gt;+money);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;//装载待执行的Js代码文件&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;       engine.eval(&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; FileReader(&lt;span class=&quot;string&quot;&gt;&quot;D:/maps.js&quot;&lt;/span&gt;));&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;//先判断是否可调用方法&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;       &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (engine &lt;span class=&quot;keyword&quot;&gt;instanceof&lt;/span&gt; Invocable) &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            Invocable in = (Invocable) engine;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;// 执行Js中的discount()函数&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            Double result = (Double) in.invokeFunction(&lt;span class=&quot;string&quot;&gt;&quot;discount&quot;&lt;/span&gt;, money);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;打折后的商品价格构是：&quot;&lt;/span&gt; + result.intValue());&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;       &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(String[] args)&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;throws&lt;/span&gt; FileNotFoundException, ScriptException, NoSuchMethodException&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	spend(&lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;上面代码输出结果：&lt;/p&gt;
-&lt;p&gt;该商品价格：100&lt;/p&gt;
-&lt;p&gt;打折后的商品价格是：80&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;strong&gt;三、修改javascript文件&lt;/strong&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;1、修改maps.js文件中的打折函数，在函数中新增使用一个java代码中定义的变量&lt;/p&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//说白了，就是把js函数中写死的百分比改成了重java代码中获取&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;function &lt;span class=&quot;title&quot;&gt;discount&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(money)&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    	&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; money * dis;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;strong&gt;四、修改java代码&lt;/strong&gt;&lt;/p&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;16&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;17&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;18&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;19&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;20&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;21&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;22&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;23&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;24&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;25&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;26&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;27&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;28&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;29&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;/**&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; * 商品消费方法&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; * &lt;span class=&quot;doctag&quot;&gt;@throws&lt;/span&gt; ScriptException &lt;/div&gt;&lt;div class=&quot;line&quot;&gt; * &lt;span class=&quot;doctag&quot;&gt;@throws&lt;/span&gt; FileNotFoundException &lt;/div&gt;&lt;div class=&quot;line&quot;&gt; * &lt;span class=&quot;doctag&quot;&gt;@throws&lt;/span&gt; NoSuchMethodException &lt;/div&gt;&lt;div class=&quot;line&quot;&gt; */&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;spend&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; money)&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;throws&lt;/span&gt; FileNotFoundException, ScriptException, NoSuchMethodException&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//获取javascript执行引擎&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	ScriptEngine engine = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; ScriptEngineManager().getEngineByName(&lt;span class=&quot;string&quot;&gt;&quot;javascript&quot;&lt;/span&gt;); &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;comment&quot;&gt;//定义js函数中使用的折扣变量&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	Bindings bind = engine.createBindings();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	bind.put(&lt;span class=&quot;string&quot;&gt;&quot;dis&quot;&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0.9&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	engine.setBindings(bind, ScriptContext.ENGINE_SCOPE);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;       System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;该商品价格：&quot;&lt;/span&gt;+money);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;//装载待执行的Js代码文件&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;       engine.eval(&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; FileReader(&lt;span class=&quot;string&quot;&gt;&quot;D:/maps.js&quot;&lt;/span&gt;));&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;//先判断是否可调用方法&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;       &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (engine &lt;span class=&quot;keyword&quot;&gt;instanceof&lt;/span&gt; Invocable) &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            Invocable in = (Invocable) engine;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            &lt;span class=&quot;comment&quot;&gt;// 执行Js中的discount()函数&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            Double result = (Double) in.invokeFunction(&lt;span class=&quot;string&quot;&gt;&quot;discount&quot;&lt;/span&gt;, money);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;打折后的商品价格是：&quot;&lt;/span&gt; + result.intValue());&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;       &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(String[] args)&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;throws&lt;/span&gt; FileNotFoundException, ScriptException, NoSuchMethodException&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	spend(&lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;blockquote&gt;
-&lt;p&gt;其实上面java代码中只增加了如下代码&lt;/p&gt;
-&lt;p&gt;Bindings bind = engine.createBindings();//创建一个js执行引擎的数据绑定器&lt;/p&gt;
-&lt;p&gt;bind.put(“dis”, 0.9); //定义dis变量值&lt;/p&gt;
-&lt;p&gt;engine.setBindings(bind, ScriptContext.ENGINE_SCOPE);&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;上面的例子实现了简单的java代码和js代码交互功能，这样其实我们可以实现另一个场景，不需要重启服务器，就可以实时控制扩展和变更后台运行的一些灵活的业务规则。&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;开发这么长时间，一直的开发思想模式就是java负责服务器端(后台)运行，js负责前端(前台)交互体验，两个语言没有任何代码级别的交互；但其实还有另一种开发模式，就是java和javascript混合开发，前后端不那么分离；即java代码可以直接调用javascript文件中定义的函数；javascript中定义的函数可以读取java代码中定义的变量数据；感觉有点意思！其实这种开发模式个人觉得也很有价值，比如下面的场景：&lt;/p&gt;
     
     </summary>
     
