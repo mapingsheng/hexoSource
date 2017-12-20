@@ -260,6 +260,309 @@
             
               
                 
+                <a class="post-title-link" href="/使用spring的RestTemplate调用REST接口/" itemprop="url">
+                  使用spring的RestTemplate调用REST接口
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-12-18T18:18:39+08:00" content="2017-12-18">
+              2017-12-18
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/spring/" itemprop="url" rel="index">
+                    <span itemprop="name">spring</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>开发接口调用时，我们后台一般使用spring的RestTemplate调用对应的REST接口获取数据；具体使用如下：</p>
+<p>一、RestTemplate源码中的常用API</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">	<span class="comment">// GET</span></div><div class="line"></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="keyword">public</span> &lt;T&gt; <span class="function">T <span class="title">getForObject</span><span class="params">(String url, Class&lt;T&gt; responseType, Object... urlVariables)</span> <span class="keyword">throws</span> RestClientException </span>&#123;&#125;</div><div class="line"></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="keyword">public</span> &lt;T&gt; <span class="function">T <span class="title">getForObject</span><span class="params">(String url, Class&lt;T&gt; responseType, Map&lt;String, ?&gt; urlVariables)</span> <span class="keyword">throws</span> RestClientException </span>&#123;&#125;</div><div class="line"></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="keyword">public</span> &lt;T&gt; <span class="function">T <span class="title">getForObject</span><span class="params">(URI url, Class&lt;T&gt; responseType)</span> <span class="keyword">throws</span> RestClientException </span>&#123;&#125;</div><div class="line"></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="keyword">public</span> &lt;T&gt; <span class="function">ResponseEntity&lt;T&gt; <span class="title">getForEntity</span><span class="params">(String url, Class&lt;T&gt; responseType, Object... urlVariables)</span></span></div><div class="line">			<span class="keyword">throws</span> RestClientException &#123;&#125;</div><div class="line"></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="keyword">public</span> &lt;T&gt; <span class="function">ResponseEntity&lt;T&gt; <span class="title">getForEntity</span><span class="params">(String url, Class&lt;T&gt; responseType, Map&lt;String, ?&gt; urlVariables)</span></span></div><div class="line">			<span class="keyword">throws</span> RestClientException &#123;&#125;</div><div class="line"></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="keyword">public</span> &lt;T&gt; <span class="function">ResponseEntity&lt;T&gt; <span class="title">getForEntity</span><span class="params">(URI url, Class&lt;T&gt; responseType)</span> <span class="keyword">throws</span> RestClientException </span>&#123;&#125;</div><div class="line"></div><div class="line">&gt;</div><div class="line"></div><div class="line">	<span class="comment">// POST</span></div><div class="line"></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="keyword">public</span> &lt;T&gt; <span class="function">T <span class="title">postForObject</span><span class="params">(String url, Object request, Class&lt;T&gt; responseType, Object... uriVariables)</span></span></div><div class="line">			<span class="keyword">throws</span> RestClientException &#123;&#125;</div><div class="line"></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="keyword">public</span> &lt;T&gt; <span class="function">T <span class="title">postForObject</span><span class="params">(String url, Object request, Class&lt;T&gt; responseType, Map&lt;String, ?&gt; uriVariables)</span></span></div><div class="line">			<span class="keyword">throws</span> RestClientException &#123;&#125;</div><div class="line"></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="keyword">public</span> &lt;T&gt; <span class="function">T <span class="title">postForObject</span><span class="params">(URI url, Object request, Class&lt;T&gt; responseType)</span> <span class="keyword">throws</span> RestClientException </span>&#123;&#125;</div><div class="line"></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="keyword">public</span> &lt;T&gt; <span class="function">ResponseEntity&lt;T&gt; <span class="title">postForEntity</span><span class="params">(String url, Object request, Class&lt;T&gt; responseType, Object... uriVariables)</span></span></div><div class="line">			<span class="keyword">throws</span> RestClientException &#123;&#125;</div><div class="line"></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="keyword">public</span> &lt;T&gt; <span class="function">ResponseEntity&lt;T&gt; <span class="title">postForEntity</span><span class="params">(String url, Object request, Class&lt;T&gt; responseType, Map&lt;String, ?&gt; uriVariables)</span></span></div><div class="line">			<span class="keyword">throws</span> RestClientException &#123;&#125;</div><div class="line"></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="keyword">public</span> &lt;T&gt; <span class="function">ResponseEntity&lt;T&gt; <span class="title">postForEntity</span><span class="params">(URI url, Object request, Class&lt;T&gt; responseType)</span> <span class="keyword">throws</span> RestClientException </span>&#123;&#125;</div><div class="line"></div><div class="line">&gt;</div><div class="line"></div><div class="line">	<span class="comment">// PUT</span></div><div class="line"></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">put</span><span class="params">(String url, Object request, Object... urlVariables)</span> <span class="keyword">throws</span> RestClientException </span>&#123;&#125;</div><div class="line"></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">put</span><span class="params">(String url, Object request, Map&lt;String, ?&gt; urlVariables)</span> <span class="keyword">throws</span> RestClientException </span>&#123;&#125;</div><div class="line"></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">put</span><span class="params">(URI url, Object request)</span> <span class="keyword">throws</span> RestClientException </span>&#123;&#125;</div><div class="line"></div><div class="line">&gt;</div><div class="line"></div><div class="line">	<span class="comment">// DELETE</span></div><div class="line"></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">delete</span><span class="params">(String url, Object... urlVariables)</span> <span class="keyword">throws</span> RestClientException </span>&#123;</div><div class="line">		execute(url, HttpMethod.DELETE, <span class="keyword">null</span>, <span class="keyword">null</span>, urlVariables);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">delete</span><span class="params">(String url, Map&lt;String, ?&gt; urlVariables)</span> <span class="keyword">throws</span> RestClientException </span>&#123;</div><div class="line">		execute(url, HttpMethod.DELETE, <span class="keyword">null</span>, <span class="keyword">null</span>, urlVariables);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">delete</span><span class="params">(URI url)</span> <span class="keyword">throws</span> RestClientException </span>&#123;</div><div class="line"></div><div class="line">&gt;</div><div class="line"></div><div class="line">	<span class="comment">// general execution</span></div><div class="line"></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="keyword">public</span> &lt;T&gt; <span class="function">T <span class="title">execute</span><span class="params">(String url, HttpMethod method, RequestCallback requestCallback,</span></span></div><div class="line">			ResponseExtractor&lt;T&gt; responseExtractor, Object... urlVariables) <span class="keyword">throws</span> RestClientException &#123;&#125;</div><div class="line"></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="keyword">public</span> &lt;T&gt; <span class="function">T <span class="title">execute</span><span class="params">(String url, HttpMethod method, RequestCallback requestCallback,</span></span></div><div class="line">			ResponseExtractor&lt;T&gt; responseExtractor, Map&lt;String, ?&gt; urlVariables) <span class="keyword">throws</span> RestClientException &#123;&#125;</div><div class="line"></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="keyword">public</span> &lt;T&gt; <span class="function">T <span class="title">execute</span><span class="params">(URI url, HttpMethod method, RequestCallback requestCallback,</span></span></div><div class="line">			ResponseExtractor&lt;T&gt; responseExtractor) <span class="keyword">throws</span> RestClientException &#123;&#125;</div><div class="line"></div><div class="line">&gt;</div><div class="line"></div><div class="line">	<span class="comment">/**</span></div><div class="line">     * 以上所有的get、post等等方法底层都是调用的该方法执行的rest接口请求</div><div class="line">     */</div><div class="line">	<span class="keyword">protected</span> &lt;T&gt; <span class="function">T <span class="title">doExecute</span><span class="params">(URI url, HttpMethod method, </span></span></div><div class="line">		RequestCallback requestCallback,ResponseExtractor&lt;T&gt; responseExtractor) <span class="keyword">throws</span> RestClientException &#123;&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>其实针对上面的GET<em>、POST</em>、DELETE*等等rest接口请求方法中，整个调用底层都是调用的doExecute()方法</p>
+</blockquote>
+<p><img src="http://soujava.com/images/restTemplate.png" alt="Alt text"></p>
+<p>二、<strong>RestTemplate调用接口示例</strong></p>
+<blockquote>
+<p>1.GET-直接实例化RestTemplate对象并采用GET方法调用对应的rest接口，并返回对应的响应值字符串</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">RestTemplate restClient = <span class="keyword">new</span> RestTemplate();</div><div class="line">String url = <span class="string">"http://localhost:8080/user/info/v5.6.5?id=3f62fca0123"</span>;</div><div class="line">String result = restClient.getForObject(<span class="keyword">new</span> URI(url), String.class);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>2.GET-调用对应的REST接口，并用响应结果对象示例接收封装对应的结果集</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line">    * rest接口响应值的数据封装类</div><div class="line">    */</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ResponseResult</span></span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="title">ResponseResult</span><span class="params">()</span></span>&#123;&#125;</div><div class="line">	</div><div class="line">	<span class="keyword">private</span> <span class="keyword">boolean</span> rlt;</div><div class="line">	<span class="keyword">private</span> String msg;</div><div class="line">	<span class="keyword">private</span> String code;</div><div class="line">	<span class="keyword">private</span> String time;</div><div class="line">	<span class="keyword">private</span> String data;</div><div class="line">	</div><div class="line">	<span class="comment">//get、set方法省略</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line">    * 设置数据传递的超时时间、建立连接的超时时间</div><div class="line">    */</div><div class="line">   SimpleClientHttpRequestFactory requestFactory = <span class="keyword">new</span> SimpleClientHttpRequestFactory();</div><div class="line">requestFactory.setReadTimeout(READTIMEOUT);</div><div class="line">   requestFactory.setConnectTimeout(CONNECTTIMEOUT);</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line">    * 实例化一个RestTemplate对象</div><div class="line">    */</div><div class="line">RestTemplate restClient = <span class="keyword">new</span> RestTemplate();</div><div class="line">restClient.setRequestFactory(requestFactory);</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line">    * 用ResponseResult对象封装响应结果</div><div class="line">    */</div><div class="line">String url = <span class="string">"http://localhost:8080/user/info/v5.6.5?id=3f62fca0123"</span>;</div><div class="line">ResponseResult result = restClient.getForObject(<span class="keyword">new</span> URI(url), ResponseResult.class);</div><div class="line">System.out.println(result.getMsg());</div></pre></td></tr></table></figure>
+<blockquote>
+<p>3.GET-调用对应的REST接口，在rest接口PATH路径中传递参数</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line">    * 请求参数在对应的请求path地址中</div><div class="line">    */</div><div class="line">String URI = <span class="string">"http://localhost:8080/user/info/&#123;id&#125;/v5.6.5"</span>;</div><div class="line">   RestTemplate restTemplate = <span class="keyword">new</span> RestTemplate();</div><div class="line">   ResponseResult result = restTemplate.getForObject(URI, ResponseResult.class, <span class="string">"3f62fca0123"</span>);<span class="comment">//把请求接口中的&#123;id&#125;参数值放入最后一个入参中，最后一个参数是一个可变长(数组)类型的入参</span></div><div class="line">System.out.println(result.getMsg());</div></pre></td></tr></table></figure>
+<blockquote>
+<p>4.POST-调用对应的REST接口，设置header参数</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line">    * 设置header入参对象</div><div class="line">    */</div><div class="line">HttpHeaders headers = <span class="keyword">new</span> HttpHeaders();</div><div class="line">   headers.set(<span class="string">"area"</span>, <span class="string">"010"</span>);</div><div class="line">   headers.set(<span class="string">"token"</span>, <span class="string">"71aee1b842cc49f69d26b4bd980c9b8d"</span>); </div><div class="line">headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON)); </div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line">    * 把对应的header对象通过HttpEntity进行封装处理</div><div class="line">    */</div><div class="line">RestTemplate restClient = <span class="keyword">new</span> RestTemplate();</div><div class="line">HttpEntity&lt;String&gt; httpEntity = <span class="keyword">new</span> HttpEntity&lt;String&gt;(headers);</div><div class="line"></div><div class="line">String postUrl = <span class="string">"http://localhost:8080/user/info/v5.6.5?id=3f62fca0123"</span>;</div><div class="line">ResponseEntity&lt;ResponseResult&gt; result = restClient.postForEntity(postUrl, httpEntity, ResponseResult.class);</div><div class="line"></div><div class="line">System.out.println(result.getBody().getMsg());</div></pre></td></tr></table></figure>
+<blockquote>
+<p>5.POST-调用rest接口时，传递json参数</p>
+</blockquote>
+<p><em>因为一般rest接口都是提供给其他系统调用的，如果一个rest接口的入参数量很多的时候，往往调用比较麻烦，并且容易出错；并且接口提供方一般在对应的rest接口入参中使用对象传参，方便后期接口扩展；所以针对接口调用方来讲，只需要按照入参的对象的属性名称封装一个json格式的数据串即可成功调用，这样一来兼容性会比较好</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line">    * 设置header入参对象</div><div class="line">    */</div><div class="line">HttpHeaders headers = <span class="keyword">new</span> HttpHeaders();</div><div class="line">   headers.set(<span class="string">"token"</span>, <span class="string">"71aee1b842cc49f69d26b4bd980c9b8d"</span>); </div><div class="line">headers.setContentType(MediaType.APPLICATION_JSON);</div><div class="line"></div><div class="line">String postUrl = <span class="string">"http://localhost:8080/user/add/v5.6.5"</span>;	</div><div class="line">String requestJson = <span class="string">"&#123;\"name\":\"张三\",\"age\":25&#125;"</span>;<span class="comment">//这里可以用JSONObject处理json格式的入参，避免拼接字符串</span></div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line">    * 把请求入参和对应的header入参封装到HttpEntity对象中</div><div class="line">    */</div><div class="line">HttpEntity&lt;String&gt; httpEntity = <span class="keyword">new</span> HttpEntity&lt;String&gt;(requestJson,headers);</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line">    * 请求对应的rest接口添加用户操作</div><div class="line">    */</div><div class="line">RestTemplate restClient = <span class="keyword">new</span> RestTemplate();</div><div class="line">String result = restClient.postForObject(postUrl, httpEntity, String.class);</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/使用spring的RestTemplate调用REST接口时出现线程阻塞/" itemprop="url">
+                  使用spring的RestTemplate调用REST接口时出现线程阻塞
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-12-18T16:32:12+08:00" content="2017-12-18">
+              2017-12-18
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/spring/" itemprop="url" rel="index">
+                    <span itemprop="name">spring</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>由于需要给APP端提供相关的数据服务，所以在后台也少不了调用第三方平台的服务接口，所以开发接口调用时，我们后台一般使用spring的RestTemplate调用对应的REST接口获取数据；最近开发时，由于使用了MappingJackson2HttpMessageConverter转换器，所以导致接口性能压测时，出现了大量的线程BLOCKED：</p>
+<p><img src="http://soujava.com/images/threadBlcked.png" alt="Alt text"></p>
+<p>然后通过jstack命令把接口调用过程的线程情况进行了输出，然后根据输出的线程调用栈情况，逐级找到了最终的阻塞原因，整个过程如下：</p>
+<blockquote>
+<p>1.使用jstack命令输出java的堆栈信息如下：</p>
+</blockquote>
+<p><img src="http://soujava.com/images/dump.png" alt="Alt text"></p>
+<blockquote>
+<p>2.根据堆栈信息，逐级进入代码分析步骤如下：</p>
+</blockquote>
+<p><img src="http://soujava.com/images/threaddump.png" alt="Alt text"></p>
+<ul>
+<li>MappingJackson2HttpMessageConverter类的构造器方法如下</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">MappingJackson2HttpMessageConverter</span><span class="params">()</span> </span>&#123;</div><div class="line">	<span class="keyword">this</span>(Jackson2ObjectMapperBuilder.json().build());</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>点击build()方法如下</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> &lt;T extends ObjectMapper&gt; <span class="function">T <span class="title">build</span><span class="params">()</span> </span>&#123;</div><div class="line">	ObjectMapper mapper;</div><div class="line">	<span class="keyword">if</span> (<span class="keyword">this</span>.createXmlMapper) &#123;</div><div class="line">		mapper = (<span class="keyword">this</span>.defaultUseWrapper == <span class="keyword">null</span> ? <span class="keyword">new</span> XmlObjectMapperInitializer().create()</div><div class="line">				: <span class="keyword">new</span> XmlObjectMapperInitializer().create(<span class="keyword">this</span>.defaultUseWrapper));</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">else</span> &#123;</div><div class="line">		mapper = <span class="keyword">new</span> ObjectMapper();</div><div class="line">	&#125;</div><div class="line">	configure(mapper); <span class="comment">//继续点击分析</span></div><div class="line">	<span class="keyword">return</span> (T) mapper;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>点击configure()方法如下</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">configure</span><span class="params">(ObjectMapper objectMapper)</span> </span>&#123;</div><div class="line">	Assert.notNull(objectMapper, <span class="string">"ObjectMapper must not be null"</span>);</div><div class="line"></div><div class="line">	<span class="keyword">if</span> (<span class="keyword">this</span>.findModulesViaServiceLoader) &#123;</div><div class="line">		<span class="comment">// Jackson 2.2+</span></div><div class="line">		objectMapper.registerModules(ObjectMapper.findModules(<span class="keyword">this</span>.moduleClassLoader));</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">this</span>.findWellKnownModules) &#123;</div><div class="line">		registerWellKnownModulesIfAvailable(objectMapper); <span class="comment">//继续点击深入分析</span></div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="keyword">if</span> (<span class="keyword">this</span>.modules != <span class="keyword">null</span>) &#123;</div><div class="line">		<span class="keyword">for</span> (Module <span class="keyword">module</span> : <span class="keyword">this</span>.modules) &#123;</div><div class="line">			<span class="comment">// Using Jackson 2.0+ registerModule method, not Jackson 2.2+ registerModules</span></div><div class="line">			objectMapper.registerModule(<span class="keyword">module</span>);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	....后半部分方法代码省略</div></pre></td></tr></table></figure>
+<ul>
+<li>点击进入registerWellKnownModulesIfAvailable()方法如下</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">registerWellKnownModulesIfAvailable</span><span class="params">(ObjectMapper objectMapper)</span> </span>&#123;</div><div class="line"></div><div class="line">	  ....前半部分代码省略</div><div class="line"></div><div class="line">	<span class="comment">// Joda-Time present?</span></div><div class="line">	<span class="keyword">if</span> (ClassUtils.isPresent(<span class="string">"org.joda.time.LocalDate"</span>, <span class="keyword">this</span>.moduleClassLoader)) &#123;</div><div class="line">		<span class="keyword">try</span> &#123;</div><div class="line"></div><div class="line">			<span class="comment">/**</span></div><div class="line">			 * 文件的根源就在这个ClassUtils.forName()方法底层中</div><div class="line">			 */</div><div class="line">			Class&lt;? extends Module&gt; jodaModule = (Class&lt;? extends Module&gt;)</div><div class="line">					ClassUtils.forName(<span class="string">"com.fasterxml.jackson.datatype.joda.JodaModule"</span>, <span class="keyword">this</span>.moduleClassLoader);</div><div class="line">			objectMapper.registerModule(BeanUtils.instantiate(jodaModule));</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">catch</span> (ClassNotFoundException ex) &#123;</div><div class="line">			<span class="comment">// jackson-datatype-joda not available</span></div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	....后半部分代码省略</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>3.再继续按照整个堆栈信息，逐级向上找到最终的一个spring的java类中【ClassUtils.java:250】</p>
+</blockquote>
+<p><img src="http://soujava.com/images/dumpfenxi.png" alt="Alt text"></p>
+<blockquote>
+<p>4.然后进入org.springframework.util.ClassUtils.java类中的第250行</p>
+</blockquote>
+<p><img src="http://soujava.com/images/loadclass.png" alt="Alt text"></p>
+<blockquote>
+<p>5.我们点击loadClass()方法，进入到java.lang.ClassLoader.java</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> Class&lt;?&gt; loadClass(String name) <span class="keyword">throws</span> ClassNotFoundException &#123;</div><div class="line">       <span class="keyword">return</span> loadClass(name, <span class="keyword">false</span>); <span class="comment">//该方法是另一个loadClass方法的重载</span></div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>6.我们继续点击ClassLoader类中的loadClass()方法，进入到最底层的loadClass方法</p>
+</blockquote>
+<p><img src="http://soujava.com/images/loadclasslock.png" alt="Alt text"></p>
+<p>通过方法我们可以看到该方法中以下两个导致线程阻塞的问题</p>
+<ul>
+<li>方法中有一个synchronized同步方法</li>
+<li>同步方法中的getClassLoadingLock方法内部还有一个lock锁</li>
+</ul>
+<p>通过排查分析发现，就是上面的问题导致线程BLOCKED；后来去除了MappingJackson2HttpMessageConverter的注册，再次压测时，线程阻塞问题得以解决。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/前台向后台上传文件报net-ERR-CONNECTION-RESET问题入坑/" itemprop="url">
                   前台向后台上传文件报net::ERR_CONNECTION_RESET问题入坑
                 </a>
@@ -1161,236 +1464,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/设计模式-抽象工厂模式/" itemprop="url">
-                  设计模式--抽象工厂模式
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-05-19T15:14:26+08:00" content="2017-05-19">
-              2017-05-19
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/设计模式/" itemprop="url" rel="index">
-                    <span itemprop="name">设计模式</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>上一篇介绍的工厂方法模式中虽然解决了bmw汽车生产问题，并且也在本地初步实现了设计-生产-测试-销售一体化的目标，并且在当地的业绩还不错；当时现在高层领导看到了中国是一个很大的市场，所以计划在中国制造BMW汽车，经过开会商议，形成了以下会议纪要：</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/设计模式-抽象工厂模式/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/设计模式-工厂方法模式/" itemprop="url">
-                  设计模式--工厂方法模式
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-05-18T13:57:28+08:00" content="2017-05-18">
-              2017-05-18
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/设计模式/" itemprop="url" rel="index">
-                    <span itemprop="name">设计模式</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>说到工厂方法模式不得不围绕车去说明了，因为它太通俗了，不需要过多去解释，满大街都是的；就拿宝马来讲，这是德国的一个品牌，虽然不算太好，但也还可以，记得当初宝马在德国慕尼黑新建第一家工厂的时候，组织架构还是非常简单的，分为设计部、生产部、装配部、测试部、订单部这几个部门，所以通过这几个部门也大致可以了解到一辆BMW的生产流程时设计-生产-装配-测试；然后有人下订单后就把车送过去了。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/设计模式-工厂方法模式/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1436,7 +1509,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">72</span>
+              <span class="site-state-item-count">74</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
