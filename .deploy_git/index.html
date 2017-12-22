@@ -260,6 +260,149 @@
             
               
                 
+                <a class="post-title-link" href="/DataOutputStream-write方法入坑/" itemprop="url">
+                  DataOutputStream.write方法入坑
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-12-22T20:47:09+08:00" content="2017-12-22">
+              2017-12-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>最近需要开发一个web端创建管理具有IM功能的群组，具备跟微信一样的聊天功能，是调用第三方服务的接口实现的；所以调用其他同事的公共方法调用第三方的rest接口时，由于需要带着用户的中文名称注册昵称，所以在调用接口过程中，发现了莫名其妙的中文参数乱码问题，让我很是费解，因为在该设置编码的地方都已经全部设置为utf-8；仍然出现中文乱码。下面是我的排查及解决问题过程：</p>
+<blockquote>
+<p>整个rest接口调用的公共方法代码大致思路如下</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">String paramter = <span class="string">"name=张三"</span>;</div><div class="line">   </div><div class="line">   String register_account_url = <span class="string">"https://*.wefs.comg/user/register"</span>;</div><div class="line">URL url = <span class="keyword">new</span> URL(register_account_url);</div><div class="line">URLConnection connection = url.openConnection();</div><div class="line">HttpsURLConnection httpsURLConnection = (HttpsURLConnection)connection;</div><div class="line">httpsURLConnection.setRequestMethod(<span class="string">"POST"</span>);<span class="comment">//设置请求类型</span></div><div class="line">httpsURLConnection.setUseCaches(<span class="keyword">false</span>);</div><div class="line">httpsURLConnection.setDoInput(<span class="keyword">true</span>);</div><div class="line">httpsURLConnection.setDoOutput(<span class="keyword">true</span>);</div><div class="line">httpsURLConnection.setConnectTimeout(<span class="number">30000</span>);<span class="comment">//设置连接超时时间</span></div><div class="line">httpsURLConnection.setReadTimeout(<span class="number">600000</span>);<span class="comment">//设置读取超时时间</span></div><div class="line">httpsURLConnection.setRequestProperty(<span class="string">"Charsert"</span>, <span class="string">"UTF-8"</span>);<span class="comment">//设置编码</span></div><div class="line">httpsURLConnection.setRequestProperty(<span class="string">"Content-Type"</span>, <span class="string">"application/x-www-form-urlencoded;charset=utf-8"</span>);</div><div class="line">   </div><div class="line">DataOutputStream submitDos = <span class="keyword">new</span> DataOutputStream(httpsURLConnection.getOutputStream());</div><div class="line"></div><div class="line">submitDos.writeBytes(paramter);<span class="comment">//关键的一行代码，这样会出现乱码</span></div></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li><p>整个排查过程很是费解，先排查接受web端的参数中是否乱码，然后排查请求第三方接口时是否设置了编码；然后排查向第三方接口传递参数时是否编码统一等等关键点，排查后依然中文乱码</p>
+</li>
+<li><p>就定位到了DataOutputStream.writeBytes(paramter);这一行，因为说实在的，关于这个类这个方法还是第一次见到在这样的场景中使用；</p>
+</li>
+<li><p>然后就进入到writeBytes方法源码中看了一下，果然发现了问题所在，该方法源码如下：</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">writeBytes</span><span class="params">(String s)</span> <span class="keyword">throws</span> IOException </span>&#123;</div><div class="line">       <span class="keyword">int</span> len = s.length();</div><div class="line">       <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; len ; i++) &#123;</div><div class="line">           out.write((<span class="keyword">byte</span>)s.charAt(i));<span class="comment">//关键问题就出现在这一行</span></div><div class="line">       &#125;</div><div class="line">       incCount(len);</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p>我们在源码中发现了一个在for循环中使用了<em>(byte)s.charAt(i)</em>这一行代码，下面逐行分解如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 我们把上面的for循环中的out.write((byte)s.charAt(i));这一句代码拆开成如下   的for循环语句</div><div class="line"> */</div><div class="line">String s = <span class="string">"张三"</span>；</div><div class="line"><span class="keyword">int</span> len = s.length();<span class="comment">//长度为2</span></div><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; len ; i++) &#123;</div><div class="line">	<span class="keyword">char</span> cs = s.charAt(i); <span class="comment">//张 [一个char占2个字节(16位)，所以可以存储大部分的中文]</span></div><div class="line">   	<span class="keyword">byte</span> by = (<span class="keyword">byte</span>)cs; <span class="comment">//问题根源所在 [一个byte占1个字节(8位)，把char强转为byte就会发生丢失]</span></div><div class="line">       out.write(by); <span class="comment">//其实调用的api方法为 write(int b);只不过把byte自动向上转型为int型而已</span></div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>解决问题的办法就是不要使用out.writeBytes(String s)这个方法，更改为out.write(byte b[])这个重载的方法</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">//有问题的代码 </span></div><div class="line">submitDos.writeBytes(paramter);</div><div class="line"></div><div class="line"><span class="comment">//更改后的代码</span></div><div class="line">submitDos.write(paramter.getBytes());</div></pre></td></tr></table></figure>
+<blockquote>
+<p>下面针对DataOutputStream的write方法写一个小demo进行验证</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">	</div><div class="line"> <span class="comment">/**</span></div><div class="line"> * 声明一个指向D盘下test.txt的输出流(d盘确保已经存在test.txt文件)</div><div class="line"> * </div><div class="line"> * 然后我们把一个中文字符分别通过out.writeBytes(String s)方法和write(byte b[])写入到这个文件中然后我们查看写入到文件中的内容</div><div class="line"> */</div><div class="line">DataOutputStream out = <span class="keyword">new</span> DataOutputStream(<span class="keyword">new</span> FileOutputStream(<span class="string">"D:\\test.txt"</span>));</div><div class="line">String count = <span class="string">"马"</span>;</div><div class="line">out.writeBytes(count);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>上面代码写入到文件中的内容为 l；即英文的消息l字符；因为我们把”马”这个中文调用out.writeBytes(String s)方法时，由于内部发送了如下转换：</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"> <span class="keyword">char</span> c= count.charAt(<span class="number">0</span>);</div><div class="line"><span class="keyword">byte</span> b = (<span class="keyword">byte</span>)c;<span class="comment">//把值为马的char型转换为byte型后，值变为108</span></div><div class="line">out.write(c); <span class="comment">//由于108对应的就是小写英文字符l</span></div></pre></td></tr></table></figure>
+<p>所以问题根源就是 JAVA中的char是16位的，一个char存储一个中文字符，直接用转换byte强转换后会变为8位，直接导致高8位丢失，从而导致中文乱码。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">	</div><div class="line"> <span class="comment">/**</span></div><div class="line"> * 声明一个指向D盘下test.txt的输出流(d盘确保已经存在test.txt文件)</div><div class="line"> * </div><div class="line"> * 然后我们把一个中文字符分别通过out.writeBytes(String s)方法和write(byte b[])写入到这个文件中然后我们查看写入到文件中的内容</div><div class="line"> */</div><div class="line">DataOutputStream out = <span class="keyword">new</span> DataOutputStream(<span class="keyword">new</span> FileOutputStream(<span class="string">"D:\\test.txt"</span>));</div><div class="line">String count = <span class="string">"马"</span>;</div><div class="line">out.write(count.getBytes()); <span class="comment">//可以正常的把中文字符 马 输出到test.txt文件中</span></div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/使用spring的RestTemplate调用REST接口/" itemprop="url">
                   使用spring的RestTemplate调用REST接口
                 </a>
@@ -1349,121 +1492,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/设计模式-单例模式/" itemprop="url">
-                  设计模式--单例模式
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-05-24T17:20:19+08:00" content="2017-05-24">
-              2017-05-24
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/设计模式/" itemprop="url" rel="index">
-                    <span itemprop="name">设计模式</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>单例模式根据名字就能明白其含义了，就是只能实例化一个对象的意思；多余的话不赘述，其实单例模式在一些场景中使用可以有效的提升服务器效率节省资源利用；比如服务器资源配置文件的读取、数据库连接建立等等，像这种操作没有必要每次随着方法的调用都加载读取一次资源文件，或者重新建立一次新的连接，这样是非常耗时耗资源的操作，我们只需要在服务启动时，或者第一次方法调用时加载一次就行了，后续方法的调用直接使用对应的实例对象即可；实现一个单例模式有很多种方法，每一种方法都尤其应用场景及优缺点，所以下面就分别描述各种方法：</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/设计模式-单例模式/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1509,7 +1537,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">74</span>
+              <span class="site-state-item-count">75</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
