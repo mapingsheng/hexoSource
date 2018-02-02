@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.soujava.com/"/>
-  <updated>2017-12-22T13:51:31.293Z</updated>
+  <updated>2018-02-02T09:39:28.030Z</updated>
   <id>http://www.soujava.com/</id>
   
   <author>
@@ -14,6 +14,62 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>运用webGL实现3D效果-机器组装</title>
+    <link href="http://www.soujava.com/%E8%BF%90%E7%94%A8webGL%E5%AE%9E%E7%8E%B03D%E6%95%88%E6%9E%9C-%E6%9C%BA%E5%99%A8%E7%BB%84%E8%A3%85/"/>
+    <id>http://www.soujava.com/运用webGL实现3D效果-机器组装/</id>
+    <published>2018-02-02T08:27:07.000Z</published>
+    <updated>2018-02-02T09:39:28.030Z</updated>
+    
+    <content type="html">&lt;p&gt;在二次元的世界里，如果有些东西能以3D的效果展示，给人的感觉是完全不一样的，比如我们平时使用的地图导航上面显示的3D画面、教学场景中使用的几何教学演示、一些3D场景的动画等等，针对这些应用，完全可以使用webGL实现，并且在浏览器中无障碍展示，并且还可以添加交互功能。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/webgl1.png&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;由于3D是通过浏览器查看的，并且对应的数据源可以是多种格式（json、xml），说白了就是我们创建了一个静态的web网站，然后浏览网页中的3D场景而已；所以我们需要把对应的html页面部署到对应的web服务器中运行；大概的步骤如下：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;一、部署步骤&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;1.：安装nodejs服务&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;参考：&lt;a href=&quot;http://soujava.com/CentOS%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85nodeJs/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;CentOS系统安装nodeJs&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;2.：部署webGL示例网页到nodejs服务中&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;新建node_server/publish文件夹&lt;/li&gt;
+&lt;li&gt;新建nodejs服务脚本文件server.js&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;var http = require(&lt;span class=&quot;string&quot;&gt;&#39;http&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;var express = require(&lt;span class=&quot;string&quot;&gt;&#39;express&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;var app = express();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;app.use(express.&lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&quot;publish&quot;&lt;/span&gt;)).listen(&lt;span class=&quot;number&quot;&gt;8080&lt;/span&gt;);&lt;span class=&quot;comment&quot;&gt;//创建http服务，访问publish文件夹中的资源，并监听8080端口，等同于启动了tomcat服务&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;em&gt;通过上面两步，我们就成功搭建了一个web服务器！&lt;/em&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;把对应的3D示例相关web页面资源copy到publish目录中即可&lt;/p&gt;
+&lt;p&gt;源码地址：&lt;a href=&quot;https://github.com/mapingsheng/webGL/tree/master/node_server_demo&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;github.com/mapingsheng    &lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;运行&lt;em&gt;node server.js&lt;/em&gt; 启动服务，然后打开浏览器浏览效果&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/webgl2.png&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/webgl3.png&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/webgl4.png&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;3.：下面看一下3D场景的动画展示&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/webgl5.gif&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/webgl6.gif&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在二次元的世界里，如果有些东西能以3D的效果展示，给人的感觉是完全不一样的，比如我们平时使用的地图导航上面显示的3D画面、教学场景中使用的几何教学演示、一些3D场景的动画等等，针对这些应用，完全可以使用webGL实现，并且在浏览器中无障碍展示，并且还可以添加交互功能。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://soujava.com/images/webgl1.png&quot; alt=&quot;Alt text&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="3D" scheme="http://www.soujava.com/categories/3D/"/>
+    
+    
+      <category term="webGL" scheme="http://www.soujava.com/tags/webGL/"/>
+    
+  </entry>
   
   <entry>
     <title>DataOutputStream.write方法入坑</title>
@@ -1462,152 +1518,6 @@
       &lt;p&gt;在开发中用到反射操作具体类的情况比较少，但是我们用到的一些开发框架确都是反射的应用代表，比如spring、hibernate、mybatis等等框架。&lt;/p&gt;
 &lt;p&gt;就拿spring框架来讲，我们在application.xml中配置一个bean标签，然后把类的全路径配置好之后，spring启动初始化时就把这个类路径对应的具体类初始化成了一个真正意义上的bean对象，我们就可以直接使用这个bean对象中的方法进行操作了；这里面最典型的就是aop、ioc了。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;一、使用原生反射方式&lt;/strong&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="java" scheme="http://www.soujava.com/categories/java/"/>
-    
-    
-      <category term="java" scheme="http://www.soujava.com/tags/java/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>java新旧版本的排序</title>
-    <link href="http://www.soujava.com/java%E6%96%B0%E6%97%A7%E7%89%88%E6%9C%AC%E7%9A%84%E6%8E%92%E5%BA%8F/"/>
-    <id>http://www.soujava.com/java新旧版本的排序/</id>
-    <published>2017-05-06T02:47:14.000Z</published>
-    <updated>2017-05-06T06:45:41.029Z</updated>
-    
-    <content type="html">&lt;p&gt;因为最近在做app客户的rest接口，所以要确保后台提供给app的rest接口是相对安全的，就涉及到了一些加密操作，其实主要涉及以下两种加密方式：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;AES加密&lt;/li&gt;
-&lt;li&gt;MD5加密&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;其实针对上面两种加密方式我们应用在不同的场景，AES加密主要应用在POST、DELETE等对于服务器来讲不能确保”幂等“的操作；MD5加密主要应用在GET等对于服务器来讲可以确保“幂等”的操作。&lt;/p&gt;
-&lt;p&gt;一般是先确定待加密的value值集合，然后把value值集合进行自然排序，然后再加上双方约定好的秘钥串进行最终的MD5加密处理。&lt;/p&gt;
-&lt;p&gt;所以加密过程中为了确保双方的加密后的值能一致，都进行了排序处理，下面就针对排序这一操作在熟悉一下java中的排序。&lt;/p&gt;
-&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
-&lt;p&gt;&lt;strong&gt;一、自然排序&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;自然排序就是不适用自定义的比较器进行排序，而是适用默认的比较器进行排序操作，比如经常使用的java.util包中的比较器工具类。&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;对list集合自然排序–Collections.sort(list)&lt;/li&gt;
-&lt;/ol&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;List&amp;lt;String&amp;gt; list = Arrays.asList(&lt;span class=&quot;string&quot;&gt;&quot;a&quot;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&quot;c&quot;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&quot;中&quot;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&quot;b&quot;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Collections.sort(list);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;以上代码排序后结果：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;[a, b, c, 中]&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;ol&gt;
-&lt;li&gt;对Array数组自然排序–Arrays.sort(array)&lt;/li&gt;
-&lt;/ol&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;16&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;17&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;18&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;19&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;20&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;21&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;22&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;23&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;24&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	String[] array = &amp;#123;&lt;span class=&quot;string&quot;&gt;&quot;a&quot;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&quot;c&quot;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&quot;中&quot;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&quot;b&quot;&lt;/span&gt;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	Arrays.sort(array);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;```	&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;以上代码排序后结果：&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;gt;[a, b, c, 中]&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;. 对Map集合自然排序--Collections.sort(list)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;```java&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	Map&amp;lt;String,String&amp;gt; map = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; HashMap&amp;lt;String,String&amp;gt;();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	map.put(&lt;span class=&quot;string&quot;&gt;&quot;name&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;a&quot;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	map.put(&lt;span class=&quot;string&quot;&gt;&quot;code&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;c&quot;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	map.put(&lt;span class=&quot;string&quot;&gt;&quot;real&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;中&quot;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	map.put(&lt;span class=&quot;string&quot;&gt;&quot;attr&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;b&quot;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	Collection&amp;lt;String&amp;gt; collect = map.values();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	List&amp;lt;String&amp;gt; mapList = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; ArrayList&amp;lt;String&amp;gt;(collect);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	Collections.sort(mapList);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;以上代码排序后结果：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;[a, b, c, 中]&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;注：可以看到以上所使用到的自然排序后，结果都是一样,按照升序进行排序。那么我们如果想让集合中的元素降序排列该怎么办呢，那就需要自定义比较器了。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;二、自定义比较器进行排序&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;说到自定义比较器，就不得不说Comparator和Comparable这两个比较接口，下面进行各自说明一下&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;1. Comparable接口&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;该接口主要用来将自定义的类型具有排序特性，那么就需要实现该接口，该接口中只有一个compareTo方法，源码如下：&lt;/p&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;interface&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Comparable&lt;/span&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;T&lt;/span&gt;&amp;gt; &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;compareTo&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(T o)&lt;/span&gt;&lt;/span&gt;;	&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;主要应用在以下场景&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;针对集合中的泛型元素不具有排序特征(集合中的元素没有实现Comparable接口)，如果集合中的泛型元素不具有排序特性，那么我们就不能使用上面的例子中的默认比较器进行排序操作。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;下面新建一个学生类-Student&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;16&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;17&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;18&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;19&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;20&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;21&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;22&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;23&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;24&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;25&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;26&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;27&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;28&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;29&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Student&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; String name; &lt;span class=&quot;comment&quot;&gt;//名称&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; age; &lt;span class=&quot;comment&quot;&gt;//年龄&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	Student(String name,&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; age)&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.name = name;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.age = age;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; String &lt;span class=&quot;title&quot;&gt;getName&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; name;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;setName&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(String name)&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.name = name;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;getAge&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; age;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;setAge&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; age)&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.age = age;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;meta&quot;&gt;@Override&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; String &lt;span class=&quot;title&quot;&gt;toString&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&quot;User [name=&quot;&lt;/span&gt; + name + &lt;span class=&quot;string&quot;&gt;&quot;, age=&quot;&lt;/span&gt; + age + &lt;span class=&quot;string&quot;&gt;&quot;]&quot;&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ul&gt;
-&lt;li&gt;声明一个集合，并且把Student实例添加到集合中&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Student stu1 = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Student(&lt;span class=&quot;string&quot;&gt;&quot;王明&quot;&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;25&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Student stu2 = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Student(&lt;span class=&quot;string&quot;&gt;&quot;李茜&quot;&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;29&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Student stu3 = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Student(&lt;span class=&quot;string&quot;&gt;&quot;魏泽&quot;&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;18&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;List&amp;lt;Student&amp;gt; stuList = Arrays.asList(stu1,stu2,stu3);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ul&gt;
-&lt;li&gt;使用默认的集合排序方式对集合进行排序操作(无法编译)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Collections.sort(stuList); &lt;span class=&quot;comment&quot;&gt;//编译报错&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//The method sort(List&amp;lt;T&amp;gt;) in the type Collections is not applicable for the arguments (List&amp;lt;Student&amp;gt;)&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;之所以我们针对泛型元素为Student类型的集合stuList进行默认排序时，无法通过编译，因为集合中的泛型元素Student没有不具有排序特性(Student没有实现Comparable接口)；&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;我们对Student类进行改造-实现Comparable接口，并覆写比较方法&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;16&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;17&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;18&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;19&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;20&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;21&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;22&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;23&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;24&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;25&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;26&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;27&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;28&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;29&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;30&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;31&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;32&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;33&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;34&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;35&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;36&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;37&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;/**&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; * 把Student类实现Comparable接口，然后该类就具有了排序特性，然后覆写比较方法&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; * &lt;span class=&quot;doctag&quot;&gt;@author&lt;/span&gt; maps&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; */&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Student&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Comparable&lt;/span&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;Student&lt;/span&gt;&amp;gt;&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; String name;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; age;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;meta&quot;&gt;@Override&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;compareTo&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(Student o)&lt;/span&gt; &lt;/span&gt;&amp;#123; &lt;span class=&quot;comment&quot;&gt;//覆写比较方法，按照年龄升序排列&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.age-o.getAge();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	Student(String name,&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; age)&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.name = name;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.age = age;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; String &lt;span class=&quot;title&quot;&gt;getName&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; name;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;setName&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(String name)&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.name = name;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;getAge&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; age;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;setAge&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; age)&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.age = age;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;meta&quot;&gt;@Override&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; String &lt;span class=&quot;title&quot;&gt;toString&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&quot;User [name=&quot;&lt;/span&gt; + name + &lt;span class=&quot;string&quot;&gt;&quot;, age=&quot;&lt;/span&gt; + age + &lt;span class=&quot;string&quot;&gt;&quot;]&quot;&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ul&gt;
-&lt;li&gt;然后还使用默认的比较器进行排序操作&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Student stu1 = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Student(&lt;span class=&quot;string&quot;&gt;&quot;王明&quot;&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;25&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Student stu2 = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Student(&lt;span class=&quot;string&quot;&gt;&quot;李茜&quot;&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;29&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Student stu3 = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Student(&lt;span class=&quot;string&quot;&gt;&quot;魏泽&quot;&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;18&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;List&amp;lt;Student&amp;gt; stuList = Arrays.asList(stu1,stu2,stu3);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Collections.sort(stuList); &lt;span class=&quot;comment&quot;&gt;//可以正常编译、运行&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;运行以上代码后输出：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;blockquote&gt;
-&lt;p&gt;[User [name=魏泽, age=18], User [name=王明, age=25], User [name=李茜, age=29]]&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;可以看到我们把集合中的泛型元素Student实现Comparable接口之后，该类就具有了排序特性，那么我们就可以使用sort方法进行排序了，不需要再针对包含该泛型元素的集合额外的自定义比较器了。&lt;/p&gt;
-&lt;p&gt;其实针对这个接口的作用主要就是将元素具有排序特性，那么该接口的使用有一定的局限性，也就是只能操作自己定义的类；比如上面例子中的Student类是导入第三方的，该类没有实现Comparable接口，我们也没有源码，那么我们现在要针对泛型元素为Student的集合元素进行排序时该怎么办呢？&lt;/p&gt;
-&lt;p&gt;然而我们针对那些不具有排序特性的泛型集合进行排序是很常见的操作，那么我们针对这种情况应该怎么办呢？那么我们可以通过使用Comparator接口来自定义比较器进行排序操作。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;2. Comparator接口&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;该接口的功能就是自定义比较器操作，针对上面例子最后提出的问题我们接着分析。&lt;/p&gt;
-&lt;p&gt;该接口主要有以下两个应用场景：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;使那些不具备排序特性的元素可以进行排序操作&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;下面新建一个学生类-Student，该类仍然不具有排序特性&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;16&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;17&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;18&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;19&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;20&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;21&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;22&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;23&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;24&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;25&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;26&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;27&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;28&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;29&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Student&lt;/span&gt;&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; String name; &lt;span class=&quot;comment&quot;&gt;//名称&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; age; &lt;span class=&quot;comment&quot;&gt;//年龄&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	Student(String name,&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; age)&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.name = name;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.age = age;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; String &lt;span class=&quot;title&quot;&gt;getName&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; name;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;setName&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(String name)&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.name = name;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;getAge&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; age;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;setAge&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; age)&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.age = age;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;meta&quot;&gt;@Override&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; String &lt;span class=&quot;title&quot;&gt;toString&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&quot;User [name=&quot;&lt;/span&gt; + name + &lt;span class=&quot;string&quot;&gt;&quot;, age=&quot;&lt;/span&gt; + age + &lt;span class=&quot;string&quot;&gt;&quot;]&quot;&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ul&gt;
-&lt;li&gt;声明一个集合，并且把Student实例添加到集合中&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Student stu1 = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Student(&lt;span class=&quot;string&quot;&gt;&quot;王明&quot;&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;25&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Student stu2 = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Student(&lt;span class=&quot;string&quot;&gt;&quot;李茜&quot;&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;29&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Student stu3 = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Student(&lt;span class=&quot;string&quot;&gt;&quot;魏泽&quot;&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;18&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;List&amp;lt;Student&amp;gt; stuList = Arrays.asList(stu1,stu2,stu3);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ul&gt;
-&lt;li&gt;使用默认的集合排序方式对集合进行排序操作(无法编译)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Collections.sort(stuList); &lt;span class=&quot;comment&quot;&gt;//编译报错&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ul&gt;
-&lt;li&gt;我们定义一个针对不具有排序特性的Student的元素集合定义一个比较器&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;/**&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; * 定义一个普通的类，然后把该类实现Comparator排序接口即可，泛型类型就是我们待排序的Student类&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; * &lt;span class=&quot;doctag&quot;&gt;@author&lt;/span&gt; maps&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; */&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;StudentComparator&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;Comparator&lt;/span&gt;&amp;lt;&lt;span class=&quot;title&quot;&gt;Student&lt;/span&gt;&amp;gt;&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;meta&quot;&gt;@Override&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;compare&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(Student o1, Student o2)&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;		&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; o1.getAge()-o2.getAge();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;	&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ul&gt;
-&lt;li&gt;使用我们自定义的比较器对刚才的stuList集合进行排序操作&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Collections.sort(stuList, &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; StudentComparator());&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;上面代码执行结果：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;blockquote&gt;
-&lt;p&gt;[User [name=魏泽, age=18], User [name=王明, age=25], User [name=李茜, age=29]]&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;可以看到使用我们自定义的比较器后，排序时使用了集合中的泛型元素的年龄(age)属性进行了升序排列。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;自定义一个比较器，然后覆盖默认的排序方法&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;其实这种使用场景在上面已经用到了，就是下面一行代码&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Collections.sort(stuList, new StudentComparator());&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;我们可以看到Collections.sort方法定义了两个不同参数格式的重载方法，其中一个参数的sort方法就是使用默认的比较器(集合中泛型元素实现接口Comparable后覆写的比较方法)进行排序的操作；其中两个参数的sort方法中第二个参数就是我们自定义的比较器实例，所以当我们传递第二个参数时，也就表明我们将使用我们自定义的比较器来覆盖默认的比较器进行排序操作，具体就不进行演示了，上面例子中已经展示了。&lt;/p&gt;
-&lt;p&gt;其实Comparator接口中定义了很多有用的方法，比如把排序规则反转、构件排序链等等，比如我们定义的比较器是按照学生的年龄进行升序排序的，那么我们可以使用比较器的反转方法进行降序排列。&lt;/p&gt;
-&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Collections.sort(stuList,&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; StudentComparator().reversed());&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;上面代码运行结果：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;[User [name=李茜, age=29], User [name=王明, age=25], User [name=魏泽, age=18]]&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;可以看到我们使用比较器反转方法后，按照了年龄降序进行排序。&lt;/p&gt;
-</content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;因为最近在做app客户的rest接口，所以要确保后台提供给app的rest接口是相对安全的，就涉及到了一些加密操作，其实主要涉及以下两种加密方式：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;AES加密&lt;/li&gt;
-&lt;li&gt;MD5加密&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;其实针对上面两种加密方式我们应用在不同的场景，AES加密主要应用在POST、DELETE等对于服务器来讲不能确保”幂等“的操作；MD5加密主要应用在GET等对于服务器来讲可以确保“幂等”的操作。&lt;/p&gt;
-&lt;p&gt;一般是先确定待加密的value值集合，然后把value值集合进行自然排序，然后再加上双方约定好的秘钥串进行最终的MD5加密处理。&lt;/p&gt;
-&lt;p&gt;所以加密过程中为了确保双方的加密后的值能一致，都进行了排序处理，下面就针对排序这一操作在熟悉一下java中的排序。&lt;/p&gt;
     
     </summary>
     
