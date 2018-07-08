@@ -260,6 +260,160 @@
             
               
                 
+                <a class="post-title-link" href="/Mysql-8-0-安装笔记/" itemprop="url">
+                  Mysql 8.0 安装笔记
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-07-08T17:41:46+08:00" content="2018-07-08">
+              2018-07-08
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">Mysql</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>一、下载安装包</p>
+<p>访问地址：<a href="https://dev.mysql.com/downloads/mysql/" target="_blank" rel="external">https://dev.mysql.com/downloads/mysql/</a></p>
+<p><img src="http://soujava.com/images/mysqlDownload.png" alt="Alt text"></p>
+<p>二、安装</p>
+<p> 1、在D盘中新建mysql文件夹，然后把下载下来的安装包解压到里面。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">D:\develop\soft&gt;cd mysql</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">  D:\develop\soft\mysql&gt;dir</div><div class="line">	</div><div class="line">D:\develop\soft\mysql 的目录</div><div class="line"></div><div class="line"><span class="number">2018</span>/<span class="number">06</span>/<span class="number">30</span>  <span class="number">12</span>:<span class="number">42</span>    &lt;DIR&gt;          .</div><div class="line"><span class="number">2018</span>/<span class="number">06</span>/<span class="number">30</span>  <span class="number">12</span>:<span class="number">42</span>    &lt;DIR&gt;          ..</div><div class="line"><span class="number">2018</span>/<span class="number">06</span>/<span class="number">30</span>  <span class="number">14</span>:<span class="number">19</span>    &lt;DIR&gt;          mysql-<span class="number">8.0</span>.11-winx64</div><div class="line">               <span class="number">0</span> 个文件              <span class="number">0</span> 字节</div><div class="line">               <span class="number">3</span> 个目录 <span class="number">522</span>,<span class="number">972</span>,<span class="number">643</span>,<span class="number">328</span> 可用字节*</div></pre></td></tr></table></figure>
+<p>2、切换到mysql-8.0.11-winx64目录中</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">D:\develop\soft\mysql&gt;cd mysql-<span class="number">8.0</span>.11-winx64</div><div class="line"></div><div class="line">D:\develop\soft\mysql\mysql-<span class="number">8.0</span>.11-winx64&gt;dir</div><div class="line">	 驱动器 D 中的卷是 新加卷</div><div class="line">	 卷的序列号是 F6E6-<span class="number">5223</span></div><div class="line">	</div><div class="line">	 D:\develop\soft\mysql\mysql-<span class="number">8.0</span>.11-winx64 的目录</div><div class="line">	</div><div class="line">	<span class="number">2018</span>/<span class="number">06</span>/<span class="number">30</span>  <span class="number">14</span>:<span class="number">19</span>    &lt;DIR&gt;          .</div><div class="line">	<span class="number">2018</span>/<span class="number">06</span>/<span class="number">30</span>  <span class="number">14</span>:<span class="number">19</span>    &lt;DIR&gt;          ..</div><div class="line">	<span class="number">2018</span>/<span class="number">06</span>/<span class="number">30</span>  <span class="number">12</span>:<span class="number">42</span>    &lt;DIR&gt;          bin</div><div class="line">	<span class="number">2018</span>/<span class="number">06</span>/<span class="number">30</span>  <span class="number">14</span>:<span class="number">59</span>    &lt;DIR&gt;          data</div><div class="line">	<span class="number">2018</span>/<span class="number">06</span>/<span class="number">30</span>  <span class="number">12</span>:<span class="number">42</span>    &lt;DIR&gt;          docs</div><div class="line">	<span class="number">2018</span>/<span class="number">06</span>/<span class="number">30</span>  <span class="number">12</span>:<span class="number">42</span>    &lt;DIR&gt;          include</div><div class="line">	<span class="number">2018</span>/<span class="number">06</span>/<span class="number">30</span>  <span class="number">12</span>:<span class="number">42</span>    &lt;DIR&gt;          lib</div><div class="line">	<span class="number">2018</span>/<span class="number">04</span>/<span class="number">08</span>  <span class="number">14</span>:<span class="number">44</span>           <span class="number">301</span>,<span class="number">518</span> LICENSE</div><div class="line">	<span class="number">2018</span>/<span class="number">06</span>/<span class="number">30</span>  <span class="number">14</span>:<span class="number">01</span>               <span class="number">855</span> my-<span class="keyword">default</span>.ini</div><div class="line">	<span class="number">2018</span>/<span class="number">04</span>/<span class="number">08</span>  <span class="number">14</span>:<span class="number">44</span>               <span class="number">687</span> README</div><div class="line">	<span class="number">2018</span>/<span class="number">06</span>/<span class="number">30</span>  <span class="number">14</span>:<span class="number">20</span>                <span class="number">56</span> resetPWD.txt</div><div class="line">	<span class="number">2018</span>/<span class="number">06</span>/<span class="number">30</span>  <span class="number">12</span>:<span class="number">42</span>    &lt;DIR&gt;          share</div><div class="line">	               <span class="number">4</span> 个文件        <span class="number">303</span>,<span class="number">116</span> 字节</div><div class="line">	               <span class="number">8</span> 个目录 <span class="number">522</span>,<span class="number">972</span>,<span class="number">643</span>,<span class="number">328</span> 可用字节</div></pre></td></tr></table></figure>
+<p>3、列出mysql-8.0.11-winx64文件夹中的目录</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">D:\develop\soft\mysql\mysql-<span class="number">8.0</span>.11-winx64&gt;dir</div><div class="line">	 驱动器 D 中的卷是 新加卷</div><div class="line">	 卷的序列号是 F6E6-<span class="number">5223</span></div><div class="line">	</div><div class="line">	 D:\develop\soft\mysql\mysql-<span class="number">8.0</span>.11-winx64 的目录</div><div class="line">	</div><div class="line">	<span class="number">2018</span>/<span class="number">06</span>/<span class="number">30</span>  <span class="number">15</span>:<span class="number">06</span>    &lt;DIR&gt;          .</div><div class="line">	<span class="number">2018</span>/<span class="number">06</span>/<span class="number">30</span>  <span class="number">15</span>:<span class="number">06</span>    &lt;DIR&gt;          ..</div><div class="line">	<span class="number">2018</span>/<span class="number">04</span>/<span class="number">08</span>  <span class="number">16</span>:<span class="number">53</span>    &lt;DIR&gt;          bin</div><div class="line">	<span class="number">2018</span>/<span class="number">04</span>/<span class="number">08</span>  <span class="number">16</span>:<span class="number">53</span>    &lt;DIR&gt;          docs</div><div class="line">	<span class="number">2018</span>/<span class="number">04</span>/<span class="number">08</span>  <span class="number">16</span>:<span class="number">53</span>    &lt;DIR&gt;          include</div><div class="line">	<span class="number">2018</span>/<span class="number">04</span>/<span class="number">08</span>  <span class="number">16</span>:<span class="number">53</span>    &lt;DIR&gt;          lib</div><div class="line">	<span class="number">2018</span>/<span class="number">04</span>/<span class="number">08</span>  <span class="number">14</span>:<span class="number">44</span>           <span class="number">301</span>,<span class="number">518</span> LICENSE</div><div class="line">	<span class="number">2018</span>/<span class="number">06</span>/<span class="number">30</span>  <span class="number">15</span>:<span class="number">09</span>               <span class="number">856</span> my.ini</div><div class="line">	<span class="number">2018</span>/<span class="number">04</span>/<span class="number">08</span>  <span class="number">14</span>:<span class="number">44</span>               <span class="number">687</span> README</div><div class="line">	<span class="number">2018</span>/<span class="number">04</span>/<span class="number">08</span>  <span class="number">16</span>:<span class="number">53</span>    &lt;DIR&gt;          share</div><div class="line">	               <span class="number">3</span> 个文件        <span class="number">303</span>,<span class="number">061</span> 字节</div><div class="line">	               <span class="number">7</span> 个目录 <span class="number">521</span>,<span class="number">901</span>,<span class="number">731</span>,<span class="number">840</span> 可用字节</div></pre></td></tr></table></figure>
+<p>4、在根目录中编辑my.ini配置文件(如果没有该文件则新建一个)</p>
+<p> <em>注：其中的basedir、datadir需要更改为你本地硬盘中的真实目录地址</em></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">[mysqld]</div><div class="line"># 设置3306端口</div><div class="line">port = 3306</div><div class="line"># 设置mysql的安装目录</div><div class="line">basedir = D:\\develop\\soft\\mysql\\mysql-5.6.39-winx64</div><div class="line"># 设置mysql数据库的数据的存放目录</div><div class="line">datadir = D:\\develop\\soft\\mysql\\mysql-5.6.39-winx64\\data</div><div class="line"># 允许最大连接数</div><div class="line">max_connections=200</div><div class="line"># 允许连接失败的次数。这是为了防止有人从该主机试图攻击数据库系统</div><div class="line">max_connect_errors=10</div><div class="line"># 服务端使用的字符集默认为UTF8</div><div class="line">character-set-server=utf8</div><div class="line"># 创建新表时将使用的默认存储引擎</div><div class="line">default-storage-engine=INNODB</div><div class="line"># 默认使用“mysql_native_password”插件认证</div><div class="line">default_authentication_plugin=mysql_native_password</div><div class="line"></div><div class="line">[mysql]</div><div class="line"># 设置mysql客户端默认字符集</div><div class="line">default-character-set=utf8</div><div class="line"></div><div class="line">[client]</div><div class="line"># 设置mysql客户端连接服务端时默认使用的端口</div><div class="line">port=3306</div><div class="line">default-character-set=utf8</div></pre></td></tr></table></figure>
+<p>5、切换到bin目录中</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">D:\develop\soft\mysql\mysql-<span class="number">8.0</span>.11-winx64&gt;cd bin</div></pre></td></tr></table></figure>
+<p>5、初始化mysql配置信息</p>
+<p><em>注：在输出的命令行中，有mysql自动新建root账号时分配的随机密码，一定要记住这个密码，安装成功后需要登陆新建用户、数据库</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">D:\develop\soft\mysql\mysql-<span class="number">8.0</span>.11-winx64\bin&gt;mysqld --initialize --console</div><div class="line"></div><div class="line"><span class="number">2018</span>-<span class="number">06</span>-<span class="number">30</span>T07:<span class="number">10</span>:<span class="number">18.607836</span>Z <span class="number">0</span> [System] [MY-<span class="number">013169</span>] [Server] D:\develop\soft\mysql\mysql-<span class="number">8.0</span>.11-winx64\bin\mysqld.exe (mysqld <span class="number">8.0</span>.11) initializing of server in progress as process <span class="number">13940</span></div><div class="line"><span class="number">2018</span>-<span class="number">06</span>-<span class="number">30</span>T07:<span class="number">10</span>:<span class="number">18.613208</span>Z <span class="number">0</span> [ERROR] [MY-<span class="number">010340</span>] [Server] Error message file <span class="string">'D:\develop\soft\mysql\mysql-5.6.39-winx64\share\english\errmsg.sys'</span> had only <span class="number">886</span> error messages, but it should contain at least <span class="number">4512</span> error messages. Check that the above file is the right version <span class="keyword">for</span> <span class="keyword">this</span> program!</div><div class="line"><span class="number">2018</span>-<span class="number">06</span>-<span class="number">30</span>T07:<span class="number">10</span>:<span class="number">25.877420</span>Z <span class="number">5</span> [Note] [MY-<span class="number">010454</span>] [Server] A temporary password is generated <span class="keyword">for</span> root<span class="meta">@localhost</span>: P6aiG/xZ,)<span class="number">7</span>g 注意：这里就是mysql自动新建root账号时分配的随机密码，一定要记住这个密码，安装成功后需要登陆新建用户、数据库</div><div class="line"><span class="number">2018</span>-<span class="number">06</span>-<span class="number">30</span>T07:<span class="number">10</span>:<span class="number">29.016482</span>Z <span class="number">0</span> [System] [MY-<span class="number">013170</span>] [Server] D:\develop\soft\mysql\mysql-<span class="number">8.0</span>.11-winx64\bin\mysqld.exe (mysqld <span class="number">8.0</span>.11) initializing of server has completed</div></pre></td></tr></table></figure>
+<p>6、安装mysql服务</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">D:\develop\soft\mysql\mysql-<span class="number">8.0</span>.11-winx64\bin&gt;mysqld --install</div><div class="line">Service successfully installed.</div></pre></td></tr></table></figure>
+<p>7、启动mysql服务</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">D:\develop\soft\mysql\mysql-<span class="number">8.0</span>.11-winx64\bin&gt;net start mysql</div><div class="line">MySQL 服务正在启动 ..</div><div class="line">MySQL 服务已经启动成功。</div></pre></td></tr></table></figure>
+<p>8、登陆mysql</p>
+<p><em>登陆mysql时，提示输入的密码就是我们在第5步初始化mysql时，系统自动为我们生成的root密码</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">D:\develop\soft\mysql\mysql-<span class="number">8.0</span>.11-winx64\bin&gt;mysql -u root -p</div><div class="line">	Enter password: ************</div><div class="line">	Welcome to the MySQL monitor.  Commands end with ; or \g.</div><div class="line">	Your MySQL connection id is <span class="number">8</span></div><div class="line">	Server version: <span class="number">8.0</span>.11</div><div class="line">	</div><div class="line">	Copyright (c) <span class="number">2000</span>, <span class="number">2018</span>, Oracle and/or its affiliates. All rights reserved.</div><div class="line">	</div><div class="line">	Oracle is a registered trademark of Oracle Corporation and/or its</div><div class="line">	affiliates. Other names may be trademarks of their respective</div><div class="line">	owners.</div><div class="line">	</div><div class="line">	Type <span class="string">'help;'</span> or <span class="string">'\h'</span> <span class="keyword">for</span> help. Type <span class="string">'\c'</span> to clear the current input statement.</div></pre></td></tr></table></figure>
+<p>9、修改root密码</p>
+<p><em>因为mysql为我们随机分配的root登陆密码不好记忆，所以我们需要修改为我们方便记忆的密码</em></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">mysql&gt; ALTER USER <span class="string">'root'</span>@<span class="string">'localhost'</span> IDENTIFIED WITH mysql_native_password BY <span class="string">'xteamsoft'</span>;</div><div class="line">	Query OK, <span class="number">0</span> <span class="function">rows <span class="title">affected</span> <span class="params">(<span class="number">0.01</span> sec)</span></span></div></pre></td></tr></table></figure>
+<p>10、登陆成功后，可以显示目前的数据库列表</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">mysql&gt; show databases;</div><div class="line"></div><div class="line">+--------------------+</div><div class="line">| Database           |</div><div class="line">+--------------------+</div><div class="line">| information_schema |</div><div class="line">| mysql              |</div><div class="line">| performance_schema |</div><div class="line">| sys                |</div><div class="line">+--------------------+</div><div class="line"><span class="number">4</span> <span class="function">rows in <span class="title">set</span> <span class="params">(<span class="number">0.30</span> sec)</span></span></div></pre></td></tr></table></figure>
+<p>11、应用mysql数据库，然后显示mysql数据库中的所有表结构</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">mysql&gt; use mysql;</div><div class="line"></div><div class="line">Database changed</div><div class="line"></div><div class="line">mysql&gt; show tables;</div><div class="line"></div><div class="line">+---------------------------+</div><div class="line">| Tables_in_mysql           |</div><div class="line">+---------------------------+</div><div class="line">| columns_priv              |</div><div class="line">| component                 |</div><div class="line">| db                        |</div><div class="line">| default_roles             |</div><div class="line">| engine_cost               |</div><div class="line">| func                      |</div><div class="line">| general_log               |</div><div class="line">| global_grants             |</div><div class="line">| gtid_executed             |</div><div class="line">| help_category             |</div><div class="line">| help_keyword              |</div><div class="line">| help_relation             |</div><div class="line">| help_topic                |</div><div class="line">| innodb_index_stats        |</div><div class="line">| innodb_table_stats        |</div><div class="line">| password_history          |</div><div class="line">| plugin                    |</div><div class="line">| procs_priv                |</div><div class="line">| proxies_priv              |</div><div class="line">| role_edges                |</div><div class="line">| server_cost               |</div><div class="line">| servers                   |</div><div class="line">| slave_master_info         |</div><div class="line">| slave_relay_log_info      |</div><div class="line">| slave_worker_info         |</div><div class="line">| slow_log                  |</div><div class="line">| tables_priv               |</div><div class="line">| time_zone                 |</div><div class="line">| time_zone_leap_second     |</div><div class="line">| time_zone_name            |</div><div class="line">| time_zone_transition      |</div><div class="line">| time_zone_transition_type |</div><div class="line">| user                      |</div><div class="line">+---------------------------+</div><div class="line"><span class="number">33</span> <span class="function">rows in <span class="title">set</span> <span class="params">(<span class="number">0.02</span> sec)</span></span></div></pre></td></tr></table></figure>
+<p>12、查询user表中的用户</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">mysql&gt; select user,host,authentication_string from mysql.user;</div><div class="line">+------------------+-----------+-------------------------------------------+</div><div class="line">| user             | host      | authentication_string                     |</div><div class="line">+------------------+-----------+-------------------------------------------+</div><div class="line">| mysql.infoschema | localhost | *THISISNOTAVALIDPASSWORDTHATCANBEUSEDHERE |</div><div class="line">| mysql.session    | localhost | *THISISNOTAVALIDPASSWORDTHATCANBEUSEDHERE |</div><div class="line">| mysql.sys        | localhost | *THISISNOTAVALIDPASSWORDTHATCANBEUSEDHERE |</div><div class="line">| root             | localhost | *<span class="number">069686983</span>B4218189367E02EAFDFC126EDAA7A2F |</div><div class="line">+------------------+-----------+-------------------------------------------+</div><div class="line"><span class="number">4</span> <span class="function">rows in <span class="title">set</span> <span class="params">(<span class="number">0.00</span> sec)</span></span></div></pre></td></tr></table></figure>
+<p>13、创建我们自己的用户</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">mysql&gt; CREATE USER <span class="string">'maps'</span>@<span class="string">'%'</span> IDENTIFIED BY <span class="string">'maps'</span>;</div><div class="line">Query OK, <span class="number">0</span> <span class="function">rows <span class="title">affected</span> <span class="params">(<span class="number">0.05</span> sec)</span></span></div><div class="line"></div><div class="line">mysql&gt; select user,host,authentication_string from mysql.user;</div><div class="line">+------------------+-----------+-------------------------------------------+</div><div class="line">| user             | host      | authentication_string                     |</div><div class="line">+------------------+-----------+-------------------------------------------+</div><div class="line">| maps             | %         | *<span class="number">6</span>D563D2A92CA78E4D2E08B5836BDDF5C4DC6ED04 |</div><div class="line">| mysql.infoschema | localhost | *THISISNOTAVALIDPASSWORDTHATCANBEUSEDHERE |</div><div class="line">| mysql.session    | localhost | *THISISNOTAVALIDPASSWORDTHATCANBEUSEDHERE |</div><div class="line">| mysql.sys        | localhost | *THISISNOTAVALIDPASSWORDTHATCANBEUSEDHERE |</div><div class="line">| root             | localhost | *<span class="number">069686983</span>B4218189367E02EAFDFC126EDAA7A2F |</div><div class="line">+------------------+-----------+-------------------------------------------+</div><div class="line"><span class="number">5</span> <span class="function">rows in <span class="title">set</span> <span class="params">(<span class="number">0.00</span> sec)</span></span></div></pre></td></tr></table></figure>
+<p>14、查看新建的maps用户的权限信息</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">mysql&gt; show grants <span class="keyword">for</span> maps;</div><div class="line">+----------------------------------+</div><div class="line">| Grants <span class="keyword">for</span> maps@%                |</div><div class="line">+----------------------------------+</div><div class="line">| GRANT USAGE ON *.* TO `maps`@`%` |</div><div class="line">+----------------------------------+</div><div class="line"><span class="number">1</span> <span class="function">row in <span class="title">set</span> <span class="params">(<span class="number">0.00</span> sec)</span></span></div></pre></td></tr></table></figure>
+<p>15、为maps用户授权(增、删、改、查)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">mysql&gt; GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER ON *.* to <span class="string">'maps'</span>@<span class="string">'%'</span>;</div><div class="line">Query OK, <span class="number">0</span> <span class="function">rows <span class="title">affected</span> <span class="params">(<span class="number">0.12</span> sec)</span></span></div><div class="line"></div><div class="line">mysql&gt; show grants <span class="keyword">for</span> maps;</div><div class="line">+--------------------------------------------------------------------------------+</div><div class="line">| Grants <span class="keyword">for</span> maps@%                                                              |</div><div class="line">+--------------------------------------------------------------------------------+</div><div class="line">| GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, ALTER ON *.* TO `maps`@`%` |</div><div class="line">+--------------------------------------------------------------------------------+</div><div class="line"><span class="number">1</span> <span class="function">row in <span class="title">set</span> <span class="params">(<span class="number">0.00</span> sec)</span></span></div></pre></td></tr></table></figure>
+<p><em>参考：<a href="https://dev.mysql.com/doc/refman/5.7/en/data-directory-initialization-mysqld.html" target="_blank" rel="external">https://dev.mysql.com/doc/refman/5.7/en/data-directory-initialization-mysqld.html</a></em></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/运用webGL实现3D效果-机器组装/" itemprop="url">
                   运用webGL实现3D效果-机器组装
                 </a>
@@ -1378,121 +1532,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/jersey-2-轻量级Rest接口后台服务常规接口开发/" itemprop="url">
-                  jersey-2--轻量级Rest接口后台服务常规接口开发
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-07-04T15:27:35+08:00" content="2017-07-04">
-              2017-07-04
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/jersey/" itemprop="url" rel="index">
-                    <span itemprop="name">jersey</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>随着上一篇文章讲解了jersey框架的搭建运行，这一篇主要围绕我们平时开发rest接口方式进行示例；平时开发rest接口时无非提供GET、POST、PUT、DELETE等等类型的方法，或者在header中传入一些验证参数，下面我们就以user为例，主要围绕user的增删改查行为进行开发对应的rest接口。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/jersey-2-轻量级Rest接口后台服务常规接口开发/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1538,7 +1577,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">76</span>
+              <span class="site-state-item-count">77</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
